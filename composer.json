@@ -1,0 +1,48 @@
+{
+    "name": "symfony-cmf/SeoBundle",
+    "type": "symfony-bundle",
+    "description": "Symfony CMF SEO Bundle",
+    "keywords": ["Symfony CMF"],
+    "homepage": "http://cmf.symfony.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Symfony CMF Community",
+            "homepage": "https://github.com/symfony-cmf/SeoBundle/contributors"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": false,
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.2",
+        "symfony-cmf/core-bundle": "1.0.*"
+    },
+    "require-dev": {
+        "symfony-cmf/testing": "1.1.*",
+        "doctrine/phpcr-bundle": "1.0.*",
+        "doctrine/phpcr-odm": "1.0.*",
+        "sonata-project/doctrine-phpcr-admin-bundle": "1.0.*",
+        "symfony-cmf/routing-bundle": "1.1.*",
+        "symfony/monolog-bundle": "2.2.*"
+    },
+    "suggest": {
+        "symfony-cmf/menu-bundle": "Have editable menus for content",
+        "symfony-cmf/routing-bundle": "Have editable routes for content",
+        "friendsofsymfony/rest-bundle": "Improved handling for different output formats",
+        "doctrine/phpcr-odm": "To persist content with the PHP content repository",
+        "doctrine/phpcr-bundle": "To integrate PHPCR-ODM with Symfony",
+        "sonata-project/doctrine-phpcr-admin-bundle": "To provide admin interfaces for the content"
+    },
+    "autoload":{
+        "psr-0":{
+            "Symfony\\Cmf\\Bundle\\ContentBundle": ""
+        }
+    },
+    "target-dir": "Symfony/Cmf/Bundle/SeoBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1-dev"
+        }
+    }
+}
