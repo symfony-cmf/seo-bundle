@@ -4,17 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="cmf_seo.example.class">Cmf\SeoBundle\Example</parameter>
+        <parameter key="cmf_seo.default_template"></parameter>
     </parameters>
 
     <services>
-        <service id="cmf_seo.example" class="%cmf_seo.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="cmf_seo.controller" class="Cmf\SeoBundle\Controller\SeoAwareContentController">
+            <argument type="service" id="templating" />
+            <argument>%cmf_seo.default_template%</argument>
+            <argument type="service" id="fos_rest.view_handler" on-invalid="ignore"/>
+        </service>
+        <service id="cmf_seo.form.type.seo_stuff" class="Cmf\SeoBundle\Form\Type\SeoStuffType">
+            <tag name="form.type" alias="seo_stuff" />
         </service>
     </services>
-    -->
+
 </container>

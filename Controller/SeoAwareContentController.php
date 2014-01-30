@@ -1,17 +1,10 @@
 <?php
 
-/*
- * This file is part of the Symfony CMF package.
- *
- * (c) 2011-2013 Symfony CMF
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-
 namespace Cmf\SeoBundle\Controller;
 
+use Cmf\SeoBundle\Model\SeoAwareContentInterface;
+use Cmf\SeoBundle\Model\SeoStuff;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +16,7 @@ use FOS\RestBundle\View\ViewHandlerInterface;
  * The content controller is a simple controller that calls a template with
  * the specified content.
  */
-class ContentController
+class SeoAwareContentController extends  Controller
 {
     /**
      * @var EngineInterface
@@ -84,6 +77,11 @@ class ContentController
 
         $params = $this->getParams($request, $contentDocument);
 
+        //additional stuff for rendering Seo Stuff
+        if ($contentDocument instanceof SeoAwareContentInterface ) {
+
+        }
+
         return $this->renderResponse($contentTemplate, $params);
 
     }
@@ -112,5 +110,49 @@ class ContentController
         return array(
             'cmfMainContent' => $contentDocument,
         );
+    }
+
+    protected function handleSeoStuff(SeoAwareContentInterface $contentDocument)
+    {
+        /** @var SeoPage $seoPage */
+        $seoPage = $this->get('sonata.seo.page');
+
+        /** @var SeoStuff $seoStuff */
+        $seoStuff = $contentDocument->getSeoStuff();
+
+
+        //set the title based on the title strategy
+        $title = $this->createTitle($seoStuff);
+        $seoPage->setTitle($title);
+        $seoPage->setMeta('property', 'og:title', $title);
+
+        $seoPage->setMeta('property', 'og:description', $seoStuff->getMetaDescription());
+        $seoPage->setMeta('name', 'description', $seoStuff->getMetaDescription());
+        $seoPage->setMeta('property', 'og:keys', $seoStuff->getMetaKeywords());
+    }
+
+    /**
+     * based on the title strategy this method will create the title from the given
+     * configs in the seo configuration part
+     *
+     * @param \Cmf\SeoBundle\Model\SeoStuff $seoStuff
+     * @internal param \Cmf\SeoBundle\Model\SeoAwareContentInterface $contentDocument
+     * @return string
+     */
+    protected function createTitle(SeoStuff $seoStuff)
+    {
+        $configTitle = $this->container->get('sonata_seo.page.title');
+        $contentTitle = $seoStuff->getTitle();
+
+        switch ($seoStuff->getTitleStrategy()) {
+            case 'prepend':
+                return $contentTitle. ' - '.$configTitle;
+            case 'append':
+                return $configTitle . ' - ' . $contentTitle;
+            case 'replace':
+                return $contentTitle;
+            default:
+                return $configTitle;
+        }
     }
 }

@@ -1,4 +1,4 @@
-# Symfony CMF Content Bundle
+# Symfony CMF Seo Bundle
 
 [![Build Status](https://secure.travis-ci.org/symfony-cmf/ContentBundle.png)](http://travis-ci.org/symfony-cmf/ContentBundle)
 [![Latest Stable Version](https://poser.pugx.org/symfony-cmf/content-bundle/version.png)](https://packagist.org/packages/symfony-cmf/content-bundle)
@@ -7,7 +7,7 @@
 This bundle is part of the [Symfony Content Management Framework (CMF)](http://cmf.symfony.com/)
 and licensed under the [MIT License](LICENSE).
 
-The SeoBundle will contain an `SeoContentAwareInterface` with a `SeoStuff` class as encapsulation for
+The SeoBundle will contain an `SeoAwareContentInterface` with a `SeoStuff` class as encapsulation for
 all the seo stuff. Content Documents which implement this interface will get some additional stuff to render:
 - canonicalUrl's will force a canonical Link or a redirect with the right status code
 - meta data can be set to the page's header

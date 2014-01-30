@@ -16,7 +16,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.2",
-        "symfony-cmf/core-bundle": "1.0.*"
+        "symfony-cmf/core-bundle": "1.0.*",
+        "sonata-project/seo-bundle":"dev-master"
     },
     "require-dev": {
         "symfony-cmf/testing": "1.1.*",
@@ -25,6 +26,7 @@
         "sonata-project/doctrine-phpcr-admin-bundle": "1.0.*",
         "symfony-cmf/routing-bundle": "1.1.*",
         "symfony/monolog-bundle": "2.2.*"
+
     },
     "suggest": {
         "symfony-cmf/menu-bundle": "Have editable menus for content",
