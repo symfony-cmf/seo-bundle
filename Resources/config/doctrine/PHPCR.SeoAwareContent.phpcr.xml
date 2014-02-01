@@ -1,0 +1,27 @@
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping
+        https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd"
+        >
+
+    <document
+            name="Cmf\SeoBundle\Document\PHPCR\SeoAwareContent"
+            >
+        <node name="node"/>
+        <nodename name="name"/>
+        <parent-document name="parent"/>
+        <id name="id">
+            <generator strategy="PARENT"/>
+        </id>
+        <field name="title" type="string"/>
+        <field name="body" type="string"/>
+        <field name="seoStuff" type="string" assoc="" nullable="true" />
+        <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="preFlush"/>
+            <lifecycle-callback type="prePersist" method="preFlush"/>
+            <lifecycle-callback type="postLoad" method="postLoad"/>
+        </lifecycle-callbacks>
+    </document>
+
+</doctrine-mapping>

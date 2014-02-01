@@ -105,14 +105,13 @@ class SeoStuff
 
     /**
      * @param string $originalUrlStrategy
-     * @throws \Symfony\Cmf\Bundle\ContentBundle\Exceptions\SeoAwareContentException
+     * @throws \Cmf\SeoBundle\Exceptions\SeoAwareContentException
+     * @todo manage a default value by config
      */
     public function setOriginalUrlStrategy($originalUrlStrategy)
     {
         if (!in_array($originalUrlStrategy, array('canonical', 'redirect'))) {
-            throw new SeoAwareContentException(
-                sprintf('The given url strategy does not match to the allowed ones: canonical/redirect', $originalUrlStrategy)
-            );
+            $this->originalUrlStrategy = 'canonical';
         }
         $this->originalUrlStrategy = $originalUrlStrategy;
     }
@@ -143,14 +142,13 @@ class SeoStuff
 
     /**
      * @param string $titleStrategy
-     * @throws \Symfony\Cmf\Bundle\ContentBundle\Exceptions\SeoAwareContentException
+     * @throws \Cmf\SeoBundle\Exceptions\SeoAwareContentException
+     * @todo manage a default value by config
      */
     public function setTitleStrategy($titleStrategy)
     {
-        if (!in_array($titleStrategy, array('prevent', 'append', 'replace'))) {
-            throw new SeoAwareContentException(
-              sprintf('The given title strategy %s does not match prevent, append or replace', $titleStrategy)
-            );
+        if (!in_array($titleStrategy, array('prepend', 'append', 'replace'))) {
+            $this->titleStrategy = 'prepend';
         }
         $this->titleStrategy = $titleStrategy;
     }
@@ -173,5 +171,17 @@ class SeoStuff
         return serialize($this);
     }
 
+    public function toArray()
+    {
+        return array(
+            'title'                 => $this->getTitle(),
+            'titleStrategy'         => $this->getTitleStrategy(),
+            'metaDescription'       => $this->getMetaDescription(),
+            'metaKeywords'          => $this->getMetaKeywords(),
+            'originalUrl'           => $this->getOriginalUrl(),
+            'originalUrlStrategy'   => $this->getOriginalUrlStrategy()
+        );
+
+    }
 }
  

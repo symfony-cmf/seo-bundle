@@ -1,0 +1,14 @@
+{% extends "::base.twig" %}
+
+{% block seo_head %}
+    {{ sonata_seo_title() }}
+    {{ sonata_seo_metadatas() }}
+    {{ sonata_seo_link_canonical() }}
+    {{ sonata_seo_lang_alternates() }}
+{% endblock %}
+
+{% block content -%}
+    <h1>{{ cmfMainContent.title }}</h1>
+
+    {{ cmfMainContent.body|raw }}
+{%- endblock %}
