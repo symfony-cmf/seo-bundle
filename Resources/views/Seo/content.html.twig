@@ -1,4 +1,4 @@
-{% extends "::base.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block seo_head %}
     {{ sonata_seo_title() }}
@@ -7,7 +7,7 @@
     {{ sonata_seo_lang_alternates() }}
 {% endblock %}
 
-{% block content -%}
+{% block body -%}
     <h1>{{ cmfMainContent.title }}</h1>
 
     {{ cmfMainContent.body|raw }}

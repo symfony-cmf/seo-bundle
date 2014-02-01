@@ -4,7 +4,8 @@ namespace Cmf\SeoBundle\Document\PHPCR;
 
 use Cmf\SeoBundle\Model\SeoAwareContentInterface;
 use Cmf\SeoBundle\Model\SeoStuff;
-use Symfony\Cmf\Bundle\ContentBundle\Model\StaticContent;
+use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
+use Symfony\Component\Routing\Route;
 
 /**
  * @todo create an own document instead of using the static content one
@@ -12,7 +13,9 @@ use Symfony\Cmf\Bundle\ContentBundle\Model\StaticContent;
  * Class SeoAwareContent
  * @package Cmf\SeoBundle\Doctrine\Phpcr
  */
-class SeoAwareContent extends StaticContent implements SeoAwareContentInterface {
+class SeoAwareContent implements
+    SeoAwareContentInterface,
+    RouteReferrersInterface {
 
     /**
      * Primary identifier, details depend on storage layer.
@@ -34,6 +37,18 @@ class SeoAwareContent extends StaticContent implements SeoAwareContentInterface 
      * @var string
      */
     protected $body;
+
+    /**
+     * @var SeoStuff
+     */
+    protected $seoStuff;
+
+    /**
+     * @var RouteObjectInterface[]
+     */
+    protected $routes;
+
+
 
     /**
      * Explicitly set the primary id, if the storage layer permits this.
@@ -84,12 +99,6 @@ class SeoAwareContent extends StaticContent implements SeoAwareContentInterface 
     {
         $this->body = $body;
     }
-
-
-    /**
-     * @var SeoStuff
-     */
-    protected $seoStuff;
 
     /**
      * Any content model can handle its seo properties. By implementing
@@ -179,5 +188,29 @@ class SeoAwareContent extends StaticContent implements SeoAwareContentInterface 
         foreach ($persistedData as $property => $value) {
             $this->seoStuff->{'set' . ucfirst($property)}($value);
         }
+    }
+
+    /**
+     * @param Route $route
+     */
+    public function addRoute($route)
+    {
+        $this->routes->add($route);
+    }
+
+    /**
+     * @param Route $route
+     */
+    public function removeRoute($route)
+    {
+        $this->routes->removeElement($route);
+    }
+
+    /**
+     * @return \Symfony\Component\Routing\Route[] Route instances that point to this content
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
     }
 }

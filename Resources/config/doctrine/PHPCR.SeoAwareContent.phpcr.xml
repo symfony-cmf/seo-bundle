@@ -7,6 +7,7 @@
 
     <document
             name="Cmf\SeoBundle\Document\PHPCR\SeoAwareContent"
+            referenceable="true"
             >
         <node name="node"/>
         <nodename name="name"/>
@@ -17,6 +18,9 @@
         <field name="title" type="string"/>
         <field name="body" type="string"/>
         <field name="seoStuff" type="string" assoc="" nullable="true" />
+        <referrers name="routes" referring-document="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route" referenced-by="content">
+            <cascade><cascade-persist /></cascade>
+        </referrers>
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="preFlush"/>
             <lifecycle-callback type="prePersist" method="preFlush"/>

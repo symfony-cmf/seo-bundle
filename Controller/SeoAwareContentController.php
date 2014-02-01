@@ -4,6 +4,7 @@ namespace Cmf\SeoBundle\Controller;
 
 use Cmf\SeoBundle\Model\SeoAwareContentInterface;
 use Cmf\SeoBundle\Model\SeoStuff;
+use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,7 +80,7 @@ class SeoAwareContentController extends  Controller
 
         //additional stuff for rendering Seo Stuff
         if ($contentDocument instanceof SeoAwareContentInterface ) {
-
+            $this->handleSeoStuff($contentDocument);
         }
 
         return $this->renderResponse($contentTemplate, $params);
@@ -122,13 +123,13 @@ class SeoAwareContentController extends  Controller
 
 
         //set the title based on the title strategy
-        $title = $this->createTitle($seoStuff);
+        $title = $this->createTitle($seoStuff, $seoPage->getTitle());
         $seoPage->setTitle($title);
-        $seoPage->setMeta('property', 'og:title', $title);
+        $seoPage->addMeta('property', 'og:title', $title);
 
-        $seoPage->setMeta('property', 'og:description', $seoStuff->getMetaDescription());
-        $seoPage->setMeta('name', 'description', $seoStuff->getMetaDescription());
-        $seoPage->setMeta('property', 'og:keys', $seoStuff->getMetaKeywords());
+        $seoPage->addMeta('property', 'og:description', $seoStuff->getMetaDescription());
+        $seoPage->addMeta('name', 'description', $seoStuff->getMetaDescription());
+        $seoPage->addMeta('property', 'og:keys', $seoStuff->getMetaKeywords());
     }
 
     /**
@@ -136,12 +137,12 @@ class SeoAwareContentController extends  Controller
      * configs in the seo configuration part
      *
      * @param \Cmf\SeoBundle\Model\SeoStuff $seoStuff
+     * @param null $configTitle
      * @internal param \Cmf\SeoBundle\Model\SeoAwareContentInterface $contentDocument
      * @return string
      */
-    protected function createTitle(SeoStuff $seoStuff)
+    protected function createTitle(SeoStuff $seoStuff, $configTitle = null)
     {
-        $configTitle = $this->container->get('sonata_seo.page.title');
         $contentTitle = $seoStuff->getTitle();
 
         switch ($seoStuff->getTitleStrategy()) {

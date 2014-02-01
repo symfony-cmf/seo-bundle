@@ -2,13 +2,11 @@
 
 namespace Cmf\SeoBundle\Admin;
 
-use Cmf\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\DoctrinePHPCRAdminBundle\Admin\Admin;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SeoAwareContentAdminController extends Admin{
 
@@ -20,7 +18,6 @@ class SeoAwareContentAdminController extends Admin{
 
     public function getNewInstance()
     {
-        /** @var $new SeoAwareContent */
         $new = parent::getNewInstance();
         if ($this->hasRequest()) {
             $parentId = $this->getRequest()->query->get('parent');
@@ -65,20 +62,6 @@ class SeoAwareContentAdminController extends Admin{
             ->add('title', 'doctrine_phpcr_string')
             ->add('name',  'doctrine_phpcr_nodename')
         ;
-    }
-
-    /**
-     * @param mixed $contentDocument
-     * @return mixed|void
-     * @todo set this stuff to the document and ad a route child list in there
-     */
-    public function prePersist($contentDocument)
-    {
-        $route = new Route();
-        $route->setParent($this->getModelManager()->find(null, '/cms/routes'));
-        $route->setName($contentDocument->getTitle());
-        $route->setContent($contentDocument);
-        $this->getModelManager()->create($route);
     }
 
     public function toString($object)
