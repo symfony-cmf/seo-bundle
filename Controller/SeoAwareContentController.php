@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SeoAwareContentController extends ContentController implements ContainerAwareInterface
 {
     /**
-     * @var ContainerAwareInterface
+     * @var ContainerInterface
      */
     protected $container;
 

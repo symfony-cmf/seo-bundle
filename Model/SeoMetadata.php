@@ -2,8 +2,6 @@
 
 namespace Cmf\SeoBundle\Model;
 
-use Cmf\SeoBundle\Exceptions\SeoAwareContentException;
-
 class SeoMetadata implements SeoMetadataInterface
 {
     /**

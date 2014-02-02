@@ -18,7 +18,15 @@ class SeoAwareContentAdminController extends StaticContentAdmin
     {
         $formMapper
             ->with('form.group_general')
-                ->add('parent', 'doctrine_phpcr_odm_tree', array('root_node' => $this->getRootPath(), 'choice_list' => array(), 'select_root_node' => true))
+                ->add(
+                    'parent',
+                    'doctrine_phpcr_odm_tree',
+                    array(
+                        'root_node' => $this->getRootPath(),
+                        'choice_list' => array(),
+                        'select_root_node' => true
+                        )
+                )
                 ->add('name', 'text')
                 ->add('title', 'text')
                 ->add('body', 'textarea', array('required' => false))
