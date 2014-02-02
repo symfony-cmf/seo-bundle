@@ -2,7 +2,7 @@
 
 namespace Cmf\SeoBundle\Controller;
 
-use Cmf\SeoBundle\Model\SeoAwareContentInterface;
+use Cmf\SeoBundle\Model\SeoAwareInterface;
 use Cmf\SeoBundle\Model\SeoMetadataInterface;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\ContentBundle\Controller\ContentController;
@@ -28,7 +28,7 @@ class SeoAwareContentController extends ContentController implements ContainerAw
     public function indexAction(Request $request, $contentDocument, $contentTemplate = null)
     {
        //additional check for rendering SeoMetadata
-        if ($contentDocument instanceof SeoAwareContentInterface) {
+        if ($contentDocument instanceof SeoAwareInterface) {
             $this->handleMetadata($contentDocument);
         }
         return parent::indexAction($request, $contentDocument, $contentTemplate);
@@ -38,9 +38,9 @@ class SeoAwareContentController extends ContentController implements ContainerAw
      * Method will do the "hard" work. Means: setting the seo meta data to the SonataPage
      * service, which offers the opportunity to render it in the template
      *
-     * @param SeoAwareContentInterface $contentDocument
+     * @param SeoAwareInterface $contentDocument
      */
-    protected function handleMetadata(SeoAwareContentInterface $contentDocument)
+    protected function handleMetadata(SeoAwareInterface $contentDocument)
     {
         /** @var SeoPage $seoPage */
         $seoPage = $this->container->get('sonata.seo.page');

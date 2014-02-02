@@ -2,7 +2,7 @@
 
 namespace Cmf\SeoBundle\Model;
 
-interface SeoAwareContentInterface
+interface SeoAwareInterface
 {
 
     /**

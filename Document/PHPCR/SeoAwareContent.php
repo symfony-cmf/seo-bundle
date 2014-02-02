@@ -2,20 +2,19 @@
 
 namespace Cmf\SeoBundle\Document\PHPCR;
 
-use Cmf\SeoBundle\Model\SeoAwareContentInterface;
+use Cmf\SeoBundle\Model\SeoAwareInterface;
 use Cmf\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
 use Symfony\Component\Routing\Route;
 
 /**
- * @todo create an own document instead of using the static content one
- *
  * Class SeoAwareContent
  * @package Cmf\SeoBundle\Doctrine\Phpcr
  */
 class SeoAwareContent implements
-    SeoAwareContentInterface,
-    RouteReferrersInterface {
+    SeoAwareInterface,
+    RouteReferrersInterface
+{
 
     /**
      * Primary identifier, details depend on storage layer.
