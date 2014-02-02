@@ -1,17 +1,18 @@
 # Symfony CMF Seo Bundle
 
-[![Build Status](https://secure.travis-ci.org/symfony-cmf/ContentBundle.png)](http://travis-ci.org/symfony-cmf/ContentBundle)
-[![Latest Stable Version](https://poser.pugx.org/symfony-cmf/content-bundle/version.png)](https://packagist.org/packages/symfony-cmf/content-bundle)
-[![Total Downloads](https://poser.pugx.org/symfony-cmf/content-bundle/d/total.png)](https://packagist.org/packages/symfony-cmf/content-bundle)
-
 This bundle is part of the [Symfony Content Management Framework (CMF)](http://cmf.symfony.com/)
 and licensed under the [MIT License](LICENSE).
 
-The SeoBundle will contain an `SeoAwareInterface` with a `SeoMetadata` class as encapsulation for
-all the seo stuff. Content Documents which implement this interface will get some additional stuff to render:
-- canonicalUrl's will force a canonical Link or a redirect with the right status code
-- meta data can be set to the page's header
-This work will be done by the SonataSeoBundle.
+This bundle enables contents to be shown in a SEO conform way. By the help of the SonataSeoBundle
+this bundle renders SEO-Metadata.
+For now it supports:
+- Title
+- Description
+- Keywords
+- duplicate content solutions
+
+The SeoBundle adds a `SeoAwareInterface` with a `SeoMetadata` class as encapsulation for
+all the seo stuff.
 
 ## Requirements
 
@@ -22,7 +23,7 @@ This work will be done by the SonataSeoBundle.
 
 For the install guide and reference, see:
 
-* [ContentBundle documentation](http://symfony.com/doc/master/cmf/bundles/content/index.html)
+* [SeoBundle documentation](http://symfony.com/doc/master/cmf/bundles/seo/index.html)
 
 See also:
 
