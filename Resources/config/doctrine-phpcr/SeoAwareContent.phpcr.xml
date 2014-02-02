@@ -6,7 +6,7 @@
         >
 
     <document
-            name="Cmf\SeoBundle\Document\PHPCR\SeoAwareContent"
+            name="Cmf\SeoBundle\Doctrine\Phpcr\SeoAwareContent"
             referenceable="true"
             >
         <node name="node"/>
@@ -27,5 +27,4 @@
             <lifecycle-callback type="postLoad" method="postLoad"/>
         </lifecycle-callbacks>
     </document>
-
 </doctrine-mapping>

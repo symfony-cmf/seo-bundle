@@ -8,7 +8,7 @@
         <service id="cmf_seo.admin" class="Cmf\SeoBundle\Admin\SeoAwareContentAdminController">
             <tag name="sonata.admin" manager_type="doctrine_phpcr" group="dashboard.cmf" label_catalogue="CmfSeoBundle" label="dashboard.label_seo_content" label_translator_strategy="sonata.admin.label.strategy.underscore" />
             <argument/>
-            <argument>Cmf\SeoBundle\Document\PHPCR\SeoAwareContent</argument>
+            <argument>Cmf\SeoBundle\Doctrine\Phpcr\SeoAwareContent</argument>
             <argument>SonataAdminBundle:CRUD</argument>
 
             <call method="setRouteBuilder">

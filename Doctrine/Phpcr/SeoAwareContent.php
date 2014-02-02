@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\SeoBundle\Document\PHPCR;
+namespace Cmf\SeoBundle\Doctrine\Phpcr;
 
 use Cmf\SeoBundle\Model\SeoAwareInterface;
 use Cmf\SeoBundle\Model\SeoMetadata;
