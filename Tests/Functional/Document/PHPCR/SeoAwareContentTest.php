@@ -12,7 +12,7 @@
 namespace Symfony\Cmf\Bundle\ContentBundle\Tests\Functional\Doctrine\Phpcr;
 
 use Cmf\SeoBundle\Document\PHPCR\SeoAwareContent;
-use Cmf\SeoBundle\Model\SeoStuff;
+use Cmf\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 class SeoAwareContentTest extends BaseTestCase
@@ -26,7 +26,7 @@ class SeoAwareContentTest extends BaseTestCase
 
     public function testSeoAwareContent()
     {
-        $seoStuff = new SeoStuff();
+        $seoStuff = new SeoMetadata();
         $seoStuff->setTitle('seo-test-title');
         $seoStuff->setMetaKeywords('key1, key2');
 

@@ -3,7 +3,7 @@
 namespace Cmf\SeoBundle\Document\PHPCR;
 
 use Cmf\SeoBundle\Model\SeoAwareContentInterface;
-use Cmf\SeoBundle\Model\SeoStuff;
+use Cmf\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
 use Symfony\Component\Routing\Route;
 
@@ -39,9 +39,9 @@ class SeoAwareContent implements
     protected $body;
 
     /**
-     * @var SeoStuff
+     * @var SeoMetadata
      */
-    protected $seoStuff;
+    protected $seoMetadata;
 
     /**
      * @var RouteObjectInterface[]
@@ -105,19 +105,19 @@ class SeoAwareContent implements
      * this interface a model has to return its class for all the seo properties
      * @todo find a better documentation
      *
-     * @return SeoStuff
+     * @return SeoMetadata
      */
-    public function getSeoStuff()
+    public function getSeoMetadata()
     {
-        return $this->seoStuff;
+        return $this->seoMetadata;
     }
 
     /**
-     * @param SeoStuff $seoStuff
+     * @param SeoMetadata $seoMetadata
      */
-    public function setSeoStuff($seoStuff)
+    public function setSeoMetadata($seoMetadata)
     {
-        $this->seoStuff = $seoStuff;
+        $this->seoMetadata= $seoMetadata;
     }
 
     /**
@@ -175,18 +175,18 @@ class SeoAwareContent implements
      */
     public function preFlush()
     {
-        $this->seoStuff = $this->seoStuff->toArray();
+        $this->seoMetadata = $this->seoMetadata->toArray();
     }
 
     /**
-     * wil set the information back to the seoStuff object to handle it easier
+     * wil set the information back to the seoMetadataMetadata object to handle it easier
      */
     public function postLoad()
     {
-        $persistedData = $this->seoStuff;
-        $this->seoStuff = new SeoStuff();
+        $persistedData = $this->seoMetadata;
+        $this->seoMetadata = new SeoMetadata();
         foreach ($persistedData as $property => $value) {
-            $this->seoStuff->{'set' . ucfirst($property)}($value);
+            $this->seoMetadata->{'set' . ucfirst($property)}($value);
         }
     }
 

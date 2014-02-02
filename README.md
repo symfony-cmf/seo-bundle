@@ -7,7 +7,7 @@
 This bundle is part of the [Symfony Content Management Framework (CMF)](http://cmf.symfony.com/)
 and licensed under the [MIT License](LICENSE).
 
-The SeoBundle will contain an `SeoAwareContentInterface` with a `SeoStuff` class as encapsulation for
+The SeoBundle will contain an `SeoAwareContentInterface` with a `SeoMetadata` class as encapsulation for
 all the seo stuff. Content Documents which implement this interface will get some additional stuff to render:
 - canonicalUrl's will force a canonical Link or a redirect with the right status code
 - meta data can be set to the page's header

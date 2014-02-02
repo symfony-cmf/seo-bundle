@@ -17,8 +17,8 @@
                 <argument type="service" id="service_container" />
             </call>
         </service>
-        <service id="cmf_seo.form.type.seo_stuff" class="Cmf\SeoBundle\Form\Type\SeoStuffType">
-            <tag name="form.type" alias="seo_stuff" />
+        <service id="cmf_seo.form.type.seo_metadata" class="Cmf\SeoBundle\Form\Type\SeoMetadataType">
+            <tag name="form.type" alias="seo_metadata" />
         </service>
     </services>
 

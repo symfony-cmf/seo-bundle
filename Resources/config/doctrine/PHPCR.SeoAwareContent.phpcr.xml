@@ -17,7 +17,7 @@
         </id>
         <field name="title" type="string"/>
         <field name="body" type="string"/>
-        <field name="seoStuff" type="string" assoc="" nullable="true" />
+        <field name="seoMetadata" type="string" assoc="" nullable="true" />
         <referrers name="routes" referring-document="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route" referenced-by="content">
             <cascade><cascade-persist /></cascade>
         </referrers>

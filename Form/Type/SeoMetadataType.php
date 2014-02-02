@@ -1,19 +1,13 @@
 <?php
-/**
- * User: maximilian
- * Date: 1/30/14
- * Time: 10:54 PM
- * 
- */
 
 namespace Cmf\SeoBundle\Form\Type;
-
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SeoStuffType extends AbstractType{
+class SeoMetadataType extends AbstractType
+{
 
     /**
      * {@inheritDoc}
@@ -21,7 +15,11 @@ class SeoStuffType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text')
-                ->add('titleStrategy', 'choice', array('choices' => array(
+                ->add(
+                    'titleStrategy',
+                    'choice',
+                    array(
+                    'choices' => array(
                         'prepend'   => 'form.label.title.prepend',
                         'append'    => 'form.label.title.append',
                         'replace'   => 'form.label.title.replace'
@@ -29,7 +27,12 @@ class SeoStuffType extends AbstractType{
                     )
                 )
                 ->add('originalUrl', 'text')
-                ->add('originalUrlStrategy', 'choice', array('choices' => array(
+                ->add(
+                    'originalUrlStrategy',
+                    'choice',
+                    array(
+                            'choices' =>
+                            array(
                             'canonical' => 'form.label.canonical.link',
                             'redirect' => 'form.label.redirect.link'
                         )
@@ -44,8 +47,9 @@ class SeoStuffType extends AbstractType{
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Cmf\SeoBundle\Model\SeoStuff',
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Cmf\SeoBundle\Model\SeoMetadata',
             )
         );
     }
@@ -55,6 +59,6 @@ class SeoStuffType extends AbstractType{
      */
     public function getName()
     {
-        return 'seo_stuff';
+        return 'seo_metadata';
     }
 }

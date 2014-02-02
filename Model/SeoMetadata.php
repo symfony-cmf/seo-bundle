@@ -4,7 +4,7 @@ namespace Cmf\SeoBundle\Model;
 
 use Cmf\SeoBundle\Exceptions\SeoAwareContentException;
 
-class SeoStuff
+class SeoMetadata implements SeoMetadataInterface
 {
     /**
      * This type describes the strategy of the way to solve duplicate content problems.
@@ -184,4 +184,3 @@ class SeoStuff
 
     }
 }
- 

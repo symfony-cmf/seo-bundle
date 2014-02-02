@@ -10,8 +10,7 @@ interface SeoAwareContentInterface
      * this interface a model has to return its class for all the seo properties
      * @todo find a better documentation
      *
-     * @return SeoStuff
+     * @return SeoMetadata
      */
-    public function getSeoStuff();
+    public function getSeoMetadata();
 }
- 

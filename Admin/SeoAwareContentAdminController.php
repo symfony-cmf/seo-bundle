@@ -51,7 +51,7 @@ class SeoAwareContentAdminController extends Admin{
                 ->add('title', 'text')
                 ->add('body', 'textarea', array('required' => false))
             ->with('form.group_seo')
-                ->add('seoStuff', 'seo_stuff')
+                ->add('seoMetadata', 'seo_metadata')
             ->end()
         ;
     }
