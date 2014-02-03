@@ -31,6 +31,7 @@ class SeoAwareContentController extends ContentController implements ContainerAw
         if ($contentDocument instanceof SeoAwareInterface) {
             $this->handleMetadata($contentDocument);
         }
+
         return parent::indexAction($request, $contentDocument, $contentTemplate);
     }
 
@@ -47,7 +48,6 @@ class SeoAwareContentController extends ContentController implements ContainerAw
 
         /** @var SeoMetadataInterface $seoMetadata */
         $seoMetadata = $contentDocument->getSeoMetadata();
-
 
         //set the title based on the title strategy
         $title = $this->createTitle($seoMetadata, $seoPage->getTitle());
@@ -66,8 +66,8 @@ class SeoAwareContentController extends ContentController implements ContainerAw
      * based on the title strategy this method will create the title from the given
      * configs in the seo configuration part
      *
-     * @param \Cmf\SeoBundle\Model\SeoMetadata|\Cmf\SeoBundle\Model\SeoMetadataInterface $seoMetadata
-     * @param null $configTitle
+     * @param  \Cmf\SeoBundle\Model\SeoMetadata|\Cmf\SeoBundle\Model\SeoMetadataInterface $seoMetadata
+     * @param  null                                                                       $configTitle
      * @return string
      */
     protected function createTitle(SeoMetadataInterface $seoMetadata, $configTitle = null)

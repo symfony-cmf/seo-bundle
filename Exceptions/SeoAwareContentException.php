@@ -6,4 +6,3 @@ class SeoAwareContentException extends \RuntimeException
 {
 
 }
- 

@@ -102,7 +102,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @param string $originalUrlStrategy
+     * @param  string                                             $originalUrlStrategy
      * @throws \Cmf\SeoBundle\Exceptions\SeoAwareContentException
      * @todo manage a default value by config
      */
@@ -139,7 +139,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @param string $titleStrategy
+     * @param  string                                             $titleStrategy
      * @throws \Cmf\SeoBundle\Exceptions\SeoAwareContentException
      * @todo manage a default value by config
      */

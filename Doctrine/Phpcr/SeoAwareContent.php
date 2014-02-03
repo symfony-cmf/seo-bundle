@@ -47,8 +47,6 @@ class SeoAwareContent implements
      */
     protected $routes;
 
-
-
     /**
      * Explicitly set the primary id, if the storage layer permits this.
      *
