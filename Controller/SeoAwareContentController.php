@@ -1,9 +1,9 @@
 <?php
 
-namespace Cmf\SeoBundle\Controller;
+namespace Cmf\Bundle\SeoBundleController;
 
-use Cmf\SeoBundle\Model\SeoAwareInterface;
-use Cmf\SeoBundle\Model\SeoMetadataInterface;
+use Cmf\Bundle\SeoBundleModel\SeoAwareInterface;
+use Cmf\Bundle\SeoBundleModel\SeoMetadataInterface;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\ContentBundle\Controller\ContentController;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -66,7 +66,7 @@ class SeoAwareContentController extends ContentController implements ContainerAw
      * based on the title strategy this method will create the title from the given
      * configs in the seo configuration part
      *
-     * @param  \Cmf\SeoBundle\Model\SeoMetadata|\Cmf\SeoBundle\Model\SeoMetadataInterface $seoMetadata
+     * @param  \Cmf\Bundle\SeoBundleModel\SeoMetadata|\Cmf\Bundle\SeoBundleModel\SeoMetadataInterface $seoMetadata
      * @param  null                                                                       $configTitle
      * @return string
      */

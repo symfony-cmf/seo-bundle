@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\SeoBundle\Model;
+namespace Cmf\Bundle\SeoBundleModel;
 
 interface SeoAwareInterface
 {

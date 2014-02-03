@@ -1,15 +1,15 @@
 <?php
 
-namespace Cmf\SeoBundle\Doctrine\Phpcr;
+namespace Cmf\Bundle\SeoBundleDoctrine\Phpcr;
 
-use Cmf\SeoBundle\Model\SeoAwareInterface;
-use Cmf\SeoBundle\Model\SeoMetadata;
+use Cmf\Bundle\SeoBundleModel\SeoAwareInterface;
+use Cmf\Bundle\SeoBundleModel\SeoMetadata;
 use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
 use Symfony\Component\Routing\Route;
 
 /**
  * Class SeoAwareContent
- * @package Cmf\SeoBundle\Doctrine\Phpcr
+ * @package Cmf\Bundle\SeoBundleDoctrine\Phpcr
  */
 class SeoAwareContent implements
     SeoAwareInterface,

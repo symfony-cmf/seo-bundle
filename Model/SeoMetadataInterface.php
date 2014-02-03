@@ -1,12 +1,12 @@
 <?php
 
-namespace Cmf\SeoBundle\Model;
+namespace Cmf\Bundle\SeoBundleModel;
 
 /**
  * @todo maybe i will only need the getter for the interface
  *
  * Interface SeoMetadataInterface
- * @package Cmf\SeoBundle\Model
+ * @package Cmf\Bundle\SeoBundleModel
  */
 interface SeoMetadataInterface
 {

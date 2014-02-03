@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\SeoBundle;
+namespace Cmf\Bundle\SeoBundle;
 
 use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,7 +14,7 @@ class CmfSeoBundle extends Bundle
             $container->addCompilerPass(
                 DoctrinePhpcrMappingsPass::createXmlMappingDriver(
                     array(
-                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Cmf\SeoBundle\Doctrine\Phpcr',
+                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Cmf\Bundle\SeoBundleDoctrine\Phpcr',
                     )
                 )
             );

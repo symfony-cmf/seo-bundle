@@ -6,7 +6,7 @@
         >
 
     <document
-            name="Cmf\SeoBundle\Doctrine\Phpcr\SeoAwareContent"
+            name="Cmf\Bundle\SeoBundleDoctrine\Phpcr\SeoAwareContent"
             referenceable="true"
             >
         <node name="node"/>

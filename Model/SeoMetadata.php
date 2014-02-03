@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\SeoBundle\Model;
+namespace Cmf\Bundle\SeoBundleModel;
 
 class SeoMetadata implements SeoMetadataInterface
 {
@@ -103,7 +103,7 @@ class SeoMetadata implements SeoMetadataInterface
 
     /**
      * @param  string                                             $originalUrlStrategy
-     * @throws \Cmf\SeoBundle\Exceptions\SeoAwareContentException
+     * @throws \Cmf\Bundle\SeoBundleExceptions\SeoAwareContentException
      * @todo manage a default value by config
      */
     public function setOriginalUrlStrategy($originalUrlStrategy)
@@ -140,7 +140,7 @@ class SeoMetadata implements SeoMetadataInterface
 
     /**
      * @param  string                                             $titleStrategy
-     * @throws \Cmf\SeoBundle\Exceptions\SeoAwareContentException
+     * @throws \Cmf\Bundle\SeoBundleExceptions\SeoAwareContentException
      * @todo manage a default value by config
      */
     public function setTitleStrategy($titleStrategy)
