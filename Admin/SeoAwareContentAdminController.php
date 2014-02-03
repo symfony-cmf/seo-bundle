@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\Bundle\SeoBundleAdmin;
+namespace Cmf\Bundle\SeoBundle\Admin;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Cmf\Bundle\ContentBundle\Admin\StaticContentAdmin;

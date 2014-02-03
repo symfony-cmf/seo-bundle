@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\Bundle\SeoBundleTests\Controller;
+namespace Cmf\Bundle\SeoBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

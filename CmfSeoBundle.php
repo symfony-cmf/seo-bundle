@@ -14,7 +14,7 @@ class CmfSeoBundle extends Bundle
             $container->addCompilerPass(
                 DoctrinePhpcrMappingsPass::createXmlMappingDriver(
                     array(
-                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Cmf\Bundle\SeoBundleDoctrine\Phpcr',
+                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Cmf\Bundle\SeoBundle\Doctrine\Phpcr',
                     )
                 )
             );

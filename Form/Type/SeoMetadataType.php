@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\Bundle\SeoBundleForm\Type;
+namespace Cmf\Bundle\SeoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -49,7 +49,7 @@ class SeoMetadataType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Cmf\Bundle\SeoBundleModel\SeoMetadata',
+                'data_class' => 'Cmf\Bundle\SeoBundle\Model\SeoMetadata',
             )
         );
     }

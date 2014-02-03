@@ -9,7 +9,7 @@
     </parameters>
 
     <services>
-        <service id="cmf_seo.controller" class="Cmf\Bundle\SeoBundleController\SeoAwareContentController">
+        <service id="cmf_seo.controller" class="Cmf\Bundle\SeoBundle\Controller\SeoAwareContentController">
             <argument type="service" id="templating" />
             <argument>%cmf_seo.default_template%</argument>
             <argument type="service" id="fos_rest.view_handler" on-invalid="ignore"/>
@@ -17,7 +17,7 @@
                 <argument type="service" id="service_container" />
             </call>
         </service>
-        <service id="cmf_seo.form.type.seo_metadata" class="Cmf\Bundle\SeoBundleForm\Type\SeoMetadataType">
+        <service id="cmf_seo.form.type.seo_metadata" class="Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <tag name="form.type" alias="seo_metadata" />
         </service>
     </services>
