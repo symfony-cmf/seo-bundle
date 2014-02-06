@@ -49,17 +49,29 @@ class SeoAwareContentController extends ContentController implements ContainerAw
         /** @var SeoMetadataInterface $seoMetadata */
         $seoMetadata = $contentDocument->getSeoMetadata();
 
-        //set the title based on the title strategy
-        $title = $this->createTitle($seoMetadata, $seoPage->getTitle());
-        $seoPage->setTitle($title);
-        $seoPage->addMeta('property', 'title', $title);
-        //todo we can add the configured description too
-        $seoPage->addMeta('name', 'description', $seoMetadata->getMetaDescription());
-        //todo we can add the configured keyword by ", " too
-        $seoPage->addMeta('property', 'keys', $seoMetadata->getMetaKeywords());
-        if ($seoMetadata->getOriginalUrlStrategy() == 'canonical') {
+        if ($this->container->getParameter('cmf_seo.title')) {
+            $title = $this->createTitle($seoMetadata);
+            $seoPage->setTitle($title);
+            $seoPage->addMeta('property', 'title', $title);
+        }
+
+
+        $seoPage->addMeta(
+            'name',
+            'description',
+            $seoMetadata->getMetaDescription() . ' '.$this->container->getParameter('cmf_seo.description')
+        );
+
+        $seoPage->addMeta(
+            'property',
+            'keywords',
+            $seoMetadata->getMetaKeywords() . ', '.$this->container->getParameter('cmf_seo.keys')
+        );
+        if ($this->container->getParameter('cmf_seo.content.strategy') == 'canonical') {
             $seoPage->setLinkCanonical($seoMetadata->getOriginalUrl());
         }
+
+        //todo do a redirect else, or let it be a redirect doc
     }
 
     /**
@@ -67,22 +79,23 @@ class SeoAwareContentController extends ContentController implements ContainerAw
      * configs in the seo configuration part
      *
      * @param  \Cmf\SeoBundle\Model\SeoMetadata|\Cmf\SeoBundle\Model\SeoMetadataInterface $seoMetadata
-     * @param  null                                                                       $configTitle
      * @return string
      */
-    protected function createTitle(SeoMetadataInterface $seoMetadata, $configTitle = null)
+    protected function createTitle(SeoMetadataInterface $seoMetadata)
     {
         $contentTitle = $seoMetadata->getTitle();
+        $defaultTitle = $this->container->getParameter('cmf_seo.title.default');
+        $bondBy = $this->container->getParameter('cmf_seo.title.bond_by');
 
-        switch ($seoMetadata->getTitleStrategy()) {
+        switch ($this->container->getParameter('cmf_seo.title.strategy')) {
             case 'prepend':
-                return $contentTitle. ' - '.$configTitle;
+                return $contentTitle.$bondBy.$defaultTitle;
             case 'append':
-                return $configTitle . ' - ' . $contentTitle;
+                return $defaultTitle .$bondBy. $contentTitle;
             case 'replace':
                 return $contentTitle;
             default:
-                return $configTitle;
+                return $defaultTitle;
         }
     }
 

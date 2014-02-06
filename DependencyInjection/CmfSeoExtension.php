@@ -37,15 +37,9 @@ class CmfSeoExtension extends Extension
             $container->setParameter($this->getAlias().'.keys', $config['keys']);
         }
 
-        //load the values for the title setting
-        if ($config['title']['enabled']) {
-            $this->loadTitle($config['title'], $loader, $container);
-        }
+        $this->loadTitle($config['title'], $loader, $container);
 
-        if ($config['content']['enabled']) {
-            $this->loadContent($config['content'], $loader, $container);
-        }
-
+        $this->loadContent($config['content'], $loader, $container);
     }
 
     private function loadTitle($title, $loader, ContainerBuilder $container)
@@ -53,7 +47,7 @@ class CmfSeoExtension extends Extension
         $container->setParameter($this->getAlias().'.title', true);
 
         foreach ($title as $key => $value) {
-            $container->setParameter($this->getAlias().'.'.$key, $value);
+            $container->setParameter($this->getAlias().'.title.'.$key, $value);
         }
     }
 
@@ -62,7 +56,7 @@ class CmfSeoExtension extends Extension
         $container->setParameter($this->getAlias().'.content', true);
 
         foreach ($content as $key => $value) {
-            $container->setParameter($this->getAlias().'.'.$key, $value);
+            $container->setParameter($this->getAlias().'.content.'.$key, $value);
         }
     }
 }
