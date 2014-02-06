@@ -19,21 +19,23 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cmf_seo');
 
-
-        $rootNode
+        $treeBuilder->root('cmf_seo')
             ->children()
                 ->arrayNode('title')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
                     ->children()
                         ->scalarNode('strategy')->defaultValue('prepend')->end()
-                        ->scalarNode('default')->end()
-                        ->scalarNode('bond_by')->defaultValue(' - ')->end()
+                        ->scalarNode('default')->defaultValue('')->end()
+                        ->scalarNode('bond_by')->defaultValue('')->end()
                     ->end()
                 ->end()
-                ->scalarNode('description')->end()
-                ->scalarNode('keys')->end()
+                ->scalarNode('description')->defaultValue('')->end()
+                ->scalarNode('keys')->defaultValue('')->end()
                 ->arrayNode('content')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
                     ->children()
                         ->scalarNode('strategy')->defaultValue('redirect')->end()
                     ->end()

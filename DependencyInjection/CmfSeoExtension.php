@@ -25,5 +25,44 @@ class CmfSeoExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('admin.xml');
+
+
+        //take the setting for the description
+        if ($config['description']) {
+            $container->setParameter($this->getAlias().'.description', $config['description']);
+        }
+
+        //take the setting for keys
+        if ($config['keys']) {
+            $container->setParameter($this->getAlias().'.keys', $config['keys']);
+        }
+
+        //load the values for the title setting
+        if ($config['title']['enabled']) {
+            $this->loadTitle($config['title'], $loader, $container);
+        }
+
+        if ($config['content']['enabled']) {
+            $this->loadContent($config['content'], $loader, $container);
+        }
+
+    }
+
+    private function loadTitle($title, $loader, ContainerBuilder $container)
+    {
+        $container->setParameter($this->getAlias().'.title', true);
+
+        foreach ($title as $key => $value) {
+            $container->setParameter($this->getAlias().'.'.$key, $value);
+        }
+    }
+
+    private function loadContent($content, $loader, ContainerBuilder $container)
+    {
+        $container->setParameter($this->getAlias().'.content', true);
+
+        foreach ($content as $key => $value) {
+            $container->setParameter($this->getAlias().'.'.$key, $value);
+        }
     }
 }
