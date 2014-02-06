@@ -38,7 +38,8 @@
     },
     "autoload":{
         "psr-0":{
-            "Symfony\\Cmf\\Bundle\\ContentBundle": ""
+            "Symfony\\Cmf\\Bundle\\ContentBundle": "",
+            "Cmf\\Bundle\\SeoBundle":"src/Cmf/"
         }
     },
     "target-dir": "Symfony/Cmf/Bundle/SeoBundle",

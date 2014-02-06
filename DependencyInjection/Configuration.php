@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\Bundle\SeoBundle\DependencyInjection;
+namespace Cmf\SeoBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -21,9 +21,26 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('cmf_seo');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+
+        $rootNode
+            ->children()
+                ->arrayNode('title')
+                    ->children()
+                        ->scalarNode('strategy')->defaultValue('prepend')->end()
+                        ->scalarNode('default')->end()
+                        ->scalarNode('bond_by')->defaultValue(' - ')->end()
+                    ->end()
+                ->end()
+                ->scalarNode('description')->end()
+                ->scalarNode('keys')->end()
+                ->arrayNode('content')
+                    ->children()
+                        ->scalarNode('strategy')->defaultValue('redirect')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
         return $treeBuilder;
     }
 }

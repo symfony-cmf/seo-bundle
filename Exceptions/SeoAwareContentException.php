@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\Bundle\SeoBundle\Exceptions;
+namespace Cmf\SeoBundle\Exceptions;
 
 class SeoAwareContentException extends \RuntimeException
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\Bundle\SeoBundle\DependencyInjection;
+namespace Cmf\SeoBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
