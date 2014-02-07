@@ -28,6 +28,12 @@ class SeoAwareContentController extends ContentController implements SeoAwareCon
         if ($contentDocument instanceof SeoAwareInterface) {
             $this->seoPage->setSeoMetadata($contentDocument->getSeoMetadata());
             $this->seoPage->setMetadataValues();
+
+            //have a look if the strategy is redirect and if there is a route to redirect to
+            if ($url = $this->seoPage->getRedirect()) {
+                print("should be redirected to $url");
+                exit;
+            }
         }
 
         return parent::indexAction($request, $contentDocument, $contentTemplate);

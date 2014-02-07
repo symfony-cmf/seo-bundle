@@ -33,6 +33,11 @@ class CmfSeoPage implements
      */
     private $container;
 
+    /**
+     * @var bool | false
+     */
+    private $redirect = false;
+
     public function __construct(SeoPage $sonataPage)
     {
         $this->sonataPage = $sonataPage;
@@ -71,11 +76,14 @@ class CmfSeoPage implements
         );
 
         //if the strategy for duplicate content is canonical, the service will trigger an canonical link
-        if ($this->container->getParameter('cmf_seo.content.strategy') == 'canonical') {
-            $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
+        switch ($this->container->getParameter('cmf_seo.content.strategy')) {
+            case 'canonical':
+                $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
+                break;
+            case 'redirect':
+                $this->setRedirect($this->seoMetadata->getOriginalUrl());
+                break;
         }
-
-        //todo do a redirect else, or let it be a redirect doc
     }
 
 
@@ -110,5 +118,22 @@ class CmfSeoPage implements
     {
         $this->container = $container;
     }
-}
 
+    /**
+     *
+     * @param $redirect
+     */
+    private function setRedirect($redirect)
+    {
+        $this->redirect = $redirect;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRedirect()
+    {
+        return $this->redirect;
+    }
+
+}

@@ -18,4 +18,12 @@ interface CmfSeoPageInterface
      *
      */
     public function setMetadataValues();
+
+    /**
+     * will return false if the strategy for duplicate content is not redirect, or it is
+     * but there is not redirect route in the meta data
+     *
+     * @return bool | string
+     */
+    public function getRedirect();
 }
