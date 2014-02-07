@@ -183,7 +183,9 @@ class SeoAwareContent implements
         $persistedData = $this->seoMetadata;
         $this->seoMetadata = new SeoMetadata();
         foreach ($persistedData as $property => $value) {
-            $this->seoMetadata->{'set' . ucfirst($property)}($value);
+            if (method_exists($this->seoMetadata, 'set' . ucfirst($property))) {
+                $this->seoMetadata->{'set' . ucfirst($property)}($value);
+            }
         }
     }
 

@@ -39,7 +39,7 @@ interface SeoMetadataInterface
     public function getMetaKeywords();
 
     /**
-     * Setter for the originalUrlStrategy
+     * Setter for the originalUrl
      *
      * @param string $originalUrl
      */
@@ -48,26 +48,11 @@ interface SeoMetadataInterface
     /**
      * Getter for the original url, means the url where to redirect
      * or setting href property of the canonical link. This depends on the value
-     * of the originalUrlStrategy.
+     * of the originalUrl strategy.
      *
      * @return string
      */
     public function getOriginalUrl();
-
-    /**
-     * Setter for url strategy
-     *
-     * @param string $originalUrlStrategy
-     * @todo manage a default value by config
-     */
-    public function setOriginalUrlStrategy($originalUrlStrategy);
-
-    /**
-     * Getter for the url strategy
-     *
-     * @return string
-     */
-    public function getOriginalUrlStrategy();
 
     /**
      * Setter for the seo title
@@ -83,20 +68,6 @@ interface SeoMetadataInterface
      */
     public function getTitle();
 
-    /**
-     * Setter for the title strategy
-     *
-     * @param string $titleStrategy
-     * @todo manage a default value by config
-     */
-    public function setTitleStrategy($titleStrategy);
-
-    /**
-     * Getter for the title strategy
-     *
-     * @return string
-     */
-    public function getTitleStrategy();
 
     /**
      * for the process of serialization for storing the seo metadata we
