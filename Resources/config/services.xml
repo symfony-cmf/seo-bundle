@@ -13,6 +13,16 @@
             <argument type="service" id="templating" />
             <argument>%cmf_seo.default_template%</argument>
             <argument type="service" id="fos_rest.view_handler" on-invalid="ignore"/>
+            <call method="setSeoPage" >
+                <argument type="service" id="cmf_seo.page"/>
+            </call>
+
+        </service>
+        <service id="cmf_seo.form.type.seo_metadata" class="Cmf\SeoBundle\Form\Type\SeoMetadataType">
+            <tag name="form.type" alias="seo_metadata" />
+        </service>
+        <service id="cmf_seo.page" class="Cmf\SeoBundle\Services\CmfSeoPage">
+            <argument type="service" id="sonata.seo.page" />
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
