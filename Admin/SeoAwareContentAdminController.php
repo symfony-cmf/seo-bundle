@@ -31,7 +31,7 @@ class SeoAwareContentAdminController extends StaticContentAdmin
                 ->add('title', 'text')
                 ->add('body', 'textarea', array('required' => false))
             ->with('form.group_seo')
-                ->add('seoMetadata', 'seo_metadata')
+                ->add('seoMetadata', 'seo_metadata', array('label'=>false))
             ->end()
         ;
     }
