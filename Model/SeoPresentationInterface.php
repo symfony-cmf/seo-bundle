@@ -1,10 +1,9 @@
 <?php
 
-namespace Cmf\SeoBundle\Services;
+namespace Cmf\SeoBundle\Model;
 
-use Cmf\SeoBundle\Model\SeoMetadataInterface;
 
-interface CmfSeoPageInterface
+interface SeoPresentationInterface
 {
     /**
      * simple setter for the seo meta data to the service

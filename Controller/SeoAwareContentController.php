@@ -3,7 +3,7 @@
 namespace Cmf\SeoBundle\Controller;
 
 use Cmf\SeoBundle\Model\SeoAwareInterface;
-use Cmf\SeoBundle\Services\CmfSeoPageInterface;
+use Cmf\SeoBundle\Model\SeoPresentationInterface;
 use Symfony\Cmf\Bundle\ContentBundle\Controller\ContentController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SeoAwareContentController extends ContentController implements SeoAwareControllerInterface
 {
     /**
-     * @var CmfSeoPageInterface
+     * @var SeoPresentationInterface
      */
     protected $seoPage;
 
@@ -42,7 +42,7 @@ class SeoAwareContentController extends ContentController implements SeoAwareCon
     /**
      * {@inheritDoc}
      */
-    public function setSeoPage(CmfSeoPageInterface $seoPage)
+    public function setSeoPage(SeoPresentationInterface $seoPage)
     {
         $this->seoPage = $seoPage;
     }

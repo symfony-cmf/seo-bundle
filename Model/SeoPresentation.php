@@ -6,16 +6,14 @@
  * 
  */
 
-namespace Cmf\SeoBundle\Services;
+namespace Cmf\SeoBundle\Model;
 
-
-use Cmf\SeoBundle\Model\SeoMetadataInterface;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class CmfSeoPage implements
-    CmfSeoPageInterface,
+class SeoPresentation implements
+    SeoPresentationInterface,
     ContainerAwareInterface
 {
     /**

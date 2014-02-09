@@ -21,7 +21,7 @@
         <service id="cmf_seo.form.type.seo_metadata" class="Cmf\SeoBundle\Form\Type\SeoMetadataType">
             <tag name="form.type" alias="seo_metadata" />
         </service>
-        <service id="cmf_seo.page" class="Cmf\SeoBundle\Services\CmfSeoPage">
+        <service id="cmf_seo.page" class="Cmf\SeoBundle\Model\SeoPresentation">
             <argument type="service" id="sonata.seo.page" />
             <call method="setContainer">
                 <argument type="service" id="service_container" />
