@@ -15,8 +15,7 @@
     "prefer-stable": false,
     "require": {
         "php": ">=5.3.3",
-        "symfony/framework-bundle": "~2.2",
-        "symfony-cmf/content-bundle": "1.1.*@dev",
+        "symfony-cmf/content-bundle": "dev-master",
         "sonata-project/seo-bundle":"dev-master"
     },
     "require-dev": {
@@ -40,7 +39,7 @@
     "target-dir": "Symfony/Cmf/Bundle/SeoBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1-dev"
+            "dev-master": "dev"
         }
     }
 }
