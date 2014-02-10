@@ -18,7 +18,7 @@ class AppKernel extends TestKernel
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new \Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
             new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
-            new \Cmf\SeoBundle\\CmfSeoBundle(),
+            new \Symfony\Cmf\Bundle\SeoBundle\\CmfSeoBundle(),
         ));
     }
 

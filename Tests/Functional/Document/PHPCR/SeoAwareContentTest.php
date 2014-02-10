@@ -11,8 +11,8 @@
 
 namespace Symfony\Cmf\Bundle\ContentBundle\Tests\Functional\Doctrine\Phpcr;
 
-use Cmf\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
-use Cmf\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 class SeoAwareContentTest extends BaseTestCase

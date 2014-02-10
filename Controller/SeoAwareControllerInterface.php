@@ -6,10 +6,10 @@
  * 
  */
 
-namespace Cmf\SeoBundle\Controller;
+namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
 
-use Cmf\SeoBundle\Model\SeoPresentationInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
 
 interface SeoAwareControllerInterface
 {

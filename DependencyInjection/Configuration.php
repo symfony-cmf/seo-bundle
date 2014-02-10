@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmf\SeoBundle\DependencyInjection;
+namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

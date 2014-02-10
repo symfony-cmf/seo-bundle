@@ -1,9 +1,9 @@
 <?php
 
-namespace Cmf\SeoBundle\Controller;
+namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
-use Cmf\SeoBundle\Model\SeoAwareInterface;
-use Cmf\SeoBundle\Model\SeoPresentationInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
 use Symfony\Cmf\Bundle\ContentBundle\Controller\ContentController;
 use Symfony\Component\HttpFoundation\Request;
 

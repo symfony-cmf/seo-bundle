@@ -6,7 +6,7 @@
  * 
  */
 
-namespace Cmf\SeoBundle\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;

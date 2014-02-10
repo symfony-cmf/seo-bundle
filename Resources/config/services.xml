@@ -9,7 +9,7 @@
     </parameters>
 
     <services>
-        <service id="cmf_seo.controller" class="Cmf\SeoBundle\Controller\SeoAwareContentController">
+        <service id="cmf_seo.controller" class="Symfony\Cmf\Bundle\SeoBundle\Controller\SeoAwareContentController">
             <argument type="service" id="templating" />
             <argument>%cmf_seo.default_template%</argument>
             <argument type="service" id="fos_rest.view_handler" on-invalid="ignore"/>
@@ -18,16 +18,16 @@
             </call>
 
         </service>
-        <service id="cmf_seo.form.type.seo_metadata" class="Cmf\SeoBundle\Form\Type\SeoMetadataType">
+        <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <tag name="form.type" alias="seo_metadata" />
         </service>
-        <service id="cmf_seo.page" class="Cmf\SeoBundle\Model\SeoPresentation">
+        <service id="cmf_seo.page" class="Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation">
             <argument type="service" id="sonata.seo.page" />
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
         </service>
-        <service id="cmf_seo.form.type.seo_metadata" class="Cmf\SeoBundle\Form\Type\SeoMetadataType">
+        <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <tag name="form.type" alias="seo_metadata" />
         </service>
     </services>
