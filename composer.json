@@ -1,16 +1,5 @@
 {
-    "name": "symfony-cmf/SeoBundle",
-    "type": "symfony-bundle",
-    "description": "Symfony CMF SEO Bundle",
-    "keywords": ["Symfony CMF"],
-    "homepage": "http://cmf.symfony.com",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Symfony CMF Community",
-            "homepage": "https://github.com/symfony-cmf/SeoBundle/contributors"
-        }
-    ],
+    "name": "electricmaxxx/SeoBundle",
     "minimum-stability": "dev",
     "prefer-stable": false,
     "require": {
