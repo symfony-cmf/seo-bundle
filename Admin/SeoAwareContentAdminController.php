@@ -8,7 +8,7 @@ use Symfony\Cmf\Bundle\ContentBundle\Admin\StaticContentAdmin;
 class SeoAwareContentAdminController extends StaticContentAdmin
 {
 
-    protected $translationDomain = 'CmfSeoBundle';
+    protected $translationDomain = 'SeoBundle';
 
     protected $baseRouteName = 'cmf_seo';
 
