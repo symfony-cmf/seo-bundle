@@ -2,6 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
+use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
@@ -13,7 +14,8 @@ use Symfony\Component\Routing\Route;
  */
 class SeoAwareContent implements
     SeoAwareInterface,
-    RouteReferrersInterface
+    RouteReferrersInterface,
+    TranslatableInterface
 {
 
     /**
@@ -26,6 +28,11 @@ class SeoAwareContent implements
     protected $parent;
 
     protected $name;
+
+    /**
+     * @var string
+     */
+    private $locale;
 
     /**
      * @var string
@@ -211,5 +218,24 @@ class SeoAwareContent implements
     public function getRoutes()
     {
         return $this->routes;
+    }
+
+
+    /**
+     * @return string|boolean The locale of this model or false if
+     *      translations are disabled in this project.
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string|boolean $locale The local for this model, or false if
+     *      translations are disabled in this project.
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

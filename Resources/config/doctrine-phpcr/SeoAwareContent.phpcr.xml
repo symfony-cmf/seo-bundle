@@ -8,15 +8,17 @@
     <document
             name="Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent"
             referenceable="true"
+            translator="attribute"
             >
         <node name="node"/>
+        <locale name="locale" />
         <nodename name="name"/>
         <parent-document name="parent"/>
         <id name="id">
             <generator strategy="PARENT"/>
         </id>
-        <field name="title" type="string"/>
-        <field name="body" type="string"/>
+        <field name="title" type="string" translated="true"/>
+        <field name="body" type="string"  translated="true"/>
         <field name="seoMetadata" type="string" assoc="" nullable="true" />
         <referrers name="routes" referring-document="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route" referenced-by="content">
             <cascade><cascade-persist /></cascade>
