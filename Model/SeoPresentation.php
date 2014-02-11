@@ -3,7 +3,7 @@
  * User: maximilian
  * Date: 2/7/14
  * Time: 11:18 PM
- * 
+ *
  */
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
@@ -49,7 +49,6 @@ class SeoPresentation implements
         $this->seoMetadata = $seoMetadata;
     }
 
-
     public function setMetaDataValues()
     {
         //based on the title strategy, the helper method will set the complete title
@@ -83,7 +82,6 @@ class SeoPresentation implements
                 break;
         }
     }
-
 
     /**
      * based on the title strategy this method will create the title from the given

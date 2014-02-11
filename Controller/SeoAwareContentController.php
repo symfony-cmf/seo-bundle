@@ -47,4 +47,3 @@ class SeoAwareContentController extends ContentController implements SeoAwareCon
         $this->seoPage = $seoPage;
     }
 }
-

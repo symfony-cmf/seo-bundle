@@ -68,7 +68,6 @@ interface SeoMetadataInterface
      */
     public function getTitle();
 
-
     /**
      * for the process of serialization for storing the seo metadata we
      * need to get all properties in an array

@@ -26,7 +26,6 @@ class CmfSeoExtension extends Extension
         $loader->load('services.xml');
         $loader->load('admin.xml');
 
-
         //take the setting for the description
         if ($config['description']) {
             $container->setParameter($this->getAlias().'.description', $config['description']);

@@ -3,11 +3,10 @@
  * User: maximilian
  * Date: 2/7/14
  * Time: 11:34 PM
- * 
+ *
  */
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
-
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
 

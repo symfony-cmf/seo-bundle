@@ -2,7 +2,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
-
 interface SeoPresentationInterface
 {
     /**
