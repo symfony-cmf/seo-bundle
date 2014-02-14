@@ -26,16 +26,6 @@ class CmfSeoExtension extends Extension
         $loader->load('services.xml');
         $loader->load('admin.xml');
 
-        //take the setting for the description
-        if ($config['description']) {
-            $container->setParameter($this->getAlias().'.description', $config['description']);
-        }
-
-        //take the setting for keys
-        if ($config['keys']) {
-            $container->setParameter($this->getAlias().'.keys', $config['keys']);
-        }
-
         $this->loadTitle($config['title'], $loader, $container);
 
         $this->loadContent($config['content'], $loader, $container);
