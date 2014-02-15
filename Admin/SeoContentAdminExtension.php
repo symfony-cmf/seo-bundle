@@ -5,16 +5,15 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Admin;
 use Sonata\AdminBundle\Admin\AdminExtension;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class SeoContentAdminExtension extends AdminExtesion
+/**
+ * This AdminExtension will server the bundle's own form type
+ * for configuring seo metadata.
+ *
+ * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>
+ */
+class SeoContentAdminExtension extends AdminExtension
 {
-
-    protected $translationDomain = 'SeoBundle';
-
-    protected $baseRouteName = 'cmf_seo';
-
-    protected $baseRoutePattern = 'seo_content';
-
-    protected function configureFormFields(FormMapper $formMapper)
+    public function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->with('form.group_seo')
