@@ -5,19 +5,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="cmf_seo.admin" class="Symfony\Cmf\Bundle\SeoBundle\Admin\SeoAwareContentAdminController">
-            <tag name="sonata.admin" manager_type="doctrine_phpcr" group="dashboard.cmf" label_catalogue="CmfSeoBundle" label="dashboard.label_seo_content" label_translator_strategy="sonata.admin.label.strategy.underscore" />
-            <argument/>
-            <argument>Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent</argument>
-            <argument>SonataAdminBundle:CRUD</argument>
-
-            <call method="setRouteBuilder">
-                <argument type="service" id="sonata.admin.route.path_info_slashes" />
-            </call>
-
-            <call method="setRootPath">
-                <argument>/cms/content</argument>
-            </call>
+        <service id="cmf_seo.admin" class="Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension">
+            <tag name="sonata.admin.extension" global="true" />
         </service>
     </services>
 </container>
