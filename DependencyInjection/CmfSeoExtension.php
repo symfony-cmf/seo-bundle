@@ -48,4 +48,12 @@ class CmfSeoExtension extends Extension
             $container->setParameter($this->getAlias().'.content.'.$key, $value);
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getNamespace()
+    {
+        return 'http://cmf.symfony.com/schema/dic/seo';
+    }
 }
