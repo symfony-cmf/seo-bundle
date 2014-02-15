@@ -14,11 +14,8 @@ class AppKernel extends TestKernel
         ));
 
         $this->addBundles(array(
-            new \Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
-            new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
-            new \Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
-            new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
-            new \Symfony\Cmf\Bundle\SeoBundle\\CmfSeoBundle(),
+            new \Sonata\SeoBundle\SonataSeoBundle(),
+            new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
         ));
     }
 
