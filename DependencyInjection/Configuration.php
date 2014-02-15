@@ -26,7 +26,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('strategy')->defaultValue('prepend')->end()
-                        ->scalarNode('bond_by')->defaultValue('')->end()
+                        ->scalarNode('separator')->defaultValue('')->end()
                     ->end()
                 ->end()
                 ->arrayNode('content')
