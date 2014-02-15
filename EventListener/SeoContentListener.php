@@ -2,10 +2,10 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
-use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class SeoContentListener
 {
@@ -20,10 +20,10 @@ class SeoContentListener
         $this->seoPage = $seoPage;
     }
 
-    public function onControllerFound(FilterControllerEvent  $event)
+    public function onKernelRequest(GetResponseEvent  $event)
     {
         $contentDocument = $event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY);
-        if ($contentDocument instanceof SeoAwareContent) {
+        if ($contentDocument instanceof SeoAwareInterface) {
             $this->seoPage->setSeoMetadata($contentDocument->getSeoMetadata());
             $this->seoPage->setMetadataValues();
 

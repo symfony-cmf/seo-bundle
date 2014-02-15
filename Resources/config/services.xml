@@ -19,7 +19,7 @@
         </service>
         <service id="cmf_seo.event_lister.seo_content" class="Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener">
             <argument type="service" id="cmf_seo.page"/>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onControllerFound"/>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
     </services>
 
