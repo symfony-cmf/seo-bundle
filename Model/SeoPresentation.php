@@ -94,16 +94,16 @@ class SeoPresentation implements
     {
         $defaultTitle = $this->sonataPage->getTitle();
         $contentTitle = $this->seoMetadata->getTitle();
-        $bondBy = $this->container->getParameter('cmf_seo.title.bond_by');
+        $separator = $this->container->getParameter('cmf_seo.title.separator');
 
         if ('' == $defaultTitle) {
             return $contentTitle;
         }
         switch ($this->container->getParameter('cmf_seo.title.strategy')) {
             case 'prepend':
-                return $contentTitle.$bondBy.$defaultTitle;
+                return $contentTitle.$separator.$defaultTitle;
             case 'append':
-                return $defaultTitle .$bondBy. $contentTitle;
+                return $defaultTitle .$separator. $contentTitle;
             case 'replace':
                 return $contentTitle;
             default:
