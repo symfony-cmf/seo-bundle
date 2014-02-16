@@ -31,10 +31,20 @@ class CmfSeoExtension extends Extension
 
         $this->loadContent($config['content'], $loader, $container);
 
+        if ($config['persistence']['phpcr']['enabled']) {
+            $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
+        }
+    }
+
+    public function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
+    {
+        $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
+
         if ($config['use_sonata_admin']) {
             $this->loadSonataAdmin($config, $loader, $container);
         }
     }
+
 
     public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container)
     {

@@ -13,7 +13,7 @@
         "doctrine/phpcr-odm": "1.0.*",
         "sonata-project/doctrine-phpcr-admin-bundle": "1.1.*",
         "symfony-cmf/routing-bundle": "1.1.*",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "dev-master"
 
     },
     "suggest": {
