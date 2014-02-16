@@ -6,6 +6,7 @@ use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -32,6 +33,8 @@ class SeoPresentationTest extends BaseTestCase
      */
     private $seoMetadata;
 
+    private $containerMock;
+
     public function setUp()
     {
         $this->pageService = new SeoPage();
@@ -40,66 +43,47 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata = new SeoMetadata();
 
         $this->SUT->setSeoMetadata($this->seoMetadata);
-        /*
-        $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\Container')
-                                ->disableOriginalConstructor()
-                                ->setMethods(array('set', 'get'))
-                                ->getMock();
-        */
-        $this->SUT->setContainer($this->container);
+
+        $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\Container', array('getParameter'));
+
+        $this->SUT->setContainer($this->containerMock);
     }
 
     /**
      * @dataProvider provideSeoMetadataValues
      */
-    public function testSettingSeoMetadataToPageService($seoConfig, $expectedValues)
+    public function testSettingTitleFromSeoMetadataToPageService($titleSeparator, $titleStrategy, $expectedValue)
     {
         //values for every SeoMetadata
         $this->seoMetadata->setTitle('Special title');
-        $this->seoMetadata->setMetaDescription('Special description');
-        $this->seoMetadata->setMetaKeywords('special');
 
         //default configs like in the sonata_seo config block
         $this->pageService->setTitle('Default title');
-        $this->pageService->setMetas(
-            array(
-                'names'  => array(
-                    'description' => 'default description',
-                    'keywords'    => 'keys, default'
-                )
-            )
-        );
-        print("container: ". get_class($this->container));
+
         //setting the config to the container mock
-        foreach ($seoConfig as $key => $value) {
-            $this->container->set($key, $value);
-        }
+        $this->containerMock->expects($this->at(1))
+                            ->method('getParameter')
+                            ->with($this->equalTo('cmf_seo.title.separator'))
+                            ->will($this->returnValue($titleSeparator));
+
+        $this->containerMock->expects($this->at(2))
+                            ->method('getParameter')
+                            ->with($this->equalTo('cmf_seo.title.strategy'))
+                            ->will($this->returnValue($titleStrategy));
+
+        $this->SUT->setMetaDataValues();
 
         //do the asserts
-        foreach ($expectedValues as $key => $value) {
-            if ($key != 'title') {
-                $this->assertEquals($value, $this->pageService->getMetas()['names'][$key]);
-            } else {
-                $this->assertEquals($value, $this->pageService->getTitle());
-            }
-        }
+        $this->assertEquals($expectedValue, $this->pageService->getTitle());
     }
 
 
     public function provideSeoMetadataValues()
     {
         return array(
-          array(
-              array(
-                  'cmf_seo.title.strategy'  => 'prepend',
-                  'cmf_seo.title'           => ' | '
-              ),
-              array(
-                  'title' => 'Special title | Default title',
-                  'description' => 'default description. Special description',
-                  'keywords'    => 'keys, default, special'
-              )
-          )
+            array(' | ', 'prepend', 'Special title | Default title'),
+            array(' | ', 'append', 'Default title | Special title'),
+            array(' | ', 'replace', 'Special title')
         );
     }
 }
