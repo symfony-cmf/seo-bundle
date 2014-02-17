@@ -110,4 +110,31 @@ class SeoPresentationTest extends BaseTestCase
             )
         );
     }
+
+    /**
+     * just test the combining of default description and the one in the seo metadata
+     */
+    public function testSettingDescriptionToSeoPage()
+    {
+        $this->seoMetadata->setMetaDescription('Special description');
+        //to set it here is the same as it was set in the sonata_seo settings
+        $this->pageService->addMeta('names', 'description', 'Default description');
+        $this->SUT->setMetaDataValues();
+        $this->assertEquals(
+            'Default description. Special description',
+            $this->pageService->getMetas()['names']['description'][0]
+        );
+    }
+
+    public function testSettingKeywordsToSeoPage()
+    {
+        $this->seoMetadata->setMetaKeywords('key1, key2');
+        //to set it here is the same as it was set in the sonata_seo settings
+        $this->pageService->addMeta('names', 'keywords', 'default, other');
+        $this->SUT->setMetaDataValues();
+        $this->assertEquals(
+            'default, other, key1, key2',
+            $this->pageService->getMetas()['names']['keywords'][0]
+        );
+    }
 }
