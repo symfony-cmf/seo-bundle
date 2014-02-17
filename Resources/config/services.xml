@@ -22,6 +22,7 @@
         <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <tag name="form.type" alias="seo_metadata" />
         </service>
+
         <service id="cmf_seo.event_lister.seo_content" class="Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener">
             <argument type="service" id="cmf_seo.page"/>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
