@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 interface SeoPresentationInterface
+
 {
     /**
      * simple setter for the seo meta data to the service
@@ -24,4 +25,22 @@ interface SeoPresentationInterface
      * @return bool | string
      */
     public function getRedirect();
+
+    /**
+     * This method is needed to get the default title parameters injected. They are used for
+     * concatenating the default values and the seo meta data or defining the strategy for that.
+     *
+     * @param array $titleParameters
+     * @return mixed
+     */
+    public function setTitleParameters(array $titleParameters);
+
+    /**
+     * This method is the setter injection for the content parameters which contain strategies for
+     * duplicate content.
+     *
+     * @param array $contentParameters
+     * @return mixed
+     */
+    public function setContentParameters(array $contentParameters);
 }

@@ -36,6 +36,13 @@ class CmfSeoExtension extends Extension
         }
     }
 
+    /**
+     * fits the phpcr settings to its position
+     * 
+     * @param $config
+     * @param XmlFileLoader $loader
+     * @param ContainerBuilder $container
+     */
     public function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
     {
         $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
@@ -45,7 +52,13 @@ class CmfSeoExtension extends Extension
         }
     }
 
-
+    /**
+     * adds/loads the admin mapping if for the right values of the use_sonata_admin setting
+     *
+     * @param $config
+     * @param XmlFileLoader $loader
+     * @param ContainerBuilder $container
+     */
     public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container)
     {
         $bundles = $container->getParameter('kernel.bundles');
@@ -56,7 +69,13 @@ class CmfSeoExtension extends Extension
         $loader->load('admin.xml');
     }
 
-
+    /**
+     * just fits the title values into its position and creates a parameter array
+     *
+     * @param $title
+     * @param $loader
+     * @param ContainerBuilder $container
+     */
     private function loadTitle($title, $loader, ContainerBuilder $container)
     {
         $container->setParameter($this->getAlias().'.title', true);
@@ -64,8 +83,17 @@ class CmfSeoExtension extends Extension
         foreach ($title as $key => $value) {
             $container->setParameter($this->getAlias().'.title.'.$key, $value);
         }
+
+        $container->setParameter($this->getAlias().'.title_parameters', $title);
     }
 
+    /**
+     * fits all parameters under content into its position and creates a parameter array
+     *
+     * @param $content
+     * @param $loader
+     * @param ContainerBuilder $container
+     */
     private function loadContent($content, $loader, ContainerBuilder $container)
     {
         $container->setParameter($this->getAlias().'.content', true);
@@ -73,6 +101,7 @@ class CmfSeoExtension extends Extension
         foreach ($content as $key => $value) {
             $container->setParameter($this->getAlias().'.content.'.$key, $value);
         }
+        $container->setParameter($this->getAlias().'.content_parameters', $content);
     }
     
     /**

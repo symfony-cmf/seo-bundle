@@ -8,12 +8,17 @@
         <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <tag name="form.type" alias="seo_metadata" />
         </service>
+
         <service id="cmf_seo.page" class="Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation">
             <argument type="service" id="sonata.seo.page" />
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
+            <call method="setTitleParameters">
+                <argument>cmf_seo.title_parameters</argument>
+            </call>
+            <call method="setContentParameters">
+                <argument>cmf_seo.content_parameters</argument>
             </call>
         </service>
+
         <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <tag name="form.type" alias="seo_metadata" />
         </service>
