@@ -6,7 +6,6 @@ use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -33,8 +32,6 @@ class SeoPresentationTest extends BaseTestCase
      */
     private $seoMetadata;
 
-    private $containerMock;
-
     public function setUp()
     {
         $this->pageService = new SeoPage();
@@ -43,34 +40,20 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata = new SeoMetadata();
 
         $this->SUT->setSeoMetadata($this->seoMetadata);
-
-        $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\Container', array('getParameter'));
-
-        $this->SUT->setContainer($this->containerMock);
     }
 
     /**
      * @dataProvider provideSeoMetadataValues
      */
-    public function testSettingTitleFromSeoMetadataToPageService($titleSeparator, $titleStrategy, $expectedValue)
+    public function testSettingTitleFromSeoMetadataToPageService($titleParameters, $expectedValue)
     {
         //values for every SeoMetadata
         $this->seoMetadata->setTitle('Special title');
 
-        //default configs like in the sonata_seo config block
-        $this->pageService->setTitle('Default title');
+        //setting the values for the title parameters
+        $this->SUT->setTitleParameters($titleParameters);
 
-        //setting the config to the container mock
-        $this->containerMock->expects($this->at(1))
-                            ->method('getParameter')
-                            ->with($this->equalTo('cmf_seo.title.separator'))
-                            ->will($this->returnValue($titleSeparator));
-
-        $this->containerMock->expects($this->at(2))
-                            ->method('getParameter')
-                            ->with($this->equalTo('cmf_seo.title.strategy'))
-                            ->will($this->returnValue($titleStrategy));
-
+        //run the transformation
         $this->SUT->setMetaDataValues();
 
         //do the asserts
@@ -78,12 +61,53 @@ class SeoPresentationTest extends BaseTestCase
     }
 
 
+    /**
+     * Data provider for different title settings
+     * @return array
+     */
     public function provideSeoMetadataValues()
     {
         return array(
-            array(' | ', 'prepend', 'Special title | Default title'),
-            array(' | ', 'append', 'Default title | Special title'),
-            array(' | ', 'replace', 'Special title')
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  'Default title'
+                ),
+                'Special title | Default title'
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'append',
+                    'default'   =>  'Default title'
+                ),
+                'Default title | Special title'
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'replace',
+                    'default'   =>  'Default title'
+                ),
+                'Special title'
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  ''
+                ),
+                'Special title'
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   => ''
+                ),
+                'Special title'
+            )
         );
     }
 }
