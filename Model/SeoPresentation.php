@@ -18,7 +18,6 @@ use Sonata\SeoBundle\Seo\SeoPage;
  * which triggers an redirect.
  *
  * Class SeoPresentation
- * @package Symfony\Cmf\Bundle\SeoBundle\Model
  */
 class SeoPresentation implements SeoPresentationInterface
 {

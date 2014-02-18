@@ -13,7 +13,6 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
  * sonatas PageService.
  *
  * Class SeoPresentationTest
- * @package Symfony\Cmf\Bundle\SeoBundle\Tests\Unit
  */
 class SeoPresentationTest extends BaseTestCase
 {

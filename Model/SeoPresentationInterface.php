@@ -4,7 +4,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
  * Interface SeoPresentationInterface
- * @package Symfony\Cmf\Bundle\SeoBundle\Model
  */
 interface SeoPresentationInterface
 

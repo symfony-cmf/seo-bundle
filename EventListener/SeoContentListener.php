@@ -11,7 +11,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * Class SeoContentListener
- * @package Symfony\Cmf\Bundle\SeoBundle\EventListener
  */
 class SeoContentListener
 {
