@@ -6,18 +6,18 @@ use Sonata\SeoBundle\Seo\SeoPage;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
- * SonataSeoBundle which is able to provide the values to its twig helpers.
+ * SonataSeoBundle which is able to provide the values to its Twig helpers.
  *
  * Preparing means combining the title value of the SeoMetadata and the default
  * value defined in the cmf_seo.title.default parameter. Both strings are
  * concatenated by an separator depending on the strategy set in the config.
  *
  * The content config under cmf_seo.content gives a strategy how to handle duplicate
- * content. If it is set to canonical a canonical link is created by an twig helper
+ * content. If it is set to canonical a canonical link is created by an Twig helper
  * (url must be set to the SeoPage), otherwise the url is set to the redirect property
  * which triggers an redirect.
  *
- * Class SeoPresentation
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class SeoPresentation implements SeoPresentationInterface
 {
@@ -37,19 +37,21 @@ class SeoPresentation implements SeoPresentationInterface
     private $redirect = false;
 
     /**
-     * storing the content parameters - config values under cmf_seo.content
+     * Storing the content parameters - config values under cmf_seo.content.
+     *
      * @var array
      */
     private $contentParameters;
 
     /**
-     * storing the title parameters - config values under cmf_seo.title
+     * Storing the title parameters - config values under cmf_seo.title.
+     *
      * @var array
      */
     private $titleParameters;
 
     /**
-     * to store the current locale injected by DIC
+     * To store the current locale injected by DIC
      *
      * @var string
      */
@@ -83,11 +85,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * This method is the setter injection for the content parameters which contain strategies for
-     * duplicate content.
-     *
-     * @param array $contentParameters
-     * @return mixed
+     * {@inheritDoc}
      */
     public function setContentParameters(array $contentParameters)
     {
@@ -145,8 +143,8 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * based on the title strategy this method will create the title from the given
-     * configs in the seo configuration part
+     * Based on the title strategy this method will create the title from the given
+     * configs in the seo configuration part.
      *
      * @return string
      */
@@ -173,10 +171,10 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * depending on the current locale and the setting for the default title this
+     * Depending on the current locale and the setting for the default title this
      * method will return the default title as a string.
      *
-     * @param array | string $defaultTitle
+     * @param array|string $defaultTitle
      * @return array|string
      */
     private function doMultilangDecision($defaultTitle)
@@ -207,9 +205,9 @@ class SeoPresentation implements SeoPresentationInterface
 
 
     /**
-     * same as for the previous method. You can set the keywords in your sonata seo
+     * Same as for the previous method. You can set the keywords in your sonata seo
      * setting, but each SeoAwareContent is able to set its own, this method will combine
-     * both
+     * both.
      *
      * @return string
      */
@@ -223,7 +221,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * setter for the redirect property
+     * Setter for the redirect property.
      *
      * @param $redirect
      */

@@ -3,7 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
- * Interface SeoPresentationInterface
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 interface SeoPresentationInterface
 

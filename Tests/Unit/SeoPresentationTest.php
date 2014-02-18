@@ -12,7 +12,6 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
  * This model is responsible for putting the SeoMetadata into
  * sonatas PageService.
  *
- * Class SeoPresentationTest
  */
 class SeoPresentationTest extends BaseTestCase
 {
@@ -41,9 +40,6 @@ class SeoPresentationTest extends BaseTestCase
         $this->SUT->setSeoMetadata($this->seoMetadata);
     }
 
-    /**
-     * @dataProvider provideSeoMetadataValues
-     */
     public function testSettingTitleFromSeoMetadataToPageService($titleParameters, $expectedValue)
     {
         //values for every SeoMetadata
@@ -59,10 +55,6 @@ class SeoPresentationTest extends BaseTestCase
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
     }
 
-    /**
-     * Data provider for different title settings
-     * @return array
-     */
     public function provideSeoMetadataValues()
     {
         return array(
@@ -70,48 +62,45 @@ class SeoPresentationTest extends BaseTestCase
                 array(
                     'separator' => ' | ',
                     'strategy'  => 'prepend',
-                    'default'   =>  'Default title'
+                    'default'   =>  'Default title',
                 ),
-                'Special title | Default title'
+                'Special title | Default title',
             ),
             array(
                 array(
                     'separator' => ' | ',
                     'strategy'  => 'append',
-                    'default'   =>  'Default title'
+                    'default'   =>  'Default title',
                 ),
-                'Default title | Special title'
+                'Default title | Special title',
             ),
             array(
                 array(
                     'separator' => ' | ',
                     'strategy'  => 'replace',
-                    'default'   =>  'Default title'
+                    'default'   =>  'Default title',
                 ),
-                'Special title'
+                'Special title',
             ),
             array(
                 array(
                     'separator' => ' | ',
                     'strategy'  => 'prepend',
-                    'default'   =>  ''
+                    'default'   =>  '',
                 ),
-                'Special title'
+                'Special title',
             ),
             array(
                 array(
                     'separator' => ' | ',
                     'strategy'  => 'prepend',
-                    'default'   => ''
+                    'default'   => '',
                 ),
-                'Special title'
+                'Special title',
             )
         );
     }
 
-    /**
-     * just test the combining of default description and the one in the seo metadata
-     */
     public function testSettingDescriptionToSeoPage()
     {
         $this->seoMetadata->setMetaDescription('Special description');
@@ -124,9 +113,6 @@ class SeoPresentationTest extends BaseTestCase
         );
     }
 
-    /**
-     * just test the combination of default keywords and the one in the seo metadata
-     */
     public function testSettingKeywordsToSeoPage()
     {
         $this->seoMetadata->setMetaKeywords('key1, key2');
@@ -139,13 +125,6 @@ class SeoPresentationTest extends BaseTestCase
         );
     }
 
-    /**
-     * @param $titleParameters
-     * @param $locale
-     * @param $expectedValue
-     *
-     * @dataProvider provideMultilangTitleParameters
-     */
     public function testSettingMultilangTitleToSeoPage($titleParameters, $locale, $expectedValue)
     {
         $this->seoMetadata->setTitle('Special title');
@@ -158,10 +137,6 @@ class SeoPresentationTest extends BaseTestCase
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
     }
 
-    /**
-     * Data provider for different title settings
-     * @return array
-     */
     public function provideMultilangTitleParameters()
     {
         return array(
@@ -172,11 +147,11 @@ class SeoPresentationTest extends BaseTestCase
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
-                        'de' => 'Der Title'
+                        'de' => 'Der Title',
                     )
                 ),
                 'en',
-                'Special title | Default title'
+                'Special title | Default title',
             ),
             array(
                 array(
@@ -185,11 +160,11 @@ class SeoPresentationTest extends BaseTestCase
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
-                        'de' => 'Der Title'
+                        'de' => 'Der Title',
                     )
                 ),
                 'fr',
-                'Special title | title de default'
+                'Special title | title de default',
             ),
             array(
                 array(
@@ -198,11 +173,11 @@ class SeoPresentationTest extends BaseTestCase
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
-                        'de' => 'Der Titel'
+                        'de' => 'Der Titel',
                     )
                 ),
                 'de',
-                'Special title | Der Titel'
+                'Special title | Der Titel',
             )
         );
     }

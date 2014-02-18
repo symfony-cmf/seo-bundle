@@ -30,7 +30,7 @@ class SeoContentListener
     /**
      * @param GetResponseEvent $event
      */
-    public function onKernelRequest(GetResponseEvent  $event)
+    public function onKernelRequest(GetResponseEvent $event)
     {
         $contentDocument = $event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY);
         if ($contentDocument instanceof SeoAwareInterface) {
