@@ -2,6 +2,10 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+/**
+ * Interface SeoPresentationInterface
+ * @package Symfony\Cmf\Bundle\SeoBundle\Model
+ */
 interface SeoPresentationInterface
 
 {
@@ -43,4 +47,12 @@ interface SeoPresentationInterface
      * @return mixed
      */
     public function setContentParameters(array $contentParameters);
+
+    /**
+     * Will need the locale to make decision on the default title to
+     * have multilang support.
+     *
+     * @param $locale
+     */
+    public function setLocale($locale);
 }

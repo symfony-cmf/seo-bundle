@@ -17,6 +17,9 @@
             <call method="setContentParameters">
                 <argument>cmf_seo.content_parameters</argument>
             </call>
+            <call method="setLocale">
+                <argument>_locale</argument>
+            </call>
         </service>
 
         <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">

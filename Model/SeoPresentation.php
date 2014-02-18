@@ -50,6 +50,13 @@ class SeoPresentation implements SeoPresentationInterface
     private $titleParameters;
 
     /**
+     * to store the current locale injected by DIC
+     *
+     * @var string
+     */
+    private $locale;
+
+    /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
@@ -86,6 +93,14 @@ class SeoPresentation implements SeoPresentationInterface
     public function setContentParameters(array $contentParameters)
     {
         $this->contentParameters = $contentParameters;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     /**
@@ -138,7 +153,7 @@ class SeoPresentation implements SeoPresentationInterface
      */
     private function createTitle()
     {
-        $defaultTitle = $this->titleParameters['default'];
+        $defaultTitle = $this->doMultilangDecision($this->titleParameters['default']);
         $separator = $this->titleParameters['separator'];
         $contentTitle = $this->seoMetadata->getTitle();
 
@@ -155,6 +170,24 @@ class SeoPresentation implements SeoPresentationInterface
                 return $contentTitle;
             default:
                 return $defaultTitle;
+        }
+    }
+
+    /**
+     * depending on the current locale and the setting for the default title this
+     * method will return the default title as a string.
+     *
+     * @param array | string $defaultTitle
+     * @return array|string
+     */
+    private function doMultilangDecision($defaultTitle)
+    {
+        if (is_string($defaultTitle)) {
+            return $defaultTitle;
+        }
+
+        if (is_array($defaultTitle) && isset($defaultTitle[$this->locale])) {
+            return $defaultTitle[$this->locale];
         }
     }
 
