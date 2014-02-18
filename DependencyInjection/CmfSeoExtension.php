@@ -27,9 +27,9 @@ class CmfSeoExtension extends Extension
         $loader->load('services.xml');
         $loader->load('admin.xml');
 
-        $this->loadTitle($config['title'], $loader, $container);
+        $this->loadTitle($config['title'], $container);
 
-        $this->loadContent($config['content'], $loader, $container);
+        $this->loadContent($config['content'], $container);
 
         if ($config['persistence']['phpcr']['enabled']) {
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
@@ -37,7 +37,7 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * fits the phpcr settings to its position
+     * Fits the phpcr settings to its position.
      * 
      * @param $config
      * @param XmlFileLoader $loader
@@ -53,7 +53,7 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * adds/loads the admin mapping if for the right values of the use_sonata_admin setting
+     * Adds/loads the admin mapping if for the right values of the use_sonata_admin setting.
      *
      * @param $config
      * @param XmlFileLoader $loader
@@ -70,13 +70,12 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * just fits the title values into its position and creates a parameter array
+     * Just fits the title values into its position and creates a parameter array.
      *
      * @param $title
-     * @param $loader
      * @param ContainerBuilder $container
      */
-    private function loadTitle($title, $loader, ContainerBuilder $container)
+    private function loadTitle($title, ContainerBuilder $container)
     {
         $container->setParameter($this->getAlias().'.title', true);
 
@@ -88,13 +87,12 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * fits all parameters under content into its position and creates a parameter array
+     * Fits all parameters under content into its position and creates a parameter array.
      *
      * @param $content
-     * @param $loader
      * @param ContainerBuilder $container
      */
-    private function loadContent($content, $loader, ContainerBuilder $container)
+    private function loadContent($content, ContainerBuilder $container)
     {
         $container->setParameter($this->getAlias().'.content', true);
 
