@@ -40,6 +40,19 @@ class CmfSeoExtension extends Extension
     {
         $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
 
+        $keys = array(
+            'metadata_class'            => 'class.metadata',
+            'presentation_class'        => 'class.presentation',
+            'metadata_formtype_class'   => 'form_type.metadata',
+            'admin_class'               => 'class.admin'
+        );
+
+        foreach ($keys as $sourceKey => $targetKey) {
+            if (isset($config[$sourceKey])) {
+                $container->setParameter($this->getAlias() . '.persistence.phpcr.'.$targetKey, $config[$sourceKey]);
+            }
+        }
+
         if ($config['use_sonata_admin']) {
             $this->loadSonataAdmin($config, $loader, $container);
         }

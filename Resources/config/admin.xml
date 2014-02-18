@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="cmf_seo.admin" class="Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension">
+        <service id="cmf_seo.admin" class="seo_cmf.persistence.phpcr.class.admin">
             <tag name="sonata.admin.extension" global="true" />
         </service>
     </services>
