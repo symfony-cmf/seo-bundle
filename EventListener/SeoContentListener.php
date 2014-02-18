@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
- * Class SeoContentListener
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class SeoContentListener
 {
