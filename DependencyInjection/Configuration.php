@@ -4,6 +4,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -45,6 +46,14 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('prepend')
                         ->end()
                         ->scalarNode('separator')->defaultValue('')->end()
+                        ->variableNode('default')
+                            ->validate()
+                                ->ifTrue(function ($v) {
+                                    return !is_string($v) || !is_array($v);
+                                })
+                                ->thenInvalid('Default can either be an array or a string, "%s" given')
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
                 ->arrayNode('content')

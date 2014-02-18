@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Route;
 
 /**
  * Class SeoAwareContent
- * @package Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr
  */
 class SeoAwareContent implements
     SeoAwareInterface,

@@ -6,7 +6,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
  * @todo maybe i will only need the getter for the interface
  *
  * Interface SeoMetadataInterface
- * @package Symfony\Cmf\Bundle\SeoBundle\Model
  */
 interface SeoMetadataInterface
 {
