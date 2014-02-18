@@ -26,7 +26,7 @@ class SeoPresentation implements
     private $container;
 
     /**
-     * @var bool | false
+     * @var bool|false
      */
     private $redirect = false;
 
@@ -42,7 +42,6 @@ class SeoPresentation implements
     {
         $this->seoMetadata = $seoMetadata;
     }
-
 
     /**
      *  this method will combine all settings directly in the sonata_seo configuration with
@@ -125,7 +124,6 @@ class SeoPresentation implements
 
         return $sonataDescription .'. '. $this->seoMetadata->getMetaDescription();
     }
-
 
     /**
      * same as for the previous method. You can set the keywords in your sonata seo

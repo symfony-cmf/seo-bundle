@@ -14,7 +14,6 @@ class SeoContentListener
      */
     private $seoPage;
 
-
     public function __construct(SeoPresentationInterface $seoPage)
     {
         $this->seoPage = $seoPage;

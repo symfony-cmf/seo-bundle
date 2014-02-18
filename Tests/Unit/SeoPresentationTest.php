@@ -6,7 +6,6 @@ use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -76,7 +75,6 @@ class SeoPresentationTest extends BaseTestCase
         //do the asserts
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
     }
-
 
     public function provideSeoMetadataValues()
     {

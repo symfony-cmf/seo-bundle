@@ -45,7 +45,6 @@ class CmfSeoExtension extends Extension
         }
     }
 
-
     public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container)
     {
         $bundles = $container->getParameter('kernel.bundles');
@@ -55,7 +54,6 @@ class CmfSeoExtension extends Extension
 
         $loader->load('admin.xml');
     }
-
 
     private function loadTitle($title, $loader, ContainerBuilder $container)
     {
@@ -74,7 +72,7 @@ class CmfSeoExtension extends Extension
             $container->setParameter($this->getAlias().'.content.'.$key, $value);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
