@@ -45,8 +45,8 @@ class CmfSeoExtension extends Extension
             'presentation_class'        => 'class.presentation',
             'metadata_formtype_class'   => 'form_type.metadata',
             'admin_class'               => 'class.admin',
-            'manager_name' => 'manager_name',
-            'content_basepath' => 'content_basepath',
+            'manager_name'              => 'manager_name',
+            'content_basepath'          => 'content_basepath',
         );
 
         foreach ($keys as $sourceKey => $targetKey) {
