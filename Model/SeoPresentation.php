@@ -32,7 +32,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $seoMetadata;
 
     /**
-     * @var bool | false
+     * @var bool
      */
     private $redirect = false;
 
@@ -174,7 +174,7 @@ class SeoPresentation implements SeoPresentationInterface
      * Depending on the current locale and the setting for the default title this
      * method will return the default title as a string.
      *
-     * @param array|string $defaultTitle
+     * @param  array|string $defaultTitle
      * @return array|string
      */
     private function doMultilangDecision($defaultTitle)
@@ -202,7 +202,6 @@ class SeoPresentation implements SeoPresentationInterface
 
         return $sonataDescription .'. '. $this->seoMetadata->getMetaDescription();
     }
-
 
     /**
      * Same as for the previous method. You can set the keywords in your sonata seo

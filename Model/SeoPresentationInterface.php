@@ -25,7 +25,7 @@ interface SeoPresentationInterface
      * will return false if the strategy for duplicate content is not redirect, or it is
      * but there is not redirect route in the meta data
      *
-     * @return bool | string
+     * @return bool|string
      */
     public function getRedirect();
 
@@ -33,8 +33,7 @@ interface SeoPresentationInterface
      * This method is needed to get the default title parameters injected. They are used for
      * concatenating the default values and the seo meta data or defining the strategy for that.
      *
-     * @param array $titleParameters
-     * @return mixed
+     * @param  array $titleParameters
      */
     public function setTitleParameters(array $titleParameters);
 
@@ -42,8 +41,7 @@ interface SeoPresentationInterface
      * This method is the setter injection for the content parameters which contain strategies for
      * duplicate content.
      *
-     * @param array $contentParameters
-     * @return mixed
+     * @param  array $contentParameters
      */
     public function setContentParameters(array $contentParameters);
 

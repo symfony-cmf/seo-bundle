@@ -52,6 +52,7 @@ class Configuration implements ConfigurationInterface
                                 if (!is_string($v) || !is_array($v)) {
                                     throw new InvalidTypeException();
                                 }
+
                                 return $v;
                             })
                             ->end()

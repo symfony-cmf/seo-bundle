@@ -40,9 +40,9 @@ class CmfSeoExtension extends Extension
 
     /**
      * Fits the phpcr settings to its position.
-     * 
+     *
      * @param $config
-     * @param XmlFileLoader $loader
+     * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
      */
     public function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
@@ -58,7 +58,7 @@ class CmfSeoExtension extends Extension
      * Adds/loads the admin mapping if for the right values of the use_sonata_admin setting.
      *
      * @param $config
-     * @param XmlFileLoader $loader
+     * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
      */
     public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container)
@@ -103,7 +103,7 @@ class CmfSeoExtension extends Extension
         }
         $container->setParameter($this->getAlias().'.content_parameters', $content);
     }
-    
+
     /**
      * {@inheritDoc}
      */
