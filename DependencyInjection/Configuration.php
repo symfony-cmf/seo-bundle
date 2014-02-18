@@ -48,13 +48,10 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('separator')->defaultValue('')->end()
                         ->variableNode('default')
                             ->validate()
-                            ->always(function ($v) {
-                                if (!is_string($v) || !is_array($v)) {
-                                    throw new InvalidTypeException();
-                                }
-
-                                return $v;
-                            })
+                                ->ifTrue(function ($v) {
+                                    return !is_string($v) || !is_array($v);
+                                })
+                                ->thenInvalid('Default can either be an array or a string, "%s" given')
                             ->end()
                         ->end()
                     ->end()
