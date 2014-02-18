@@ -207,5 +207,4 @@ class SeoPresentationTest extends BaseTestCase
             )
         );
     }
-
 }
