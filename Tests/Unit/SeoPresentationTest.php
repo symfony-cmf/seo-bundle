@@ -60,7 +60,6 @@ class SeoPresentationTest extends BaseTestCase
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
     }
 
-
     /**
      * Data provider for different title settings
      * @return array
@@ -126,6 +125,9 @@ class SeoPresentationTest extends BaseTestCase
         );
     }
 
+    /**
+     * just test the combination of default keywords and the one in the seo metadata
+     */
     public function testSettingKeywordsToSeoPage()
     {
         $this->seoMetadata->setMetaKeywords('key1, key2');
@@ -137,4 +139,73 @@ class SeoPresentationTest extends BaseTestCase
             $this->pageService->getMetas()['names']['keywords'][0]
         );
     }
+
+    /**
+     * @param $titleParameters
+     * @param $locale
+     * @param $expectedValue
+     *
+     * @dataProvider provideMultilangTitleParameters
+     */
+    public function testSettingMultilangTitleToSeoPage($titleParameters, $locale, $expectedValue)
+    {
+        $this->seoMetadata->setTitle('Special title');
+
+        $this->SUT->setLocale($locale);
+        $this->SUT->setTitleParameters($titleParameters);
+
+        $this->SUT->setMetaDataValues();
+
+        $this->assertEquals($expectedValue, $this->pageService->getTitle());
+    }
+
+    /**
+     * Data provider for different title settings
+     * @return array
+     */
+    public function provideMultilangTitleParameters()
+    {
+        return array(
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  array(
+                        'en' => 'Default title',
+                        'fr' => 'title de default',
+                        'de' => 'Der Title'
+                    )
+                ),
+                'en',
+                'Special title | Default title'
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  array(
+                        'en' => 'Default title',
+                        'fr' => 'title de default',
+                        'de' => 'Der Title'
+                    )
+                ),
+                'fr',
+                'Special title | title de default'
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  array(
+                        'en' => 'Default title',
+                        'fr' => 'title de default',
+                        'de' => 'Der Titel'
+                    )
+                ),
+                'de',
+                'Special title | Der Titel'
+            )
+        );
+    }
+
 }
