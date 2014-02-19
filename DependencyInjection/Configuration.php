@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->canBeEnabled()
                             ->children()
-                                ->scalarNode('content_class')
+                                ->scalarNode('document_class')
                                     ->defaultValue('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent')
                                 ->end()
                                 ->scalarNode('admin_class')

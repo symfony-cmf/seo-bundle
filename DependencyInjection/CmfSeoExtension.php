@@ -42,7 +42,7 @@ class CmfSeoExtension extends Extension
 
         $keys = array(
             'admin_class'               => 'admin_extension.class',
-            'content_class'             => 'content.class',
+            'document_class'             => 'document.class',
             'content_basepath'          => 'content_basepath',
         );
 
