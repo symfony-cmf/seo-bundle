@@ -41,11 +41,8 @@ class CmfSeoExtension extends Extension
         $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
 
         $keys = array(
-            'metadata_class'            => 'class.metadata',
-            'presentation_class'        => 'class.presentation',
-            'metadata_formtype_class'   => 'form_type.metadata',
-            'admin_class'               => 'class.admin',
-            'manager_name'              => 'manager_name',
+            'admin_class'               => 'admin_extension.class',
+            'content_class'             => 'content.class',
             'content_basepath'          => 'content_basepath',
         );
 
