@@ -9,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\ContentBundle\Tests\Resources\DataFixtures\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ODM\PHPCR\Document\Generic;
-use Symfony\Cmf\Bundle\ContentBundle\Doctrine\Phpcr\StaticContent;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
+use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 
 class LoadContentData implements FixtureInterface, DependentFixtureInterface
 {
@@ -35,20 +37,50 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $contentRoot->setParent($root);
         $manager->persist($contentRoot);
 
-        $content = new StaticContent;
+        $routeRoot = new Generic;
+        $routeRoot->setNodename('routes');
+        $routeRoot->setParent($root);
+        $manager->persist($routeRoot);
+
+        $content = new SeoAwareContent();
         $content->setName('content-1');
         $content->setTitle('Content 1');
         $content->setBody('Content 1');
         $content->setParent($contentRoot);
+        $metadata = new SeoMetadata();
+        $metadata->setTitle('Title content 1');
+        $metadata->setMetaDescription('Description of content 1.');
+        $metadata->setMetaKeywords('content1, content');
+        $metadata->setOriginalUrl('/to/original');
+        $content->setSeoMetadata($metadata);
         $manager->persist($content);
 
-        $content = new StaticContent;
+        /*
+        $route = new Route();
+        $route->setParent($routeRoot);
+        $route->setContent($content);
+        $route->setName('content-1');
+        $manager->persist($route);
+        */
+        $content = new SeoAwareContent();
         $content->setName('content-2');
         $content->setTitle('Content 2');
         $content->setBody('Content 2');
         $content->setParent($contentRoot);
+        $metadata->setTitle('Title content 2');
+        $metadata->setMetaDescription('Description of content 2.');
+        $metadata->setMetaKeywords('content2, content');
+        $metadata->setOriginalUrl('/to/original2');
+        $content->setSeoMetadata($metadata);
         $manager->persist($content);
 
+        /*
+        $route = new Route();
+        $route->setParent($routeRoot);
+        $route->setContent($content);
+        $route->setName('content-2');
+        $manager->persist($route);
+*/
         $manager->flush();
     }
 }
