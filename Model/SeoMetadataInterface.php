@@ -3,9 +3,9 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
- * @todo maybe i will only need the getter for the interface
+ * The interface for the SeoMetadata. This class should have getter and setter as well.
  *
- * Interface SeoMetadataInterface
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 interface SeoMetadataInterface
 {

@@ -2,11 +2,17 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+/**
+ * This class is a container for the metadata. This data will be served to sonatas PageService
+ * if the document implements the SeoAwareInterface.
+ *
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
+ */
 class SeoMetadata implements SeoMetadataInterface
 {
     /**
      * This string contains the information where we will find the original content.
-     * Depending on the setting for the originalUrlType, we will do an redirect to this url or
+     * Depending on the setting for the cmf_seo.content.strategy, we will do an redirect to this url or
      * create a canonical link with this value as the href attribute.
      *
      * @var string
@@ -14,21 +20,23 @@ class SeoMetadata implements SeoMetadataInterface
     private $originalUrl;
 
     /**
-     * If this string is set, it will be inserted as a meta tag for the page description
+     * If this string is set, it will be inserted as a meta tag for the page description.
      *
      * @var  string
      */
     private $metaDescription;
 
     /**
-     * This comma separated list will contain the Keywords for the page's meta information
+     * This comma separated list will contain the Keywords for the page's meta information.
+     *
      * @var string
      */
     private $metaKeywords;
 
     /**
-     * depending on the strategy setting for the title this string will be prepend/append to a
-     * default title or will replase it
+     * Depending on the cmf_seo.title.strategy this string will be prepend/append to a
+     * default title or will replace it. The default title is can be (multi lang) set
+     * in in the configuration under cmf_seo.title.default.
      *
      * @var string
      */
@@ -100,7 +108,8 @@ class SeoMetadata implements SeoMetadataInterface
 
 
     /**
-     * to store the value of this object into databases this method will serialize the complete object
+     * Just to get a string representation of the object.
+     * @todo have a look if i still need it that way
      *
      * @return string
      */
@@ -109,6 +118,12 @@ class SeoMetadata implements SeoMetadataInterface
         return serialize($this);
     }
 
+    /**
+     * The properties of this class are stored as a field with assoac="true". To do so, this method
+     * will serve all values as an array.
+     *
+     * @return array
+     */
     public function toArray()
     {
         return array(

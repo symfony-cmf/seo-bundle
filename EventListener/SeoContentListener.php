@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
+ * This listener takes care on documents which implements the SeoAwareInterface.
+ * This interface is a sign, that the document takes care on seo. In case of a match
+ * the listener calls a special presentation model to prepare the SeoMetadata for
+ * putting it into sonatas Page Service.
+ *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class SeoContentListener
