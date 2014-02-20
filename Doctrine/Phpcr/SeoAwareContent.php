@@ -9,7 +9,13 @@ use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
 use Symfony\Component\Routing\Route;
 
 /**
- * Class SeoAwareContent
+ * The bundle's own content class which supports the SeoAwareInterface.
+ *
+ * This interface is responsible for serving the SeoMeta or been recognised
+ * for an sonata admin extension.
+ *
+ *
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class SeoAwareContent implements
     SeoAwareInterface,

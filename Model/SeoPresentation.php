@@ -6,7 +6,7 @@ use Sonata\SeoBundle\Seo\SeoPage;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
- * SonataSeoBundle which is able to provide the values to its Twig helpers.
+ * SonataSeoBundle, which is able to provide the values to its Twig helpers.
  *
  * Preparing means combining the title value of the SeoMetadata and the default
  * value defined in the cmf_seo.title.default parameter. Both strings are

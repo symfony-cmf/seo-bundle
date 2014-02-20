@@ -4,13 +4,14 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
- * To learn more see
+ * To learn more see.
  * {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
+ *
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class Configuration implements ConfigurationInterface
 {
