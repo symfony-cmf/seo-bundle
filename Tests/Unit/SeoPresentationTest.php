@@ -40,6 +40,11 @@ class SeoPresentationTest extends BaseTestCase
         $this->SUT->setSeoMetadata($this->seoMetadata);
     }
 
+    /**
+     * @param $titleParameters
+     * @param $expectedValue
+     * @dataProvider provideSeoMetadataValues
+     */
     public function testSettingTitleFromSeoMetadataToPageService($titleParameters, $expectedValue)
     {
         //values for every SeoMetadata
@@ -125,6 +130,13 @@ class SeoPresentationTest extends BaseTestCase
         );
     }
 
+    /**
+     * @param $titleParameters
+     * @param $locale
+     * @param $expectedValue
+     *
+     * @dataProvider provideMultilangTitleParameters
+     */
     public function testSettingMultilangTitleToSeoPage($titleParameters, $locale, $expectedValue)
     {
         $this->seoMetadata->setTitle('Special title');
