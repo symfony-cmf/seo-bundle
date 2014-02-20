@@ -3,8 +3,10 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
- * An interface for the SeoPresentation model. It serves methods to set the title
- * and content parameters from the container/configuration and a method for setting
+ * An interface for the SeoPresentation model.
+ *
+ * It serves methods to set the title and content parameters
+ * from the container/configuration and a method for setting
  * the SeoMetadata.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>

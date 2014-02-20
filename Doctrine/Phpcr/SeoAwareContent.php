@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Route;
 
 /**
  * The bundle's own content class which supports the SeoAwareInterface.
+ *
  * This interface is responsible for serving the SeoMeta or been recognised
  * for an sonata admin extension.
  *

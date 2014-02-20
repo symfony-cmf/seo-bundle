@@ -3,6 +3,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
+ * The interface is responsible to mark a document as a seo aware content.
+ *
  * A listener on the kernel.request event will parse documents which
  * imports this interface and calling a presentation model
  * to put the SeoMetadata into sonatas PageService.

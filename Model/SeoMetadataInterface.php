@@ -3,7 +3,9 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
- * The interface for the SeoMetadata. This class should have getter and setter as well.
+ * The interface for the SeoMetadata.
+ *
+ * This class should have getter and setter as well.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
