@@ -35,7 +35,7 @@ class SeoMetadataPersistenceTest extends BaseTestCase
             $refl = new \ReflectionClass($metaDataClass);
             $prop = $refl->getProperty($key);
             $prop->setAccessible(true);
-            $prop->setValue($$metaDataClass, $value);
+            $prop->setValue($metaDataClass, $value);
         }
 
         //properties for the document itself
@@ -48,7 +48,7 @@ class SeoMetadataPersistenceTest extends BaseTestCase
 
         $content = new SeoAwareContent();
         $refl = new \ReflectionClass($content);
-
+        $content->setParent($this->base);
         foreach ($documentData as $key => $value) {
             $refl = new \ReflectionClass($content);
             $prop = $refl->getProperty($key);
