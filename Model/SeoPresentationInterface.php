@@ -33,7 +33,7 @@ interface SeoPresentationInterface
      * This method is needed to get the default title parameters injected. They are used for
      * concatenating the default values and the seo meta data or defining the strategy for that.
      *
-     * @param  array $titleParameters
+     * @param array $titleParameters
      */
     public function setTitleParameters(array $titleParameters);
 
@@ -41,7 +41,7 @@ interface SeoPresentationInterface
      * This method is the setter injection for the content parameters which contain strategies for
      * duplicate content.
      *
-     * @param  array $contentParameters
+     * @param array $contentParameters
      */
     public function setContentParameters(array $contentParameters);
 
