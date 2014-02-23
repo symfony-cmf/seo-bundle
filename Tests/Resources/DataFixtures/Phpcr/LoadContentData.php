@@ -55,13 +55,11 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $content->setSeoMetadata($metadata);
         $manager->persist($content);
 
-        /*
         $route = new Route();
         $route->setParent($routeRoot);
         $route->setContent($content);
         $route->setName('content-1');
         $manager->persist($route);
-        */
         $content = new SeoAwareContent();
         $content->setName('content-2');
         $content->setTitle('Content 2');

@@ -198,9 +198,9 @@ class SeoPresentation implements SeoPresentationInterface
     {
         $sonataDescription = isset($this->sonataPage->getMetas()['names']['description'][0])
                                 ? $this->sonataPage->getMetas()['names']['description'][0]
-                                : array();
+                                : '';
 
-        return $sonataDescription .'. '. $this->seoMetadata->getMetaDescription();
+        return ('' != $sonataDescription ? $sonataDescription .'. ' : '' ). $this->seoMetadata->getMetaDescription();
     }
 
     /**
@@ -214,9 +214,9 @@ class SeoPresentation implements SeoPresentationInterface
     {
         $sonataKeywords = isset($this->sonataPage->getMetas()['names']['keywords'][0])
                                 ? $this->sonataPage->getMetas()['names']['keywords'][0]
-                                : array();
+                                : '';
 
-        return $sonataKeywords .', '. $this->seoMetadata->getMetaKeywords();
+        return ('' != $sonataKeywords ? $sonataKeywords .', ' : ''). $this->seoMetadata->getMetaKeywords();
     }
 
     /**
