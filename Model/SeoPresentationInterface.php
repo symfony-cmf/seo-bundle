@@ -2,6 +2,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Doctrine\ODM\PHPCR\DocumentManager;
+
 /**
  * An interface for the SeoPresentation model.
  *
@@ -15,11 +17,12 @@ interface SeoPresentationInterface
 
 {
     /**
-     * Simple setter for the seo meta data to the service.
+     * To get access to the current content and it's SeoMetadata
+     * this setter is needed.
      *
-     * @param SeoMetadataInterface $seoMetadata
+     * @param SeoAwareInterface $contentDocument
      */
-    public function setSeoMetadata(SeoMetadataInterface $seoMetadata);
+    public function setContentDocument(SeoAwareInterface $contentDocument);
 
     /**
      * Just a method which will set the values to the sonata service or trigger some other
@@ -52,10 +55,9 @@ interface SeoPresentationInterface
     public function setContentParameters(array $contentParameters);
 
     /**
-     * Will need the locale to make decision on the default title to
-     * have multilang support.
+     * The document manager is needed to detect the current locale of the document.
      *
-     * @param $locale
+     * @param \Doctrine\ODM\PHPCR\DocumentManager $documentManager
      */
-    public function setLocale($locale);
+    public function setDocumentManager(DocumentManager $documentManager);
 }

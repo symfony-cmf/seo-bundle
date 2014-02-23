@@ -21,8 +21,8 @@
             <call method="setContentParameters">
                 <argument>%cmf_seo.content_parameters%</argument>
             </call>
-            <call method="setLocale">
-                <argument>_locale</argument>
+            <call method="setDocumentManager">
+                <argument>doctrine_phpcr.odm.default_document_manager</argument>
             </call>
         </service>
         <service id="cmf_seo.event_lister.seo_content" class="%cmf_seo.event_lister.seo_content.class%">

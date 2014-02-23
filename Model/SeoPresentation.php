@@ -2,6 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Doctrine\ODM\PHPCR\DocumentManager;
 use Sonata\SeoBundle\Seo\SeoPage;
 
 /**
@@ -51,11 +52,14 @@ class SeoPresentation implements SeoPresentationInterface
     private $titleParameters;
 
     /**
-     * To store the current locale injected by DIC
-     *
-     * @var string
+     * @var DocumentManager
      */
-    private $locale;
+    private $dm;
+
+    /**
+     * @var SeoAwareInterface
+     */
+    private $contentDocument;
 
     /**
      * The constructor will set the injected SeoPage - the service of
@@ -71,9 +75,9 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * {@inheritDoc}
      */
-    public function setSeoMetadata(SeoMetadataInterface $seoMetadata)
+    public function setContentDocument(SeoAwareInterface $contentDocument)
     {
-        $this->seoMetadata = $seoMetadata;
+        $this->contentDocument = $contentDocument;
     }
 
     /**
@@ -95,9 +99,9 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * {@inheritDoc}
      */
-    public function setLocale($locale)
+    public function setDocumentManager(DocumentManager $documentManager)
     {
-        $this->locale = $locale;
+        $this->dm = $documentManager;
     }
 
     /**
@@ -106,6 +110,9 @@ class SeoPresentation implements SeoPresentationInterface
      */
     public function setMetaDataValues()
     {
+        //get the current seo metadata out of the document
+        $this->seoMetadata = $this->contentDocument->getSeoMetadata();
+
         //based on the title strategy, the helper method will set the complete title
         if ($this->seoMetadata->getTitle() !== '') {
             $title = $this->createTitle();
@@ -183,9 +190,13 @@ class SeoPresentation implements SeoPresentationInterface
             return $defaultTitle;
         }
 
-        if (is_array($defaultTitle) && isset($defaultTitle[$this->locale])) {
-            return $defaultTitle[$this->locale];
+        // try the current location of the document, seoMetadata should have the same
+        $currentLocale = $this->dm->getUnitOfWork()->getCurrentLocale($this->seoMetadata);
+        if (is_array($defaultTitle) && isset($defaultTitle[$currentLocale])) {
+            return $defaultTitle[$currentLocale];
         }
+
+        //@todo try the fallback language of the application
     }
 
     /**

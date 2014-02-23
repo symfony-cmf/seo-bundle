@@ -30,6 +30,13 @@ class SeoPresentationTest extends BaseTestCase
      */
     private $seoMetadata;
 
+
+    private $dmMock;
+
+    private $unitOfWork;
+
+    private $document;
+
     public function setUp()
     {
         $this->pageService = new SeoPage();
@@ -37,7 +44,30 @@ class SeoPresentationTest extends BaseTestCase
 
         $this->seoMetadata = new SeoMetadata();
 
-        $this->SUT->setSeoMetadata($this->seoMetadata);
+        //need the DM and unitOfWork for getting the locale out of the document
+        $this->dmMock = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
+                                ->disableOriginalConstructor()
+                                ->getMock();
+
+        $this->unitOfWork = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
+                                    ->disableOriginalConstructor()
+                                    ->getMock();
+
+        $this->dmMock->expects($this->any())
+                         ->method('getUnitOfWork')
+                         ->will($this->returnValue($this->unitOfWork));
+
+        //mock the current document to answer with the seo metadata
+        $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface');
+        $this->document->expects($this->once())
+                       ->method('getSeoMetadata')
+                       ->will($this->returnValue($this->seoMetadata));
+
+        //settings for the presentation model
+        $this->SUT->setDocumentManager($this->dmMock);
+        $this->SUT->setContentDocument($this->document);
+
+
     }
 
     /**
@@ -141,7 +171,11 @@ class SeoPresentationTest extends BaseTestCase
     {
         $this->seoMetadata->setTitle('Special title');
 
-        $this->SUT->setLocale($locale);
+        $this->unitOfWork->expects($this->once())
+                         ->method('getCurrentLocale')
+                         ->will($this->returnValue($locale));
+
+
         $this->SUT->setTitleParameters($titleParameters);
 
         $this->SUT->setMetaDataValues();
