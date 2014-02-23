@@ -1,0 +1,9 @@
+cmf_seo:
+    persistence:
+      phpcr: ~
+    title:
+        strategy: append
+        separator: ' | '
+        default: Default title
+    content:
+      strategy: canonical
