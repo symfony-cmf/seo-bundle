@@ -57,7 +57,7 @@ class Configuration implements ConfigurationInterface
                         ->variableNode('default')
                             ->validate()
                                 ->ifTrue(function ($v) {
-                                    return !is_string($v) || !is_array($v);
+                                    return !is_string($v) && !is_array($v);
                                 })
                                 ->thenInvalid('Default can either be an array or a string, "%s" given')
                             ->end()
