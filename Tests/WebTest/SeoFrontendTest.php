@@ -36,7 +36,7 @@ class SeoFrontendTest extends BaseTestCase
     {
         $crawler = $this->client->request('GET', '/content/content-1');
         $res = $this->client->getResponse();
-
+        print($res);
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content 1")'));
 
@@ -57,6 +57,12 @@ class SeoFrontendTest extends BaseTestCase
             'content1, content',
         );
         $this->assertEquals($expectedMeta, $actualMeta);
+
+        //test the setting of canonical link
+        $linkCrwaler = $crawler->filter('head > link')->reduce(function ($node) {
+            return $node->attr('rel') == 'canonical';
+        });
+        $this->assertEquals('/to/original', $linkCrwaler->eq(0)->attr('href'));
 
 
 
