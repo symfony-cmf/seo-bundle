@@ -29,12 +29,36 @@ class SeoFrontendTest extends BaseTestCase
         $this->client = $this->createClient();
     }
 
+    /**
+     * This test is without any setting in sonata_seo just cmf data.
+     */
     public function testTitle()
     {
         $crawler = $this->client->request('GET', '/content/content-1');
         $res = $this->client->getResponse();
-        print($res);
+
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content 1")'));
+
+        //test the title
+        $titleCrawler = $crawler->filter('head > title');
+        $this->assertEquals('Title content 1 | Default title', $titleCrawler->text());
+
+        //test the meta tag entries
+        $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
+                $namesValue = $node->attr('names');
+                return $namesValue == 'title' || $namesValue == 'description' || $namesValue == 'keywords';
+        });
+
+        $actualMeta = $metaCrawler->extract('content', 'content');
+        $expectedMeta = array(
+            'Title content 1 | Default title',
+            'Description of content 1.',
+            'content1, content',
+        );
+        $this->assertEquals($expectedMeta, $actualMeta);
+
+
+
     }
 }

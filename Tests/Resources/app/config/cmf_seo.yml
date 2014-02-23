@@ -2,7 +2,7 @@ cmf_seo:
     persistence:
       phpcr: ~
     title:
-        strategy: append
+        strategy: prepend
         separator: ' | '
         default: Default title
     content:
