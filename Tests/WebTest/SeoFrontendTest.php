@@ -31,8 +31,9 @@ class SeoFrontendTest extends BaseTestCase
 
     public function testTitle()
     {
-        $crawler = $this->client->request('GET', '/content-1');
+        $crawler = $this->client->request('GET', '/content/content-1');
         $res = $this->client->getResponse();
+        print($res);
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content 1")'));
     }

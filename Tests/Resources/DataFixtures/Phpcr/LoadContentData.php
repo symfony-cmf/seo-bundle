@@ -15,6 +15,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ODM\PHPCR\Document\Generic;
+use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
@@ -32,15 +33,11 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
     {
         $root = $manager->find(null, '/test');
 
-        $contentRoot = new Generic;
-        $contentRoot->setNodename('contents');
-        $contentRoot->setParent($root);
-        $manager->persist($contentRoot);
+        NodeHelper::createPath($manager->getPhpcrSession(), '/test/content');
+        NodeHelper::createPath($manager->getPhpcrSession(), '/test/routes/content');
 
-        $routeRoot = new Generic;
-        $routeRoot->setNodename('routes');
-        $routeRoot->setParent($root);
-        $manager->persist($routeRoot);
+        $contentRoot = $manager->find(null, '/test/content');
+        $routeRoot = $manager->find(null, '/test/routes/content');
 
         $content = new SeoAwareContent();
         $content->setName('content-1');
@@ -56,10 +53,12 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $manager->persist($content);
 
         $route = new Route();
-        $route->setParent($routeRoot);
+        $route->setPosition($routeRoot, 'content-1');
         $route->setContent($content);
-        $route->setName('content-1');
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
         $manager->persist($route);
+        unset($content, $route);
+
         $content = new SeoAwareContent();
         $content->setName('content-2');
         $content->setTitle('Content 2');
@@ -72,13 +71,12 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $content->setSeoMetadata($metadata);
         $manager->persist($content);
 
-        /*
         $route = new Route();
-        $route->setParent($routeRoot);
+        $route->setPosition($routeRoot, 'content-2');
         $route->setContent($content);
-        $route->setName('content-2');
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
         $manager->persist($route);
-*/
+
         $manager->flush();
     }
 }

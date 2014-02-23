@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content=" minimum-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% block seo_head %}
+        <title>{% block title %}{{ cmfMainContent.title|default('CMF Sandbox')|striptags }}{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
+
