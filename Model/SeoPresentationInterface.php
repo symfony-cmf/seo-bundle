@@ -60,4 +60,14 @@ interface SeoPresentationInterface
      * @param \Doctrine\ODM\PHPCR\DocumentManager $documentManager
      */
     public function setDocumentManager(DocumentManager $documentManager);
+
+    /**
+     * Setter for the default locale of the application.
+     *
+     * This one is used, if the document locale can not be found in the list
+     * of translated default titles.
+     *
+     * @param $locale
+     */
+    public function setDefaultLocale($locale);
 }

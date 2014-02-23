@@ -66,8 +66,11 @@ class SeoPresentationTest extends BaseTestCase
         //settings for the presentation model
         $this->SUT->setDocumentManager($this->dmMock);
         $this->SUT->setContentDocument($this->document);
+    }
 
-
+    public function tearDown()
+    {
+        unset($this->seoMetadata);
     }
 
     /**
@@ -226,5 +229,54 @@ class SeoPresentationTest extends BaseTestCase
                 'Special title | Der Titel',
             )
         );
+    }
+
+    public function testDefaultLocaleFallbackForDefaultTitleTranslation()
+    {
+        $this->seoMetadata->setTitle('Special title');
+
+        $titleValues = array(
+            'separator' => ' | ',
+            'strategy'  => 'prepend',
+            'default'   =>  array(
+                'en' => 'Default title',
+                'fr' => 'title de default',
+                'de' => 'Der Title',
+            )
+        );
+
+        $this->SUT->setTitleParameters($titleValues);
+        $this->SUT->setDefaultLocale('en');
+
+        $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
+
+        $this->SUT->setMetaDataValues();
+
+        $this->assertEquals('Special title | Default title', $this->pageService->getTitle());
+    }
+
+    /**
+     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
+     */
+    public function testDefaultLocationFallbackBreakThrowsException()
+    {
+        $this->seoMetadata->setTitle('Special title');
+
+        $titleValues = array(
+            'separator' => ' | ',
+            'strategy'  => 'prepend',
+            'default'   =>  array(
+                'en' => 'Default title',
+                'fr' => 'title de default',
+                'de' => 'Der Title',
+            )
+        );
+
+        $this->SUT->setTitleParameters($titleValues);
+        $this->SUT->setDefaultLocale('nl');
+
+        $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
+
+        $this->SUT->setMetaDataValues();
     }
 }

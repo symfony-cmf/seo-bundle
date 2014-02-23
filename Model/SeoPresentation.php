@@ -4,6 +4,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareContentException;
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -62,6 +64,11 @@ class SeoPresentation implements SeoPresentationInterface
     private $contentDocument;
 
     /**
+     * @var string
+     */
+    private $defaultLocale;
+
+    /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
@@ -105,6 +112,14 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function setDefaultLocale($locale)
+    {
+        $this->defaultLocale = $locale;
+    }
+
+    /**
      *  this method will combine all settings directly in the sonata_seo configuration with
      *  the given values of the current content
      */
@@ -114,7 +129,7 @@ class SeoPresentation implements SeoPresentationInterface
         $this->seoMetadata = $this->contentDocument->getSeoMetadata();
 
         //based on the title strategy, the helper method will set the complete title
-        if ($this->seoMetadata->getTitle() !== '') {
+        if ($this->seoMetadata->getTitle() !== null) {
             $title = $this->createTitle();
 
             //set the title to SeoPage and  a meta field
@@ -122,7 +137,7 @@ class SeoPresentation implements SeoPresentationInterface
             $this->sonataPage->addMeta('names', 'title', $title);
         }
 
-        if ($this->seoMetadata->getMetaDescription() != '') {
+        if ($this->seoMetadata->getMetaDescription() !== null) {
             $this->sonataPage->addMeta(
                 'names',
                 'description',
@@ -130,7 +145,7 @@ class SeoPresentation implements SeoPresentationInterface
             );
         }
 
-        if ($this->seoMetadata->getMetaKeywords() != '') {
+        if ($this->seoMetadata->getMetaKeywords() !== null) {
             $this->sonataPage->addMeta(
                 'names',
                 'keywords',
@@ -182,6 +197,7 @@ class SeoPresentation implements SeoPresentationInterface
      * method will return the default title as a string.
      *
      * @param  array|string $defaultTitle
+     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
      * @return array|string
      */
     private function doMultilangDecision($defaultTitle)
@@ -190,13 +206,25 @@ class SeoPresentation implements SeoPresentationInterface
             return $defaultTitle;
         }
 
+
         // try the current location of the document, seoMetadata should have the same
         $currentLocale = $this->dm->getUnitOfWork()->getCurrentLocale($this->seoMetadata);
         if (is_array($defaultTitle) && isset($defaultTitle[$currentLocale])) {
             return $defaultTitle[$currentLocale];
         }
 
-        //@todo try the fallback language of the application
+        if (is_array($defaultTitle) && isset($defaultTitle[$this->defaultLocale])) {
+            return $defaultTitle[$this->defaultLocale];
+        }
+
+        throw new SeoAwareException(
+            sprintf(
+                'No default value of title found for current document locale %s and applications default %s',
+                $currentLocale,
+                $this->defaultLocale
+            )
+        );
+
     }
 
     /**
