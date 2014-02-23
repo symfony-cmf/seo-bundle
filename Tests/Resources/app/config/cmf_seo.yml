@@ -1,0 +1,21 @@
+cmf_seo:
+    persistence:
+      phpcr: ~
+    title:
+        strategy: append
+        separator: ' | '
+        default: Default title
+    content:
+      strategy: canonical
+
+cmf_routing:
+    dynamic:
+        enabled: true
+        persistence:
+            phpcr:
+                route_basepath: /test/routes
+                enabled: true
+    chain:
+        routers_by_id:
+            cmf_routing.dynamic_router: 20
+            router.default: 100

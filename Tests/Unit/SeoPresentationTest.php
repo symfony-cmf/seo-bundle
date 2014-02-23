@@ -12,8 +12,6 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
  * This model is responsible for putting the SeoMetadata into
  * sonatas PageService.
  *
- * Class SeoPresentationTest
- * @package Symfony\Cmf\Bundle\SeoBundle\Tests\Unit
  */
 class SeoPresentationTest extends BaseTestCase
 {
@@ -32,8 +30,6 @@ class SeoPresentationTest extends BaseTestCase
      */
     private $seoMetadata;
 
-    private $containerMock;
-
     public function setUp()
     {
         $this->pageService = new SeoPage();
@@ -42,34 +38,22 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata = new SeoMetadata();
 
         $this->SUT->setSeoMetadata($this->seoMetadata);
-
-        $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\Container', array('getParameter'));
-
-        $this->SUT->setContainer($this->containerMock);
     }
 
     /**
+     * @param $titleParameters
+     * @param $expectedValue
      * @dataProvider provideSeoMetadataValues
      */
-    public function testSettingTitleFromSeoMetadataToPageService($titleSeparator, $titleStrategy, $expectedValue)
+    public function testSettingTitleFromSeoMetadataToPageService($titleParameters, $expectedValue)
     {
         //values for every SeoMetadata
         $this->seoMetadata->setTitle('Special title');
 
-        //default configs like in the sonata_seo config block
-        $this->pageService->setTitle('Default title');
+        //setting the values for the title parameters
+        $this->SUT->setTitleParameters($titleParameters);
 
-        //setting the config to the container mock
-        $this->containerMock->expects($this->at(1))
-                            ->method('getParameter')
-                            ->with($this->equalTo('cmf_seo.title.separator'))
-                            ->will($this->returnValue($titleSeparator));
-
-        $this->containerMock->expects($this->at(2))
-                            ->method('getParameter')
-                            ->with($this->equalTo('cmf_seo.title.strategy'))
-                            ->will($this->returnValue($titleStrategy));
-
+        //run the transformation
         $this->SUT->setMetaDataValues();
 
         //do the asserts
@@ -79,9 +63,134 @@ class SeoPresentationTest extends BaseTestCase
     public function provideSeoMetadataValues()
     {
         return array(
-            array(' | ', 'prepend', 'Special title | Default title'),
-            array(' | ', 'append', 'Default title | Special title'),
-            array(' | ', 'replace', 'Special title')
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  'Default title',
+                ),
+                'Special title | Default title',
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'append',
+                    'default'   =>  'Default title',
+                ),
+                'Default title | Special title',
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'replace',
+                    'default'   =>  'Default title',
+                ),
+                'Special title',
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  '',
+                ),
+                'Special title',
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   => '',
+                ),
+                'Special title',
+            )
+        );
+    }
+
+    public function testSettingDescriptionToSeoPage()
+    {
+        $this->seoMetadata->setMetaDescription('Special description');
+        //to set it here is the same as it was set in the sonata_seo settings
+        $this->pageService->addMeta('names', 'description', 'Default description');
+        $this->SUT->setMetaDataValues();
+        $this->assertEquals(
+            'Default description. Special description',
+            $this->pageService->getMetas()['names']['description'][0]
+        );
+    }
+
+    public function testSettingKeywordsToSeoPage()
+    {
+        $this->seoMetadata->setMetaKeywords('key1, key2');
+        //to set it here is the same as it was set in the sonata_seo settings
+        $this->pageService->addMeta('names', 'keywords', 'default, other');
+        $this->SUT->setMetaDataValues();
+        $this->assertEquals(
+            'default, other, key1, key2',
+            $this->pageService->getMetas()['names']['keywords'][0]
+        );
+    }
+
+    /**
+     * @param $titleParameters
+     * @param $locale
+     * @param $expectedValue
+     *
+     * @dataProvider provideMultilangTitleParameters
+     */
+    public function testSettingMultilangTitleToSeoPage($titleParameters, $locale, $expectedValue)
+    {
+        $this->seoMetadata->setTitle('Special title');
+
+        $this->SUT->setLocale($locale);
+        $this->SUT->setTitleParameters($titleParameters);
+
+        $this->SUT->setMetaDataValues();
+
+        $this->assertEquals($expectedValue, $this->pageService->getTitle());
+    }
+
+    public function provideMultilangTitleParameters()
+    {
+        return array(
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  array(
+                        'en' => 'Default title',
+                        'fr' => 'title de default',
+                        'de' => 'Der Title',
+                    )
+                ),
+                'en',
+                'Special title | Default title',
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  array(
+                        'en' => 'Default title',
+                        'fr' => 'title de default',
+                        'de' => 'Der Title',
+                    )
+                ),
+                'fr',
+                'Special title | title de default',
+            ),
+            array(
+                array(
+                    'separator' => ' | ',
+                    'strategy'  => 'prepend',
+                    'default'   =>  array(
+                        'en' => 'Default title',
+                        'fr' => 'title de default',
+                        'de' => 'Der Titel',
+                    )
+                ),
+                'de',
+                'Special title | Der Titel',
+            )
         );
     }
 }

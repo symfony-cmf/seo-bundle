@@ -6,6 +6,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * This is the bundle's own form type for editing the SeoMetadata on a document.
+ *
+ * Documents, that implements the SeoAwareInterface and a sonata admin class to
+ * do the backend stuff, will get this form type on the fly.
+ * But you can call this type by "$form->add('seoMetadata', 'seo_metadata');"
+ *
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
+ */
 class SeoMetadataType extends AbstractType
 {
 
