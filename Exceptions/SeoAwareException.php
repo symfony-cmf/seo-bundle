@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Exceptions;
-
 
 use Symfony\Component\Process\Exception\RuntimeException;
 

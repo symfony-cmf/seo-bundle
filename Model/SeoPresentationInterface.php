@@ -64,8 +64,8 @@ interface SeoPresentationInterface
     /**
      * Setter for the default locale of the application.
      *
-     * This one is used, if the document locale can not be found in the list
-     * of translated default titles.
+     * If the list of translated titles does not contain the locale of the current document,
+     * or the current document has no locale at all, this locale is used instead.
      *
      * @param $locale
      */

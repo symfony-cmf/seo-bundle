@@ -129,7 +129,7 @@ class SeoPresentation implements SeoPresentationInterface
         $this->seoMetadata = $this->contentDocument->getSeoMetadata();
 
         //based on the title strategy, the helper method will set the complete title
-        if ($this->seoMetadata->getTitle() !== null) {
+        if (null !== $this->seoMetadata->getTitle()) {
             $title = $this->createTitle();
 
             //set the title to SeoPage and  a meta field
@@ -137,7 +137,7 @@ class SeoPresentation implements SeoPresentationInterface
             $this->sonataPage->addMeta('names', 'title', $title);
         }
 
-        if ($this->seoMetadata->getMetaDescription() !== null) {
+        if (null !== $this->seoMetadata->getMetaDescription()) {
             $this->sonataPage->addMeta(
                 'names',
                 'description',
@@ -145,7 +145,7 @@ class SeoPresentation implements SeoPresentationInterface
             );
         }
 
-        if ($this->seoMetadata->getMetaKeywords() !== null) {
+        if (null !== $this->seoMetadata->getMetaKeywords()) {
             $this->sonataPage->addMeta(
                 'names',
                 'keywords',
@@ -224,7 +224,6 @@ class SeoPresentation implements SeoPresentationInterface
                 $this->defaultLocale
             )
         );
-
     }
 
     /**
