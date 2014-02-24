@@ -1,0 +1,21 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ cmfMainContent.title|striptags }}{% endblock %}
+
+{% block seo_head -%}
+    {{ sonata_seo_title() }}
+    {{ sonata_seo_metadatas() }}
+    {{ sonata_seo_link_canonical() }}
+    {{ sonata_seo_lang_alternates() }}
+{% endblock %}
+
+{% block content %}
+    <div class="articleContainer hero-unit">
+        <p><em>This is a template used by the sandbox controller</em></p>
+        <h1 id="main_title">{{ cmfMainContent.title }}</h1>
+        <div>
+            {{ cmfMainContent.body|raw }}
+        </div>
+    </div>
+    {{ parent() }}
+{% endblock %}

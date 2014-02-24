@@ -107,7 +107,7 @@ class SeoPresentation implements SeoPresentationInterface
     public function setMetaDataValues()
     {
         //based on the title strategy, the helper method will set the complete title
-        if ($this->seoMetadata->getTitle() !== '') {
+        if ('' !== $this->seoMetadata->getTitle()) {
             $title = $this->createTitle();
 
             //set the title to SeoPage and  a meta field
@@ -115,7 +115,7 @@ class SeoPresentation implements SeoPresentationInterface
             $this->sonataPage->addMeta('names', 'title', $title);
         }
 
-        if ($this->seoMetadata->getMetaDescription() != '') {
+        if ('' !== $this->seoMetadata->getMetaDescription()) {
             $this->sonataPage->addMeta(
                 'names',
                 'description',
@@ -123,7 +123,7 @@ class SeoPresentation implements SeoPresentationInterface
             );
         }
 
-        if ($this->seoMetadata->getMetaKeywords() != '') {
+        if ('' !== $this->seoMetadata->getMetaKeywords()) {
             $this->sonataPage->addMeta(
                 'names',
                 'keywords',
@@ -198,9 +198,9 @@ class SeoPresentation implements SeoPresentationInterface
     {
         $sonataDescription = isset($this->sonataPage->getMetas()['names']['description'][0])
                                 ? $this->sonataPage->getMetas()['names']['description'][0]
-                                : array();
+                                : '';
 
-        return $sonataDescription .'. '. $this->seoMetadata->getMetaDescription();
+        return ('' !== $sonataDescription ? $sonataDescription.'. ' : '').$this->seoMetadata->getMetaDescription();
     }
 
     /**
@@ -214,9 +214,9 @@ class SeoPresentation implements SeoPresentationInterface
     {
         $sonataKeywords = isset($this->sonataPage->getMetas()['names']['keywords'][0])
                                 ? $this->sonataPage->getMetas()['names']['keywords'][0]
-                                : array();
+                                : '';
 
-        return $sonataKeywords .', '. $this->seoMetadata->getMetaKeywords();
+        return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
     }
 
     /**

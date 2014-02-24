@@ -12,6 +12,10 @@
         <testsuite name="unit">
             <directory>./Tests/Unit</directory>
         </testsuite>
+
+        <testsuite name="web">
+            <directory>./Tests/WebTest</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
