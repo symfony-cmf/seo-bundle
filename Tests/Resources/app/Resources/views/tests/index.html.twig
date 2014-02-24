@@ -2,7 +2,7 @@
 
 {% block title %}{{ cmfMainContent.title|striptags }}{% endblock %}
 
-{% block seo_head %}
+{% block seo_head -%}
     {{ sonata_seo_title() }}
     {{ sonata_seo_metadatas() }}
     {{ sonata_seo_link_canonical() }}

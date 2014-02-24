@@ -24,8 +24,8 @@ class SeoFrontendTest extends BaseTestCase
     public function setUp()
     {
         $this->db('PHPCR')->loadFixtures(array(
-                'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
-            ));
+            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
+        ));
         $this->client = $this->createClient();
     }
 
@@ -36,7 +36,7 @@ class SeoFrontendTest extends BaseTestCase
     {
         $crawler = $this->client->request('GET', '/content/content-1');
         $res = $this->client->getResponse();
-        print($res);
+
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content 1")'));
 
@@ -47,7 +47,7 @@ class SeoFrontendTest extends BaseTestCase
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
                 $namesValue = $node->attr('names');
-                return $namesValue == 'title' || $namesValue == 'description' || $namesValue == 'keywords';
+                return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');
@@ -59,12 +59,9 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertEquals($expectedMeta, $actualMeta);
 
         //test the setting of canonical link
-        $linkCrwaler = $crawler->filter('head > link')->reduce(function ($node) {
-            return $node->attr('rel') == 'canonical';
+        $linkCrawler = $crawler->filter('head > link')->reduce(function ($node) {
+            return 'canonical' === $node->attr('rel');
         });
-        $this->assertEquals('/to/original', $linkCrwaler->eq(0)->attr('href'));
-
-
-
+        $this->assertEquals('/to/original', $linkCrawler->eq(0)->attr('href'));
     }
 }

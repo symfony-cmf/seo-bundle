@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -15,7 +13,6 @@ class TestController extends Controller
                 'title'     => $contentDocument->getTitle(),
                 'body' => $contentDocument->getBody(),
             )
-
         );
 
         return $this->render('::tests/index.html.twig', $params);
