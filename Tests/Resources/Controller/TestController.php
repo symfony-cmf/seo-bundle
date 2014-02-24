@@ -12,7 +12,7 @@ class TestController extends Controller
             'cmfMainContent' => array(
                 'title'     => $contentDocument->getTitle(),
                 'body' => $contentDocument->getBody(),
-            )
+            ),
         );
 
         return $this->render('::tests/index.html.twig', $params);
