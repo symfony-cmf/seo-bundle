@@ -22,51 +22,17 @@ use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoPresentation implements SeoPresentationInterface
+class SeoPresentation extends AbstractSeoPresentation
 {
     /**
      * @var SeoPage
      */
-    private $sonataPage;
+    protected $sonataPage;
 
     /**
      * @var SeoMetadataInterface
      */
-    private $seoMetadata;
-
-    /**
-     * @var bool
-     */
-    private $redirect = false;
-
-    /**
-     * Storing the content parameters - config values under cmf_seo.content.
-     *
-     * @var array
-     */
-    private $contentParameters;
-
-    /**
-     * Storing the title parameters - config values under cmf_seo.title.
-     *
-     * @var array
-     */
-    private $titleParameters;
-
-    /**
-     * @var DocumentManager
-     */
-    private $dm;
-
-    /**
-     * @var SeoAwareInterface
-     */
-    private $contentDocument;
-
-    /**
-     * @var string
-     */
-    private $defaultLocale;
+    protected $seoMetadata;
 
     /**
      * The constructor will set the injected SeoPage - the service of
@@ -80,53 +46,13 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function setContentDocument(SeoAwareInterface $contentDocument)
-    {
-        $this->contentDocument = $contentDocument;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTitleParameters(array $titleParameters)
-    {
-        $this->titleParameters = $titleParameters;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setContentParameters(array $contentParameters)
-    {
-        $this->contentParameters = $contentParameters;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setDocumentManager(DocumentManager $documentManager)
-    {
-        $this->dm = $documentManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setDefaultLocale($locale)
-    {
-        $this->defaultLocale = $locale;
-    }
-
-    /**
      *  this method will combine all settings directly in the sonata_seo configuration with
      *  the given values of the current content
      */
     public function setMetaDataValues()
     {
         //get the current seo metadata out of the document
-        $this->seoMetadata = $this->contentDocument->getSeoMetadata();
+        $this->seoMetadata = $this->getSeoMetadata();
 
         //based on the title strategy, the helper method will set the complete title
         if (null !== $this->seoMetadata->getTitle()) {
@@ -208,20 +134,22 @@ class SeoPresentation implements SeoPresentationInterface
 
 
         // try the current location of the document, seoMetadata should have the same
-        $currentLocale = $this->dm->getUnitOfWork()->getCurrentLocale($this->seoMetadata);
+        $currentLocale = $this->getModelLocale();
         if (is_array($defaultTitle) && isset($defaultTitle[$currentLocale])) {
             return $defaultTitle[$currentLocale];
         }
 
-        if (is_array($defaultTitle) && isset($defaultTitle[$this->defaultLocale])) {
-            return $defaultTitle[$this->defaultLocale];
+        //try the applications default locale
+        $defaultLocale = $this->getApplicationDefaultLocale();
+        if (is_array($defaultTitle) && isset($defaultTitle[$defaultLocale])) {
+            return $defaultTitle[$defaultLocale];
         }
 
         throw new SeoAwareException(
             sprintf(
                 'No default value of title found for current document locale %s and applications default %s',
                 $currentLocale,
-                $this->defaultLocale
+                $defaultLocale
             )
         );
     }
@@ -255,23 +183,5 @@ class SeoPresentation implements SeoPresentationInterface
                                 : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
-    }
-
-    /**
-     * Setter for the redirect property.
-     *
-     * @param $redirect
-     */
-    private function setRedirect($redirect)
-    {
-        $this->redirect = $redirect;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRedirect()
-    {
-        return $this->redirect;
     }
 }

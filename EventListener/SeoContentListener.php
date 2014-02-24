@@ -39,7 +39,7 @@ class SeoContentListener
     {
         $contentDocument = $event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY);
         if ($contentDocument instanceof SeoAwareInterface) {
-            $this->seoPage->setSeoMetadata($contentDocument->getSeoMetadata());
+            $this->seoPage->setContentDocument($contentDocument);
             $this->seoPage->setMetadataValues();
 
             //have a look if the strategy is redirect and if there is a route to redirect to

@@ -44,10 +44,20 @@ class SeoPresentationTest extends BaseTestCase
 
         $this->seoMetadata = new SeoMetadata();
 
+        //need a mock for the manager registry
+        $managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
+                                ->disableOriginalConstructor()
+                                ->getMock();
+
         //need the DM and unitOfWork for getting the locale out of the document
         $this->dmMock = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
                                 ->disableOriginalConstructor()
                                 ->getMock();
+
+        $managerRegistry->expects($this->any())
+                        ->method('getManager')
+                        ->will($this->returnValue($this->dmMock));
+
 
         $this->unitOfWork = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
                                     ->disableOriginalConstructor()
@@ -64,7 +74,7 @@ class SeoPresentationTest extends BaseTestCase
                        ->will($this->returnValue($this->seoMetadata));
 
         //settings for the presentation model
-        $this->SUT->setDocumentManager($this->dmMock);
+        $this->SUT->setDoctrineRegistry($managerRegistry);
         $this->SUT->setContentDocument($this->document);
     }
 

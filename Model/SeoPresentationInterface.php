@@ -2,8 +2,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
-use Doctrine\ODM\PHPCR\DocumentManager;
-
 /**
  * An interface for the SeoPresentation model.
  *
@@ -14,7 +12,6 @@ use Doctrine\ODM\PHPCR\DocumentManager;
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 interface SeoPresentationInterface
-
 {
     /**
      * To get access to the current content and it's SeoMetadata
@@ -37,37 +34,4 @@ interface SeoPresentationInterface
      * @return bool|string
      */
     public function getRedirect();
-
-    /**
-     * This method is needed to get the default title parameters injected. They are used for
-     * concatenating the default values and the seo meta data or defining the strategy for that.
-     *
-     * @param array $titleParameters
-     */
-    public function setTitleParameters(array $titleParameters);
-
-    /**
-     * This method is the setter injection for the content parameters which contain strategies for
-     * duplicate content.
-     *
-     * @param array $contentParameters
-     */
-    public function setContentParameters(array $contentParameters);
-
-    /**
-     * The document manager is needed to detect the current locale of the document.
-     *
-     * @param \Doctrine\ODM\PHPCR\DocumentManager $documentManager
-     */
-    public function setDocumentManager(DocumentManager $documentManager);
-
-    /**
-     * Setter for the default locale of the application.
-     *
-     * If the list of translated titles does not contain the locale of the current document,
-     * or the current document has no locale at all, this locale is used instead.
-     *
-     * @param $locale
-     */
-    public function setDefaultLocale($locale);
 }

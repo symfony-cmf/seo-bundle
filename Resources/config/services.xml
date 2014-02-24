@@ -21,8 +21,8 @@
             <call method="setContentParameters">
                 <argument>%cmf_seo.content_parameters%</argument>
             </call>
-            <call method="setDocumentManager">
-                <argument>doctrine_phpcr.odm.default_document_manager</argument>
+            <call method="setDoctrineRegistry">
+                <argument type="service" id="doctrine_phpcr"/>
             </call>
             <call method="setDefaultLocale">
                 <argument>%locale%</argument>
