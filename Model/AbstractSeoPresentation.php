@@ -122,16 +122,6 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * This method is used to get the SeoMetadata from current content document.
-     *
-     * @return SeoMetadata
-     */
-    protected function getSeoMetadata()
-    {
-        return $this->contentDocument->getSeoMetadata();
-    }
-
-    /**
      * To get the Document Manager out of the registry, this method needs to be called.
      *
      * @return \Doctrine\Common\Persistence\ObjectManager|object

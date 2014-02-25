@@ -46,6 +46,16 @@ class SeoPresentation extends AbstractSeoPresentation
     }
 
     /**
+     * This method is used to get the SeoMetadata from current content document.
+     *
+     * @return SeoMetadata
+     */
+    protected function getSeoMetadata()
+    {
+        return $this->contentDocument->getSeoMetadata();
+    }
+
+    /**
      *  this method will combine all settings directly in the sonata_seo configuration with
      *  the given values of the current content
      */
