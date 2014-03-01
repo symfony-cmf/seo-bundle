@@ -2,9 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
-use Doctrine\ODM\PHPCR\DocumentManager;
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareContentException;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 
 /**
@@ -132,7 +130,7 @@ class SeoPresentation extends AbstractSeoPresentation
      * Depending on the current locale and the setting for the default title this
      * method will return the default title as a string.
      *
-     * @param  array|string $defaultTitle
+     * @param  array|string                                               $defaultTitle
      * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
      * @return array|string
      */
@@ -141,7 +139,6 @@ class SeoPresentation extends AbstractSeoPresentation
         if (is_string($defaultTitle)) {
             return $defaultTitle;
         }
-
 
         // try the current location of the document, seoMetadata should have the same
         $currentLocale = $this->getModelLocale();

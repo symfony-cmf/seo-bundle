@@ -30,7 +30,6 @@ class SeoPresentationTest extends BaseTestCase
      */
     private $seoMetadata;
 
-
     private $dmMock;
 
     private $unitOfWork;
@@ -57,7 +56,6 @@ class SeoPresentationTest extends BaseTestCase
         $managerRegistry->expects($this->any())
                         ->method('getManager')
                         ->will($this->returnValue($this->dmMock));
-
 
         $this->unitOfWork = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
                                     ->disableOriginalConstructor()
@@ -187,7 +185,6 @@ class SeoPresentationTest extends BaseTestCase
         $this->unitOfWork->expects($this->once())
                          ->method('getCurrentLocale')
                          ->will($this->returnValue($locale));
-
 
         $this->SUT->setTitleParameters($titleParameters);
 

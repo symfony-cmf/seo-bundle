@@ -47,6 +47,7 @@ class SeoFrontendTest extends BaseTestCase
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
                 $namesValue = $node->attr('names');
+
                 return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
         });
 
