@@ -30,6 +30,12 @@ class SeoPresentationTest extends BaseTestCase
      */
     private $seoMetadata;
 
+    private $dmMock;
+
+    private $unitOfWork;
+
+    private $document;
+
     public function setUp()
     {
         $this->pageService = new SeoPage();
@@ -37,7 +43,42 @@ class SeoPresentationTest extends BaseTestCase
 
         $this->seoMetadata = new SeoMetadata();
 
-        $this->SUT->setSeoMetadata($this->seoMetadata);
+        //need a mock for the manager registry
+        $managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
+                                ->disableOriginalConstructor()
+                                ->getMock();
+
+        //need the DM and unitOfWork for getting the locale out of the document
+        $this->dmMock = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
+                                ->disableOriginalConstructor()
+                                ->getMock();
+
+        $managerRegistry->expects($this->any())
+                        ->method('getManager')
+                        ->will($this->returnValue($this->dmMock));
+
+        $this->unitOfWork = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
+                                    ->disableOriginalConstructor()
+                                    ->getMock();
+
+        $this->dmMock->expects($this->any())
+                         ->method('getUnitOfWork')
+                         ->will($this->returnValue($this->unitOfWork));
+
+        //mock the current document to answer with the seo metadata
+        $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface');
+        $this->document->expects($this->once())
+                       ->method('getSeoMetadata')
+                       ->will($this->returnValue($this->seoMetadata));
+
+        //settings for the presentation model
+        $this->SUT->setDoctrineRegistry($managerRegistry);
+        $this->SUT->setContentDocument($this->document);
+    }
+
+    public function tearDown()
+    {
+        unset($this->seoMetadata);
     }
 
     /**
@@ -141,7 +182,10 @@ class SeoPresentationTest extends BaseTestCase
     {
         $this->seoMetadata->setTitle('Special title');
 
-        $this->SUT->setLocale($locale);
+        $this->unitOfWork->expects($this->once())
+                         ->method('getCurrentLocale')
+                         ->will($this->returnValue($locale));
+
         $this->SUT->setTitleParameters($titleParameters);
 
         $this->SUT->setMetaDataValues();
@@ -192,5 +236,54 @@ class SeoPresentationTest extends BaseTestCase
                 'Special title | Der Titel',
             )
         );
+    }
+
+    public function testDefaultLocaleFallbackForDefaultTitleTranslation()
+    {
+        $this->seoMetadata->setTitle('Special title');
+
+        $titleValues = array(
+            'separator' => ' | ',
+            'strategy'  => 'prepend',
+            'default'   =>  array(
+                'en' => 'Default title',
+                'fr' => 'title de default',
+                'de' => 'Der Title',
+            )
+        );
+
+        $this->SUT->setTitleParameters($titleValues);
+        $this->SUT->setDefaultLocale('en');
+
+        $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
+
+        $this->SUT->setMetaDataValues();
+
+        $this->assertEquals('Special title | Default title', $this->pageService->getTitle());
+    }
+
+    /**
+     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
+     */
+    public function testDefaultLocationFallbackBreakThrowsException()
+    {
+        $this->seoMetadata->setTitle('Special title');
+
+        $titleValues = array(
+            'separator' => ' | ',
+            'strategy'  => 'prepend',
+            'default'   =>  array(
+                'en' => 'Default title',
+                'fr' => 'title de default',
+                'de' => 'Der Title',
+            )
+        );
+
+        $this->SUT->setTitleParameters($titleValues);
+        $this->SUT->setDefaultLocale('nl');
+
+        $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
+
+        $this->SUT->setMetaDataValues();
     }
 }

@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -19,43 +20,17 @@ use Sonata\SeoBundle\Seo\SeoPage;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoPresentation implements SeoPresentationInterface
+class SeoPresentation extends AbstractSeoPresentation
 {
     /**
      * @var SeoPage
      */
-    private $sonataPage;
+    protected $sonataPage;
 
     /**
      * @var SeoMetadataInterface
      */
-    private $seoMetadata;
-
-    /**
-     * @var bool
-     */
-    private $redirect = false;
-
-    /**
-     * Storing the content parameters - config values under cmf_seo.content.
-     *
-     * @var array
-     */
-    private $contentParameters;
-
-    /**
-     * Storing the title parameters - config values under cmf_seo.title.
-     *
-     * @var array
-     */
-    private $titleParameters;
-
-    /**
-     * To store the current locale injected by DIC
-     *
-     * @var string
-     */
-    private $locale;
+    protected $seoMetadata;
 
     /**
      * The constructor will set the injected SeoPage - the service of
@@ -69,35 +44,13 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * This method is used to get the SeoMetadata from current content document.
+     *
+     * @return SeoMetadata
      */
-    public function setSeoMetadata(SeoMetadataInterface $seoMetadata)
+    protected function getSeoMetadata()
     {
-        $this->seoMetadata = $seoMetadata;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTitleParameters(array $titleParameters)
-    {
-        $this->titleParameters = $titleParameters;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setContentParameters(array $contentParameters)
-    {
-        $this->contentParameters = $contentParameters;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
+        return $this->contentDocument->getSeoMetadata();
     }
 
     /**
@@ -106,8 +59,11 @@ class SeoPresentation implements SeoPresentationInterface
      */
     public function setMetaDataValues()
     {
+        //get the current seo metadata out of the document
+        $this->seoMetadata = $this->getSeoMetadata();
+
         //based on the title strategy, the helper method will set the complete title
-        if ('' !== $this->seoMetadata->getTitle()) {
+        if (null !== $this->seoMetadata->getTitle()) {
             $title = $this->createTitle();
 
             //set the title to SeoPage and  a meta field
@@ -115,7 +71,7 @@ class SeoPresentation implements SeoPresentationInterface
             $this->sonataPage->addMeta('names', 'title', $title);
         }
 
-        if ('' !== $this->seoMetadata->getMetaDescription()) {
+        if (null !== $this->seoMetadata->getMetaDescription()) {
             $this->sonataPage->addMeta(
                 'names',
                 'description',
@@ -123,7 +79,7 @@ class SeoPresentation implements SeoPresentationInterface
             );
         }
 
-        if ('' !== $this->seoMetadata->getMetaKeywords()) {
+        if (null !== $this->seoMetadata->getMetaKeywords()) {
             $this->sonataPage->addMeta(
                 'names',
                 'keywords',
@@ -174,7 +130,8 @@ class SeoPresentation implements SeoPresentationInterface
      * Depending on the current locale and the setting for the default title this
      * method will return the default title as a string.
      *
-     * @param  array|string $defaultTitle
+     * @param  array|string                                               $defaultTitle
+     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
      * @return array|string
      */
     private function doMultilangDecision($defaultTitle)
@@ -183,9 +140,25 @@ class SeoPresentation implements SeoPresentationInterface
             return $defaultTitle;
         }
 
-        if (is_array($defaultTitle) && isset($defaultTitle[$this->locale])) {
-            return $defaultTitle[$this->locale];
+        // try the current location of the document, seoMetadata should have the same
+        $currentLocale = $this->getModelLocale();
+        if (is_array($defaultTitle) && isset($defaultTitle[$currentLocale])) {
+            return $defaultTitle[$currentLocale];
         }
+
+        //try the applications default locale
+        $defaultLocale = $this->getApplicationDefaultLocale();
+        if (is_array($defaultTitle) && isset($defaultTitle[$defaultLocale])) {
+            return $defaultTitle[$defaultLocale];
+        }
+
+        throw new SeoAwareException(
+            sprintf(
+                'No default value of title found for current document locale %s and applications default %s',
+                $currentLocale,
+                $defaultLocale
+            )
+        );
     }
 
     /**
@@ -217,23 +190,5 @@ class SeoPresentation implements SeoPresentationInterface
                                 : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
-    }
-
-    /**
-     * Setter for the redirect property.
-     *
-     * @param $redirect
-     */
-    private function setRedirect($redirect)
-    {
-        $this->redirect = $redirect;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRedirect()
-    {
-        return $this->redirect;
     }
 }
