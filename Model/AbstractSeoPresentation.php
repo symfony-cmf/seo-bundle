@@ -66,7 +66,6 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
         return $this->redirect;
     }
 
-
     /**
      * This method is needed to get the default title parameters injected. They are used for
      * concatenating the default values and the seo meta data or defining the strategy for that.
@@ -88,7 +87,6 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     {
         $this->contentParameters = $contentParameters;
     }
-
 
     /**
      * The document manager is needed to detect the current locale of the document.
