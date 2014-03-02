@@ -12,7 +12,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoTitleStrategy implements SeoExtractorStrategyInterface
+class SeoTitleExtractorStrategy implements SeoExtractorStrategyInterface
 {
 
     /**
@@ -38,6 +38,6 @@ class SeoTitleStrategy implements SeoExtractorStrategyInterface
                 )
             );
         }
-        $seoMetadata->setOriginalUrl($document->extractTitle());
+        $seoMetadata->setTitle($document->extractTitle());
     }
 }
