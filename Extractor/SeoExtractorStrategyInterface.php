@@ -19,8 +19,8 @@ interface SeoExtractorStrategyInterface
      * an interface or being instance of a specific class,
      * or introspection to see if a certain method exists.
      *
-     * @param   SeoAwareInterface $document
-     * @return  boolean           whether this strategy supports $document
+     * @param  SeoAwareInterface $document
+     * @return boolean           whether this strategy supports $document
      */
     public function supports(SeoAwareInterface $document);
 

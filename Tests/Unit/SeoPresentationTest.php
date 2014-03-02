@@ -35,11 +35,36 @@ class SeoPresentationTest extends BaseTestCase
     private $unitOfWork;
 
     private $document;
+    private $titleStrategy;
+    private $descriptionStrategy;
+    private $routeStrategy;
 
     public function setUp()
     {
+        //mock the strategies
+        $this->titleStrategy = $this->getMock(
+            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractorStrategy',
+            array('supports', 'updateMetadata')
+        );
+        $this->descriptionStrategy = $this->getMock(
+            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractorStrategy',
+            array('supports', 'updateMetadata')
+        );
+        $this->routeStrategy = $this->getMock(
+            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy',
+            array('supports', 'updateMetadata')
+        );
+
+        //set up the SUT
         $this->pageService = new SeoPage();
-        $this->SUT = new SeoPresentation($this->pageService);
+        $this->SUT = new SeoPresentation(
+            $this->pageService,
+            array(
+                $this->titleStrategy,
+                $this->descriptionStrategy,
+                $this->routeStrategy,
+            )
+        );
 
         $this->seoMetadata = new SeoMetadata();
 
@@ -67,7 +92,7 @@ class SeoPresentationTest extends BaseTestCase
 
         //mock the current document to answer with the seo metadata
         $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface');
-        $this->document->expects($this->once())
+        $this->document->expects($this->any())
                        ->method('getSeoMetadata')
                        ->will($this->returnValue($this->seoMetadata));
 
@@ -88,6 +113,7 @@ class SeoPresentationTest extends BaseTestCase
      */
     public function testSettingTitleFromSeoMetadataToPageService($titleParameters, $expectedValue)
     {
+
         //values for every SeoMetadata
         $this->seoMetadata->setTitle('Special title');
 

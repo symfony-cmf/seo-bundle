@@ -4,6 +4,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorStrategyInterface;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -37,20 +39,42 @@ class SeoPresentation extends AbstractSeoPresentation
      * sonata which is responsible for storing the seo data.
      *
      * @param SeoPage $sonataPage
+     * @param array   $strategies
      */
-    public function __construct(SeoPage $sonataPage)
+    public function __construct(SeoPage $sonataPage, array $strategies)
     {
         $this->sonataPage = $sonataPage;
+        $this->strategies = $strategies;
     }
 
     /**
      * This method is used to get the SeoMetadata from current content document.
      *
+     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
      * @return SeoMetadata
      */
     protected function getSeoMetadata()
     {
-        return $this->contentDocument->getSeoMetadata();
+        $seoMetadata = new SeoMetadata();
+
+        //copy the documents metadata to the current one as default
+        $seoMetadata->setTitle($this->contentDocument->getSeoMetadata()->getTitle());
+        $seoMetadata->setMetaDescription($this->contentDocument->getSeoMetadata()->getMetaDescription());
+        $seoMetadata->setMetaKeywords($this->contentDocument->getSeoMetadata()->getMetaKeywords());
+        $seoMetadata->setOriginalUrl($this->contentDocument->getSeoMetadata()->getOriginalUrl());
+
+        foreach ($this->strategies as $strategy) {
+            if (!$strategy instanceof SeoExtractorStrategyInterface) {
+                print($strategy);
+                throw new SeoExtractorStrategyException('Wrong Strategy given.');
+            }
+
+            if ($strategy->supports($this->contentDocument)) {
+                $strategy->updateMetadata($this->contentDocument, $seoMetadata);
+            }
+        }
+
+        return $seoMetadata;
     }
 
     /**
