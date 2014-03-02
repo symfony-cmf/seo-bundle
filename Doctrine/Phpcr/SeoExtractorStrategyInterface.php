@@ -44,7 +44,7 @@ interface SeoExtractorStrategyInterface
      *
      * - SeoTitleExtractorInterface - extractTitle()
      * - SeoDescriptionExtractorInterface - extractDescription()
-     * - SeoOriginalRouteExtractorInterface - extractRoute()
+     * - SeoOriginalRouteExtractorInterface - extractOriginalRoute()
      *
      * @param SeoAwareInterface $document
      * @param SeoMetadataInterface $seoMetadata
