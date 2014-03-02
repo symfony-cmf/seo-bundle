@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractorStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoMetadataExtractorStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractorStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
@@ -84,6 +85,26 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
 
         $this->assertEquals('seo-route', $this->seoMetadata->getOriginalUrl());
+    }
+
+
+    public function testMetadataExtractorStrategy()
+    {
+        $strategy = new SeoMetadataExtractorStrategy();
+
+        $seoMetadata = new SeoMetadata();
+        $seoMetadata->setOriginalUrl('seo-route');
+        $seoMetadata->setTitle('seo-title');
+        $seoMetadata->setMetaKeywords('keys');
+        $seoMetadata->setMetaDescription('seo-description');
+
+        $this->routeDocument->expects($this->any())
+                            ->method('getSeoMetadata')
+                            ->will($this->returnValue($seoMetadata));
+
+        $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
+
+        $this->assertEquals($seoMetadata, $this->seoMetadata);
     }
 
     /**
