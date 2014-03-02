@@ -1,20 +1,17 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This extractor strategy is responsible for extracting
- * ths documents description.
- *
- * That document needs to implement the SeoDescriptionExtractorInterface
- * and provide a extractDescription() method.
+ * This strategy extracts the description from documents
+ * implementing the SeoDescriptionExtractorInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoOriginalDescriptionStrategy implements SeoExtractorStrategyInterface
+class SeoDescriptionStrategy implements SeoExtractorStrategyInterface
 {
 
     /**

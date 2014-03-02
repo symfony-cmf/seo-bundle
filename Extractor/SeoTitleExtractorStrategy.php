@@ -1,20 +1,17 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This extractor strategy is responsible for extracting
- * ths documents title.
- *
- * That document needs to implement the SeoTitleExtractorInterface
- * and provide a extractTitle() method.
+ * This strategy extracts the title from documents
+ * implementing the SeoTitleExtractorInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoOriginalDescriptionStrategy implements SeoExtractorStrategyInterface
+class SeoTitleStrategy implements SeoExtractorStrategyInterface
 {
 
     /**

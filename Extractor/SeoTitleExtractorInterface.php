@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 /**
  * This interface is one of the ExtractorInterfaces to
@@ -16,12 +16,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 interface SeoTitleExtractorInterface
 {
     /**
-     * The return of this method is used to update the SeoMetada's title.
-     *
-     * It is used in an extractor strategy. At the moment the SeoBundle
-     * supports the SeoTitleExtractorStrategy. This strategy checks for the
-     * SeoTitleExtractorInterface and calls this method to get a
-     * representation of the documents title.
+     * Provide a title of this page to be used in SEO context.
      *
      * @return string
      */

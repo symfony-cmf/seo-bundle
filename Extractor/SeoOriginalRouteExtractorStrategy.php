@@ -1,14 +1,13 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This extractor strategy is responsible for extracting
- * ths documents original route (if have lots of them and
- * has be aware of duplicate content).
+ * This strategy extracts the original route from documents
+ * implementing the SeoOriginalRouteExtractorInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
