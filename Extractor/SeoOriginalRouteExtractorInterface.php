@@ -18,7 +18,7 @@ interface SeoOriginalRouteExtractorInterface
     /**
      * Provide the original url of this page to be used in SEO context.
      *
-     * @return string as the route name (cmf Route object)
+     * @return string|Route the original route.
      */
     public function extractOriginalRoute();
 }
