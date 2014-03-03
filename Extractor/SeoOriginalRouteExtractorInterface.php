@@ -2,6 +2,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
+
 /**
  * This interface is one of the ExtractorInterfaces to
  * get a documents property for updating the SeoMetadata.
@@ -18,7 +20,7 @@ interface SeoOriginalRouteExtractorInterface
     /**
      * Provide the original url of this page to be used in SEO context.
      *
-     * @return string|Route the original route.
+     * @return Route the original route.
      */
     public function extractOriginalRoute();
 }

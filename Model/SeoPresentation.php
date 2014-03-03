@@ -2,10 +2,16 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use PHPCR\Util\UUIDHelper;
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\RedirectRoute;
+use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorStrategyInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy;
+use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -58,10 +64,9 @@ class SeoPresentation extends AbstractSeoPresentation
         $seoMetadata = new SeoMetadata();
 
         //copy the documents metadata to the current one as default
-        $seoMetadata->setTitle($this->contentDocument->getSeoMetadata()->getTitle());
-        $seoMetadata->setMetaDescription($this->contentDocument->getSeoMetadata()->getMetaDescription());
-        $seoMetadata->setMetaKeywords($this->contentDocument->getSeoMetadata()->getMetaKeywords());
-        $seoMetadata->setOriginalUrl($this->contentDocument->getSeoMetadata()->getOriginalUrl());
+        foreach (array('Title', 'MetaDescription', 'MetaKeywords', 'OriginalUrl') as $propertyName) {
+            $seoMetadata->{'set'.$propertyName}($this->contentDocument->getSeoMetadata()->{'get'.$propertyName}());
+        }
 
         foreach ($this->strategies as $strategy) {
             if (!$strategy instanceof SeoExtractorStrategyInterface) {
@@ -117,7 +122,9 @@ class SeoPresentation extends AbstractSeoPresentation
                 $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
                 break;
             case 'redirect':
-                $this->setRedirect($this->seoMetadata->getOriginalUrl());
+                $this->setRedirect(
+                    $this->createRedirectUrl($this->seoMetadata->getOriginalUrl())
+                );
                 break;
         }
     }
@@ -214,5 +221,35 @@ class SeoPresentation extends AbstractSeoPresentation
                                 : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
+    }
+
+    /**
+     * As there are several ways to set the original route for a content,
+     * there are several solutions needed to create a path for the redirect route
+     * out of it.
+     */
+    private function createRedirectUrl($value)
+    {
+        $routeStrategy = new SeoOriginalRouteExtractorStrategy();
+        if (!UUIDHelper::isUUID($value) &&
+            !$routeStrategy->supports($this->contentDocument)
+        ) {
+            //The value is just a plain url
+            return new RedirectResponse($value);
+        }
+
+        if (UUIDHelper::isUUID($value)) {
+            //the value is the uuid of a route document, one of the documents routes was selected
+            $routeDocument = $this->getDocumentManager()->find(null, $value);
+        }
+
+        if ($routeStrategy->supports($this->contentDocument)) {
+            //than the value is a route document
+            $routeDocument = $value;
+        }
+
+        //@todo add a method do extract the url out of the route document
+        return new RedirectResponse('some_url_of_route');
+
     }
 }
