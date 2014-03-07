@@ -36,6 +36,9 @@
             <call method="setDefaultLocale">
                 <argument>%locale%</argument>
             </call>
+            <call method="setRouter">
+                <argument type="service" id="router" />
+            </call>
         </service>
         <service id="cmf_seo.event_lister.seo_content" class="%cmf_seo.event_lister.seo_content.class%">
             <argument type="service" id="cmf_seo.page"/>

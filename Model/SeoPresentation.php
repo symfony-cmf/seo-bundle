@@ -238,6 +238,7 @@ class SeoPresentation extends AbstractSeoPresentation
             return new RedirectResponse($value);
         }
 
+        $routeDocument = null;
         if (UUIDHelper::isUUID($value)) {
             //the value is the uuid of a route document, one of the documents routes was selected
             $routeDocument = $this->getDocumentManager()->find(null, $value);
@@ -248,8 +249,11 @@ class SeoPresentation extends AbstractSeoPresentation
             $routeDocument = $value;
         }
 
-        //@todo add a method do extract the url out of the route document
-        return new RedirectResponse('some_url_of_route');
+        if (!$routeDocument instanceof Route) {
+            throw new SeoAwareException('No redirect route found.');
+        }
+
+        return new RedirectResponse($this->router->generate($routeDocument));
 
     }
 }

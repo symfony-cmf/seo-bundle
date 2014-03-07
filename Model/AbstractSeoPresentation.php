@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * The abstract class for the SeoPresentation Model.
@@ -47,6 +48,11 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
      * @var SeoAwareInterface
      */
     protected $contentDocument;
+
+    /**
+     * @var Router
+     */
+    protected $router;
 
     /**
      * Setter for the redirect property.
@@ -117,6 +123,17 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     public function setContentDocument(SeoAwareInterface $contentDocument)
     {
         $this->contentDocument = $contentDocument;
+    }
+
+    /**
+     * For the generation of a possible redirect route the
+     * router is needed.
+     *
+     * @param Router $router
+     */
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
     }
 
     /**
