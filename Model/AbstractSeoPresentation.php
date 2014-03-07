@@ -3,6 +3,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
@@ -139,7 +141,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * To get the Document Manager out of the registry, this method needs to be called.
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager|object
+     * @return ObjectManager|DocumentManager
      */
     protected function getDocumentManager()
     {
