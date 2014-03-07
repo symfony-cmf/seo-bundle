@@ -43,8 +43,8 @@ class SeoContentListener
             $this->seoPage->setMetadataValues();
 
             //have a look if the strategy is redirect and if there is a route to redirect to
-            if ($url = $this->seoPage->getRedirect()) {
-                $event->setResponse(new RedirectResponse($url));
+            if ($response = $this->seoPage->getRedirect()) {
+                $event->setResponse(new RedirectResponse($response));
             }
         }
     }
