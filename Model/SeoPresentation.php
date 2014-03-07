@@ -4,13 +4,11 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use PHPCR\Util\UUIDHelper;
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\RedirectRoute;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorStrategyInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy;
-use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -231,22 +229,21 @@ class SeoPresentation extends AbstractSeoPresentation
     private function createRedirectUrl($value)
     {
         $routeStrategy = new SeoOriginalRouteExtractorStrategy();
-        if (!UUIDHelper::isUUID($value) &&
-            !$routeStrategy->supports($this->contentDocument)
-        ) {
+
+        if (is_string($value) && !UUIDHelper::isUUID($value)) {
             //The value is just a plain url
             return new RedirectResponse($value);
         }
 
         $routeDocument = null;
-        if (UUIDHelper::isUUID($value)) {
-            //the value is the uuid of a route document, one of the documents routes was selected
-            $routeDocument = $this->getDocumentManager()->find(null, $value);
-        }
-
         if ($routeStrategy->supports($this->contentDocument)) {
             //than the value is a route document
             $routeDocument = $value;
+        }
+
+        if (is_string($value) && UUIDHelper::isUUID($value)) {
+            //the value is the uuid of a route document, one of the documents routes was selected
+            $routeDocument = $this->getDocumentManager()->find(null, $value);
         }
 
         if (!$routeDocument instanceof Route) {
@@ -254,6 +251,5 @@ class SeoPresentation extends AbstractSeoPresentation
         }
 
         return new RedirectResponse($this->router->generate($routeDocument));
-
     }
 }

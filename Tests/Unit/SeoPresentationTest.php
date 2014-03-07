@@ -3,9 +3,12 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -15,6 +18,8 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
  */
 class SeoPresentationTest extends BaseTestCase
 {
+
+    protected $managerRegistry;
     /**
      * @var SeoPresentation
      */
@@ -69,7 +74,7 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata = new SeoMetadata();
 
         //need a mock for the manager registry
-        $managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
+        $this->managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
                                 ->disableOriginalConstructor()
                                 ->getMock();
 
@@ -78,7 +83,7 @@ class SeoPresentationTest extends BaseTestCase
                                 ->disableOriginalConstructor()
                                 ->getMock();
 
-        $managerRegistry->expects($this->any())
+        $this->managerRegistry->expects($this->any())
                         ->method('getManager')
                         ->will($this->returnValue($this->dmMock));
 
@@ -97,7 +102,7 @@ class SeoPresentationTest extends BaseTestCase
                        ->will($this->returnValue($this->seoMetadata));
 
         //settings for the presentation model
-        $this->SUT->setDoctrineRegistry($managerRegistry);
+        $this->SUT->setDoctrineRegistry($this->managerRegistry);
         $this->SUT->setContentDocument($this->document);
     }
 
@@ -311,5 +316,111 @@ class SeoPresentationTest extends BaseTestCase
         $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
 
         $this->SUT->setMetaDataValues();
+    }
+
+    public function testStringUrlRouteCreation()
+    {
+        $this->seoMetadata->setOriginalUrl('/test-url');
+
+        $SUT = new SeoPresentation(
+            $this->pageService,
+            array(
+                $this->routeStrategy
+            )
+        );
+        $SUT->setContentDocument($this->document);
+        $SUT->setTitleParameters(array());
+        $SUT->setContentParameters(array('strategy' => 'redirect'));
+
+        $SUT->setMetaDataValues();
+
+        $redirect = $SUT->getRedirect();
+
+
+        $this->assertNotNull($redirect);
+        $this->assertEquals(new RedirectResponse('/test-url'), $redirect);
+    }
+
+    public function testStrategyRouteCreation()
+    {
+        $this->seoMetadata->setOriginalUrl('/test-url');
+
+        $SUT = new SeoPresentation(
+            $this->pageService,
+            array(
+                new SeoOriginalRouteExtractorStrategy()
+            )
+        );
+
+        $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
+
+        $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
+        $document   ->expects($this->any())->method('getSeoMetadata')->will($this->returnValue($this->seoMetadata));
+        $document   ->expects($this->once())
+                    ->method('extractOriginalRoute')
+                    ->will($this->returnValue($routeMock));
+
+        $router = $this ->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
+                        ->disableOriginalConstructor()
+                        ->getMock();
+        $router ->expects($this->once())
+                ->method('generate')
+                ->will($this->returnValue('/test'));
+
+        $SUT->setContentDocument($document);
+        $SUT->setTitleParameters(array());
+        $SUT->setContentParameters(array('strategy' => 'redirect'));
+        $SUT->setRouter($router);
+
+        $SUT->setMetaDataValues();
+
+        $redirect = $SUT->getRedirect();
+
+        $this->assertNotNull($redirect);
+
+        $redirectResponse = new RedirectResponse('/test');
+
+        $this->assertEquals($redirectResponse, $redirect);
+    }
+
+    public function testUuidRouteCreation()
+    {
+        $this->seoMetadata->setOriginalUrl('/test-url');
+
+        $SUT = new SeoPresentation(
+            $this->pageService,
+            array(
+                $this->routeStrategy
+            )
+        );
+
+        $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
+
+
+
+        $router = $this ->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
+                        ->disableOriginalConstructor()
+                        ->getMock();
+        $router ->expects($this->once())
+                ->method('generate')
+                ->will($this->returnValue('/test'));
+
+        $this->dmMock->expects($this->once())->method('find')->will($this->returnValue($routeMock));
+
+        $this->seoMetadata->setOriginalUrl('6ba7b811-9dad-11d1-80b4-00c04fd430c8');
+
+        $SUT->setContentDocument($this->document);
+        $SUT->setTitleParameters(array());
+        $SUT->setContentParameters(array('strategy' => 'redirect'));
+        $SUT->setRouter($router);
+        $SUT->setDoctrineRegistry($this->managerRegistry);
+        $SUT->setMetaDataValues();
+
+        $redirect = $SUT->getRedirect();
+        $this->assertNotNull($redirect);
+
+        $redirectResponse = new RedirectResponse('/test');
+
+        $this->assertEquals($redirectResponse, $redirect);
     }
 }
