@@ -34,7 +34,7 @@
     <xsd:complexType name="title">
         <xsd:sequence>
             <xsd:element name="default" type="title_default" />
-            <xsd:element name="strategy" type="xsd:string" />
+            <xsd:element name="strategy" type="title_strategy" />
             <xsd:element name="separator" type="xsd:string" />
         </xsd:sequence>
     </xsd:complexType>
