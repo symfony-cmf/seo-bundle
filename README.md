@@ -1,6 +1,6 @@
 # Symfony CMF Seo Bundle
 
-[![Build Status](https://secure.travis-ci.org/symfony-cmf/ContentBundle.png)](http://travis-ci.org/symfony-cmf/SeoBundle)
+[![Build Status](https://secure.travis-ci.org/symfony-cmf/ContentBundle.png)](http://travis-ci.org/ElectricMaxxx/CmfSeoBundle)
 
 This bundle is part of the [Symfony Content Management Framework (CMF)](http://cmf.symfony.com/)
 and licensed under the [MIT License](LICENSE).
