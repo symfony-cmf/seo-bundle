@@ -3,12 +3,12 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 
 class RouteStrategyDocument implements
-    SeoOriginalRouteExtractorInterface,
+    SeoOriginalRouteInterface,
     SeoAwareInterface
 {
 
@@ -17,7 +17,7 @@ class RouteStrategyDocument implements
      *
      * @return Route the original route.
      */
-    public function extractOriginalRoute()
+    public function getSeoOriginalRoute()
     {
 
     }

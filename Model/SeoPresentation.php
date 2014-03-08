@@ -7,8 +7,8 @@ use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorStrategyInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoStrategyInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -39,7 +39,7 @@ class SeoPresentation extends AbstractSeoPresentation
     protected $seoMetadata;
 
     /**
-     * @var SeoExtractorStrategyInterface[]
+     * @var SeoStrategyInterface[]
      */
     protected $strategies = array();
 
@@ -56,7 +56,7 @@ class SeoPresentation extends AbstractSeoPresentation
         $this->sonataPage = $sonataPage;
 
         foreach ($strategies as $strategy) {
-            if (!$strategy instanceof SeoExtractorStrategyInterface) {
+            if (!$strategy instanceof SeoStrategyInterface) {
                 throw new SeoExtractorStrategyException('Wrong Strategy given.');
             }
             array_push($this->strategies, $strategy);
@@ -234,7 +234,7 @@ class SeoPresentation extends AbstractSeoPresentation
      */
     private function createRedirectUrl($value)
     {
-        $routeStrategy = new SeoOriginalRouteExtractorStrategy();
+        $routeStrategy = new SeoOriginalRouteStrategy();
 
         if (is_string($value) && !UUIDHelper::isUUID($value)) {
             //The value is just a plain url

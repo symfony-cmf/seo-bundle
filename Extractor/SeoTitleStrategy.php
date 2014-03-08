@@ -7,12 +7,12 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This strategy extracts the description from documents
- * implementing the SeoDescriptionExtractorInterface.
+ * This strategy extracts the title from documents
+ * implementing the SeoTitleInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoDescriptionExtractorStrategy implements SeoExtractorStrategyInterface
+class SeoTitleStrategy implements SeoStrategyInterface
 {
 
     /**
@@ -20,17 +20,17 @@ class SeoDescriptionExtractorStrategy implements SeoExtractorStrategyInterface
      */
     public function supports(SeoAwareInterface $document)
     {
-        return $document instanceof SeoDescriptionExtractorInterface;
+        return $document instanceof SeoTitleInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoDescriptionExtractorInterface $document
+     * @param SeoTitleInterface $document
      */
     public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
     {
-        if (!$document instanceof SeoDescriptionExtractorInterface) {
+        if (!$document instanceof SeoTitleInterface) {
             throw new SeoExtractorStrategyException(
                 sprintf(
                     'The given document %s is not supported by this strategy. Call supports() method first.',
@@ -38,6 +38,6 @@ class SeoDescriptionExtractorStrategy implements SeoExtractorStrategyInterface
                 )
             );
         }
-        $seoMetadata->setMetaDescription($document->extractDescription());
+        $seoMetadata->setTitle($document->getSeoTitle());
     }
 }

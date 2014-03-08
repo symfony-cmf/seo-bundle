@@ -2,9 +2,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractorStrategy;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractorStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 
 /**
@@ -37,14 +37,14 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testTitleExtractorStrategy()
     {
-        $strategy = new SeoTitleExtractorStrategy();
+        $strategy = new SeoTitleStrategy();
 
         $this->assertFalse($strategy->supports($this->descriptionDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
         $this->assertTrue($strategy->supports($this->titleDocument));
 
         $this->titleDocument->expects($this->once())
-                            ->method('extractTitle')
+                            ->method('getSeoTitle')
                             ->will($this->returnValue('seo-title'));
 
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
@@ -54,14 +54,14 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testDescriptionExtractorStrategy()
     {
-        $strategy = new SeoDescriptionExtractorStrategy();
+        $strategy = new SeoDescriptionStrategy();
 
         $this->assertTrue($strategy->supports($this->descriptionDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
         $this->assertFalse($strategy->supports($this->titleDocument));
 
         $this->descriptionDocument->expects($this->once())
-            ->method('extractDescription')
+            ->method('getSeoDescription')
             ->will($this->returnValue('seo-description'));
 
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
@@ -71,14 +71,14 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testRotueExtractorStrategy()
     {
-        $strategy = new SeoOriginalRouteExtractorStrategy();
+        $strategy = new SeoOriginalRouteStrategy();
 
         $this->assertFalse($strategy->supports($this->descriptionDocument));
         $this->assertTrue($strategy->supports($this->routeDocument));
         $this->assertFalse($strategy->supports($this->titleDocument));
 
         $this->routeDocument->expects($this->once())
-            ->method('extractOriginalRoute')
+            ->method('getSeoOriginalRoute')
             ->will($this->returnValue('seo-route'));
 
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
@@ -91,15 +91,15 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionWhenServingWrongDocument()
     {
-        $strategy = new SeoOriginalRouteExtractorStrategy();
+        $strategy = new SeoOriginalRouteStrategy();
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
 
-        $strategy = new SeoTitleExtractorStrategy();
+        $strategy = new SeoTitleStrategy();
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
 
-        $strategy = new SeoDescriptionExtractorStrategy();
+        $strategy = new SeoDescriptionStrategy();
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
     }

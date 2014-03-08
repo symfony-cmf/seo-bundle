@@ -4,7 +4,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
@@ -48,15 +48,15 @@ class SeoPresentationTest extends BaseTestCase
     {
         //mock the strategies
         $this->titleStrategy = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractorStrategy',
+            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy',
             array('supports', 'updateMetadata')
         );
         $this->descriptionStrategy = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractorStrategy',
+            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy',
             array('supports', 'updateMetadata')
         );
         $this->routeStrategy = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy',
+            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
             array('supports', 'updateMetadata')
         );
 
@@ -348,7 +348,7 @@ class SeoPresentationTest extends BaseTestCase
         $SUT = new SeoPresentation(
             $this->pageService,
             array(
-                new SeoOriginalRouteExtractorStrategy()
+                new SeoOriginalRouteStrategy()
             )
         );
 
@@ -357,7 +357,7 @@ class SeoPresentationTest extends BaseTestCase
         $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
         $document   ->expects($this->any())->method('getSeoMetadata')->will($this->returnValue($this->seoMetadata));
         $document   ->expects($this->once())
-                    ->method('extractOriginalRoute')
+                    ->method('getSeoOriginalRoute')
                     ->will($this->returnValue($routeMock));
 
         $router = $this ->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')

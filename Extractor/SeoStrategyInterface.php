@@ -10,7 +10,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoExtractorStrategyInterface
+interface SeoStrategyInterface
 {
     /**
      * Check whether the strategy supports this document.

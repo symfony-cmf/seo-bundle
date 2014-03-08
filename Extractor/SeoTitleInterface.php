@@ -7,18 +7,18 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
  * get a documents property for updating the SeoMetadata.
  *
  * If you want to have a document that is able to update its
- * description for the SeoMetadata on its own, you should implement
+ * title for the SeoMetadata on its own, you should implement
  * this interface. It forces to implement the
- * extractDescription() method.
+ * getSeoTitle() method.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoDescriptionExtractorInterface
+interface SeoTitleInterface
 {
     /**
-     * Provide a description of this page to be used in SEO context.
+     * Provide a title of this page to be used in SEO context.
      *
      * @return string
      */
-    public function extractDescription();
+    public function getSeoTitle();
 }

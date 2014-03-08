@@ -7,12 +7,12 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This strategy extracts the original route from documents
- * implementing the SeoOriginalRouteExtractorInterface.
+ * This strategy extracts the description from documents
+ * implementing the SeoDescriptionInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoOriginalRouteExtractorStrategy implements SeoExtractorStrategyInterface
+class SeoDescriptionStrategy implements SeoStrategyInterface
 {
 
     /**
@@ -20,17 +20,17 @@ class SeoOriginalRouteExtractorStrategy implements SeoExtractorStrategyInterface
      */
     public function supports(SeoAwareInterface $document)
     {
-        return $document instanceof SeoOriginalRouteExtractorInterface;
+        return $document instanceof SeoDescriptionInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoOriginalRouteExtractorInterface $document
+     * @param SeoDescriptionInterface $document
      */
     public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
     {
-        if (!$document instanceof SeoOriginalRouteExtractorInterface) {
+        if (!$document instanceof SeoDescriptionInterface) {
             throw new SeoExtractorStrategyException(
                 sprintf(
                     'The given document %s is not supported by this strategy. Call supports() method first.',
@@ -38,6 +38,6 @@ class SeoOriginalRouteExtractorStrategy implements SeoExtractorStrategyInterface
                 )
             );
         }
-        $seoMetadata->setOriginalUrl($document->extractOriginalRoute());
+        $seoMetadata->setMetaDescription($document->getSeoDescription());
     }
 }
