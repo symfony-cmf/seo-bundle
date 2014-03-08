@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://cmf.symfony.com/schema/dic/seo"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://cmf.symfony.com/schema/dic/seo"
+    elementFormDefault="qualified">
+
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="config">
+        <xsd:sequence>
+            <xsd:element name="multilang" type="multilang" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="title" type="title"/>
+        <xsd:attribute name="content" type="content"/>
+        <xsd:attribute name="use-sonata-admin" type="use_sonata_admin" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="boolean">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="true" />
+            <xsd:enumeration value="false" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="use_sonata_admin">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="true" />
+            <xsd:enumeration value="false" />
+            <xsd:enumeration value="auto" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="title">
+        <xsd:sequence>
+            <xsd:element name="default" type="title_default" />
+            <xsd:element name="strategy" type="xsd:string" />
+            <xsd:element name="separator" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="title_default">
+        <xsd:restriction base="xsd:all">
+
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="content">
+        <xsd:sequence>
+            <xsd:element name="strategy" type="content_strategy" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="title_strategy">
+        <xsd:restriction>
+            <xsd:enumeration value="prepend" />
+            <xsd:enumeration value="append" />
+            <xsd:enumeration value="replace" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="content_strategy">
+        <xsd:restriction>
+            <xsd:enumeration value="redirect" />
+            <xsd:enumeration value="canonical" />
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>
