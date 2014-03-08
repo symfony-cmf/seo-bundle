@@ -168,8 +168,9 @@ class SeoPresentation extends AbstractSeoPresentation
      */
     private function createDescription()
     {
-        $sonataDescription = isset($this->sonataPage->getMetas()['names']['description'][0])
-                                ? $this->sonataPage->getMetas()['names']['description'][0]
+        $metas = $this->sonataPage->getMetas();
+        $sonataDescription = isset($metas['names']['description'][0])
+                                ? $metas['names']['description'][0]
                                 : '';
 
         return ('' !== $sonataDescription ? $sonataDescription.'. ' : '').$this->seoMetadata->getMetaDescription();
@@ -184,8 +185,9 @@ class SeoPresentation extends AbstractSeoPresentation
      */
     private function createKeywords()
     {
-        $sonataKeywords = isset($this->sonataPage->getMetas()['names']['keywords'][0])
-                                ? $this->sonataPage->getMetas()['names']['keywords'][0]
+        $metas = $this->sonataPage->getMetas();
+        $sonataKeywords = isset($metas['names']['keywords'][0])
+                                ? $metas['names']['keywords'][0]
                                 : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
