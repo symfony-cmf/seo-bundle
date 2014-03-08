@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * The content config under cmf_seo.content gives a strategy how to handle duplicate
  * content. If it is set to canonical a canonical link is created by an Twig helper
- * (url must be set to the SeoPage), otherwise the url is set to the redirect property
- * which triggers an redirect.
+ * (url must be set to the SeoPage), otherwise the url is set to the redirectResponse property
+ * which triggers an redirectResponse.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -73,7 +73,7 @@ class SeoPresentation extends AbstractSeoPresentation
     {
 
         $seoMetadata = $this->contentDocument instanceof SeoAwareInterface
-                        ? (clone $this->contentDocument->getSeoMetadata)
+                        ? (clone $this->contentDocument->getSeoMetadata())
                         : new SeoMetadata()
         ;
 
@@ -126,7 +126,7 @@ class SeoPresentation extends AbstractSeoPresentation
                 $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
                 break;
             case 'redirect':
-                $this->setRedirect(
+                $this->setRedirectResponse(
                     $this->createRedirectUrl($this->seoMetadata->getOriginalUrl())
                 );
                 break;
@@ -229,7 +229,7 @@ class SeoPresentation extends AbstractSeoPresentation
 
     /**
      * As there are several ways to set the original route for a content,
-     * there are several solutions needed to create a path for the redirect route
+     * there are several solutions needed to create a path for the redirectResponse route
      * out of it.
      */
     private function createRedirectUrl($value)

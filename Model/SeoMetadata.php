@@ -14,7 +14,7 @@ class SeoMetadata implements SeoMetadataInterface
 {
     /**
      * This string contains the information where we will find the original content.
-     * Depending on the setting for the cmf_seo.content.strategy, we will do an redirect to this url or
+     * Depending on the setting for the cmf_seo.content.strategy, we will do an redirectResponse to this url or
      * create a canonical link with this value as the href attribute.
      *
      * @var string

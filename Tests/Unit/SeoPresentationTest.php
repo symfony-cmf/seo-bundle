@@ -334,7 +334,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $SUT->setMetaDataValues();
 
-        $redirect = $SUT->getRedirect();
+        $redirect = $SUT->getRedirectResponse();
 
 
         $this->assertNotNull($redirect);
@@ -374,7 +374,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $SUT->setMetaDataValues();
 
-        $redirect = $SUT->getRedirect();
+        $redirect = $SUT->getRedirectResponse();
 
         $this->assertNotNull($redirect);
 
@@ -416,7 +416,7 @@ class SeoPresentationTest extends BaseTestCase
         $SUT->setDoctrineRegistry($this->managerRegistry);
         $SUT->setMetaDataValues();
 
-        $redirect = $SUT->getRedirect();
+        $redirect = $SUT->getRedirectResponse();
         $this->assertNotNull($redirect);
 
         $redirectResponse = new RedirectResponse('/test');

@@ -47,7 +47,7 @@ interface SeoMetadataInterface
     public function setOriginalUrl($originalUrl);
 
     /**
-     * Getter for the original url, means the url where to redirect
+     * Getter for the original url, means the url where to redirectResponse
      * or setting href property of the canonical link. This depends on the value
      * of the originalUrl strategy.
      *

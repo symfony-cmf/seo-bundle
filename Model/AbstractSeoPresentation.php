@@ -6,6 +6,7 @@ use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * The abstract class for the SeoPresentation Model.
@@ -34,7 +35,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * @var bool
      */
-    protected $redirect = false;
+    protected $redirectResponse = false;
 
     /**
      * @var ManagerRegistry
@@ -57,21 +58,21 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     protected $router;
 
     /**
-     * Setter for the redirect property.
+     * Setter for the redirectResponse property.
      *
-     * @param $redirect
+     * @param RedirectResponse $redirect
      */
-    protected function setRedirect($redirect)
+    protected function setRedirectResponse(RedirectResponse $redirect)
     {
-        $this->redirect = $redirect;
+        $this->redirectResponse = $redirect;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getRedirect()
+    public function getRedirectResponse()
     {
-        return $this->redirect;
+        return $this->redirectResponse;
     }
 
     /**
@@ -128,7 +129,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * For the generation of a possible redirect route the
+     * For the generation of a possible redirectResponse route the
      * router is needed.
      *
      * @param Router $router
