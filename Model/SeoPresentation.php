@@ -39,16 +39,28 @@ class SeoPresentation extends AbstractSeoPresentation
     protected $seoMetadata;
 
     /**
+     * @var SeoExtractorStrategyInterface[]
+     */
+    protected $strategies = array();
+
+    /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
      * @param SeoPage $sonataPage
-     * @param array   $strategies
+     * @param array $strategies
+     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
      */
     public function __construct(SeoPage $sonataPage, array $strategies)
     {
         $this->sonataPage = $sonataPage;
-        $this->strategies = $strategies;
+
+        foreach ($strategies as $strategy) {
+            if (!$strategy instanceof SeoExtractorStrategyInterface) {
+                throw new SeoExtractorStrategyException('Wrong Strategy given.');
+            }
+            array_push($this->strategies, $strategy);
+        }
     }
 
     /**
@@ -59,19 +71,13 @@ class SeoPresentation extends AbstractSeoPresentation
      */
     protected function getSeoMetadata()
     {
-        $seoMetadata = new SeoMetadata();
 
-        //copy the documents metadata to the current one as default
-        foreach (array('Title', 'MetaDescription', 'MetaKeywords', 'OriginalUrl') as $propertyName) {
-            $seoMetadata->{'set'.$propertyName}($this->contentDocument->getSeoMetadata()->{'get'.$propertyName}());
-        }
+        $seoMetadata = $this->contentDocument instanceof SeoAwareInterface
+                        ? (clone $this->contentDocument->getSeoMetadata)
+                        : new SeoMetadata()
+        ;
 
         foreach ($this->strategies as $strategy) {
-            if (!$strategy instanceof SeoExtractorStrategyInterface) {
-                print($strategy);
-                throw new SeoExtractorStrategyException('Wrong Strategy given.');
-            }
-
             if ($strategy->supports($this->contentDocument)) {
                 $strategy->updateMetadata($this->contentDocument, $seoMetadata);
             }
