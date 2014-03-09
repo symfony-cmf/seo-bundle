@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest;
 
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Client;
 
 /**
@@ -46,9 +47,11 @@ class SeoFrontendTest extends BaseTestCase
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
+            $namesValue = '';
+            if ($node instanceof Crawler) {
                 $namesValue = $node->attr('names');
-
-                return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
+            }
+            return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');
@@ -61,7 +64,10 @@ class SeoFrontendTest extends BaseTestCase
 
         //test the setting of canonical link
         $linkCrawler = $crawler->filter('head > link')->reduce(function ($node) {
-            return 'canonical' === $node->attr('rel');
+            if ($node instanceof Crawler) {
+                return 'canonical' === $node->attr('rel');
+            }
+            return false;
         });
         $this->assertEquals('/to/original', $linkCrawler->eq(0)->attr('href'));
     }
