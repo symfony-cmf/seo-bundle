@@ -9,21 +9,24 @@
 
     <xsd:complexType name="config">
         <xsd:sequence>
-            <xsd:element name="multilang" type="multilang" minOccurs="0" />
+            <xsd:element name="persistence" type="persistence" minOccurs="0" />
         </xsd:sequence>
-        <xsd:attribute name="title" type="title"/>
-        <xsd:attribute name="content" type="content"/>
-        <xsd:attribute name="use-sonata-admin" type="use_sonata_admin" />
     </xsd:complexType>
 
-    <xsd:simpleType name="boolean">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="true" />
-            <xsd:enumeration value="false" />
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xsd:complexType name="persistence">
+        <xsd:sequence>
+            <xsd:element name="phpcr" type="phpcr" minOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
 
-    <xsd:simpleType name="use_sonata_admin">
+    <xsd:complexType name="phpcr">
+        <xsd:attribute name="enabled" type="xsd:boolean"/>
+        <xsd:attribute name="title" type="title"/>
+        <xsd:attribute name="content" type="content"/>
+        <xsd:attribute name="use-sonata-admin" type="enable_auto" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="enable_auto">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="true" />
             <xsd:enumeration value="false" />
@@ -33,17 +36,18 @@
 
     <xsd:complexType name="title">
         <xsd:sequence>
-            <xsd:element name="default" type="title_default" />
+            <xsd:choice>
+                <xsd:element name="default" type="xsd:string" />
+                <xsd:element name="default" type="title_default" />
+            </xsd:choice>
             <xsd:element name="strategy" type="title_strategy" />
             <xsd:element name="separator" type="xsd:string" />
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:simpleType name="title_default">
-        <xsd:restriction base="xsd:all">
+    <xsd:complexType name="title_default">
 
-        </xsd:restriction>
-    </xsd:simpleType>
+    </xsd:complexType>
 
     <xsd:complexType name="content">
         <xsd:sequence>
