@@ -28,7 +28,9 @@
     </php>
 
     <listeners>
+        <!--
         <listener class="Symfony\Cmf\Component\Testing\Phpunit\DatabaseTestListener" />
+        -->
     </listeners>
 
 </phpunit>
