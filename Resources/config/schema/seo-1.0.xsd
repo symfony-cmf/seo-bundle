@@ -10,6 +10,8 @@
     <xsd:complexType name="config">
         <xsd:sequence>
             <xsd:element name="persistence" type="persistence" minOccurs="0" />
+            <xsd:element name="title" type="title"/>
+            <xsd:element name="content" type="content"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -21,8 +23,6 @@
 
     <xsd:complexType name="phpcr">
         <xsd:attribute name="enabled" type="xsd:boolean"/>
-        <xsd:attribute name="title" type="title"/>
-        <xsd:attribute name="content" type="content"/>
         <xsd:attribute name="use-sonata-admin" type="enable_auto" />
     </xsd:complexType>
 
