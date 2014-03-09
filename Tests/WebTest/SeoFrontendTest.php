@@ -50,6 +50,8 @@ class SeoFrontendTest extends BaseTestCase
             $namesValue = '';
             if ($node instanceof Crawler) {
                 $namesValue = $node->attr('names');
+            } elseif ($node instanceof \DOMElement) {
+                $namesValue = $node->getAttribute('names');
             }
             return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
         });
@@ -66,6 +68,8 @@ class SeoFrontendTest extends BaseTestCase
         $linkCrawler = $crawler->filter('head > link')->reduce(function ($node) {
             if ($node instanceof Crawler) {
                 return 'canonical' === $node->attr('rel');
+            } elseif ($node instanceof \DOMElement) {
+                return 'canonical' === $node->getAttribute('names');
             }
             return false;
         });
