@@ -184,9 +184,10 @@ class SeoPresentationTest extends BaseTestCase
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'description', 'Default description');
         $this->SUT->setMetaDataValues();
+        $metas = $this->pageService->getMetas();
         $this->assertEquals(
             'Default description. Special description',
-            $this->pageService->getMetas()['names']['description'][0]
+            $metas['names']['description'][0]
         );
     }
 
@@ -196,9 +197,10 @@ class SeoPresentationTest extends BaseTestCase
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'keywords', 'default, other');
         $this->SUT->setMetaDataValues();
+        $keywords = $this->pageService->getMetas();
         $this->assertEquals(
             'default, other, key1, key2',
-            $this->pageService->getMetas()['names']['keywords'][0]
+            $keywords['names']['keywords'][0]
         );
     }
 
