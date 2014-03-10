@@ -9,9 +9,9 @@
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_lister.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
 
-        <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractorStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractorStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy</parameter>
+        <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy</parameter>
+        <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy</parameter>
+        <parameter key="cmf_seo.extractor_strategy.route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy</parameter>
     </parameters>
     <services>
         <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">
