@@ -107,7 +107,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  'Default title',
                 ),
                 'Special title | Default title',
@@ -115,7 +115,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'append',
+                    'pattern'  => 'append',
                     'default'   =>  'Default title',
                 ),
                 'Default title | Special title',
@@ -123,7 +123,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'replace',
+                    'pattern'  => 'replace',
                     'default'   =>  'Default title',
                 ),
                 'Special title',
@@ -131,7 +131,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  '',
                 ),
                 'Special title',
@@ -139,7 +139,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   => '',
                 ),
                 'Special title',
@@ -199,7 +199,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -212,7 +212,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -225,7 +225,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -244,7 +244,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $titleValues = array(
             'separator' => ' | ',
-            'strategy'  => 'prepend',
+            'pattern'  => 'prepend',
             'default'   =>  array(
                 'en' => 'Default title',
                 'fr' => 'title de default',
@@ -271,7 +271,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $titleValues = array(
             'separator' => ' | ',
-            'strategy'  => 'prepend',
+            'pattern'  => 'prepend',
             'default'   =>  array(
                 'en' => 'Default title',
                 'fr' => 'title de default',
