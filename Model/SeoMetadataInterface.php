@@ -49,7 +49,7 @@ interface SeoMetadataInterface
     /**
      * Getter for the original url, means the url where to redirect
      * or setting href property of the canonical link. This depends on the value
-     * of the originalUrl strategy.
+     * of the originalUrl pattern.
      *
      * @return string
      */

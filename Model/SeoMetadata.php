@@ -14,7 +14,7 @@ class SeoMetadata implements SeoMetadataInterface
 {
     /**
      * This string contains the information where we will find the original content.
-     * Depending on the setting for the cmf_seo.content.strategy, we will do an redirect to this url or
+     * Depending on the setting for the cmf_seo.content.pattern, we will do an redirect to this url or
      * create a canonical link with this value as the href attribute.
      *
      * @var string
@@ -36,7 +36,7 @@ class SeoMetadata implements SeoMetadataInterface
     private $metaKeywords;
 
     /**
-     * Depending on the cmf_seo.title.strategy this string will be prepend/append to a
+     * Depending on the cmf_seo.title.pattern this string will be prepend/append to a
      * default title or will replace it. The default title is can be (multi lang) set
      * in in the configuration under cmf_seo.title.default.
      *

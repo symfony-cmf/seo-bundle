@@ -30,7 +30,6 @@ class CmfSeoExtension extends Extension
         $loader->load('admin.xml');
 
         $this->loadTitle($config['title'], $container);
-
         $this->loadContent($config['content'], $container);
 
         if ($config['persistence']['phpcr']['enabled']) {

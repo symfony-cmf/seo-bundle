@@ -36,10 +36,10 @@ cmf_seo:
     description: My default description
     keys: default, key, other
     content:
-      strategy: canonical
+      pattern: canonical
 ```
 
-Would create a title like `content_specific | My SEO title` cause the default title strategy is `prepend`. Other
+Would create a title like `content_specific | My SEO title` cause the default title pattern is `prepend`. Other
 values are `append` and `replace`.
 This will add the default description combined with the config specific one into a meta tag.
 The same will be done for the keywords.
