@@ -140,7 +140,6 @@ class CmfSeoExtension extends Extension
     {
         $strategyParameters = array();
         foreach ($strategies as $strategy) {
-            print("Set: ".$strategy."\n");
             array_push($strategyParameters, $strategy);
         }
         $container->setParameter($this->getAlias().'.strategies', $strategyParameters);
