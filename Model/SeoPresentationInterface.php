@@ -28,7 +28,7 @@ interface SeoPresentationInterface
     public function setMetadataValues();
 
     /**
-     * Will return false if the strategy for duplicate content is not redirect, or it is
+     * Will return false if the pattern for duplicate content is not redirect, or it is
      * but there is not redirect route in the meta data.
      *
      * @return bool|string

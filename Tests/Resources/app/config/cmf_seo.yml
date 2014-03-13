@@ -2,11 +2,11 @@ cmf_seo:
     persistence:
       phpcr: ~
     title:
-        strategy: prepend
+        pattern: prepend
         separator: ' | '
         default: Default title
     content:
-      strategy: canonical
+      pattern: canonical
 
 cmf_routing:
     dynamic:
