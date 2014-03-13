@@ -138,7 +138,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  'Default title',
                 ),
                 'Special title | Default title',
@@ -146,7 +146,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'append',
+                    'pattern'  => 'append',
                     'default'   =>  'Default title',
                 ),
                 'Default title | Special title',
@@ -154,7 +154,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'replace',
+                    'pattern'  => 'replace',
                     'default'   =>  'Default title',
                 ),
                 'Special title',
@@ -162,7 +162,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  '',
                 ),
                 'Special title',
@@ -170,7 +170,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   => '',
                 ),
                 'Special title',
@@ -184,9 +184,10 @@ class SeoPresentationTest extends BaseTestCase
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'description', 'Default description');
         $this->SUT->setMetaDataValues();
+        $metas = $this->pageService->getMetas();
         $this->assertEquals(
             'Default description. Special description',
-            $this->pageService->getMetas()['names']['description'][0]
+            $metas['names']['description'][0]
         );
     }
 
@@ -196,9 +197,10 @@ class SeoPresentationTest extends BaseTestCase
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'keywords', 'default, other');
         $this->SUT->setMetaDataValues();
+        $keywords = $this->pageService->getMetas();
         $this->assertEquals(
             'default, other, key1, key2',
-            $this->pageService->getMetas()['names']['keywords'][0]
+            $keywords['names']['keywords'][0]
         );
     }
 
@@ -230,7 +232,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -243,7 +245,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -256,7 +258,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -275,7 +277,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $titleValues = array(
             'separator' => ' | ',
-            'strategy'  => 'prepend',
+            'pattern'  => 'prepend',
             'default'   =>  array(
                 'en' => 'Default title',
                 'fr' => 'title de default',
@@ -302,7 +304,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $titleValues = array(
             'separator' => ' | ',
-            'strategy'  => 'prepend',
+            'pattern'  => 'prepend',
             'default'   =>  array(
                 'en' => 'Default title',
                 'fr' => 'title de default',
