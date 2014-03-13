@@ -332,7 +332,7 @@ class SeoPresentationTest extends BaseTestCase
         );
         $SUT->setContentDocument($this->document);
         $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('strategy' => 'redirect'));
+        $SUT->setContentParameters(array('pattern' => 'redirect'));
 
         $SUT->setMetaDataValues();
 
@@ -371,7 +371,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $SUT->setContentDocument($document);
         $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('strategy' => 'redirect'));
+        $SUT->setContentParameters(array('pattern' => 'redirect'));
         $SUT->setRouter($router);
 
         $SUT->setMetaDataValues();
@@ -413,7 +413,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $SUT->setContentDocument($this->document);
         $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('strategy' => 'redirect'));
+        $SUT->setContentParameters(array('pattern' => 'redirect'));
         $SUT->setRouter($router);
         $SUT->setDoctrineRegistry($this->managerRegistry);
         $SUT->setMetaDataValues();
