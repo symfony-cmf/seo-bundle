@@ -77,7 +77,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
 
     /**
      * This method is needed to get the default title parameters injected. They are used for
-     * concatenating the default values and the seo meta data or defining the strategy for that.
+     * concatenating the default values and the seo meta data or defining the pattern for that.
      *
      * @param array $titleParameters
      */

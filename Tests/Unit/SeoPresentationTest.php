@@ -65,18 +65,18 @@ class SeoPresentationTest extends BaseTestCase
         $this->SUT = new SeoPresentation(
             $this->pageService,
             array(
-                $this->titleStrategy,
-                $this->descriptionStrategy,
-                $this->routeStrategy,
+                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
+                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy',
+                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy',
             )
         );
 
         $this->seoMetadata = new SeoMetadata();
 
         //need a mock for the manager registry
-        $this->managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
-                                ->disableOriginalConstructor()
-                                ->getMock();
+        $this->managerRegistry = $this  ->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
+                                        ->disableOriginalConstructor()
+                                        ->getMock();
 
         //need the DM and unitOfWork for getting the locale out of the document
         $this->dmMock = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
@@ -138,7 +138,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  'Default title',
                 ),
                 'Special title | Default title',
@@ -146,7 +146,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'append',
+                    'pattern'  => 'append',
                     'default'   =>  'Default title',
                 ),
                 'Default title | Special title',
@@ -154,7 +154,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'replace',
+                    'pattern'  => 'replace',
                     'default'   =>  'Default title',
                 ),
                 'Special title',
@@ -162,7 +162,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  '',
                 ),
                 'Special title',
@@ -170,7 +170,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   => '',
                 ),
                 'Special title',
@@ -232,7 +232,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -245,7 +245,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -258,7 +258,7 @@ class SeoPresentationTest extends BaseTestCase
             array(
                 array(
                     'separator' => ' | ',
-                    'strategy'  => 'prepend',
+                    'pattern'  => 'prepend',
                     'default'   =>  array(
                         'en' => 'Default title',
                         'fr' => 'title de default',
@@ -277,7 +277,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $titleValues = array(
             'separator' => ' | ',
-            'strategy'  => 'prepend',
+            'pattern'  => 'prepend',
             'default'   =>  array(
                 'en' => 'Default title',
                 'fr' => 'title de default',
@@ -304,7 +304,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $titleValues = array(
             'separator' => ' | ',
-            'strategy'  => 'prepend',
+            'pattern'  => 'prepend',
             'default'   =>  array(
                 'en' => 'Default title',
                 'fr' => 'title de default',

@@ -49,7 +49,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('title')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->enumNode('strategy')
+                        ->enumNode('pattern')
                             ->values(array('prepend', 'append', 'replace'))
                             ->defaultValue('prepend')
                         ->end()
@@ -62,16 +62,25 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid('Default can either be an array or a string, "%s" given')
                             ->end()
                         ->end()
+
                     ->end()
                 ->end()
                 ->arrayNode('content')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->enumNode('strategy')
+                        ->enumNode('pattern')
                             ->values(array('redirect', 'canonical'))
                             ->defaultValue('canonical')
                         ->end()
                     ->end()
+                ->end()
+                ->arrayNode('strategies')
+                    ->defaultValue(array(
+                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoTitleStrategy',
+                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoDescriptionStrategy',
+                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoOriginalRouteStrategy',
+                        ))
+                    ->prototype('scalar')->end()
                 ->end()
             ->end()
         ;

@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * Preparing means combining the title value of the SeoMetadata and the default
  * value defined in the cmf_seo.title.default parameter. Both strings are
- * concatenated by an separator depending on the strategy set in the config.
+ * concatenated by an separator depending on the pattern set in the config.
  *
- * The content config under cmf_seo.content gives a strategy how to handle duplicate
+ * The content config under cmf_seo.content gives a pattern how to handle duplicate
  * content. If it is set to canonical a canonical link is created by an Twig helper
  * (url must be set to the SeoPage), otherwise the url is set to the redirectResponse property
  * which triggers an redirectResponse.
@@ -55,10 +55,26 @@ class SeoPresentation extends AbstractSeoPresentation
     {
         $this->sonataPage = $sonataPage;
 
-        foreach ($strategies as $strategy) {
+        foreach ($strategies as $strategyClassName) {
+            try {
+                if (is_string($strategyClassName)) {
+                    $strategy = new $strategyClassName();
+                } elseif (is_object($strategyClassName)) {
+                    $strategy = $strategyClassName;
+                } else {
+                    throw new SeoExtractorStrategyException('Unknown type for a given strategy');
+                }
+
+            } catch (\Exception $e) {
+                throw new SeoExtractorStrategyException(
+                    sprintf('Class %s not found.', $strategyClassName)
+                );
+            }
+
             if (!$strategy instanceof SeoStrategyInterface) {
                 throw new SeoExtractorStrategyException('Wrong Strategy given.');
             }
+
             array_push($this->strategies, $strategy);
         }
     }
@@ -95,7 +111,7 @@ class SeoPresentation extends AbstractSeoPresentation
         //get the current seo metadata out of the document
         $this->seoMetadata = $this->getSeoMetadata();
 
-        //based on the title strategy, the helper method will set the complete title
+        //based on the title pattern, the helper method will set the complete title
         if (null !== $this->seoMetadata->getTitle()) {
             $title = $this->createTitle();
 
@@ -120,8 +136,8 @@ class SeoPresentation extends AbstractSeoPresentation
             );
         }
 
-        //if the strategy for duplicate content is canonical, the service will trigger an canonical link
-        switch ($this->contentParameters['strategy']) {
+        //if the pattern for duplicate content is canonical, the service will trigger an canonical link
+        switch ($this->contentParameters['pattern']) {
             case 'canonical':
                 $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
                 break;
@@ -134,7 +150,7 @@ class SeoPresentation extends AbstractSeoPresentation
     }
 
     /**
-     * Based on the title strategy this method will create the title from the given
+     * Based on the title pattern this method will create the title from the given
      * configs in the seo configuration part.
      *
      * @return string
@@ -148,8 +164,7 @@ class SeoPresentation extends AbstractSeoPresentation
         if ('' == $defaultTitle) {
             return $contentTitle;
         }
-
-        switch ($this->titleParameters['strategy']) {
+        switch ($this->titleParameters['pattern']) {
             case 'prepend':
                 return $contentTitle.$separator.$defaultTitle;
             case 'append':
