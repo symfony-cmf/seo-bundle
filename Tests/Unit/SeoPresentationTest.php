@@ -40,35 +40,14 @@ class SeoPresentationTest extends BaseTestCase
     private $unitOfWork;
 
     private $document;
-    private $titleStrategy;
-    private $descriptionStrategy;
-    private $routeStrategy;
 
     public function setUp()
     {
-        //mock the strategies
-        $this->titleStrategy = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy',
-            array('supports', 'updateMetadata')
-        );
-        $this->descriptionStrategy = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy',
-            array('supports', 'updateMetadata')
-        );
-        $this->routeStrategy = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
-            array('supports', 'updateMetadata')
-        );
-
         //set up the SUT
         $this->pageService = new SeoPage();
         $this->SUT = new SeoPresentation(
             $this->pageService,
-            array(
-                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
-                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy',
-                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy',
-            )
+            array()
         );
 
         $this->seoMetadata = new SeoMetadata();
@@ -326,9 +305,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $SUT = new SeoPresentation(
             $this->pageService,
-            array(
-                $this->routeStrategy
-            )
+            array()
         );
         $SUT->setContentDocument($this->document);
         $SUT->setTitleParameters(array());
@@ -350,7 +327,7 @@ class SeoPresentationTest extends BaseTestCase
         $SUT = new SeoPresentation(
             $this->pageService,
             array(
-                new SeoOriginalRouteStrategy()
+                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
             )
         );
 
@@ -392,7 +369,6 @@ class SeoPresentationTest extends BaseTestCase
         $SUT = new SeoPresentation(
             $this->pageService,
             array(
-                $this->routeStrategy
             )
         );
 
