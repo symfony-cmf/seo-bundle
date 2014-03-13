@@ -55,10 +55,26 @@ class SeoPresentation extends AbstractSeoPresentation
     {
         $this->sonataPage = $sonataPage;
 
-        foreach ($strategies as $strategy) {
+        foreach ($strategies as $strategyClassName) {
+            try {
+                if (is_string($strategyClassName)) {
+                    $strategy = new $strategyClassName();
+                } elseif (is_object($strategyClassName)) {
+                    $strategy = $strategyClassName;
+                } else {
+                    throw new SeoExtractorStrategyException('Unknown type for a given strategy');
+                }
+
+            } catch (\Exception $e) {
+                throw new SeoExtractorStrategyException(
+                    sprintf('Class %s not found.', $strategyClassName)
+                );
+            }
+
             if (!$strategy instanceof SeoStrategyInterface) {
                 throw new SeoExtractorStrategyException('Wrong Strategy given.');
             }
+
             array_push($this->strategies, $strategy);
         }
     }

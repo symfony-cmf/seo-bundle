@@ -62,6 +62,7 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid('Default can either be an array or a string, "%s" given')
                             ->end()
                         ->end()
+
                     ->end()
                 ->end()
                 ->arrayNode('content')
@@ -72,6 +73,14 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('canonical')
                         ->end()
                     ->end()
+                ->end()
+                ->arrayNode('strategies')
+                    ->defaultValue(array(
+                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoTitleStrategy',
+                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoDescriptionStrategy',
+                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoOriginalRouteStrategy',
+                        ))
+                    ->prototype('scalar')->end()
                 ->end()
             ->end()
         ;

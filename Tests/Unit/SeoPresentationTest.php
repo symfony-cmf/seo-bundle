@@ -65,18 +65,18 @@ class SeoPresentationTest extends BaseTestCase
         $this->SUT = new SeoPresentation(
             $this->pageService,
             array(
-                $this->titleStrategy,
-                $this->descriptionStrategy,
-                $this->routeStrategy,
+                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
+                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy',
+                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy',
             )
         );
 
         $this->seoMetadata = new SeoMetadata();
 
         //need a mock for the manager registry
-        $this->managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
-                                ->disableOriginalConstructor()
-                                ->getMock();
+        $this->managerRegistry = $this  ->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
+                                        ->disableOriginalConstructor()
+                                        ->getMock();
 
         //need the DM and unitOfWork for getting the locale out of the document
         $this->dmMock = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')

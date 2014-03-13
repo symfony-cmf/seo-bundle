@@ -9,9 +9,6 @@
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_lister.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
 
-        <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractorStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractorStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractorStrategy</parameter>
     </parameters>
     <services>
         <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">
@@ -19,11 +16,7 @@
         </service>
         <service id="cmf_seo.page" class="%cmf_seo.presentation.class%">
             <argument type="service" id="sonata.seo.page" />
-            <argument type="collection">
-                <argument type="service" id="cmf_seo.extractor_strategy.title"></argument>
-                <argument type="service" id="cmf_seo.extractor_strategy.description"></argument>
-                <argument type="service" id="cmf_seo.extractor_strategy.route"></argument>
-            </argument>
+            <argument>%cmf_seo.strategies%</argument>
             <call method="setTitleParameters">
                 <argument>%cmf_seo.title_parameters%</argument>
             </call>
@@ -45,9 +38,6 @@
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
 
-        <service id="cmf_seo.extractor_strategy.title" class="%cmf_seo.extractor_strategy.title.class%"/>
-        <service id="cmf_seo.extractor_strategy.description" class="%cmf_seo.extractor_strategy.description.class%"/>
-        <service id="cmf_seo.extractor_strategy.route" class="%cmf_seo.extractor_strategy.route.class%"/>
     </services>
 
 </container>
