@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <xsd:schema xmlns="http://cmf.symfony.com/schema/dic/seo"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     targetNamespace="http://cmf.symfony.com/schema/dic/seo"
@@ -40,7 +39,7 @@
                 <xsd:element name="default" type="xsd:string" />
                 <xsd:element name="default" type="title_default" />
             </xsd:choice>
-            <xsd:element name="strategy" type="title_strategy" />
+            <xsd:element name="pattern" type="title_pattern" />
             <xsd:element name="separator" type="xsd:string" />
         </xsd:sequence>
     </xsd:complexType>
@@ -51,11 +50,11 @@
 
     <xsd:complexType name="content">
         <xsd:sequence>
-            <xsd:element name="strategy" type="content_strategy" />
+            <xsd:element name="pattern" type="content_pattern" />
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:simpleType name="title_strategy">
+    <xsd:simpleType name="title_pattern">
         <xsd:restriction>
             <xsd:enumeration value="prepend" />
             <xsd:enumeration value="append" />
@@ -63,7 +62,7 @@
         </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:simpleType name="content_strategy">
+    <xsd:simpleType name="content_pattern">
         <xsd:restriction>
             <xsd:enumeration value="redirect" />
             <xsd:enumeration value="canonical" />
