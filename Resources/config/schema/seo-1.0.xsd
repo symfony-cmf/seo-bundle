@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://cmf.symfony.com/schema/dic/seo"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://cmf.symfony.com/schema/dic/seo"
+    elementFormDefault="qualified">
+
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="config">
+        <xsd:sequence>
+            <xsd:element name="persistence" type="persistence" minOccurs="0" />
+            <xsd:element name="title" type="title"/>
+            <xsd:element name="content" type="content"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="persistence">
+        <xsd:sequence>
+            <xsd:element name="phpcr" type="phpcr" minOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="phpcr">
+        <xsd:attribute name="enabled" type="xsd:boolean"/>
+        <xsd:attribute name="use-sonata-admin" type="enable_auto" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="enable_auto">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="true" />
+            <xsd:enumeration value="false" />
+            <xsd:enumeration value="auto" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="title">
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:element name="default" type="xsd:string" />
+                <xsd:element name="default" type="title_default" />
+            </xsd:choice>
+            <xsd:element name="pattern" type="title_pattern" />
+            <xsd:element name="separator" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="title_default">
+
+    </xsd:complexType>
+
+    <xsd:complexType name="content">
+        <xsd:sequence>
+            <xsd:element name="pattern" type="content_pattern" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="title_pattern">
+        <xsd:restriction>
+            <xsd:enumeration value="prepend" />
+            <xsd:enumeration value="append" />
+            <xsd:enumeration value="replace" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="content_pattern">
+        <xsd:restriction>
+            <xsd:enumeration value="redirect" />
+            <xsd:enumeration value="canonical" />
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>
