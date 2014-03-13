@@ -138,11 +138,6 @@ class CmfSeoExtension extends Extension
      */
     private function loadStrategies($strategies, ContainerBuilder $container)
     {
-        $strategyParameters = array();
-        foreach ($strategies as $strategy) {
-            print("Set: ".$strategy."\n");
-            array_push($strategyParameters, $strategy);
-        }
-        $container->setParameter($this->getAlias().'.strategies', $strategyParameters);
+        $container->setParameter($this->getAlias().'.strategies', $strategies);
     }
 }
