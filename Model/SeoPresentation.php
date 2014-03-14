@@ -4,12 +4,11 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use PHPCR\Util\UUIDHelper;
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoStrategyInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -133,15 +132,13 @@ class SeoPresentation extends AbstractSeoPresentation
             );
         }
 
-        //if the pattern for duplicate content is canonical, the service will trigger an canonical link
+        $absoluteUrl = $this->createAbsoluteUrl($this->seoMetadata->getOriginalUrl());
         switch ($this->contentParameters['pattern']) {
             case 'canonical':
-                $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
+                $this->sonataPage->setLinkCanonical($absoluteUrl);
                 break;
             case 'redirect':
-                $this->setRedirectResponse(
-                    $this->createRedirectUrl($this->seoMetadata->getOriginalUrl())
-                );
+                $this->setRedirectResponse(new RedirectResponse($absoluteUrl));
                 break;
         }
     }
@@ -243,33 +240,33 @@ class SeoPresentation extends AbstractSeoPresentation
 
     /**
      * As there are several ways to set the original route for a content,
-     * there are several solutions needed to create a path for the redirectResponse route
-     * out of it.
+     * there are several solutions needed to create a absolute path for either
+     * the redirect response or the canonical link.
+     *
+     * The route can be:
+     *  - absolute url simply stored in the SeoMetadata
+     *  - a uuid of a route document selected from a collection of routes
+     *  - a route document
+     *  - a symfony route key
      */
-    private function createRedirectUrl($value)
+    private function createAbsoluteUrl($routeValue)
     {
-        $routeStrategy = new SeoOriginalRouteStrategy();
-
-        if (is_string($value) && !UUIDHelper::isUUID($value)) {
+        if (is_string($routeValue) && !UUIDHelper::isUUID($routeValue)) {
             //The value is just a plain url
-            return new RedirectResponse($value);
+            return $routeValue;
         }
 
-        $routeDocument = null;
-        if ($routeStrategy->supports($this->contentDocument)) {
-            //than the value is a route document
-            $routeDocument = $value;
-        }
-
-        if (is_string($value) && UUIDHelper::isUUID($value)) {
+        if (is_string($routeValue) && UUIDHelper::isUUID($routeValue)) {
             //the value is the uuid of a route document, one of the documents routes was selected
-            $routeDocument = $this->getDocumentManager()->find(null, $value);
+            $routeValue = $this->getDocumentManager()->find(null, $routeValue);
         }
 
-        if (!$routeDocument instanceof Route) {
-            throw new SeoAwareException('No redirect route found.');
+        try {
+            $absoluteUrl = $this->router->generate($routeValue);
+        } catch (RouteNotFoundException $e) {
+            throw new SeoAwareException('Not possible to create a url from SeoMetadata original url value.');
         }
 
-        return new RedirectResponse($this->router->generate($routeDocument));
+        return $absoluteUrl;
     }
 }
