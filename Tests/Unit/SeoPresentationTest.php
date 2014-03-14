@@ -459,7 +459,7 @@ class SeoPresentationTest extends BaseTestCase
                                     ->disableOriginalConstructor()
                                     ->getMock();
 
-        $this->routerMock   ->expects($this->any())
+        $routerMock   ->expects($this->any())
                             ->method('generate')
                             ->will($this->throwException(new RouteNotFoundException));
 
