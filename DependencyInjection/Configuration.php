@@ -62,7 +62,6 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid('Default can either be an array or a string, "%s" given')
                             ->end()
                         ->end()
-
                     ->end()
                 ->end()
                 ->arrayNode('content')
