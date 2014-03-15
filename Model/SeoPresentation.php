@@ -256,11 +256,6 @@ class SeoPresentation extends AbstractSeoPresentation
             return $routeValue;
         }
 
-        if (is_string($routeValue) && UUIDHelper::isUUID($routeValue)) {
-            //the value is the uuid of a route document, one of the documents routes was selected
-            $routeValue = $this->getDocumentManager()->find(null, $routeValue);
-        }
-
         try {
             $absoluteUrl = $this->router->generate($routeValue);
         } catch (RouteNotFoundException $e) {
