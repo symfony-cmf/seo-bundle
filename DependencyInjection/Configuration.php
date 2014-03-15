@@ -56,23 +56,27 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('separator')->defaultValue('')->end()
                         ->variableNode('default')
                             ->validate()
-                                ->ifTrue(function ($v) { return !is_string($v) && !is_array($v); })
+                                ->ifTrue(function ($v) {
+                                    return !is_string($v) && !is_array($v);
+                                })
                                 ->thenInvalid('Default can either be an array or a string, "%s" given')
                             ->end()
                             ->beforeNormalization()
-                                ->ifTrue(function ($v) { return is_array($v) && (is_array(current($v)) || isset($v['lang'])); })
+                                ->ifTrue(function ($v) {
+                                    return is_array($v) && (is_array(current($v)) || isset($v['lang']));
+                                })
                                 ->then(function ($v) {
-                                        if (isset($v['lang'])) {
-                                            return array($v['lang'] => $v['value']);
-                                        }
+                                    if (isset($v['lang'])) {
+                                        return array($v['lang'] => $v['value']);
+                                    }
 
-                                        $multilang = array();
+                                    $multilang = array();
 
-                                        foreach ($v as $default) {
-                                            $multilang[$default['lang']] = $default['value'];
-                                        }
+                                    foreach ($v as $default) {
+                                        $multilang[$default['lang']] = $default['value'];
+                                    }
 
-                                        return $multilang;
+                                    return $multilang;
                                 })
                             ->end()
                         ->end() // default
