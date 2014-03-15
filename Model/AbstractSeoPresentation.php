@@ -6,6 +6,7 @@ use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoStrategyInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -56,6 +57,11 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
      * @var Router
      */
     protected $router;
+
+    /**
+     * @var SeoStrategyInterface[]
+     */
+    protected $strategies = array();
 
     /**
      * Setter for the redirectResponse property.
@@ -162,9 +168,20 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * This method uses the DocumentManager to get the documents current locale.
      * @param string
+     * @return null|string
      */
     protected function getModelLocale()
     {
         return $this->getDocumentManager()->getUnitOfWork()->getCurrentLocale($this->contentDocument);
+    }
+
+    /**
+     * Method to add strategies by the compiler pass.
+     *
+     * @param SeoStrategyInterface $strategy
+     */
+    public function addStrategy(SeoStrategyInterface $strategy)
+    {
+        $this->strategies[] = $strategy;
     }
 }

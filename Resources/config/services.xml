@@ -9,14 +9,16 @@
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_lister.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
 
+        <parameter key="cmf_seo.extractor_strategy.title">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy</parameter>
+        <parameter key="cmf_seo.extractor_strategy.description">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_url">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy</parameter>
     </parameters>
     <services>
         <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">
             <tag name="form.type" alias="seo_metadata" />
         </service>
-        <service id="cmf_seo.page" class="%cmf_seo.presentation.class%">
+        <service id="cmf_seo.presentation" class="%cmf_seo.presentation.class%">
             <argument type="service" id="sonata.seo.page" />
-            <argument>%cmf_seo.strategies%</argument>
             <call method="setTitleParameters">
                 <argument>%cmf_seo.title_parameters%</argument>
             </call>
@@ -34,10 +36,19 @@
             </call>
         </service>
         <service id="cmf_seo.event_lister.seo_content" class="%cmf_seo.event_lister.seo_content.class%">
-            <argument type="service" id="cmf_seo.page"/>
+            <argument type="service" id="cmf_seo.presentation"/>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
 
+        <service id="cmf_seo.extractor_strategy.title" class="%cmf_seo.extractor_strategy.title%">
+            <tag name="cmf_seo.extractor"/>
+        </service>
+        <service id="cmf_seo.extractor_strategy.description" class="%cmf_seo.extractor_strategy.description%">
+            <tag name="cmf_seo.extractor"/>
+        </service>
+        <service id="cmf_seo.extractor_strategy.original_url" class="%cmf_seo.extractor_strategy.original_url%">
+            <tag name="cmf_seo.extractor"/>
+        </service>
     </services>
 
 </container>

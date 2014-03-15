@@ -36,10 +36,6 @@ class CmfSeoExtension extends Extension
         if ($config['persistence']['phpcr']['enabled']) {
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
         }
-
-        if ($config['strategies'] && is_array($config['strategies'])) {
-            $this->loadStrategies($config['strategies'], $container);
-        }
     }
 
     /**
@@ -126,18 +122,5 @@ class CmfSeoExtension extends Extension
     public function getNamespace()
     {
         return 'http://cmf.symfony.com/schema/dic/seo';
-    }
-
-    /**
-     * The strategies are FQCN of the strategies for extracting SeoMetadata
-     * from a document.
-     *
-     * @param $strategies
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
-     */
-    private function loadStrategies($strategies, ContainerBuilder $container)
-    {
-        $container->setParameter($this->getAlias().'.strategies', $strategies);
     }
 }

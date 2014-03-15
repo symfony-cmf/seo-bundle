@@ -11,7 +11,6 @@
             <xsd:element name="persistence" type="persistence" minOccurs="0" />
             <xsd:element name="title" type="title"/>
             <xsd:element name="content" type="content"/>
-            <xsd:element name="strategies" type="strategies" />
         </xsd:sequence>
     </xsd:complexType>
 
@@ -69,10 +68,4 @@
             <xsd:enumeration value="canonical" />
         </xsd:restriction>
     </xsd:simpleType>
-
-    <xsd:complexType name="strategies">
-        <xsd:choice>
-            <xsd:element name="strategy" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:choice>
-    </xsd:complexType>
 </xsd:schema>

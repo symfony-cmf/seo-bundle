@@ -4,6 +4,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use MyProject\Proxies\__CG__\stdClass;
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
@@ -309,45 +310,6 @@ class SeoPresentationTest extends BaseTestCase
         $this->SUT->setMetaDataValues();
     }
 
-    /**
-     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
-     */
-    public function testStrategyExceptionWhenNotString()
-    {
-        new SeoPresentation(
-            $this->pageService,
-            array(
-                array(1,2,3)
-            )
-        );
-    }
-
-    /**
-     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
-     */
-    public function testStrategyExceptionWhenClassIsNotFound()
-    {
-        new SeoPresentation(
-            $this->pageService,
-            array(
-                'Some\Class',
-            )
-        );
-    }
-
-    /**
-     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
-     */
-    public function testStrategyExceptionWhenClassHasWrongInterface()
-    {
-        new SeoPresentation(
-            $this->pageService,
-            array(
-                get_class($this),
-            )
-        );
-    }
-
     public function testStringUrlRouteCreation()
     {
         $this->seoMetadata->setOriginalUrl('/test-url');
@@ -373,12 +335,7 @@ class SeoPresentationTest extends BaseTestCase
     {
         $this->seoMetadata->setOriginalUrl('/test-url');
 
-        $SUT = new SeoPresentation(
-            $this->pageService,
-            array(
-                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
-            )
-        );
+        $SUT = new SeoPresentation($this->pageService);
 
         $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
 
@@ -392,41 +349,11 @@ class SeoPresentationTest extends BaseTestCase
         $SUT->setTitleParameters(array());
         $SUT->setContentParameters(array('pattern' => 'redirect'));
         $SUT->setRouter($this->routerMock);
-
+        $SUT->addStrategy(new SeoOriginalRouteStrategy());
         $SUT->setMetaDataValues();
 
         $redirect = $SUT->getRedirectResponse();
 
-        $this->assertNotNull($redirect);
-
-        $redirectResponse = new RedirectResponse('/test');
-
-        $this->assertEquals($redirectResponse, $redirect);
-    }
-
-    public function testUuidRouteCreation()
-    {
-        $this->seoMetadata->setOriginalUrl('/test-url');
-
-        $SUT = new SeoPresentation(
-            $this->pageService,
-            array()
-        );
-
-        $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
-
-        $this->dmMock->expects($this->once())->method('find')->will($this->returnValue($routeMock));
-
-        $this->seoMetadata->setOriginalUrl('6ba7b811-9dad-11d1-80b4-00c04fd430c8');
-
-        $SUT->setContentDocument($this->document);
-        $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('pattern' => 'redirect'));
-        $SUT->setRouter($this->routerMock);
-        $SUT->setDoctrineRegistry($this->managerRegistry);
-        $SUT->setMetaDataValues();
-
-        $redirect = $SUT->getRedirectResponse();
         $this->assertNotNull($redirect);
 
         $redirectResponse = new RedirectResponse('/test');

@@ -5,8 +5,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 use PHPCR\Util\UUIDHelper;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoStrategyInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
@@ -38,41 +36,14 @@ class SeoPresentation extends AbstractSeoPresentation
     protected $seoMetadata;
 
     /**
-     * @var SeoStrategyInterface[]
-     */
-    protected $strategies = array();
-
-    /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
      * @param SeoPage $sonataPage
-     * @param array $strategies
-     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
      */
-    public function __construct(SeoPage $sonataPage, array $strategies)
+    public function __construct(SeoPage $sonataPage)
     {
         $this->sonataPage = $sonataPage;
-
-        foreach ($strategies as $strategyClassName) {
-            if (!is_string($strategyClassName)) {
-                throw new SeoExtractorStrategyException('Need a string (FQCN) for the strategy.');
-            }
-
-            if (!class_exists($strategyClassName)) {
-                throw new SeoExtractorStrategyException(
-                    sprintf('Class %s not found.', $strategyClassName)
-                );
-            }
-
-            $strategy = new $strategyClassName();
-
-            if (!$strategy instanceof SeoStrategyInterface) {
-                throw new SeoExtractorStrategyException('Wrong Strategy given.');
-            }
-
-            array_push($this->strategies, $strategy);
-        }
     }
 
     /**
@@ -245,7 +216,6 @@ class SeoPresentation extends AbstractSeoPresentation
      *
      * The route can be:
      *  - absolute url simply stored in the SeoMetadata
-     *  - a uuid of a route document selected from a collection of routes
      *  - a route document
      *  - a symfony route key
      */

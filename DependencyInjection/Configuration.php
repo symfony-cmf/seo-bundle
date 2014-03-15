@@ -74,14 +74,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('strategies')
-                    ->defaultValue(array(
-                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoTitleStrategy',
-                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoDescriptionStrategy',
-                            'Symfony\\Cmf\\Bundle\\SeoBundle\\Extractor\\SeoOriginalRouteStrategy',
-                        ))
-                    ->prototype('scalar')->end()
-                ->end()
             ->end()
         ;
 
