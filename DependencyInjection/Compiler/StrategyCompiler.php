@@ -35,7 +35,7 @@ class StrategyCompiler implements CompilerPassInterface
                 throw new LogicException(sprintf('strategy "%s" must be public', $id));
             }
 
-            $strategyDefinition->addMethodCall('addStrategy', array(
+            $strategyDefinition->addMethodCall('addExtractor', array(
                 new Reference($id)
             ));
         }

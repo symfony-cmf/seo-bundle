@@ -103,15 +103,18 @@ class SeoPresentation extends AbstractSeoPresentation
             );
         }
 
-        $absoluteUrl = $this->createAbsoluteUrl($this->seoMetadata->getOriginalUrl());
-        switch ($this->contentParameters['pattern']) {
-            case 'canonical':
-                $this->sonataPage->setLinkCanonical($absoluteUrl);
-                break;
-            case 'redirect':
-                $this->setRedirectResponse(new RedirectResponse($absoluteUrl));
-                break;
+        if (null !== $this->seoMetadata->getOriginalUrl()) {
+            $absoluteUrl = $this->createAbsoluteUrl($this->seoMetadata->getOriginalUrl());
+            switch ($this->contentParameters['pattern']) {
+                case 'canonical':
+                    $this->sonataPage->setLinkCanonical($absoluteUrl);
+                    break;
+                case 'redirect':
+                    $this->setRedirectResponse(new RedirectResponse($absoluteUrl));
+                    break;
+            }
         }
+
     }
 
     /**

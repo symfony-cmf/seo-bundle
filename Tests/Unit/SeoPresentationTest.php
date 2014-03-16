@@ -2,11 +2,13 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
-use MyProject\Proxies\__CG__\stdClass;
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -56,26 +58,26 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata = new SeoMetadata();
 
         //need a mock for the manager registry
-        $this->managerRegistry = $this  ->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
-                                        ->disableOriginalConstructor()
-                                        ->getMock();
+        $this->managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
 
         //need the DM and unitOfWork for getting the locale out of the document
-        $this->dmMock = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
-                                ->disableOriginalConstructor()
-                                ->getMock();
+        $this->dmMock = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
+                             ->disableOriginalConstructor()
+                             ->getMock();
 
         $this->managerRegistry->expects($this->any())
-                        ->method('getManager')
-                        ->will($this->returnValue($this->dmMock));
+                              ->method('getManager')
+                              ->will($this->returnValue($this->dmMock));
 
-        $this->unitOfWork = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
-                                    ->disableOriginalConstructor()
-                                    ->getMock();
+        $this->unitOfWork = $this->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
 
         $this->dmMock->expects($this->any())
-                         ->method('getUnitOfWork')
-                         ->will($this->returnValue($this->unitOfWork));
+                     ->method('getUnitOfWork')
+                     ->will($this->returnValue($this->unitOfWork));
 
         //mock the current document to answer with the seo metadata
         $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface');
@@ -83,12 +85,12 @@ class SeoPresentationTest extends BaseTestCase
                        ->method('getSeoMetadata')
                        ->will($this->returnValue($this->seoMetadata));
 
-        $this->routerMock = $this   ->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
-                                    ->disableOriginalConstructor()
-                                    ->getMock();
-        $this->routerMock   ->expects($this->any())
-                            ->method('generate')
-                            ->will($this->returnValue('/test'));
+        $this->routerMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+        $this->routerMock->expects($this->any())
+                         ->method('generate')
+                         ->will($this->returnValue('/test'));
 
         //settings for the presentation model
         $this->SUT->setDoctrineRegistry($this->managerRegistry);
@@ -340,16 +342,18 @@ class SeoPresentationTest extends BaseTestCase
         $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
 
         $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
-        $document   ->expects($this->any())->method('getSeoMetadata')->will($this->returnValue($this->seoMetadata));
-        $document   ->expects($this->once())
-                    ->method('getSeoOriginalRoute')
-                    ->will($this->returnValue($routeMock));
+        $document->expects($this->any())
+                 ->method('getSeoMetadata')
+                 ->will($this->returnValue($this->seoMetadata));
+        $document->expects($this->once())
+                 ->method('getSeoOriginalRoute')
+                 ->will($this->returnValue($routeMock));
 
         $SUT->setContentDocument($document);
         $SUT->setTitleParameters(array());
         $SUT->setContentParameters(array('pattern' => 'redirect'));
         $SUT->setRouter($this->routerMock);
-        $SUT->addStrategy(new SeoOriginalRouteStrategy());
+        $SUT->addExtractor(new SeoOriginalRouteStrategy());
         $SUT->setMetaDataValues();
 
         $redirect = $SUT->getRedirectResponse();
@@ -397,4 +401,32 @@ class SeoPresentationTest extends BaseTestCase
 
         $SUT->setMetaDataValues();
     }
+
+    public function testStrategies()
+    {
+        $this->pageService->addMeta('names', 'description', 'Default description');
+        $SUT = new SeoPresentation($this->pageService);
+        $SUT->addExtractor(new SeoOriginalRouteStrategy());
+        $SUT->addExtractor(new SeoTitleStrategy());
+        $SUT->addExtractor(new SeoDescriptionStrategy());
+        $SUT->setContentDocument(new AllStrategiesDocument());
+        $SUT->setDoctrineRegistry($this->managerRegistry);
+        $SUT->setTitleParameters(array('default' => 'Default title', 'separator' => ' | ', 'pattern' => 'prepend'));
+        $SUT->setContentParameters(array('pattern' => 'canonical'));
+
+
+        $SUT->setMetaDataValues();
+
+        $metas = $this->pageService->getMetas();
+        $actualDescription = $metas['names']['description'][0];
+        $actualTitle = $this->pageService->getTitle();
+        $actualLink = $this->pageService->getLinkCanonical();
+
+        $this->assertEquals('Test title | Default title', $actualTitle);
+        $this->assertEquals('Default description. Test Description.', $actualDescription);
+        $this->assertEquals('/test-route', $actualLink);
+
+
+    }
+
 }

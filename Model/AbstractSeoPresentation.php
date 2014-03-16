@@ -180,7 +180,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
      *
      * @param SeoStrategyInterface $strategy
      */
-    public function addStrategy(SeoStrategyInterface $strategy)
+    public function addExtractor(SeoStrategyInterface $strategy)
     {
         $this->strategies[] = $strategy;
     }
