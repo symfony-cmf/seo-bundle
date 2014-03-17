@@ -373,32 +373,31 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata->setOriginalUrl('/test-url');
 
         $SUT = new SeoPresentation(
-            $this->pageService,
-            array(
-                'Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy',
-            )
+            $this->pageService
         );
 
 
         $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
-        $document   ->expects($this->any())->method('getSeoMetadata')->will($this->returnValue($this->seoMetadata));
-        $document   ->expects($this->once())
-                    ->method('getSeoOriginalRoute')
-                    ->will($this->returnValue('route-you-wont-find'));
+        $document->expects($this->any())
+                 ->method('getSeoMetadata')
+                 ->will($this->returnValue($this->seoMetadata));
+        $document->expects($this->once())
+                 ->method('getSeoOriginalRoute')
+                 ->will($this->returnValue(new \stdClass()));
 
-        $routerMock = $this   ->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
-                                    ->disableOriginalConstructor()
-                                    ->getMock();
+        $routerMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
+                           ->disableOriginalConstructor()
+                           ->getMock();
 
-        $routerMock   ->expects($this->any())
-                            ->method('generate')
-                            ->will($this->throwException(new RouteNotFoundException));
+        $routerMock->expects($this->once())
+                   ->method('generate')
+                   ->will($this->throwException(new RouteNotFoundException));
 
         $SUT->setContentDocument($document);
-        $SUT->setTitleParameters(array());
+        $SUT->setTitleParameters(array('pattern' => 'replace'));
         $SUT->setContentParameters(array('pattern' => 'redirect'));
         $SUT->setRouter($routerMock);
-
+        $SUT->addExtractor(new SeoOriginalRouteStrategy());
         $SUT->setMetaDataValues();
     }
 
@@ -428,5 +427,4 @@ class SeoPresentationTest extends BaseTestCase
 
 
     }
-
 }
