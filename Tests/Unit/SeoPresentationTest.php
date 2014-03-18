@@ -328,7 +328,5 @@ class SeoPresentationTest extends BaseTestCase
         $this->assertEquals('Test title | Default title', $actualTitle);
         $this->assertEquals('Default description. Test Description.', $actualDescription);
         $this->assertEquals('/test-route', $actualLink);
-
-
     }
 }
