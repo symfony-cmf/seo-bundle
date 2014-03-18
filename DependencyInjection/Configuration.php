@@ -61,7 +61,25 @@ class Configuration implements ConfigurationInterface
                                 })
                                 ->thenInvalid('Default can either be an array or a string, "%s" given')
                             ->end()
-                        ->end()
+                            ->beforeNormalization()
+                                ->ifTrue(function ($v) {
+                                    return is_array($v) && (is_array(current($v)) || isset($v['lang']));
+                                })
+                                ->then(function ($v) {
+                                    if (isset($v['lang'])) {
+                                        return array($v['lang'] => $v['value']);
+                                    }
+
+                                    $multilang = array();
+
+                                    foreach ($v as $default) {
+                                        $multilang[$default['lang']] = $default['value'];
+                                    }
+
+                                    return $multilang;
+                                })
+                            ->end()
+                        ->end() // default
                     ->end()
                 ->end()
                 ->arrayNode('content')

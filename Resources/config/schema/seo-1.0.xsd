@@ -35,17 +35,21 @@
 
     <xsd:complexType name="title">
         <xsd:sequence>
-            <xsd:choice>
-                <xsd:element name="default" type="xsd:string" />
-                <xsd:element name="default" type="title_default" />
-            </xsd:choice>
-            <xsd:element name="pattern" type="title_pattern" />
-            <xsd:element name="separator" type="xsd:string" />
+            <xsd:element name="default" type="default_title" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
+
+        <xsd:attribute name="default" type="xsd:string" />
+        <xsd:attribute name="pattern" type="title_pattern" />
+        <xsd:attribute name="separator" type="xsd:string" />
+        <xsd:assert test="not(./targetNamespace:default and ./@default)"/>
     </xsd:complexType>
 
-    <xsd:complexType name="title_default">
-
+    <xsd:complexType name="default_title">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="lang" type="xsd:string" />
+            </xsd:extension>
+        </xsd:simpleContent>
     </xsd:complexType>
 
     <xsd:complexType name="content">
