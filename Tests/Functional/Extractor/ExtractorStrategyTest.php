@@ -153,8 +153,8 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
                                ->will($this->returnValue('seo-route-key'));
 
         $this->router->expects($this->once())
-                     ->with('seo-route-key')
                      ->method('generate')
+                     ->with('seo-route-key')
                      ->will($this->returnValue('/seo-route'));
         $strategy->setRouter($this->router);
 

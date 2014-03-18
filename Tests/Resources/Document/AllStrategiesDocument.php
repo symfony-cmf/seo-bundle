@@ -38,7 +38,7 @@ class AllStrategiesDocument implements
      *
      * @return Route the original route.
      */
-    public function getSeoOriginalRoute()
+    public function getSeoOriginalUrl()
     {
         return '/test-route';
     }
