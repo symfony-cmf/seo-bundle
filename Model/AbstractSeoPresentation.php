@@ -5,7 +5,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\PHPCR\DocumentManager;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -52,11 +51,6 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
      * @var SeoAwareInterface
      */
     protected $contentDocument;
-
-    /**
-     * @var Router
-     */
-    protected $router;
 
     /**
      * @var SeoExtractorInterface[]
@@ -132,17 +126,6 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     public function setContentDocument(SeoAwareInterface $contentDocument)
     {
         $this->contentDocument = $contentDocument;
-    }
-
-    /**
-     * For the generation of a possible redirectResponse route the
-     * router is needed.
-     *
-     * @param Router $router
-     */
-    public function setRouter(Router $router)
-    {
-        $this->router = $router;
     }
 
     /**

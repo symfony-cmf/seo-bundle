@@ -26,7 +26,6 @@ class SeoPresentationTest extends BaseTestCase
 
     protected $managerRegistry;
 
-    protected $routerMock;
     /**
      * @var SeoPresentation
      */
@@ -87,17 +86,9 @@ class SeoPresentationTest extends BaseTestCase
                        ->method('getSeoMetadata')
                        ->will($this->returnValue($this->seoMetadata));
 
-        $this->routerMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
-                                 ->disableOriginalConstructor()
-                                 ->getMock();
-        $this->routerMock->expects($this->any())
-                         ->method('generate')
-                         ->will($this->returnValue('/test'));
-
         //settings for the presentation model
         $this->SUT->setDoctrineRegistry($this->managerRegistry);
         $this->SUT->setContentDocument($this->document);
-        $this->SUT->setRouter($this->routerMock);
     }
 
     public function tearDown()
@@ -314,163 +305,11 @@ class SeoPresentationTest extends BaseTestCase
         $this->SUT->setMetaDataValues();
     }
 
-    public function testStringUrlRouteCreation()
-    {
-        $this->seoMetadata->setOriginalUrl('/test-url');
-
-        $SUT = new SeoPresentation(
-            $this->pageService,
-            array()
-        );
-        $SUT->setContentDocument($this->document);
-        $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('pattern' => 'redirect'));
-
-        $SUT->setMetaDataValues();
-
-        $redirect = $SUT->getRedirectResponse();
-
-
-        $this->assertNotNull($redirect);
-        $this->assertEquals(new RedirectResponse('/test-url'), $redirect);
-    }
-
-    public function testStrategyRouteCreation()
-    {
-        $this->seoMetadata->setOriginalUrl('/test-url');
-
-        $SUT = new SeoPresentation($this->pageService);
-
-        $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
-
-        $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
-        $document->expects($this->any())
-                 ->method('getSeoMetadata')
-                 ->will($this->returnValue($this->seoMetadata));
-        $document->expects($this->once())
-                 ->method('getSeoOriginalRoute')
-                 ->will($this->returnValue($routeMock));
-
-        $SUT->setContentDocument($document);
-        $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('pattern' => 'redirect'));
-        $SUT->setRouter($this->routerMock);
-        $SUT->addExtractor(new SeoOriginalRouteExtractor());
-        $SUT->setMetaDataValues();
-
-        $redirect = $SUT->getRedirectResponse();
-
-        $this->assertNotNull($redirect);
-
-        $redirectResponse = new RedirectResponse('/test');
-
-        $this->assertEquals($redirectResponse, $redirect);
-    }
-
-    public function testStrategyRouteKeyCreation()
-    {
-        $this->seoMetadata->setOriginalUrl('/test-url');
-
-        $SUT = new SeoPresentation($this->pageService);
-
-        //@todo at the right route with a key
-        $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
-
-        $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
-        $document->expects($this->any())
-                 ->method('getSeoMetadata')
-                 ->will($this->returnValue($this->seoMetadata));
-        $document->expects($this->once())
-                 ->method('getSeoOriginalRouteKey')
-                 ->will($this->returnValue($routeMock));
-
-        $SUT->setContentDocument($document);
-        $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('pattern' => 'redirect'));
-        $SUT->setRouter($this->routerMock);
-        $SUT->addExtractor(new SeoOriginalRouteKeyExtractor());
-        $SUT->setMetaDataValues();
-
-        $redirect = $SUT->getRedirectResponse();
-
-        $this->assertNotNull($redirect);
-
-        $redirectResponse = new RedirectResponse('/test');
-
-        $this->assertEquals($redirectResponse, $redirect);
-    }
-
-    public function testStrategyUrlCreation()
-    {
-        $this->seoMetadata->setOriginalUrl('/test-url');
-
-        $SUT = new SeoPresentation($this->pageService);
-
-        $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
-        $document->expects($this->any())
-                 ->method('getSeoMetadata')
-                 ->will($this->returnValue($this->seoMetadata));
-        $document->expects($this->once())
-                 ->method('getSeoOriginalUrl')
-                 ->will($this->returnValue('/test'));
-
-        $SUT->setContentDocument($document);
-        $SUT->setTitleParameters(array());
-        $SUT->setContentParameters(array('pattern' => 'redirect'));
-        $SUT->setRouter($this->routerMock);
-        $SUT->addExtractor(new SeoOriginalUrlExtractor());
-        $SUT->setMetaDataValues();
-
-        $redirect = $SUT->getRedirectResponse();
-
-        $this->assertNotNull($redirect);
-
-        $redirectResponse = new RedirectResponse('/test');
-
-        $this->assertEquals($redirectResponse, $redirect);
-    }
-
-    /**
-     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
-     */
-    public function testExceptionWhenNoRedirectRouteFound()
-    {
-        $this->seoMetadata->setOriginalUrl('/test-url');
-
-        $SUT = new SeoPresentation(
-            $this->pageService
-        );
-
-
-        $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
-        $document->expects($this->any())
-                 ->method('getSeoMetadata')
-                 ->will($this->returnValue($this->seoMetadata));
-        $document->expects($this->once())
-                 ->method('getSeoOriginalRoute')
-                 ->will($this->returnValue(new \stdClass()));
-
-        $routerMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
-                           ->disableOriginalConstructor()
-                           ->getMock();
-
-        $routerMock->expects($this->once())
-                   ->method('generate')
-                   ->will($this->throwException(new RouteNotFoundException));
-
-        $SUT->setContentDocument($document);
-        $SUT->setTitleParameters(array('pattern' => 'replace'));
-        $SUT->setContentParameters(array('pattern' => 'redirect'));
-        $SUT->setRouter($routerMock);
-        $SUT->addExtractor(new SeoOriginalRouteExtractor());
-        $SUT->setMetaDataValues();
-    }
-
     public function testStrategies()
     {
         $this->pageService->addMeta('names', 'description', 'Default description');
         $SUT = new SeoPresentation($this->pageService);
-        $SUT->addExtractor(new SeoOriginalRouteExtractor());
+        $SUT->addExtractor(new SeoOriginalUrlExtractor());
         $SUT->addExtractor(new SeoTitleExtractor());
         $SUT->addExtractor(new SeoDescriptionExtractor());
         $SUT->setContentDocument(new AllStrategiesDocument());
@@ -489,7 +328,5 @@ class SeoPresentationTest extends BaseTestCase
         $this->assertEquals('Test title | Default title', $actualTitle);
         $this->assertEquals('Default description. Test Description.', $actualDescription);
         $this->assertEquals('/test-route', $actualLink);
-
-
     }
 }
