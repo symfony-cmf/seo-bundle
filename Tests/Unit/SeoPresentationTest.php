@@ -26,7 +26,6 @@ class SeoPresentationTest extends BaseTestCase
 
     protected $managerRegistry;
 
-    protected $routerMock;
     /**
      * @var SeoPresentation
      */
@@ -87,17 +86,9 @@ class SeoPresentationTest extends BaseTestCase
                        ->method('getSeoMetadata')
                        ->will($this->returnValue($this->seoMetadata));
 
-        $this->routerMock = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Routing\Router')
-                                 ->disableOriginalConstructor()
-                                 ->getMock();
-        $this->routerMock->expects($this->any())
-                         ->method('generate')
-                         ->will($this->returnValue('/test'));
-
         //settings for the presentation model
         $this->SUT->setDoctrineRegistry($this->managerRegistry);
         $this->SUT->setContentDocument($this->document);
-        $this->SUT->setRouter($this->routerMock);
     }
 
     public function tearDown()
