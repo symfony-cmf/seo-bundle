@@ -5,6 +5,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Router;
 
 /**
  * Contrary to the SeoOriginalRouteExtractor this one will set a
@@ -14,6 +16,11 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  */
 class SeoOriginalRouteKeyExtractor implements SeoExtractorInterface
 {
+    /**
+     * @var Router
+     */
+    private $router;
+
     /**
      * {@inheritDoc}
      */
@@ -35,7 +42,30 @@ class SeoOriginalRouteKeyExtractor implements SeoExtractorInterface
                 )
             );
         }
-        $seoMetadata->setOriginalUrl($document->getSeoOriginalRouteKey());
+
+        $routeKey = $document->getSeoOriginalRouteKey();
+        if (!is_string($routeKey)) {
+            throw new SeoExtractorStrategyException(sprintf('Expecting string but got %s.', gettype($routeKey)));
+        }
+
+        try {
+            $absoluteUrl = $this->router->generate($document->getSeoOriginalRouteKey());
+        } catch(RouteNotFoundException $e) {
+            throw new SeoExtractorStrategyException(
+                sprintf('Given symfony route key seems to be wrong.', $document->getSeoOriginalRouteKey()), 0, $e
+            );
+        }
+        $seoMetadata->setOriginalUrl($absoluteUrl);
+    }
+
+    /**
+     * Setter for the symfony router.
+     *
+     * @param Router $router
+     */
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
     }
 }
  

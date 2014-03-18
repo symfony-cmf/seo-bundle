@@ -104,13 +104,14 @@ class SeoPresentation extends AbstractSeoPresentation
         }
 
         if (null !== $this->seoMetadata->getOriginalUrl()) {
-            $absoluteUrl = $this->createAbsoluteUrl($this->seoMetadata->getOriginalUrl());
             switch ($this->contentParameters['pattern']) {
                 case 'canonical':
-                    $this->sonataPage->setLinkCanonical($absoluteUrl);
+                    $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
                     break;
                 case 'redirect':
-                    $this->setRedirectResponse(new RedirectResponse($absoluteUrl));
+                    $this->setRedirectResponse(
+                        new RedirectResponse($this->seoMetadata->getOriginalUrl())
+                    );
                     break;
             }
         }
@@ -210,31 +211,5 @@ class SeoPresentation extends AbstractSeoPresentation
                            : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
-    }
-
-    /**
-     * As there are several ways to set the original route for a content,
-     * there are several solutions needed to create a absolute path for either
-     * the redirect response or the canonical link.
-     *
-     * The route can be:
-     *  - absolute url simply stored in the SeoMetadata
-     *  - a route document
-     *  - a symfony route key
-     */
-    private function createAbsoluteUrl($routeValue)
-    {
-        if (is_string($routeValue) && !UUIDHelper::isUUID($routeValue)) {
-            //The value is just a plain url
-            return $routeValue;
-        }
-
-        try {
-            $absoluteUrl = $this->router->generate($routeValue);
-        } catch (RouteNotFoundException $e) {
-            throw new SeoAwareException('Not possible to create a url from SeoMetadata original url value.');
-        }
-
-        return $absoluteUrl;
     }
 }
