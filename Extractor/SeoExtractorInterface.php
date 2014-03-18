@@ -10,7 +10,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoStrategyInterface
+interface SeoExtractorInterface
 {
     /**
      * Check whether the strategy supports this document.
@@ -33,7 +33,6 @@ interface SeoStrategyInterface
      * This method is only called if supports returned true.
      *
      * @param SeoAwareInterface $document
-     *
      * @param SeoMetadataInterface $seoMetadata
      */
     public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata);

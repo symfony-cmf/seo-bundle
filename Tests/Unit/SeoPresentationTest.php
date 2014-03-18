@@ -3,9 +3,11 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteKeyExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
@@ -353,7 +355,70 @@ class SeoPresentationTest extends BaseTestCase
         $SUT->setTitleParameters(array());
         $SUT->setContentParameters(array('pattern' => 'redirect'));
         $SUT->setRouter($this->routerMock);
-        $SUT->addExtractor(new SeoOriginalRouteStrategy());
+        $SUT->addExtractor(new SeoOriginalRouteExtractor());
+        $SUT->setMetaDataValues();
+
+        $redirect = $SUT->getRedirectResponse();
+
+        $this->assertNotNull($redirect);
+
+        $redirectResponse = new RedirectResponse('/test');
+
+        $this->assertEquals($redirectResponse, $redirect);
+    }
+
+    public function testStrategyRouteKeyCreation()
+    {
+        $this->seoMetadata->setOriginalUrl('/test-url');
+
+        $SUT = new SeoPresentation($this->pageService);
+
+        //@todo at the right route with a key
+        $routeMock = $this->getMock('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
+
+        $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
+        $document->expects($this->any())
+                 ->method('getSeoMetadata')
+                 ->will($this->returnValue($this->seoMetadata));
+        $document->expects($this->once())
+                 ->method('getSeoOriginalRouteKey')
+                 ->will($this->returnValue($routeMock));
+
+        $SUT->setContentDocument($document);
+        $SUT->setTitleParameters(array());
+        $SUT->setContentParameters(array('pattern' => 'redirect'));
+        $SUT->setRouter($this->routerMock);
+        $SUT->addExtractor(new SeoOriginalRouteKeyExtractor());
+        $SUT->setMetaDataValues();
+
+        $redirect = $SUT->getRedirectResponse();
+
+        $this->assertNotNull($redirect);
+
+        $redirectResponse = new RedirectResponse('/test');
+
+        $this->assertEquals($redirectResponse, $redirect);
+    }
+
+    public function testStrategyUrlCreation()
+    {
+        $this->seoMetadata->setOriginalUrl('/test-url');
+
+        $SUT = new SeoPresentation($this->pageService);
+
+        $document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\RouteStrategyDocument');
+        $document->expects($this->any())
+                 ->method('getSeoMetadata')
+                 ->will($this->returnValue($this->seoMetadata));
+        $document->expects($this->once())
+                 ->method('getSeoOriginalUrl')
+                 ->will($this->returnValue('/test'));
+
+        $SUT->setContentDocument($document);
+        $SUT->setTitleParameters(array());
+        $SUT->setContentParameters(array('pattern' => 'redirect'));
+        $SUT->setRouter($this->routerMock);
+        $SUT->addExtractor(new SeoOriginalUrlExtractor());
         $SUT->setMetaDataValues();
 
         $redirect = $SUT->getRedirectResponse();
@@ -397,7 +462,7 @@ class SeoPresentationTest extends BaseTestCase
         $SUT->setTitleParameters(array('pattern' => 'replace'));
         $SUT->setContentParameters(array('pattern' => 'redirect'));
         $SUT->setRouter($routerMock);
-        $SUT->addExtractor(new SeoOriginalRouteStrategy());
+        $SUT->addExtractor(new SeoOriginalRouteExtractor());
         $SUT->setMetaDataValues();
     }
 
@@ -405,9 +470,9 @@ class SeoPresentationTest extends BaseTestCase
     {
         $this->pageService->addMeta('names', 'description', 'Default description');
         $SUT = new SeoPresentation($this->pageService);
-        $SUT->addExtractor(new SeoOriginalRouteStrategy());
-        $SUT->addExtractor(new SeoTitleStrategy());
-        $SUT->addExtractor(new SeoDescriptionStrategy());
+        $SUT->addExtractor(new SeoOriginalRouteExtractor());
+        $SUT->addExtractor(new SeoTitleExtractor());
+        $SUT->addExtractor(new SeoDescriptionExtractor());
         $SUT->setContentDocument(new AllStrategiesDocument());
         $SUT->setDoctrineRegistry($this->managerRegistry);
         $SUT->setTitleParameters(array('default' => 'Default title', 'separator' => ' | ', 'pattern' => 'prepend'));

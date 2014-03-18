@@ -7,30 +7,27 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This strategy extracts the original route from documents
- * implementing the SeoOriginalRouteInterface.
+ * Contrary to the SeoOriginalRouteExtractor this one will set a
+ * a symfony route key as a string to the SeoMetadata.
  *
- * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
+ * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
-class SeoOriginalRouteStrategy implements SeoStrategyInterface
+class SeoOriginalRouteKeyExtractor implements SeoExtractorInterface
 {
-
     /**
      * {@inheritDoc}
      */
     public function supports(SeoAwareInterface $document)
     {
-        return $document instanceof SeoOriginalRouteInterface;
+        return $document instanceof SeoOriginalRouteKeyInterface;
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @param SeoOriginalRouteInterface $document
      */
     public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
     {
-        if (!$document instanceof SeoOriginalRouteInterface) {
+        if (!$document instanceof SeoOriginalRouteKeyInterface) {
             throw new SeoExtractorStrategyException(
                 sprintf(
                     'The given document %s is not supported by this strategy. Call supports() method first.',
@@ -38,6 +35,7 @@ class SeoOriginalRouteStrategy implements SeoStrategyInterface
                 )
             );
         }
-        $seoMetadata->setOriginalUrl($document->getSeoOriginalRoute());
+        $seoMetadata->setOriginalUrl($document->getSeoOriginalRouteKey());
     }
 }
+ 

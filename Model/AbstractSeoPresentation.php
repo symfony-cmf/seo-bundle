@@ -6,7 +6,7 @@ use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoStrategyInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -59,7 +59,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     protected $router;
 
     /**
-     * @var SeoStrategyInterface[]
+     * @var SeoExtractorInterface[]
      */
     protected $strategies = array();
 
@@ -178,9 +178,9 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * Method to add strategies by the compiler pass.
      *
-     * @param SeoStrategyInterface $strategy
+     * @param SeoExtractorInterface $strategy
      */
-    public function addExtractor(SeoStrategyInterface $strategy)
+    public function addExtractor(SeoExtractorInterface $strategy)
     {
         $this->strategies[] = $strategy;
     }

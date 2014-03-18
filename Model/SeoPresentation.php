@@ -206,8 +206,8 @@ class SeoPresentation extends AbstractSeoPresentation
     {
         $metas = $this->sonataPage->getMetas();
         $sonataKeywords = isset($metas['names']['keywords'][0])
-                                ? $metas['names']['keywords'][0]
-                                : '';
+                           ? $metas['names']['keywords'][0]
+                           : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
     }

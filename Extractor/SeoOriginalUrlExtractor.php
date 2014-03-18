@@ -7,12 +7,12 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This strategy extracts the description from documents
- * implementing the SeoDescriptionInterface.
+ * Contrary to the SeoOriginalRouteExtractor this one will set a
+ * absolute url as a string to the SeoMetadata.
  *
- * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
+ * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
-class SeoDescriptionStrategy implements SeoStrategyInterface
+class SeoOriginalUrlExtractor implements SeoExtractorInterface
 {
 
     /**
@@ -20,17 +20,15 @@ class SeoDescriptionStrategy implements SeoStrategyInterface
      */
     public function supports(SeoAwareInterface $document)
     {
-        return $document instanceof SeoDescriptionInterface;
+        return $document instanceof SeoOriginalUrlInterface;
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @param SeoDescriptionInterface $document
      */
     public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
     {
-        if (!$document instanceof SeoDescriptionInterface) {
+        if (!$document instanceof SeoOriginalUrlInterface) {
             throw new SeoExtractorStrategyException(
                 sprintf(
                     'The given document %s is not supported by this strategy. Call supports() method first.',
@@ -38,6 +36,7 @@ class SeoDescriptionStrategy implements SeoStrategyInterface
                 )
             );
         }
-        $seoMetadata->setMetaDescription($document->getSeoDescription());
+        $seoMetadata->setOriginalUrl($document->getSeoOriginalUrl());
     }
 }
+ 
