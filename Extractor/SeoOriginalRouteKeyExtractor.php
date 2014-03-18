@@ -49,10 +49,10 @@ class SeoOriginalRouteKeyExtractor implements SeoExtractorInterface
         }
 
         try {
-            $absoluteUrl = $this->router->generate($document->getSeoOriginalRouteKey());
+            $absoluteUrl = $this->router->generate($routeKey);
         } catch(RouteNotFoundException $e) {
             throw new SeoExtractorStrategyException(
-                sprintf('Given symfony route key seems to be wrong.', $document->getSeoOriginalRouteKey()), 0, $e
+                sprintf('Given symfony route key seems to be wrong.', $routeKey), 0, $e
             );
         }
         $seoMetadata->setOriginalUrl($absoluteUrl);
