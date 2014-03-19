@@ -9,11 +9,11 @@
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_lister.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
 
-        <parameter key="cmf_seo.extractor_strategy.title">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.description">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_url">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_route">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteStrategy</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_route_key">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteKeyStrategy</parameter>
+        <parameter key="cmf_seo.extractor_strategy.title">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.description">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_url">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_route">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_route_key">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteKeyExtractor</parameter>
     </parameters>
     <services>
         <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">

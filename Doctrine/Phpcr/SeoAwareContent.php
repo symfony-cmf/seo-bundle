@@ -3,6 +3,9 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
 use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
@@ -20,7 +23,10 @@ use Symfony\Component\Routing\Route;
 class SeoAwareContent implements
     SeoAwareInterface,
     RouteReferrersInterface,
-    TranslatableInterface
+    TranslatableInterface,
+    SeoTitleInterface,
+    SeoDescriptionInterface,
+    SeoOriginalUrlInterface
 {
 
     /**
@@ -32,6 +38,9 @@ class SeoAwareContent implements
 
     protected $parent;
 
+    /**
+     * @var string
+     */
     protected $name;
 
     /**
@@ -241,5 +250,43 @@ class SeoAwareContent implements
     public function setLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * Provide a title of this page to be used in SEO context.
+     *
+     * @return string
+     */
+    public function getSeoTitle()
+    {
+        $seoTitle = $this->getSeoMetadata()->getTitle();
+        return null === $seoTitle || '' === $seoTitle
+                ? $this->getTitle()
+                : $seoTitle;
+    }
+
+    /**
+     * Provide a description of this page to be used in SEO context.
+     *
+     * @return string
+     */
+    public function getSeoDescription()
+    {
+        $seoDescription = $this->getSeoMetadata()->getMetaDescription();
+        return null === $seoDescription || '' == $seoDescription
+                ? substr($this->getBody(), 0, 200).' ...'
+                : $seoDescription;
+    }
+
+    /**
+     * The method returns the absolute url as a string to redirect to
+     * or set to the canonical link.
+     *
+     * @return string
+     */
+    public function getSeoOriginalUrl()
+    {
+        $seoOriginalUrl = $this->getSeoMetadata()->getOriginalUrl();
+        return null === $seoOriginalUrl || '' === $seoOriginalUrl ? '/home' : $seoOriginalUrl;
     }
 }
