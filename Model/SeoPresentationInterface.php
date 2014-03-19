@@ -2,6 +2,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * An interface for the SeoPresentation model.
  *
@@ -23,15 +25,15 @@ interface SeoPresentationInterface
 
     /**
      * Just a method which will set the values to the sonata service or trigger some other
-     * action like the redirect.
+     * action like the redirectResponse.
      */
     public function setMetadataValues();
 
     /**
-     * Will return false if the pattern for duplicate content is not redirect, or it is
-     * but there is not redirect route in the meta data.
+     * Will return false if the strategy for duplicate content is not redirectResponse, or it is
+     * but there is not redirectResponse route in the meta data.
      *
-     * @return bool|string
+     * @return bool|RedirectResponse
      */
-    public function getRedirect();
+    public function getRedirectResponse();
 }

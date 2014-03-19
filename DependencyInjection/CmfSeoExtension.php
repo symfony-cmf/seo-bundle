@@ -2,6 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;

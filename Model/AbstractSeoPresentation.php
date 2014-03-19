@@ -3,6 +3,10 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ODM\PHPCR\DocumentManager;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * The abstract class for the SeoPresentation Model.
@@ -31,7 +35,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * @var bool
      */
-    protected $redirect = false;
+    protected $redirectResponse = false;
 
     /**
      * @var ManagerRegistry
@@ -49,21 +53,26 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     protected $contentDocument;
 
     /**
-     * Setter for the redirect property.
-     *
-     * @param $redirect
+     * @var SeoExtractorInterface[]
      */
-    protected function setRedirect($redirect)
+    protected $strategies = array();
+
+    /**
+     * Setter for the redirectResponse property.
+     *
+     * @param RedirectResponse $redirect
+     */
+    protected function setRedirectResponse(RedirectResponse $redirect)
     {
-        $this->redirect = $redirect;
+        $this->redirectResponse = $redirect;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getRedirect()
+    public function getRedirectResponse()
     {
-        return $this->redirect;
+        return $this->redirectResponse;
     }
 
     /**
@@ -122,7 +131,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * To get the Document Manager out of the registry, this method needs to be called.
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager|object
+     * @return ObjectManager|DocumentManager
      */
     protected function getDocumentManager()
     {
@@ -142,9 +151,20 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * This method uses the DocumentManager to get the documents current locale.
      * @param string
+     * @return null|string
      */
     protected function getModelLocale()
     {
         return $this->getDocumentManager()->getUnitOfWork()->getCurrentLocale($this->contentDocument);
+    }
+
+    /**
+     * Method to add strategies by the compiler pass.
+     *
+     * @param SeoExtractorInterface $strategy
+     */
+    public function addExtractor(SeoExtractorInterface $strategy)
+    {
+        $this->strategies[] = $strategy;
     }
 }

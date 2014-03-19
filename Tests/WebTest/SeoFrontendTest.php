@@ -32,7 +32,7 @@ class SeoFrontendTest extends BaseTestCase
     /**
      * This test is without any setting in sonata_seo just cmf data.
      */
-    public function testTitle()
+    public function testDefaultUsage()
     {
         $crawler = $this->client->request('GET', '/content/content-1');
         $res = $this->client->getResponse();
@@ -64,5 +64,40 @@ class SeoFrontendTest extends BaseTestCase
             return 'canonical' === $node->attr('rel');
         });
         $this->assertEquals('/to/original', $linkCrawler->eq(0)->attr('href'));
+    }
+
+    public function testStrategies()
+    {
+        $crawler = $this->client->request('GET', '/content/strategy-content');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertCount(1, $crawler->filter('html:contains("content of strategy test.")'));
+
+        //test the title
+        $titleCrawler = $crawler->filter('head > title');
+        $this->assertEquals('Strategy title | Default title', $titleCrawler->text());
+
+        //test the meta tag entries
+        $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
+                $namesValue = $node->attr('names');
+
+                return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
+        });
+
+        $actualMeta = $metaCrawler->extract('content', 'content');
+        $expectedMeta = array(
+            'Strategy title | Default title',
+            'content of strategy test. ...',
+            'strategy, test',
+        );
+        $this->assertEquals($expectedMeta, $actualMeta);
+
+        //test the setting of canonical link
+        $linkCrawler = $crawler->filter('head > link')->reduce(function ($node) {
+                return 'canonical' === $node->attr('rel');
+        });
+        $this->assertEquals('/home', $linkCrawler->eq(0)->attr('href'));
+
     }
 }

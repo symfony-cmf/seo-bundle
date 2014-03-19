@@ -42,9 +42,9 @@ class SeoContentListener
             $this->seoPage->setContentDocument($contentDocument);
             $this->seoPage->setMetadataValues();
 
-            //have a look if the pattern is redirect and if there is a route to redirect to
-            if ($url = $this->seoPage->getRedirect()) {
-                $event->setResponse(new RedirectResponse($url));
+            //have a look if the strategy is redirectResponse and if there is a route to redirectResponse to
+            if ($response = $this->seoPage->getRedirectResponse()) {
+                $event->setResponse($response);
             }
         }
     }

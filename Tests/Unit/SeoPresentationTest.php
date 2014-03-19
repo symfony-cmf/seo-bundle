@@ -3,6 +3,10 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
@@ -15,6 +19,9 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
  */
 class SeoPresentationTest extends BaseTestCase
 {
+
+    protected $managerRegistry;
+
     /**
      * @var SeoPresentation
      */
@@ -38,41 +45,45 @@ class SeoPresentationTest extends BaseTestCase
 
     public function setUp()
     {
+        //set up the SUT
         $this->pageService = new SeoPage();
-        $this->SUT = new SeoPresentation($this->pageService);
+        $this->SUT = new SeoPresentation(
+            $this->pageService,
+            array()
+        );
 
         $this->seoMetadata = new SeoMetadata();
 
         //need a mock for the manager registry
-        $managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
-                                ->disableOriginalConstructor()
-                                ->getMock();
+        $this->managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
 
         //need the DM and unitOfWork for getting the locale out of the document
-        $this->dmMock = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
-                                ->disableOriginalConstructor()
-                                ->getMock();
+        $this->dmMock = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
+                             ->disableOriginalConstructor()
+                             ->getMock();
 
-        $managerRegistry->expects($this->any())
-                        ->method('getManager')
-                        ->will($this->returnValue($this->dmMock));
+        $this->managerRegistry->expects($this->any())
+                              ->method('getManager')
+                              ->will($this->returnValue($this->dmMock));
 
-        $this->unitOfWork = $this   ->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
-                                    ->disableOriginalConstructor()
-                                    ->getMock();
+        $this->unitOfWork = $this->getMockBuilder('Doctrine\ODM\PHPCR\UnitOfWork')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
 
         $this->dmMock->expects($this->any())
-                         ->method('getUnitOfWork')
-                         ->will($this->returnValue($this->unitOfWork));
+                     ->method('getUnitOfWork')
+                     ->will($this->returnValue($this->unitOfWork));
 
         //mock the current document to answer with the seo metadata
         $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface');
-        $this->document->expects($this->once())
+        $this->document->expects($this->any())
                        ->method('getSeoMetadata')
                        ->will($this->returnValue($this->seoMetadata));
 
         //settings for the presentation model
-        $this->SUT->setDoctrineRegistry($managerRegistry);
+        $this->SUT->setDoctrineRegistry($this->managerRegistry);
         $this->SUT->setContentDocument($this->document);
     }
 
@@ -88,6 +99,7 @@ class SeoPresentationTest extends BaseTestCase
      */
     public function testSettingTitleFromSeoMetadataToPageService($titleParameters, $expectedValue)
     {
+
         //values for every SeoMetadata
         $this->seoMetadata->setTitle('Special title');
 
@@ -287,5 +299,30 @@ class SeoPresentationTest extends BaseTestCase
         $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
 
         $this->SUT->setMetaDataValues();
+    }
+
+    public function testStrategies()
+    {
+        $this->pageService->addMeta('names', 'description', 'Default description');
+        $SUT = new SeoPresentation($this->pageService);
+        $SUT->addExtractor(new SeoOriginalUrlExtractor());
+        $SUT->addExtractor(new SeoTitleExtractor());
+        $SUT->addExtractor(new SeoDescriptionExtractor());
+        $SUT->setContentDocument(new AllStrategiesDocument());
+        $SUT->setDoctrineRegistry($this->managerRegistry);
+        $SUT->setTitleParameters(array('default' => 'Default title', 'separator' => ' | ', 'pattern' => 'prepend'));
+        $SUT->setContentParameters(array('pattern' => 'canonical'));
+
+
+        $SUT->setMetaDataValues();
+
+        $metas = $this->pageService->getMetas();
+        $actualDescription = $metas['names']['description'][0];
+        $actualTitle = $this->pageService->getTitle();
+        $actualLink = $this->pageService->getLinkCanonical();
+
+        $this->assertEquals('Test title | Default title', $actualTitle);
+        $this->assertEquals('Default description. Test Description.', $actualDescription);
+        $this->assertEquals('/test-route', $actualLink);
     }
 }

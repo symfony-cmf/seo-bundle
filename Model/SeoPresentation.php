@@ -2,8 +2,11 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use PHPCR\Util\UUIDHelper;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -15,8 +18,8 @@ use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
  *
  * The content config under cmf_seo.content gives a pattern how to handle duplicate
  * content. If it is set to canonical a canonical link is created by an Twig helper
- * (url must be set to the SeoPage), otherwise the url is set to the redirect property
- * which triggers an redirect.
+ * (url must be set to the SeoPage), otherwise the url is set to the redirectResponse property
+ * which triggers an redirectResponse.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -46,11 +49,24 @@ class SeoPresentation extends AbstractSeoPresentation
     /**
      * This method is used to get the SeoMetadata from current content document.
      *
+     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
      * @return SeoMetadata
      */
     protected function getSeoMetadata()
     {
-        return $this->contentDocument->getSeoMetadata();
+
+        $seoMetadata = $this->contentDocument instanceof SeoAwareInterface
+                        ? (clone $this->contentDocument->getSeoMetadata())
+                        : new SeoMetadata()
+        ;
+
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->supports($this->contentDocument)) {
+                $strategy->updateMetadata($this->contentDocument, $seoMetadata);
+            }
+        }
+
+        return $seoMetadata;
     }
 
     /**
@@ -87,15 +103,19 @@ class SeoPresentation extends AbstractSeoPresentation
             );
         }
 
-        //if the pattern for duplicate content is canonical, the service will trigger an canonical link
-        switch ($this->contentParameters['pattern']) {
-            case 'canonical':
-                $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
-                break;
-            case 'redirect':
-                $this->setRedirect($this->seoMetadata->getOriginalUrl());
-                break;
+        if (null !== $this->seoMetadata->getOriginalUrl()) {
+            switch ($this->contentParameters['pattern']) {
+                case 'canonical':
+                    $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
+                    break;
+                case 'redirect':
+                    $this->setRedirectResponse(
+                        new RedirectResponse($this->seoMetadata->getOriginalUrl())
+                    );
+                    break;
+            }
         }
+
     }
 
     /**
@@ -187,8 +207,8 @@ class SeoPresentation extends AbstractSeoPresentation
     {
         $metas = $this->sonataPage->getMetas();
         $sonataKeywords = isset($metas['names']['keywords'][0])
-                                ? $metas['names']['keywords'][0]
-                                : '';
+                           ? $metas['names']['keywords'][0]
+                           : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
     }
