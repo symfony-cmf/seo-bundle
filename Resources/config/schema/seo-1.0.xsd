@@ -53,9 +53,7 @@
     </xsd:complexType>
 
     <xsd:complexType name="content">
-        <xsd:sequence>
-            <xsd:element name="pattern" type="content_pattern" />
-        </xsd:sequence>
+            <xsd:attribute name="pattern" type="content_pattern" />
     </xsd:complexType>
 
     <xsd:simpleType name="title_pattern">
