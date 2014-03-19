@@ -18,6 +18,7 @@ use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
 
 class LoadContentData implements FixtureInterface, DependentFixtureInterface
 {
@@ -75,6 +76,26 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $route->setContent($content);
         $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
         $manager->persist($route);
+
+        $strategyContent = new SeoAwareContent();
+        $strategyContent->setName('strategy-content');
+        $strategyContent->setTitle('Strategy title');
+        $strategyContent->setBody('content of strategy test.');
+        $strategyContent->setParent($contentRoot);
+        //insert empty meta data
+        $strategyMetadata = new SeoMetadata();
+        $strategyMetadata->setTitle('');
+        $strategyMetadata->setOriginalUrl('');
+        $strategyMetadata->setMetaDescription('');
+        $strategyMetadata->setMetaKeywords('strategy, test');
+        $strategyContent->setSeoMetadata($strategyMetadata);
+        $manager->persist($strategyContent);
+
+        $strategyRoute = new Route();
+        $strategyRoute->setPosition($routeRoot, 'strategy-content');
+        $strategyRoute->setContent($strategyContent);
+        $strategyRoute->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+        $manager->persist($strategyRoute);
 
         $manager->flush();
     }

@@ -3,17 +3,13 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteKeyExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
