@@ -40,9 +40,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'admin_class'       => 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension',
                     'content_basepath'  => '/cms/content',
                     'use_sonata_admin'  => 'auto',
-                    'enabled'           => false
-                )
-            )
+                    'enabled'           => false,
+                ),
+            ),
         );
 
         $sources = array_map(function ($path) {
@@ -50,6 +50,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
         }, array(
                 'config/default_config.yml',
                 'config/default_config.php',
+                'config/default_config.xml',
         ));
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
@@ -73,17 +74,18 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'admin_class'       => 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension',
                     'content_basepath'  => '/cms/content',
                     'use_sonata_admin'  => 'auto',
-                    'enabled'           => false
-                )
-            )
+                    'enabled'           => false,
+                ),
+            ),
         );
 
         $sources = array_map(function ($path) {
                 return __DIR__.'/../../Resources/Fixtures/'.$path;
-            }, array(
-                'config/multilang_config.yml',
-                'config/multilang_config.php',
-            ));
+        }, array(
+            'config/multilang_config.yml',
+            'config/multilang_config.php',
+            'config/multilang_config.xml',
+        ));
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
     }
@@ -104,8 +106,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'content_basepath'  => '/cms/content',
                     'use_sonata_admin'  => true,
                     'enabled'           => true,
-                )
-            )
+                ),
+            ),
         );
 
         $sources = array_map(function ($path) {
@@ -113,9 +115,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
         }, array(
                 'config/full_config.yml',
                 'config/full_config.php',
-            ));
+                'config/full_config.xml',
+        ));
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
     }
-
 }

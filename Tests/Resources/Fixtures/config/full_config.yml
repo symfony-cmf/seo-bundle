@@ -6,3 +6,4 @@ cmf_seo:
     persistence:
         phpcr:
             use_sonata_admin: true
+            

@@ -8,7 +8,7 @@ $container->loadFromExtension('cmf_seo', array(
     'content' => array('pattern' => 'redirect'),
     'persistence' => array(
         'phpcr' => array(
-            'use_sonata_admin'  => true
+            'use_sonata_admin'  => true,
         ),
     ),
 ));
