@@ -23,9 +23,6 @@ class CmfSeoBundle extends Bundle
             );
         }
 
-        //add the compiler pass if exist
-        if (class_exists('Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\ExtractorTagCompiler')) {
-            $container->addCompilerPass(new ExtractorTagCompiler());
-        }
+        $container->addCompilerPass(new ExtractorTagCompiler());
     }
 }
