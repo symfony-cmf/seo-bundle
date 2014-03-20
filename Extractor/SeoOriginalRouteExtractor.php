@@ -6,6 +6,7 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Router;
 
 /**
@@ -46,13 +47,12 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
         }
 
         $route = $document->getSeoOriginalRoute();
-        if (!$route instanceof Route) {
-            throw new SeoExtractorStrategyException(
-                sprintf('Expecting Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route but got %s.', get_class($route))
-            );
-        }
 
-        $seoMetadata->setOriginalUrl($this->router->generate($route));
+        try {
+            $seoMetadata->setOriginalUrl($this->router->generate($route));
+        } catch(RouteNotFoundException $e) {
+            throw new SeoExtractorStrategyException('Unable to create a url.', 0, $e);
+        }
     }
 
     /**

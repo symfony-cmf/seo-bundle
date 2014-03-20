@@ -23,7 +23,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     private $descriptionDocument;
     private $routeDocument;
     private $urlDocument;
-    private $routeKeyDocument;
 
     /** @var  SeoMetadata */
     private $seoMetadata;
@@ -49,9 +48,7 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->routeDocument = $this->getMock(
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\RouteExtractorDocument'
         );
-        $this->routeKeyDocument = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\RouteKeyExtractorDocument'
-        );
+
         $this->seoMetadata = new SeoMetadata();
     }
 
@@ -62,7 +59,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($strategy->supports($this->descriptionDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
         $this->assertTrue($strategy->supports($this->titleDocument));
-        $this->assertFalse($strategy->supports($this->routeKeyDocument));
 
         $this->titleDocument->expects($this->once())
                             ->method('getSeoTitle')
@@ -80,7 +76,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($strategy->supports($this->descriptionDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
         $this->assertFalse($strategy->supports($this->titleDocument));
-        $this->assertFalse($strategy->supports($this->routeKeyDocument));
         $this->assertFalse($strategy->supports($this->urlDocument));
 
         $this->descriptionDocument->expects($this->once())
@@ -99,7 +94,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($strategy->supports($this->descriptionDocument));
         $this->assertTrue($strategy->supports($this->routeDocument));
         $this->assertFalse($strategy->supports($this->titleDocument));
-        $this->assertFalse($strategy->supports($this->routeKeyDocument));
         $this->assertFalse($strategy->supports($this->urlDocument));
 
         $route = $this->getMockBuilder('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route')
@@ -138,60 +132,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
     }
 
-    public function testRouteKeyExtractor()
-    {
-        $strategy = new SeoOriginalRouteKeyExtractor();
-
-        $this->assertFalse($strategy->supports($this->descriptionDocument));
-        $this->assertTrue($strategy->supports($this->routeKeyDocument));
-        $this->assertFalse($strategy->supports($this->titleDocument));
-        $this->assertFalse($strategy->supports($this->routeDocument));
-        $this->assertFalse($strategy->supports($this->urlDocument));
-
-        $this->routeKeyDocument->expects($this->once())
-                               ->method('getSeoOriginalRouteKey')
-                               ->will($this->returnValue('seo-route-key'));
-
-        $this->router->expects($this->once())
-                     ->method('generate')
-                     ->with('seo-route-key')
-                     ->will($this->returnValue('/seo-route'));
-        $strategy->setRouter($this->router);
-
-        $strategy->updateMetadata($this->routeKeyDocument, $this->seoMetadata);
-
-        $this->assertEquals('/seo-route', $this->seoMetadata->getOriginalUrl());
-    }
-
-    /**
-     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
-     */
-    public function testRouteKeyExceptions()
-    {
-        //throws cause not supported
-        $strategy = new SeoOriginalRouteKeyExtractor();
-        $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
-
-        //throws cause the route key needs to be a string
-        $strategy = new SeoOriginalRouteKeyExtractor();
-        $this->routeDocument->expects($this->once())
-                            ->method('getSeoOriginalRouteKey')
-                            ->will($this->returnValue(array()));
-        $strategy->updateMetadata($this->routeKeyDocument, $this->seoMetadata);
-
-        //throws cause the router can not create a route out of the key
-        $strategy = new SeoOriginalRouteKeyExtractor();
-        $this->routeDocument->expects($this->once())
-                            ->method('getSeoOriginalRouteKey')
-                            ->will($this->returnValue('seo-route-key'));
-        $this->router->expects($this->once())
-                     ->method('generate')
-                     ->with('seo-route-key')
-                     ->will($this->throwException(new RouteNotFoundException));
-        $strategy->setRouter($this->router);
-        $strategy->updateMetadata($this->routeKeyDocument, $this->seoMetadata);
-    }
-
     public function testUrlExtractor()
     {
         $strategy = new SeoOriginalUrlExtractor();
@@ -200,7 +140,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($strategy->supports($this->urlDocument));
         $this->assertFalse($strategy->supports($this->titleDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
-        $this->assertFalse($strategy->supports($this->routeKeyDocument));
 
         $this->urlDocument->expects($this->once())
                           ->method('getSeoOriginalUrl')
@@ -220,30 +159,20 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->routeKeyDocument, $this->seoMetadata);
 
         $strategy = new SeoTitleExtractor();
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->routeKeyDocument, $this->seoMetadata);
 
         $strategy = new SeoDescriptionExtractor();
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->routeKeyDocument, $this->seoMetadata);
 
         $strategy = new SeoOriginalUrlExtractor();
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->routeKeyDocument, $this->seoMetadata);
-
-        $strategy = new SeoOriginalRouteKeyExtractor();
-        $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
     }
 }

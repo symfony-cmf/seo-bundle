@@ -17,9 +17,14 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 interface SeoOriginalRouteInterface
 {
     /**
-     * This method creates an instance of a Route.
+     * The method should return something that can be used to
+     * generate a absolute url.
      *
-     * @return Route
+     * This means it should return a symfony cmf Route object,
+     * a symfony route key or a uuid of a route document stored
+     * with the phpcr.
+     *
+     * @return Route|string
      */
     public function getSeoOriginalRoute();
 }
