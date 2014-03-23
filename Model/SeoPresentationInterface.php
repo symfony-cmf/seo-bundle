@@ -19,15 +19,15 @@ interface SeoPresentationInterface
      * To get access to the current content and it's SeoMetadata
      * this setter is needed.
      *
-     * @param SeoAwareInterface $contentDocument
+     * @param object $contentDocument
      */
-    public function setContentDocument(SeoAwareInterface $contentDocument);
+    public function setContentDocument($contentDocument);
 
     /**
      * Just a method which will set the values to the sonata service or trigger some other
      * action like the redirectResponse.
      */
-    public function setMetadataValues();
+    public function updateSeoPage();
 
     /**
      * Will return false if the strategy for duplicate content is not redirectResponse, or it is

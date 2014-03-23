@@ -22,14 +22,14 @@ class SeoContentListener
     /**
      * @var SeoPresentationInterface
      */
-    private $seoPage;
+    private $seoPresentation;
 
     /**
      * @param SeoPresentationInterface $seoPage
      */
     public function __construct(SeoPresentationInterface $seoPage)
     {
-        $this->seoPage = $seoPage;
+        $this->seoPresentation = $seoPage;
     }
 
     /**
@@ -37,13 +37,12 @@ class SeoContentListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $contentDocument = $event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY);
-        if ($contentDocument instanceof SeoAwareInterface) {
-            $this->seoPage->setContentDocument($contentDocument);
-            $this->seoPage->setMetadataValues();
+        if ($event->getRequest()->attributes->has(DynamicRouter::CONTENT_KEY)) {
+            $this->seoPresentation->setContentDocument($event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY));
+            $this->seoPresentation->updateSeoPage();
 
             //have a look if the strategy is redirectResponse and if there is a route to redirectResponse to
-            if ($response = $this->seoPage->getRedirectResponse()) {
+            if ($response = $this->seoPresentation->getRedirectResponse()) {
                 $event->setResponse($response);
             }
         }

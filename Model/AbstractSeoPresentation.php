@@ -123,7 +123,7 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     /**
      * {@inheritDoc}
      */
-    public function setContentDocument(SeoAwareInterface $contentDocument)
+    public function setContentDocument($contentDocument)
     {
         $this->contentDocument = $contentDocument;
     }

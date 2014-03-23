@@ -56,7 +56,7 @@ class SeoPresentation extends AbstractSeoPresentation
     {
 
         $seoMetadata = $this->contentDocument instanceof SeoAwareInterface
-                        ? (clone $this->contentDocument->getSeoMetadata())
+                        ? clone $this->contentDocument->getSeoMetadata()
                         : new SeoMetadata()
         ;
 
@@ -70,10 +70,9 @@ class SeoPresentation extends AbstractSeoPresentation
     }
 
     /**
-     *  this method will combine all settings directly in the sonata_seo configuration with
-     *  the given values of the current content
+     *  Update the sonata SeoPage service with the values gathered in this service.
      */
-    public function setMetaDataValues()
+    public function updateSeoPage()
     {
         //get the current seo metadata out of the document
         $this->seoMetadata = $this->getSeoMetadata();

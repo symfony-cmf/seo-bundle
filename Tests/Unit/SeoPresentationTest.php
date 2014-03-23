@@ -107,7 +107,7 @@ class SeoPresentationTest extends BaseTestCase
         $this->SUT->setTitleParameters($titleParameters);
 
         //run the transformation
-        $this->SUT->setMetaDataValues();
+        $this->SUT->updateSeoPage();
 
         //do the asserts
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
@@ -164,7 +164,7 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata->setMetaDescription('Special description');
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'description', 'Default description');
-        $this->SUT->setMetaDataValues();
+        $this->SUT->updateSeoPage();
         $metas = $this->pageService->getMetas();
         $this->assertEquals(
             'Default description. Special description',
@@ -177,7 +177,7 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata->setMetaKeywords('key1, key2');
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'keywords', 'default, other');
-        $this->SUT->setMetaDataValues();
+        $this->SUT->updateSeoPage();
         $keywords = $this->pageService->getMetas();
         $this->assertEquals(
             'default, other, key1, key2',
@@ -202,7 +202,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $this->SUT->setTitleParameters($titleParameters);
 
-        $this->SUT->setMetaDataValues();
+        $this->SUT->updateSeoPage();
 
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
     }
@@ -271,7 +271,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
 
-        $this->SUT->setMetaDataValues();
+        $this->SUT->updateSeoPage();
 
         $this->assertEquals('Special title | Default title', $this->pageService->getTitle());
     }
@@ -298,7 +298,7 @@ class SeoPresentationTest extends BaseTestCase
 
         $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
 
-        $this->SUT->setMetaDataValues();
+        $this->SUT->updateSeoPage();
     }
 
     public function testStrategies()
@@ -314,7 +314,7 @@ class SeoPresentationTest extends BaseTestCase
         $SUT->setContentParameters(array('pattern' => 'canonical'));
 
 
-        $SUT->setMetaDataValues();
+        $SUT->updateSeoPage();
 
         $metas = $this->pageService->getMetas();
         $actualDescription = $metas['names']['description'][0];
