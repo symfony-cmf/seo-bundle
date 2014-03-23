@@ -38,8 +38,7 @@ class SeoContentListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         if ($event->getRequest()->attributes->has(DynamicRouter::CONTENT_KEY)) {
-            $this->seoPresentation->setContentDocument($event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY));
-            $this->seoPresentation->updateSeoPage();
+            $this->seoPresentation->updateSeoPage($event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY));
 
             //have a look if the strategy is redirectResponse and if there is a route to redirectResponse to
             if ($response = $this->seoPresentation->getRedirectResponse()) {
