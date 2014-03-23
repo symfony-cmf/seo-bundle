@@ -9,13 +9,6 @@ use Sonata\DoctrinePHPCRAdminBundle\Admin\Admin;
 
 class SeoAwareContentAdmin extends Admin
 {
-
-    protected $baseRouteName = 'seo-content';
-
-    protected $baseRoutePattern = 'seo';
-
-    protected $translationDomain = 'CmfSeoBundle';
-
     public function getNewInstance()
     {
         $new = parent::getNewInstance();
