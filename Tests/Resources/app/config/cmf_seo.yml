@@ -16,7 +16,6 @@ cmf_routing:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
-
 framework:
     translator: { enabled: true, fallback: en }
 
@@ -25,3 +24,15 @@ sonata_admin:
        cmf_seo.content.admin_extension:
              implements:
                - Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface
+services:
+     sonata.admin.seo_content:
+         class: Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Admin\SeoAwareContentAdmin
+         tags:
+             - { name: sonata.admin, manager_type: doctrine_phpcr, group: "Cmf", label: "SeoAwareContent" }
+         arguments:
+             - ~
+             - Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent
+             - ~
+         calls:
+             - [ setTranslationDomain, [CmfSeoBundle]]
+             - [ setRootPath, [%cmf_seo.persistence.phpcr.content_basepath%]]
