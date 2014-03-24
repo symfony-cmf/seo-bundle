@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="CmfContentBundle.en.xliff">
+        <body>
+            <trans-unit id="title_key">
+                <source>title_key</source>
+                <target>%title% | Default title</target>
+            </trans-unit>
+            <trans-unit id="description_key">
+                <source>description_key</source>
+                <target>Default description. %description%</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

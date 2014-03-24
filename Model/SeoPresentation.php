@@ -28,7 +28,7 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * @var SeoPage
      */
-    protected $sonataPage;
+    private $sonataPage;
 
     /**
      * SeoParameters, set in the configuration.
@@ -38,12 +38,12 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * @var bool
      */
-    protected $redirectResponse = false;
+    private $redirectResponse = false;
 
     /**
      * @var SeoExtractorInterface[]
      */
-    protected $strategies = array();
+    private $strategies = array();
 
     /**
      * @var TranslatorInterface
@@ -68,7 +68,7 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * @param RedirectResponse $redirect
      */
-    protected function setRedirectResponse(RedirectResponse $redirect)
+    private function setRedirectResponse(RedirectResponse $redirect)
     {
         $this->redirectResponse = $redirect;
     }
@@ -97,7 +97,7 @@ class SeoPresentation implements SeoPresentationInterface
      * @param $contentDocument
      * @return SeoMetadata
      */
-    protected function getSeoMetadata($contentDocument)
+    private function getSeoMetadata($contentDocument)
     {
 
         $seoMetadata = $contentDocument instanceof SeoAwareInterface
