@@ -33,14 +33,27 @@ class SeoPresentationTest extends BaseTestCase
      * @var SeoMetadata
      */
     private $seoMetadata;
+    private $translator;
 
     public function setUp()
     {
         //set up the SUT
         $this->pageService = new SeoPage();
+        $this->translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+
+        $defaultSeoParameters = array(
+            'translation_domain'    => null,
+            'title_key'             => 'title_key',
+            'description_key'       => 'description_key',
+            'original_route_pattern'=> 'canonical'
+        );
+
         $this->seoPresentation = new SeoPresentation(
             $this->pageService,
-            array()
+            $this->translator,
+            $defaultSeoParameters
         );
 
         $this->seoMetadata = new SeoMetadata();
@@ -69,7 +82,13 @@ class SeoPresentationTest extends BaseTestCase
     public function testStrategies()
     {
         $this->pageService->addMeta('names', 'description', 'Default description');
-        $seoPresentation = new SeoPresentation($this->pageService);
+        $defaultSeoParameters = array(
+            'translation_domain'    => null,
+            'title_key'             => 'title_key',
+            'description_key'       => 'description_key',
+            'original_route_pattern'=> 'canonical'
+        );
+        $seoPresentation = new SeoPresentation($this->pageService, $this->translator, $defaultSeoParameters);
         $seoPresentation->addExtractor(new SeoOriginalUrlExtractor());
         $seoPresentation->addExtractor(new SeoTitleExtractor());
         $seoPresentation->addExtractor(new SeoDescriptionExtractor());

@@ -5,7 +5,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
-use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**

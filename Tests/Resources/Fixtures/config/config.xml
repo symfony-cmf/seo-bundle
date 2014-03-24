@@ -1,5 +1,6 @@
 <container xmlns="http://symfony.com/schema/dic/services">
     <config xmlns="http://cmf.symfony.com/schema/dic/seo">
-            <title default="Default title"/>
+        <description_key>description_key</description_key>
+        <title_key>title_key</title_key>
     </config>
 </container>
