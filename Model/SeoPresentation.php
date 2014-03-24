@@ -2,11 +2,13 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
-use PHPCR\Util\UUIDHelper;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ODM\PHPCR\DocumentManager;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -23,8 +25,145 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoPresentation extends AbstractSeoPresentation
+class SeoPresentation implements SeoPresentationInterface
 {
+    /**
+     * Storing the content parameters - config values under cmf_seo.content.
+     *
+     * @var array
+     */
+    protected $contentParameters;
+
+    /**
+     * Storing the title parameters - config values under cmf_seo.title.
+     *
+     * @var array
+     */
+    protected $titleParameters;
+
+    /**
+     * @var bool
+     */
+    protected $redirectResponse = false;
+
+    /**
+     * @var ManagerRegistry
+     */
+    protected $managerRegistry;
+
+    /**
+     * @var string
+     */
+    protected $defaultLocale;
+
+    /**
+     * @var SeoExtractorInterface[]
+     */
+    protected $strategies = array();
+
+    /**
+     * Setter for the redirectResponse property.
+     *
+     * @param RedirectResponse $redirect
+     */
+    protected function setRedirectResponse(RedirectResponse $redirect)
+    {
+        $this->redirectResponse = $redirect;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRedirectResponse()
+    {
+        return $this->redirectResponse;
+    }
+
+    /**
+     * This method is needed to get the default title parameters injected. They are used for
+     * concatenating the default values and the seo meta data or defining the pattern for that.
+     *
+     * @param array $titleParameters
+     */
+    public function setTitleParameters(array $titleParameters)
+    {
+        $this->titleParameters = $titleParameters;
+    }
+
+    /**
+     * This method is the setter injection for the content parameters which contain strategies for
+     * duplicate content.
+     *
+     * @param array $contentParameters
+     */
+    public function setContentParameters(array $contentParameters)
+    {
+        $this->contentParameters = $contentParameters;
+    }
+
+    /**
+     * The document manager is needed to detect the current locale of the document.
+     *
+     * @param \Doctrine\Bundle\PHPCRBundle\ManagerRegistry $managerRegistry
+     */
+    public function setDoctrineRegistry(ManagerRegistry $managerRegistry)
+    {
+        $this->managerRegistry = $managerRegistry;
+    }
+
+    /**
+     * Setter for the default locale of the application.
+     *
+     * If the list of translated titles does not contain the locale of the current document,
+     * or the current document has no locale at all, this locale is used instead.
+     *
+     * @param $locale
+     */
+    public function setDefaultLocale($locale)
+    {
+        $this->defaultLocale = $locale;
+    }
+
+    /**
+     * To get the Document Manager out of the registry, this method needs to be called.
+     *
+     * @return ObjectManager|DocumentManager
+     */
+    protected function getDocumentManager()
+    {
+        return $this->managerRegistry->getManager();
+    }
+
+    /**
+     * Get the applications default locale.
+     *
+     * @return string
+     */
+    protected function getApplicationDefaultLocale()
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
+     * This method uses the DocumentManager to get the documents current locale.
+     * @param string
+     * @return null|string
+     */
+    protected function getModelLocale($contentDocument)
+    {
+        return $this->getDocumentManager()->getUnitOfWork()->getCurrentLocale($contentDocument);
+    }
+
+    /**
+     * Method to add strategies by the compiler pass.
+     *
+     * @param SeoExtractorInterface $strategy
+     */
+    public function addExtractor(SeoExtractorInterface $strategy)
+    {
+        $this->strategies[] = $strategy;
+    }
+
     /**
      * @var SeoPage
      */
@@ -44,6 +183,7 @@ class SeoPresentation extends AbstractSeoPresentation
     /**
      * Get the SeoMetadata based on the content document.
      *
+     * @param $contentDocument
      * @return SeoMetadata
      */
     protected function getSeoMetadata($contentDocument)
@@ -114,6 +254,8 @@ class SeoPresentation extends AbstractSeoPresentation
      * Based on the title pattern this method will create the title from the given
      * configs in the seo configuration part.
      *
+     * @param $contentTitle
+     * @param $locale
      * @return string
      */
     private function createTitle($contentTitle, $locale)
@@ -140,7 +282,8 @@ class SeoPresentation extends AbstractSeoPresentation
      * Depending on the current locale and the setting for the default title this
      * method will return the default title as a string.
      *
-     * @param  array|string                                               $defaultTitle
+     * @param  array|string $defaultTitle
+     * @param $locale
      * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
      * @return array|string
      */
@@ -173,6 +316,7 @@ class SeoPresentation extends AbstractSeoPresentation
      * As you can set your default description in the sonata_seo settings and
      * can add some more from your contend, this method will combine both.
      *
+     * @param $contentDescription
      * @return string
      */
     private function createDescription($contentDescription)
@@ -190,6 +334,7 @@ class SeoPresentation extends AbstractSeoPresentation
      * setting, but each SeoAwareContent is able to set its own, this method will combine
      * both.
      *
+     * @param $contentKeywords
      * @return string
      */
     private function createKeywords($contentKeywords)
