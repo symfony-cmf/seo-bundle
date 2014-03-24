@@ -46,54 +46,14 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('title')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->enumNode('pattern')
-                            ->values(array('prepend', 'append', 'replace'))
-                            ->defaultValue('prepend')
-                        ->end()
-                        ->scalarNode('separator')->defaultValue('')->end()
-                        ->variableNode('default')
-                            ->validate()
-                                ->ifTrue(function ($v) {
-                                    return !is_string($v) && !is_array($v);
-                                })
-                                ->thenInvalid('Default can either be an array or a string, "%s" given')
-                            ->end()
-                            ->beforeNormalization()
-                                ->ifTrue(function ($v) {
-                                    return is_array($v) && (is_array(current($v)) || isset($v['lang']));
-                                })
-                                ->then(function ($v) {
-                                    if (isset($v['lang'])) {
-                                        return array($v['lang'] => $v['value']);
-                                    }
-
-                                    $multilang = array();
-
-                                    foreach ($v as $default) {
-                                        $multilang[$default['lang']] = $default['value'];
-                                    }
-
-                                    return $multilang;
-                                })
-                            ->end()
-                        ->end() // default
-                    ->end()
-                ->end()
-                ->arrayNode('content')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->enumNode('pattern')
-                            ->values(array('redirect', 'canonical'))
-                            ->defaultValue('canonical')
-                        ->end()
-                    ->end()
-                ->end()
+                ->sclarNode('translation_domain')->defaultValue(null)->end()
+                ->sclarNode('title_key')->end()
+                ->sclarNode('description_key')->end()
+                ->sclarNode('original_route_pattern')->defaultValue('canonical')->end()
             ->end()
         ;
 
         return $treeBuilder;
     }
 }
+

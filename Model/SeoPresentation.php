@@ -3,22 +3,20 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
  * SonataSeoBundle, which is able to provide the values to its Twig helpers.
  *
- * Preparing means combining the title value of the SeoMetadata and the default
- * value defined in the cmf_seo.title.default parameter. Both strings are
- * concatenated by an separator depending on the pattern set in the config.
+ * Preparing means:
+ * Create the title/description by using the configured
+ * translation keys with the help of Symfony's translator and the contents
+ * SeoMetadata value as parameter.
  *
- * The content config under cmf_seo.content gives a pattern how to handle duplicate
+ * The original_route_pattern will decide how to handle duplicate
  * content. If it is set to canonical a canonical link is created by an Twig helper
  * (url must be set to the SeoPage), otherwise the url is set to the redirectResponse property
  * which triggers an redirectResponse.
@@ -28,18 +26,14 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 class SeoPresentation implements SeoPresentationInterface
 {
     /**
-     * Storing the content parameters - config values under cmf_seo.content.
-     *
-     * @var array
+     * @var SeoPage
      */
-    protected $contentParameters;
+    protected $sonataPage;
 
     /**
-     * Storing the title parameters - config values under cmf_seo.title.
-     *
-     * @var array
+     * SeoParameters, set in the configuration.
      */
-    protected $titleParameters;
+    private $seoParameters;
 
     /**
      * @var bool
@@ -47,23 +41,28 @@ class SeoPresentation implements SeoPresentationInterface
     protected $redirectResponse = false;
 
     /**
-     * @var ManagerRegistry
-     */
-    protected $managerRegistry;
-
-    /**
-     * @var string
-     */
-    protected $defaultLocale;
-
-    /**
      * @var SeoExtractorInterface[]
      */
     protected $strategies = array();
 
     /**
-     * Setter for the redirectResponse property.
+     * @var Translator
+     */
+    private $translator;
+
+
+    /**
+     * The constructor will set the injected SeoPage - the service of
+     * sonata which is responsible for storing the seo data.
      *
+     * @param SeoPage $sonataPage
+     */
+    public function __construct(SeoPage $sonataPage)
+    {
+        $this->sonataPage = $sonataPage;
+    }
+
+    /**
      * @param RedirectResponse $redirect
      */
     protected function setRedirectResponse(RedirectResponse $redirect)
@@ -72,7 +71,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @return bool|RedirectResponse
      */
     public function getRedirectResponse()
     {
@@ -80,78 +79,13 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * This method is needed to get the default title parameters injected. They are used for
-     * concatenating the default values and the seo meta data or defining the pattern for that.
+     * Setter for the seo parameters.
      *
-     * @param array $titleParameters
+     * @param array $seoParameters
      */
-    public function setTitleParameters(array $titleParameters)
+    public function setSeoParameters(array $seoParameters)
     {
-        $this->titleParameters = $titleParameters;
-    }
-
-    /**
-     * This method is the setter injection for the content parameters which contain strategies for
-     * duplicate content.
-     *
-     * @param array $contentParameters
-     */
-    public function setContentParameters(array $contentParameters)
-    {
-        $this->contentParameters = $contentParameters;
-    }
-
-    /**
-     * The document manager is needed to detect the current locale of the document.
-     *
-     * @param \Doctrine\Bundle\PHPCRBundle\ManagerRegistry $managerRegistry
-     */
-    public function setDoctrineRegistry(ManagerRegistry $managerRegistry)
-    {
-        $this->managerRegistry = $managerRegistry;
-    }
-
-    /**
-     * Setter for the default locale of the application.
-     *
-     * If the list of translated titles does not contain the locale of the current document,
-     * or the current document has no locale at all, this locale is used instead.
-     *
-     * @param $locale
-     */
-    public function setDefaultLocale($locale)
-    {
-        $this->defaultLocale = $locale;
-    }
-
-    /**
-     * To get the Document Manager out of the registry, this method needs to be called.
-     *
-     * @return ObjectManager|DocumentManager
-     */
-    protected function getDocumentManager()
-    {
-        return $this->managerRegistry->getManager();
-    }
-
-    /**
-     * Get the applications default locale.
-     *
-     * @return string
-     */
-    protected function getApplicationDefaultLocale()
-    {
-        return $this->defaultLocale;
-    }
-
-    /**
-     * This method uses the DocumentManager to get the documents current locale.
-     * @param string
-     * @return null|string
-     */
-    protected function getModelLocale($contentDocument)
-    {
-        return $this->getDocumentManager()->getUnitOfWork()->getCurrentLocale($contentDocument);
+        $this->seoParameters = $seoParameters;
     }
 
     /**
@@ -165,19 +99,13 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * @var SeoPage
-     */
-    protected $sonataPage;
-
-    /**
-     * The constructor will set the injected SeoPage - the service of
-     * sonata which is responsible for storing the seo data.
+     * Setter for the translator.
      *
-     * @param SeoPage $sonataPage
+     * @param Translator $translator
      */
-    public function __construct(SeoPage $sonataPage)
+    public function setTranslator(Translator $translator)
     {
-        $this->sonataPage = $sonataPage;
+        $this->translator = $translator;
     }
 
     /**
@@ -204,25 +132,38 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * This method will update sonatas SeoPage service.
+     *
+     * Depending on the contents SeoMetadata it will set
+     * a title, a meta description, meta keywords and
+     * (depending on the pattern) the canonical link or
+     * creates a RedirectResponse.
      */
     public function updateSeoPage($contentDocument)
     {
         $seoMetadata = $this->getSeoMetadata($contentDocument);
-        $locale = $this->getModelLocale($contentDocument);
+        $translationDomain = $this->seoParameters['translation_domain'];
 
         if ($seoMetadata->getTitle()) {
-            $title = $this->createTitle($seoMetadata->getTitle(), $locale);
+            $pageTitle = $this->translator->trans(
+                $this->seoParameters['title_key'],
+                array('title' => $seoMetadata->getTitle()),
+                $translationDomain
+            );
 
-            $this->sonataPage->setTitle($title);
-            $this->sonataPage->addMeta('names', 'title', $title);
+            $this->sonataPage->setTitle($pageTitle);
+            $this->sonataPage->addMeta('names', 'title', $pageTitle);
         }
 
         if ($seoMetadata->getMetaDescription()) {
             $this->sonataPage->addMeta(
                 'names',
                 'description',
-                $this->createDescription($seoMetadata->getMetaDescription())
+                $this->translator->trans(
+                    $this->seoParameters['description_key'],
+                    array('description' => $seoMetadata->getMetaDescription()),
+                    $translationDomain
+                )
             );
         }
 
@@ -236,7 +177,7 @@ class SeoPresentation implements SeoPresentationInterface
 
         $url = $seoMetadata->getOriginalUrl();
         if ($url) {
-            switch ($this->contentParameters['pattern']) {
+            switch ($this->seoParameters['original_route_pattern']) {
                 case 'canonical':
                     $this->sonataPage->setLinkCanonical($url);
                     break;
@@ -251,88 +192,8 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Based on the title pattern this method will create the title from the given
-     * configs in the seo configuration part.
-     *
-     * @param $contentTitle
-     * @param $locale
-     * @return string
-     */
-    private function createTitle($contentTitle, $locale)
-    {
-        $defaultTitle = $this->doMultilangDecision($this->titleParameters['default'], $locale);
-        $separator = $this->titleParameters['separator'];
-
-        if ('' == $defaultTitle) {
-            return $contentTitle;
-        }
-        switch ($this->titleParameters['pattern']) {
-            case 'prepend':
-                return $contentTitle.$separator.$defaultTitle;
-            case 'append':
-                return $defaultTitle .$separator. $contentTitle;
-            case 'replace':
-                return $contentTitle;
-            default:
-                return $defaultTitle;
-        }
-    }
-
-    /**
-     * Depending on the current locale and the setting for the default title this
-     * method will return the default title as a string.
-     *
-     * @param  array|string $defaultTitle
-     * @param $locale
-     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
-     * @return array|string
-     */
-    private function doMultilangDecision($defaultTitle, $locale)
-    {
-        if (is_string($defaultTitle)) {
-            return $defaultTitle;
-        }
-
-        if (is_array($defaultTitle) && isset($defaultTitle[$locale])) {
-            return $defaultTitle[$locale];
-        }
-
-        //try the applications default locale
-        $defaultLocale = $this->getApplicationDefaultLocale();
-        if (is_array($defaultTitle) && isset($defaultTitle[$defaultLocale])) {
-            return $defaultTitle[$defaultLocale];
-        }
-
-        throw new SeoAwareException(
-            sprintf(
-                'No default value of title found for current document locale %s and applications default %s',
-                $locale,
-                $defaultLocale
-            )
-        );
-    }
-
-    /**
-     * As you can set your default description in the sonata_seo settings and
-     * can add some more from your contend, this method will combine both.
-     *
-     * @param $contentDescription
-     * @return string
-     */
-    private function createDescription($contentDescription)
-    {
-        $metas = $this->sonataPage->getMetas();
-        $sonataDescription = isset($metas['names']['description'][0])
-                                ? $metas['names']['description'][0]
-                                : '';
-
-        return ('' !== $sonataDescription ? $sonataDescription.'. ' : '') . $contentDescription;
-    }
-
-    /**
-     * Same as for the previous method. You can set the keywords in your sonata seo
-     * setting, but each SeoAwareContent is able to set its own, this method will combine
-     * both.
+     * This method will use sonatas default values (if set) to
+     * create a concatenated list of keywords.
      *
      * @param $contentKeywords
      * @return string

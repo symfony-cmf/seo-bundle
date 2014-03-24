@@ -20,17 +20,8 @@
         </service>
         <service id="cmf_seo.presentation" class="%cmf_seo.presentation.class%">
             <argument type="service" id="sonata.seo.page" />
-            <call method="setTitleParameters">
-                <argument>%cmf_seo.title_parameters%</argument>
-            </call>
-            <call method="setContentParameters">
-                <argument>%cmf_seo.content_parameters%</argument>
-            </call>
-            <call method="setDoctrineRegistry">
-                <argument type="service" id="doctrine_phpcr"/>
-            </call>
-            <call method="setDefaultLocale">
-                <argument>%locale%</argument>
+            <call method="setSeoParameters">
+                <argument>%cmf_seo.seo-parameters%</argument>
             </call>
         </service>
         <service id="cmf_seo.event_lister.seo_content" class="%cmf_seo.event_lister.seo_content.class%">

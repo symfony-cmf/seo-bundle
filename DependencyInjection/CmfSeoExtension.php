@@ -83,39 +83,17 @@ class CmfSeoExtension extends Extension
         $loader->load('admin.xml');
     }
 
-    /**
-     * Just fits the title values into its position and creates a parameter array.
-     *
-     * @param $title
-     * @param ContainerBuilder $container
-     */
-    private function loadTitle($title, ContainerBuilder $container)
+    public function loadSeoParameters($config, ContainerBuilder $container)
     {
-        $container->setParameter($this->getAlias().'.title', true);
-
-        foreach ($title as $key => $value) {
-            $container->setParameter($this->getAlias().'.title.'.$key, $value);
+        $params = array('translation_domain', 'title_key', 'description_key', 'original_route_pattern');
+        $seoParams = array();
+        foreach ($params as $param) {
+            if (array_key_exists($param, $config)) {
+                $seoParams[$param] = $config[$param];
+            }
         }
-
-        $container->setParameter($this->getAlias().'.title_parameters', $title);
+        $container->setParameter($this->getAlias().'.seo-parameters', $seoParams);
     }
-
-    /**
-     * Fits all parameters under content into its position and creates a parameter array.
-     *
-     * @param $content
-     * @param ContainerBuilder $container
-     */
-    private function loadContent($content, ContainerBuilder $container)
-    {
-        $container->setParameter($this->getAlias().'.content', true);
-
-        foreach ($content as $key => $value) {
-            $container->setParameter($this->getAlias().'.content.'.$key, $value);
-        }
-        $container->setParameter($this->getAlias().'.content_parameters', $content);
-    }
-
     /**
      * {@inheritDoc}
      */
