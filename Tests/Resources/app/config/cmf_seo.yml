@@ -1,12 +1,9 @@
 cmf_seo:
     persistence:
       phpcr: ~
-    title:
-        pattern: prepend
-        separator: ' | '
-        default: Default title
-    content:
-      pattern: canonical
+    title_key: default_title
+    description_key: default_description
+    original_route_pattern: canonical
 
 cmf_routing:
     dynamic:

@@ -30,8 +30,7 @@ class CmfSeoExtension extends Extension
         $loader->load('services.xml');
         $loader->load('admin.xml');
 
-        $this->loadTitle($config['title'], $container);
-        $this->loadContent($config['content'], $container);
+        $this->loadSeoParameters($config, $container);
 
         if ($config['persistence']['phpcr']['enabled']) {
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
@@ -83,6 +82,12 @@ class CmfSeoExtension extends Extension
         $loader->load('admin.xml');
     }
 
+    /**
+     * Does the seo parameters into a separate array to inject them at all.
+     *
+     * @param $config
+     * @param ContainerBuilder $container
+     */
     public function loadSeoParameters($config, ContainerBuilder $container)
     {
         $params = array('translation_domain', 'title_key', 'description_key', 'original_route_pattern');
