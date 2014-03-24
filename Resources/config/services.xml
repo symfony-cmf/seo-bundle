@@ -20,9 +20,8 @@
         </service>
         <service id="cmf_seo.presentation" class="%cmf_seo.presentation.class%">
             <argument type="service" id="sonata.seo.page" />
-            <call method="setSeoParameters">
-                <argument>%cmf_seo.seo-parameters%</argument>
-            </call>
+            <argument type="service" id="translator" />
+            <argument>%cmf_seo.seo-parameters%</argument>
         </service>
         <service id="cmf_seo.event_lister.seo_content" class="%cmf_seo.event_lister.seo_content.class%">
             <argument type="service" id="cmf_seo.presentation"/>

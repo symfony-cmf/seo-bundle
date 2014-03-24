@@ -6,6 +6,7 @@ use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -46,20 +47,23 @@ class SeoPresentation implements SeoPresentationInterface
     protected $strategies = array();
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
-
 
     /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
      * @param SeoPage $sonataPage
+     * @param TranslatorInterface $translator
+     * @param array $seoParameters
      */
-    public function __construct(SeoPage $sonataPage)
+    public function __construct(SeoPage $sonataPage, TranslatorInterface $translator, array $seoParameters)
     {
         $this->sonataPage = $sonataPage;
+        $this->translator = $translator;
+        $this->seoParameters = $seoParameters;
     }
 
     /**
@@ -79,16 +83,6 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Setter for the seo parameters.
-     *
-     * @param array $seoParameters
-     */
-    public function setSeoParameters(array $seoParameters)
-    {
-        $this->seoParameters = $seoParameters;
-    }
-
-    /**
      * Method to add strategies by the compiler pass.
      *
      * @param SeoExtractorInterface $strategy
@@ -96,16 +90,6 @@ class SeoPresentation implements SeoPresentationInterface
     public function addExtractor(SeoExtractorInterface $strategy)
     {
         $this->strategies[] = $strategy;
-    }
-
-    /**
-     * Setter for the translator.
-     *
-     * @param Translator $translator
-     */
-    public function setTranslator(Translator $translator)
-    {
-        $this->translator = $translator;
     }
 
     /**
@@ -147,7 +131,7 @@ class SeoPresentation implements SeoPresentationInterface
         if ($seoMetadata->getTitle()) {
             $pageTitle = $this->translator->trans(
                 $this->seoParameters['title_key'],
-                array('title' => $seoMetadata->getTitle()),
+                array('%title%' => $seoMetadata->getTitle()),
                 $translationDomain
             );
 
@@ -161,7 +145,7 @@ class SeoPresentation implements SeoPresentationInterface
                 'description',
                 $this->translator->trans(
                     $this->seoParameters['description_key'],
-                    array('description' => $seoMetadata->getMetaDescription()),
+                    array('%description%' => $seoMetadata->getMetaDescription()),
                     $translationDomain
                 )
             );

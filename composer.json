@@ -24,7 +24,6 @@
         "friendsofsymfony/rest-bundle": "Improved handling for different output formats",
         "doctrine/phpcr-odm": "To persist content with the PHP content repository",
         "doctrine/phpcr-bundle": "To integrate PHPCR-ODM with Symfony",
-        "sonata-project/core-bundle": "2.2.*@dev",
         "sonata-project/doctrine-phpcr-admin-bundle": "To provide admin interfaces for the content"
     },
     "autoload":{
