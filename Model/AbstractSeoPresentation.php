@@ -48,11 +48,6 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     protected $defaultLocale;
 
     /**
-     * @var SeoAwareInterface
-     */
-    protected $contentDocument;
-
-    /**
      * @var SeoExtractorInterface[]
      */
     protected $strategies = array();
@@ -121,14 +116,6 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function setContentDocument(SeoAwareInterface $contentDocument)
-    {
-        $this->contentDocument = $contentDocument;
-    }
-
-    /**
      * To get the Document Manager out of the registry, this method needs to be called.
      *
      * @return ObjectManager|DocumentManager
@@ -153,9 +140,9 @@ abstract class AbstractSeoPresentation implements SeoPresentationInterface
      * @param string
      * @return null|string
      */
-    protected function getModelLocale()
+    protected function getModelLocale($contentDocument)
     {
-        return $this->getDocumentManager()->getUnitOfWork()->getCurrentLocale($this->contentDocument);
+        return $this->getDocumentManager()->getUnitOfWork()->getCurrentLocale($contentDocument);
     }
 
     /**

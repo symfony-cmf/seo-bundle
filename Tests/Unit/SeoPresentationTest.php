@@ -25,7 +25,7 @@ class SeoPresentationTest extends BaseTestCase
     /**
      * @var SeoPresentation
      */
-    private $SUT;
+    private $seoPresentation;
 
     /**
      * @var SeoPage
@@ -47,7 +47,7 @@ class SeoPresentationTest extends BaseTestCase
     {
         //set up the SUT
         $this->pageService = new SeoPage();
-        $this->SUT = new SeoPresentation(
+        $this->seoPresentation = new SeoPresentation(
             $this->pageService,
             array()
         );
@@ -83,8 +83,7 @@ class SeoPresentationTest extends BaseTestCase
                        ->will($this->returnValue($this->seoMetadata));
 
         //settings for the presentation model
-        $this->SUT->setDoctrineRegistry($this->managerRegistry);
-        $this->SUT->setContentDocument($this->document);
+        $this->seoPresentation->setDoctrineRegistry($this->managerRegistry);
     }
 
     public function tearDown()
@@ -104,10 +103,10 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata->setTitle('Special title');
 
         //setting the values for the title parameters
-        $this->SUT->setTitleParameters($titleParameters);
+        $this->seoPresentation->setTitleParameters($titleParameters);
 
         //run the transformation
-        $this->SUT->setMetaDataValues();
+        $this->seoPresentation->updateSeoPage($this->document);
 
         //do the asserts
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
@@ -164,7 +163,7 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata->setMetaDescription('Special description');
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'description', 'Default description');
-        $this->SUT->setMetaDataValues();
+        $this->seoPresentation->updateSeoPage($this->document);
         $metas = $this->pageService->getMetas();
         $this->assertEquals(
             'Default description. Special description',
@@ -177,7 +176,7 @@ class SeoPresentationTest extends BaseTestCase
         $this->seoMetadata->setMetaKeywords('key1, key2');
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'keywords', 'default, other');
-        $this->SUT->setMetaDataValues();
+        $this->seoPresentation->updateSeoPage($this->document);
         $keywords = $this->pageService->getMetas();
         $this->assertEquals(
             'default, other, key1, key2',
@@ -200,9 +199,9 @@ class SeoPresentationTest extends BaseTestCase
                          ->method('getCurrentLocale')
                          ->will($this->returnValue($locale));
 
-        $this->SUT->setTitleParameters($titleParameters);
+        $this->seoPresentation->setTitleParameters($titleParameters);
 
-        $this->SUT->setMetaDataValues();
+        $this->seoPresentation->updateSeoPage($this->document);
 
         $this->assertEquals($expectedValue, $this->pageService->getTitle());
     }
@@ -266,18 +265,18 @@ class SeoPresentationTest extends BaseTestCase
             )
         );
 
-        $this->SUT->setTitleParameters($titleValues);
-        $this->SUT->setDefaultLocale('en');
+        $this->seoPresentation->setTitleParameters($titleValues);
+        $this->seoPresentation->setDefaultLocale('en');
 
         $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
 
-        $this->SUT->setMetaDataValues();
+        $this->seoPresentation->updateSeoPage($this->document);
 
         $this->assertEquals('Special title | Default title', $this->pageService->getTitle());
     }
 
     /**
-     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
+     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
      */
     public function testDefaultLocationFallbackBreakThrowsException()
     {
@@ -293,28 +292,26 @@ class SeoPresentationTest extends BaseTestCase
             )
         );
 
-        $this->SUT->setTitleParameters($titleValues);
-        $this->SUT->setDefaultLocale('nl');
+        $this->seoPresentation->setTitleParameters($titleValues);
+        $this->seoPresentation->setDefaultLocale('nl');
 
         $this->unitOfWork->expects($this->once())->method('getCurrentLocale')->will($this->returnValue('nl'));
 
-        $this->SUT->setMetaDataValues();
+        $this->seoPresentation->updateSeoPage($this->document);
     }
 
     public function testStrategies()
     {
         $this->pageService->addMeta('names', 'description', 'Default description');
-        $SUT = new SeoPresentation($this->pageService);
-        $SUT->addExtractor(new SeoOriginalUrlExtractor());
-        $SUT->addExtractor(new SeoTitleExtractor());
-        $SUT->addExtractor(new SeoDescriptionExtractor());
-        $SUT->setContentDocument(new AllStrategiesDocument());
-        $SUT->setDoctrineRegistry($this->managerRegistry);
-        $SUT->setTitleParameters(array('default' => 'Default title', 'separator' => ' | ', 'pattern' => 'prepend'));
-        $SUT->setContentParameters(array('pattern' => 'canonical'));
+        $seoPresentation = new SeoPresentation($this->pageService);
+        $seoPresentation->addExtractor(new SeoOriginalUrlExtractor());
+        $seoPresentation->addExtractor(new SeoTitleExtractor());
+        $seoPresentation->addExtractor(new SeoDescriptionExtractor());
+        $seoPresentation->setDoctrineRegistry($this->managerRegistry);
+        $seoPresentation->setTitleParameters(array('default' => 'Default title', 'separator' => ' | ', 'pattern' => 'prepend'));
+        $seoPresentation->setContentParameters(array('pattern' => 'canonical'));
 
-
-        $SUT->setMetaDataValues();
+        $seoPresentation->updateSeoPage(new AllStrategiesDocument());
 
         $metas = $this->pageService->getMetas();
         $actualDescription = $metas['names']['description'][0];

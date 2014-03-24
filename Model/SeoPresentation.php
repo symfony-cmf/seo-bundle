@@ -31,11 +31,6 @@ class SeoPresentation extends AbstractSeoPresentation
     protected $sonataPage;
 
     /**
-     * @var SeoMetadataInterface
-     */
-    protected $seoMetadata;
-
-    /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
@@ -47,22 +42,21 @@ class SeoPresentation extends AbstractSeoPresentation
     }
 
     /**
-     * This method is used to get the SeoMetadata from current content document.
+     * Get the SeoMetadata based on the content document.
      *
-     * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
      * @return SeoMetadata
      */
-    protected function getSeoMetadata()
+    protected function getSeoMetadata($contentDocument)
     {
 
-        $seoMetadata = $this->contentDocument instanceof SeoAwareInterface
-                        ? (clone $this->contentDocument->getSeoMetadata())
+        $seoMetadata = $contentDocument instanceof SeoAwareInterface
+                        ? clone $contentDocument->getSeoMetadata()
                         : new SeoMetadata()
         ;
 
         foreach ($this->strategies as $strategy) {
-            if ($strategy->supports($this->contentDocument)) {
-                $strategy->updateMetadata($this->contentDocument, $seoMetadata);
+            if ($strategy->supports($contentDocument)) {
+                $strategy->updateMetadata($contentDocument, $seoMetadata);
             }
         }
 
@@ -70,47 +64,45 @@ class SeoPresentation extends AbstractSeoPresentation
     }
 
     /**
-     *  this method will combine all settings directly in the sonata_seo configuration with
-     *  the given values of the current content
+     * {@inheritDoc}
      */
-    public function setMetaDataValues()
+    public function updateSeoPage($contentDocument)
     {
-        //get the current seo metadata out of the document
-        $this->seoMetadata = $this->getSeoMetadata();
+        $seoMetadata = $this->getSeoMetadata($contentDocument);
+        $locale = $this->getModelLocale($contentDocument);
 
-        //based on the title pattern, the helper method will set the complete title
-        if (null !== $this->seoMetadata->getTitle()) {
-            $title = $this->createTitle();
+        if ($seoMetadata->getTitle()) {
+            $title = $this->createTitle($seoMetadata->getTitle(), $locale);
 
-            //set the title to SeoPage and  a meta field
             $this->sonataPage->setTitle($title);
             $this->sonataPage->addMeta('names', 'title', $title);
         }
 
-        if (null !== $this->seoMetadata->getMetaDescription()) {
+        if ($seoMetadata->getMetaDescription()) {
             $this->sonataPage->addMeta(
                 'names',
                 'description',
-                $this->createDescription()
+                $this->createDescription($seoMetadata->getMetaDescription())
             );
         }
 
-        if (null !== $this->seoMetadata->getMetaKeywords()) {
+        if ($seoMetadata->getMetaKeywords()) {
             $this->sonataPage->addMeta(
                 'names',
                 'keywords',
-                $this->createKeywords()
+                $this->createKeywords($seoMetadata->getMetaKeywords())
             );
         }
 
-        if (null !== $this->seoMetadata->getOriginalUrl()) {
+        $url = $seoMetadata->getOriginalUrl();
+        if ($url) {
             switch ($this->contentParameters['pattern']) {
                 case 'canonical':
-                    $this->sonataPage->setLinkCanonical($this->seoMetadata->getOriginalUrl());
+                    $this->sonataPage->setLinkCanonical($url);
                     break;
                 case 'redirect':
                     $this->setRedirectResponse(
-                        new RedirectResponse($this->seoMetadata->getOriginalUrl())
+                        new RedirectResponse($url)
                     );
                     break;
             }
@@ -124,11 +116,10 @@ class SeoPresentation extends AbstractSeoPresentation
      *
      * @return string
      */
-    private function createTitle()
+    private function createTitle($contentTitle, $locale)
     {
-        $defaultTitle = $this->doMultilangDecision($this->titleParameters['default']);
+        $defaultTitle = $this->doMultilangDecision($this->titleParameters['default'], $locale);
         $separator = $this->titleParameters['separator'];
-        $contentTitle = $this->seoMetadata->getTitle();
 
         if ('' == $defaultTitle) {
             return $contentTitle;
@@ -153,16 +144,14 @@ class SeoPresentation extends AbstractSeoPresentation
      * @throws \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoAwareException
      * @return array|string
      */
-    private function doMultilangDecision($defaultTitle)
+    private function doMultilangDecision($defaultTitle, $locale)
     {
         if (is_string($defaultTitle)) {
             return $defaultTitle;
         }
 
-        // try the current location of the document, seoMetadata should have the same
-        $currentLocale = $this->getModelLocale();
-        if (is_array($defaultTitle) && isset($defaultTitle[$currentLocale])) {
-            return $defaultTitle[$currentLocale];
+        if (is_array($defaultTitle) && isset($defaultTitle[$locale])) {
+            return $defaultTitle[$locale];
         }
 
         //try the applications default locale
@@ -174,7 +163,7 @@ class SeoPresentation extends AbstractSeoPresentation
         throw new SeoAwareException(
             sprintf(
                 'No default value of title found for current document locale %s and applications default %s',
-                $currentLocale,
+                $locale,
                 $defaultLocale
             )
         );
@@ -186,14 +175,14 @@ class SeoPresentation extends AbstractSeoPresentation
      *
      * @return string
      */
-    private function createDescription()
+    private function createDescription($contentDescription)
     {
         $metas = $this->sonataPage->getMetas();
         $sonataDescription = isset($metas['names']['description'][0])
                                 ? $metas['names']['description'][0]
                                 : '';
 
-        return ('' !== $sonataDescription ? $sonataDescription.'. ' : '').$this->seoMetadata->getMetaDescription();
+        return ('' !== $sonataDescription ? $sonataDescription.'. ' : '') . $contentDescription;
     }
 
     /**
@@ -203,13 +192,13 @@ class SeoPresentation extends AbstractSeoPresentation
      *
      * @return string
      */
-    private function createKeywords()
+    private function createKeywords($contentKeywords)
     {
         $metas = $this->sonataPage->getMetas();
         $sonataKeywords = isset($metas['names']['keywords'][0])
                            ? $metas['names']['keywords'][0]
                            : '';
 
-        return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$this->seoMetadata->getMetaKeywords();
+        return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '') . $contentKeywords;
     }
 }
