@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
@@ -35,6 +36,7 @@ class SeoPresentationTest extends BaseTestCase
     private $seoMetadata;
     private $translator;
     private $document;
+    private $configValues;
 
     public function setUp()
     {
@@ -42,18 +44,16 @@ class SeoPresentationTest extends BaseTestCase
         $this->translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')
                                  ->disableOriginalConstructor()
                                  ->getMock();
-
-        $defaultSeoParameters = array(
-            'translation_domain'    => null,
-            'title_key'             => 'title_key',
-            'description_key'       => 'description_key',
-            'original_route_pattern'=> 'canonical'
-        );
+        $this->configValues = new SeoConfigValues();
+        $this->configValues->setDescriptionKey('description_key');
+        $this->configValues->setTitleKey('title_key');
+        $this->configValues->setOriginalRoutePattern('canonical');
+        $this->configValues->setTranslationDomain(null);
 
         $this->seoPresentation = new SeoPresentation(
             $this->pageService,
             $this->translator,
-            $defaultSeoParameters
+            $this->configValues
         );
 
         $this->seoMetadata = new SeoMetadata();
@@ -115,19 +115,12 @@ class SeoPresentationTest extends BaseTestCase
 
     public function testStrategies()
     {
-        $defaultSeoParameters = array(
-            'translation_domain'    => null,
-            'title_key'             => 'title_key',
-            'description_key'       => 'description_key',
-            'original_route_pattern'=> 'canonical'
-        );
-
         $this->translator->expects($this->any())
                          ->method('trans')
                          ->will($this->returnValue('translation strategy test'))
         ;
 
-        $seoPresentation = new SeoPresentation($this->pageService, $this->translator, $defaultSeoParameters);
+        $seoPresentation = new SeoPresentation($this->pageService, $this->translator, $this->configValues);
         $seoPresentation->addExtractor(new SeoOriginalUrlExtractor());
         $seoPresentation->addExtractor(new SeoTitleExtractor());
         $seoPresentation->addExtractor(new SeoDescriptionExtractor());

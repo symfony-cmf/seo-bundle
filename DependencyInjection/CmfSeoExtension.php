@@ -91,14 +91,13 @@ class CmfSeoExtension extends Extension
     public function loadSeoParameters($config, ContainerBuilder $container)
     {
         $params = array('translation_domain', 'title_key', 'description_key', 'original_route_pattern');
-        $seoParams = array();
+
         foreach ($params as $param) {
-            if (array_key_exists($param, $config)) {
-                $seoParams[$param] = $config[$param];
-            }
+            $value = array_key_exists($param, $config) ? $config[$param] : null;
+            $container->setParameter($this->getAlias().'.'.$param, $value);
         }
-        $container->setParameter($this->getAlias().'.seo-parameters', $seoParams);
     }
+
     /**
      * {@inheritDoc}
      */
