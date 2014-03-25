@@ -3,9 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
