@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
@@ -34,10 +34,10 @@ class SeoPresentationTest extends BaseTestCase
      */
     private $seoMetadata;
     private $translator;
+    private $document;
 
     public function setUp()
     {
-        //set up the SUT
         $this->pageService = new SeoPage();
         $this->translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')
                                  ->disableOriginalConstructor()
@@ -57,6 +57,15 @@ class SeoPresentationTest extends BaseTestCase
         );
 
         $this->seoMetadata = new SeoMetadata();
+
+        // create the mock for the document
+        $this->document = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent')
+                               ->disableOriginalConstructor()
+                               ->getMock();
+        $this->document->expects($this->any())
+                       ->method('getSeoMetadata')
+                       ->will($this->returnValue($this->seoMetadata))
+            ;
     }
 
     public function tearDown()
@@ -64,10 +73,35 @@ class SeoPresentationTest extends BaseTestCase
         unset($this->seoMetadata);
     }
 
+    public function testDefaultTitle()
+    {
+        $this->seoMetadata->setTitle('Title test');
+        $this->translator->expects($this->once())
+                         ->method('trans')
+                         ->will($this->returnValue('Title test | Default Title'))
+            ;
+        $this->seoPresentation->updateSeoPage($this->document);
+
+        $actualTitle = $this->pageService->getTitle();
+        $this->assertEquals('Title test | Default Title', $actualTitle);
+    }
+
+    public function testDefaultDescription()
+    {
+        $this->seoMetadata->setMetaDescription('Test description.');
+        $this->translator->expects($this->once())
+                         ->method('trans')
+                         ->will($this->returnValue('Default Description. Test description.'))
+        ;
+        $this->seoPresentation->updateSeoPage($this->document);
+
+        $metas = $this->pageService->getMetas();
+        $actualDescription = $metas['names']['description'][0];
+        $this->assertEquals('Default Description. Test description.', $actualDescription);
+    }
+
     public function testSettingKeywordsToSeoPage()
     {
-        $this->markTestSkipped('need to be refactored');
-
         $this->seoMetadata->setMetaKeywords('key1, key2');
         //to set it here is the same as it was set in the sonata_seo settings
         $this->pageService->addMeta('names', 'keywords', 'default, other');
@@ -81,29 +115,33 @@ class SeoPresentationTest extends BaseTestCase
 
     public function testStrategies()
     {
-        $this->pageService->addMeta('names', 'description', 'Default description');
         $defaultSeoParameters = array(
             'translation_domain'    => null,
             'title_key'             => 'title_key',
             'description_key'       => 'description_key',
             'original_route_pattern'=> 'canonical'
         );
+
+        $this->translator->expects($this->any())
+                         ->method('trans')
+                         ->will($this->returnValue('translation strategy test'))
+        ;
+
         $seoPresentation = new SeoPresentation($this->pageService, $this->translator, $defaultSeoParameters);
         $seoPresentation->addExtractor(new SeoOriginalUrlExtractor());
         $seoPresentation->addExtractor(new SeoTitleExtractor());
         $seoPresentation->addExtractor(new SeoDescriptionExtractor());
-
         $seoPresentation->updateSeoPage(new AllStrategiesDocument());
+
+
 
         $metas = $this->pageService->getMetas();
         $actualDescription = $metas['names']['description'][0];
         $actualTitle = $this->pageService->getTitle();
         $actualLink = $this->pageService->getLinkCanonical();
 
-        $this->markTestSkipped('need to be refactored');
-
-        $this->assertEquals('Test title | Default title', $actualTitle);
-        $this->assertEquals('Default description. Test Description.', $actualDescription);
+        $this->assertEquals('translation strategy test', $actualTitle);
+        $this->assertEquals('translation strategy test', $actualDescription);
         $this->assertEquals('/test-route', $actualLink);
     }
 }
