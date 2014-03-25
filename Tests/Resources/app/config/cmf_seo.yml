@@ -16,3 +16,6 @@ cmf_routing:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
+
+framework:
+    translator: { enabled: true, fallback: en }
