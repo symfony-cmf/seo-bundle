@@ -70,7 +70,7 @@ class SeoPresentationTest extends BaseTestCase
 
     public function tearDown()
     {
-        unset($this->seoMetadata);
+        unset($this->seoMetadata, $this->configValues);
     }
 
     public function testDefaultTitle()
@@ -86,6 +86,16 @@ class SeoPresentationTest extends BaseTestCase
         $this->assertEquals('Title test | Default Title', $actualTitle);
     }
 
+    public function testContentTitle()
+    {
+        $this->seoMetadata->setTitle('Content title');
+        $this->configValues->setTitleKey(null);
+        $this->seoPresentation->updateSeoPage($this->document);
+
+        $actualTitle = $this->pageService->getTitle();
+        $this->assertEquals('Content title', $actualTitle);
+    }
+
     public function testDefaultDescription()
     {
         $this->seoMetadata->setMetaDescription('Test description.');
@@ -98,6 +108,17 @@ class SeoPresentationTest extends BaseTestCase
         $metas = $this->pageService->getMetas();
         $actualDescription = $metas['names']['description'][0];
         $this->assertEquals('Default Description. Test description.', $actualDescription);
+    }
+
+    public function testContentDescription()
+    {
+        $this->seoMetadata->setMetaDescription('Content description.');
+        $this->configValues->setDescriptionKey(null);
+        $this->seoPresentation->updateSeoPage($this->document);
+
+        $metas = $this->pageService->getMetas();
+        $actualDescription = $metas['names']['description'][0];
+        $this->assertEquals('Content description.', $actualDescription);
     }
 
     public function testSettingKeywordsToSeoPage()
