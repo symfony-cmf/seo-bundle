@@ -4,10 +4,12 @@ namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\ExtractorTagCompiler;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\TransformToPlaceholderCompiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
 class CmfSeoBundle extends Bundle
 {
@@ -24,5 +26,6 @@ class CmfSeoBundle extends Bundle
         }
 
         $container->addCompilerPass(new ExtractorTagCompiler());
+        $container->addCompilerPass(new TransformToPlaceholderCompiler(), PassConfig::TYPE_OPTIMIZE);
     }
 }
