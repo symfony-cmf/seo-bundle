@@ -2,7 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\ModelNotSupported;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
@@ -29,14 +29,9 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
     public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
     {
         if (!$document instanceof SeoOriginalUrlInterface) {
-            throw new SeoExtractorStrategyException(
-                sprintf(
-                    'The given document %s is not supported by this strategy. Call supports() method first.',
-                    get_class($document)
-                )
-            );
+            throw new ModelNotSupported($document);
         }
+
         $seoMetadata->setOriginalUrl($document->getSeoOriginalUrl());
     }
 }
- 
