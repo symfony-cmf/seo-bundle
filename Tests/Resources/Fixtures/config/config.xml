@@ -1,0 +1,7 @@
+<container xmlns="http://symfony.com/schema/dic/services">
+    <config
+            xmlns="http://cmf.symfony.com/schema/dic/seo"
+            description="default_description"
+            title="default_title">
+    </config>
+</container>

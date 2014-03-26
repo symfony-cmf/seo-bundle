@@ -1,12 +1,9 @@
 cmf_seo:
     persistence:
       phpcr: ~
-    title:
-        pattern: prepend
-        separator: ' | '
-        default: Default title
-    content:
-      pattern: canonical
+    title: "Default | %%content_title%%"
+    description: "Default description. %%content_description%%"
+    original_route_pattern: canonical
 
 cmf_routing:
     dynamic:
@@ -19,3 +16,6 @@ cmf_routing:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
+
+framework:
+    translator: { enabled: true, fallback: en }

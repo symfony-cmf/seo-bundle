@@ -1,9 +1,0 @@
-cmf_seo:
-    title:
-        default: Default title
-        pattern: append
-        separator: " | "
-    persistence:
-        phpcr:
-            use_sonata_admin: true
-            

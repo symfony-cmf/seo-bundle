@@ -42,7 +42,7 @@ class SeoFrontendTest extends BaseTestCase
 
         //test the title
         $titleCrawler = $crawler->filter('head > title');
-        $this->assertEquals('Title content 1 | Default title', $titleCrawler->text());
+        $this->assertEquals('Default | Title content 1', $titleCrawler->text());
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
@@ -53,8 +53,8 @@ class SeoFrontendTest extends BaseTestCase
 
         $actualMeta = $metaCrawler->extract('content', 'content');
         $expectedMeta = array(
-            'Title content 1 | Default title',
-            'Description of content 1.',
+            'Default | Title content 1',
+            'Default description. Description of content 1.',
             'content1, content',
         );
         $this->assertEquals($expectedMeta, $actualMeta);
@@ -76,7 +76,7 @@ class SeoFrontendTest extends BaseTestCase
 
         //test the title
         $titleCrawler = $crawler->filter('head > title');
-        $this->assertEquals('Strategy title | Default title', $titleCrawler->text());
+        $this->assertEquals('Default | Strategy title', $titleCrawler->text());
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
@@ -87,8 +87,8 @@ class SeoFrontendTest extends BaseTestCase
 
         $actualMeta = $metaCrawler->extract('content', 'content');
         $expectedMeta = array(
-            'Strategy title | Default title',
-            'content of strategy test. ...',
+            'Default | Strategy title',
+            'Default description. content of strategy test. ...',
             'strategy, test',
         );
         $this->assertEquals($expectedMeta, $actualMeta);

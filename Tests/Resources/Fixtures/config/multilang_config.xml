@@ -1,8 +1,0 @@
-<container xmlns="http://symfony.com/schema/dic/services">
-    <config xmlns="http://cmf.symfony.com/schema/dic/seo">
-            <title>
-                <default lang="de">Default Titel</default>
-                <default lang="en">Default title</default>
-            </title>
-    </config>
-</container>
