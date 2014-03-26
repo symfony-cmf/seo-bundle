@@ -28,12 +28,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testDefaultsForAllConfigFormats()
     {
         $expectedConfiguration = array(
-            'title'   => array(
-                'pattern'   => 'prepend',
-                'default'   => 'Default title',
-                'separator' => '',
-            ),
-            'content' => array('pattern' => 'canonical'),
+            'translation_domain'    => null,
+            'title'             => 'default_title',
+            'description'       => 'default_description',
+            'original_route_pattern'    => 'canonical',
             'persistence' => array(
                 'phpcr' => array(
                     'document_class'    => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent',
@@ -48,74 +46,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
         $sources = array_map(function ($path) {
                 return __DIR__.'/../../Resources/Fixtures/'.$path;
         }, array(
-                'config/default_config.yml',
-                'config/default_config.php',
-                'config/default_config.xml',
-        ));
-
-        $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
-    }
-
-    public function testMultilangForAllConfigFormats()
-    {
-        $expectedConfiguration = array(
-            'title'   => array(
-                'pattern'   => 'prepend',
-                'default'   => array(
-                    'de'    => 'Default Titel',
-                    'en'    => 'Default title',
-                ),
-                'separator' => '',
-            ),
-            'content' => array('pattern' => 'canonical'),
-            'persistence' => array(
-                'phpcr' => array(
-                    'document_class'    => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent',
-                    'admin_class'       => 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension',
-                    'content_basepath'  => '/cms/content',
-                    'use_sonata_admin'  => 'auto',
-                    'enabled'           => false,
-                ),
-            ),
-        );
-
-        $sources = array_map(function ($path) {
-                return __DIR__.'/../../Resources/Fixtures/'.$path;
-        }, array(
-            'config/multilang_config.yml',
-            'config/multilang_config.php',
-            'config/multilang_config.xml',
-        ));
-
-        $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
-    }
-
-    public function testFullForAllConfigFormats()
-    {
-        $expectedConfiguration = array(
-            'title'   => array(
-                'pattern'   => 'append',
-                'default'   => 'Default title',
-                'separator' => ' | ',
-            ),
-            'content' => array('pattern' => 'redirect'),
-            'persistence' => array(
-                'phpcr' => array(
-                    'document_class'    => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent',
-                    'admin_class'       => 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension',
-                    'content_basepath'  => '/cms/content',
-                    'use_sonata_admin'  => true,
-                    'enabled'           => true,
-                ),
-            ),
-        );
-
-        $sources = array_map(function ($path) {
-                return __DIR__.'/../../Resources/Fixtures/'.$path;
-        }, array(
-                'config/full_config.yml',
-                'config/full_config.php',
-                'config/full_config.xml',
+                'config/config.yml',
+                'config/config.php',
+                'config/config.xml',
         ));
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);

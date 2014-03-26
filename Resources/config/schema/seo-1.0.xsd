@@ -9,9 +9,12 @@
     <xsd:complexType name="config">
         <xsd:sequence>
             <xsd:element name="persistence" type="persistence" minOccurs="0" />
-            <xsd:element name="title" type="title"/>
-            <xsd:element name="content" type="content"/>
         </xsd:sequence>
+
+        <xsd:attribute name="translation-domain" type="xsd:string" />
+        <xsd:attribute name="title" type="xsd:string"/>
+        <xsd:attribute name="description" type="xsd:string" />
+        <xsd:attribute name="original-route-pattern" type="original_route_pattern"/>
     </xsd:complexType>
 
     <xsd:complexType name="persistence">
@@ -33,38 +36,7 @@
         </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:complexType name="title">
-        <xsd:sequence>
-            <xsd:element name="default" type="default_title" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-
-        <xsd:attribute name="default" type="xsd:string" />
-        <xsd:attribute name="pattern" type="title_pattern" />
-        <xsd:attribute name="separator" type="xsd:string" />
-        <xsd:assert test="not(./targetNamespace:default and ./@default)"/>
-    </xsd:complexType>
-
-    <xsd:complexType name="default_title">
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="lang" type="xsd:string" />
-            </xsd:extension>
-        </xsd:simpleContent>
-    </xsd:complexType>
-
-    <xsd:complexType name="content">
-            <xsd:attribute name="pattern" type="content_pattern" />
-    </xsd:complexType>
-
-    <xsd:simpleType name="title_pattern">
-        <xsd:restriction>
-            <xsd:enumeration value="prepend" />
-            <xsd:enumeration value="append" />
-            <xsd:enumeration value="replace" />
-        </xsd:restriction>
-    </xsd:simpleType>
-
-    <xsd:simpleType name="content_pattern">
+    <xsd:simpleType name="original_route_pattern">
         <xsd:restriction>
             <xsd:enumeration value="redirect" />
             <xsd:enumeration value="canonical" />
