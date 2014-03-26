@@ -1,8 +1,8 @@
 cmf_seo:
     persistence:
       phpcr: ~
-    title: "Default | %content_title%"
-    description: "Default description. %content_description%"
+    title: "Default | %%content_title%%"
+    description: "Default description. %%content_description%%"
     original_route_pattern: canonical
 
 cmf_routing:
