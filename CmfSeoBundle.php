@@ -26,6 +26,9 @@ class CmfSeoBundle extends Bundle
         }
 
         $container->addCompilerPass(new ExtractorTagCompiler());
-        $container->addCompilerPass(new TransformToPlaceholderCompiler(), PassConfig::TYPE_OPTIMIZE);
+        $container->addCompilerPass(new TransformToPlaceholderCompiler(array(
+            'cmf_seo.title',
+            'cmf_seo.description',
+        )), PassConfig::TYPE_OPTIMIZE);
     }
 }

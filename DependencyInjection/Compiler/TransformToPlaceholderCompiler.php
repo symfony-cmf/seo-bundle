@@ -18,12 +18,24 @@ use Symfony\Component\DependencyInjection\Reference;
 class TransformToPlaceholderCompiler implements CompilerPassInterface
 {
     /**
+     * @var array
+     */
+    private $parametersToFix;
+
+    public function __construct(array $parametersToFix)
+    {
+        $this->parametersToFix = $parametersToFix;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if ($container->hasParameter('cmf_seo.title')) {
-            $container->setParameter('cmf_seo.title', strtr($container->getParameter('cmf_seo.title'), '{}', '%%'));
+        foreach ($this->parametersToFix as $parameter) {
+            if ($container->hasParameter($parameter)) {
+                $container->setParameter($parameter, str_replace('%%', '%', $container->getParameter($parameter)));
+            }
         }
     }
 }

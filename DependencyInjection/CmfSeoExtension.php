@@ -90,17 +90,11 @@ class CmfSeoExtension extends Extension
      */
     public function loadSeoParameters($config, ContainerBuilder $container)
     {
-        $params = array('translation_domain', 'description', 'original_route_pattern');
+        $params = array('translation_domain', 'title', 'description', 'original_route_pattern');
 
         foreach ($params as $param) {
             $value = isset($config[$param]) ? $config[$param] : null;
             $container->setParameter($this->getAlias().'.'.$param, $value);
-        }
-
-        // the title needs special care. Otherwise, translator prefixes will 
-        // conflict with parameter placeholders
-        if (isset($config['title'])) {
-            $container->setParameter($this->getAlias().'.title', preg_replace('/%(.+?)%/', '{$1}', $config['title']));
         }
     }
 
