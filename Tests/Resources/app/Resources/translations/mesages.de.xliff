@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="default_title">
                 <source>default_title</source>
-                <target>%title% | Default title</target>
+                <target>%content_title% | Default title</target>
             </trans-unit>
             <trans-unit id="default_description">
                 <source>default_description</source>
-                <target>Default description. %description%</target>
+                <target>Default description. %content_description%</target>
             </trans-unit>
         </body>
     </file>

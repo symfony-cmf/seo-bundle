@@ -136,7 +136,7 @@ class SeoPresentation implements SeoPresentationInterface
             $pageTitle = null !== $this->configValues->getTitleKey()
                             ? $this->translator->trans(
                                 $this->configValues->getTitleKey(),
-                                array('%title%' => $seoMetadata->getTitle()),
+                                array('%content_title%' => $seoMetadata->getTitle()),
                                 $translationDomain
                             )
                             : $seoMetadata->getTitle();
@@ -149,7 +149,7 @@ class SeoPresentation implements SeoPresentationInterface
             $pageDescription = null !== $this->configValues->getDescriptionKey()
                                 ? $this->translator->trans(
                                     $this->configValues->getDescriptionKey(),
-                                    array('%description%' => $seoMetadata->getMetaDescription()),
+                                    array('%content_description%' => $seoMetadata->getMetaDescription()),
                                     $translationDomain
                                 )
                                 : $seoMetadata->getMetaDescription();

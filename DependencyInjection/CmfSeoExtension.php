@@ -90,7 +90,7 @@ class CmfSeoExtension extends Extension
      */
     public function loadSeoParameters($config, ContainerBuilder $container)
     {
-        $params = array('translation_domain', 'title_key', 'description_key', 'original_route_pattern');
+        $params = array('translation_domain', 'title', 'description', 'original_route_pattern');
 
         foreach ($params as $param) {
             $value = array_key_exists($param, $config) ? $config[$param] : null;

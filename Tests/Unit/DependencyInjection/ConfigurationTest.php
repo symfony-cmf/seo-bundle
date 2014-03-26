@@ -29,8 +29,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     {
         $expectedConfiguration = array(
             'translation_domain'    => null,
-            'title_key'             => 'title_key',
-            'description_key'       => 'description_key',
+            'title'             => 'default_title',
+            'description'       => 'default_description',
             'original_route_pattern'    => 'canonical',
             'persistence' => array(
                 'phpcr' => array(

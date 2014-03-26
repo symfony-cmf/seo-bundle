@@ -47,8 +47,8 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('translation_domain')->defaultValue(null)->end()
-                ->scalarNode('title_key')->end()
-                ->scalarNode('description_key')->end()
+                ->scalarNode('title')->end()
+                ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue('canonical')->end()
             ->end()
         ;

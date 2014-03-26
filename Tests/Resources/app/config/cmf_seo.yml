@@ -1,8 +1,8 @@
 cmf_seo:
     persistence:
       phpcr: ~
-    title_key: default_title
-    description_key: default_description
+    title: default_title
+    description: default_description
     original_route_pattern: canonical
 
 cmf_routing:

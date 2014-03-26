@@ -1,7 +1,7 @@
 <container xmlns="http://symfony.com/schema/dic/services">
     <config
             xmlns="http://cmf.symfony.com/schema/dic/seo"
-            description-key="description_key"
-            title-key="title_key">
+            description="default_description"
+            title="default_title">
     </config>
 </container>

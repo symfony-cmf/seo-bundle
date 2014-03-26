@@ -45,8 +45,8 @@ class SeoPresentationTest extends BaseTestCase
                                  ->disableOriginalConstructor()
                                  ->getMock();
         $this->configValues = new SeoConfigValues();
-        $this->configValues->setDescriptionKey('description_key');
-        $this->configValues->setTitleKey('title_key');
+        $this->configValues->setDescriptionKey('default_description');
+        $this->configValues->setTitleKey('default_title');
         $this->configValues->setOriginalRoutePattern('canonical');
         $this->configValues->setTranslationDomain(null);
 

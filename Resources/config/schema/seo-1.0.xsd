@@ -12,8 +12,8 @@
         </xsd:sequence>
 
         <xsd:attribute name="translation-domain" type="xsd:string" />
-        <xsd:attribute name="title-key" type="xsd:string"/>
-        <xsd:attribute name="description-key" type="xsd:string" />
+        <xsd:attribute name="title" type="xsd:string"/>
+        <xsd:attribute name="description" type="xsd:string" />
         <xsd:attribute name="original-route-pattern" type="original_route_pattern"/>
     </xsd:complexType>
 

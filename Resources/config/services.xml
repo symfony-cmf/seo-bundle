@@ -18,8 +18,8 @@
     </parameters>
     <services>
         <service id="cmf_seo.config_values" class="%cmf_seo.config_values.class%">
-            <call method="setTitleKey"><argument>%cmf_seo.title_key%</argument></call>
-            <call method="setDescriptionKey"><argument>%cmf_seo.description_key%</argument></call>
+            <call method="setTitleKey"><argument>%cmf_seo.title%</argument></call>
+            <call method="setDescriptionKey"><argument>%cmf_seo.description%</argument></call>
             <call method="setTranslationDomain"><argument>%cmf_seo.translation_domain%</argument></call>
             <call method="setOriginalRoutePattern"><argument>%cmf_seo.original_route_pattern%</argument></call>
         </service>
