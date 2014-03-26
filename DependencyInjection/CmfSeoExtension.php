@@ -93,7 +93,7 @@ class CmfSeoExtension extends Extension
         $params = array('translation_domain', 'title', 'description', 'original_route_pattern');
 
         foreach ($params as $param) {
-            $value = array_key_exists($param, $config) ? $config[$param] : null;
+            $value = isset($config[$param]) ? $config[$param] : null;
             $container->setParameter($this->getAlias().'.'.$param, $value);
         }
     }
