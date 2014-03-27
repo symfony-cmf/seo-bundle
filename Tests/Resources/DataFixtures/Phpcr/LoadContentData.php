@@ -40,7 +40,6 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $routeRoot = $manager->find(null, '/test/routes/content');
 
         $content = new SeoAwareContent();
-        $content->setName('content-1');
         $content->setTitle('Content 1');
         $content->setBody('Content 1');
         $content->setParent($contentRoot);
@@ -59,26 +58,7 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $manager->persist($route);
         unset($content, $route);
 
-        $content = new SeoAwareContent();
-        $content->setName('content-2');
-        $content->setTitle('Content 2');
-        $content->setBody('Content 2');
-        $content->setParent($contentRoot);
-        $metadata->setTitle('Title content 2');
-        $metadata->setMetaDescription('Description of content 2.');
-        $metadata->setMetaKeywords('content2, content');
-        $metadata->setOriginalUrl('/to/original2');
-        $content->setSeoMetadata($metadata);
-        $manager->persist($content);
-
-        $route = new Route();
-        $route->setPosition($routeRoot, 'content-2');
-        $route->setContent($content);
-        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
-        $manager->persist($route);
-
         $strategyContent = new SeoAwareContent();
-        $strategyContent->setName('strategy-content');
         $strategyContent->setTitle('Strategy title');
         $strategyContent->setBody('content of strategy test.');
         $strategyContent->setParent($contentRoot);
