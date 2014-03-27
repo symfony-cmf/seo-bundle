@@ -25,11 +25,9 @@ all the seo stuff.
 
 ## Documentation
 
-todo: insert correct link
-
 For the install guide and reference, see:
 
-* [SeoBundle documentation](http://symfony.com/doc/master/cmf/bundles/seo/index.html)
+* [SeoBundle documentation](http://symfony.com/doc/master/cmf/bundles/seo/index.html) (not online yet)
 
 See also:
 
