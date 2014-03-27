@@ -30,8 +30,7 @@ class CmfSeoExtension extends Extension
         $loader->load('services.xml');
         $loader->load('admin.xml');
 
-        $this->loadTitle($config['title'], $container);
-        $this->loadContent($config['content'], $container);
+        $this->loadSeoParameters($config, $container);
 
         if ($config['persistence']['phpcr']['enabled']) {
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
@@ -84,36 +83,19 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * Just fits the title values into its position and creates a parameter array.
+     * Does the seo parameters into a separate array to inject them at all.
      *
-     * @param $title
+     * @param $config
      * @param ContainerBuilder $container
      */
-    private function loadTitle($title, ContainerBuilder $container)
+    public function loadSeoParameters($config, ContainerBuilder $container)
     {
-        $container->setParameter($this->getAlias().'.title', true);
+        $params = array('translation_domain', 'title', 'description', 'original_route_pattern');
 
-        foreach ($title as $key => $value) {
-            $container->setParameter($this->getAlias().'.title.'.$key, $value);
+        foreach ($params as $param) {
+            $value = isset($config[$param]) ? $config[$param] : null;
+            $container->setParameter($this->getAlias().'.'.$param, $value);
         }
-
-        $container->setParameter($this->getAlias().'.title_parameters', $title);
-    }
-
-    /**
-     * Fits all parameters under content into its position and creates a parameter array.
-     *
-     * @param $content
-     * @param ContainerBuilder $container
-     */
-    private function loadContent($content, ContainerBuilder $container)
-    {
-        $container->setParameter($this->getAlias().'.content', true);
-
-        foreach ($content as $key => $value) {
-            $container->setParameter($this->getAlias().'.content.'.$key, $value);
-        }
-        $container->setParameter($this->getAlias().'.content_parameters', $content);
     }
 
     /**
