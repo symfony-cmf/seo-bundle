@@ -18,7 +18,7 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(SeoAwareInterface $document)
+    public function supports($document)
     {
         return $document instanceof SeoOriginalUrlInterface;
     }
