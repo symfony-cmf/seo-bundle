@@ -7,16 +7,8 @@
 This bundle is part of the [Symfony Content Management Framework (CMF)](http://cmf.symfony.com/)
 and licensed under the [MIT License](LICENSE).
 
-This bundle enables contents to be shown in a SEO conform way. By the help of the SonataSeoBundle
-this bundle renders SEO-Metadata.
-For now it supports:
-- Title
-- Description
-- Keywords
-- duplicate content solutions
-
-The SeoBundle adds a `SeoAwareInterface` with a `SeoMetadata` class as encapsulation for
-all the seo stuff.
+It provides a solution to make content bundles
+aware for Search Engine Optimisation (SEO).
 
 ## Requirements
 
@@ -27,7 +19,8 @@ all the seo stuff.
 
 For the install guide and reference, see:
 
-* [SeoBundle documentation](http://symfony.com/doc/master/cmf/bundles/seo/index.html) (not online yet)
+This bundle will be documented once the CMF 1.1 is released.
+Meanwhile find the documentation in progress in this [PR](https://github.com/symfony-cmf/symfony-cmf-docs/pull/420).
 
 See also:
 
