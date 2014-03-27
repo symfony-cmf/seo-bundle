@@ -23,29 +23,7 @@ all the seo stuff.
 
 ## Documentation
 
-###Configuration
-
-started to add a configuration, which can live on top of the config for SonataSeoBundle.
-A configuration like:
-
-```
-cmf_seo:
-    title:
-        default: My SEO title
-        bond_by: ' | '
-    description: My default description
-    keys: default, key, other
-    content:
-      pattern: canonical
-```
-
-Would create a title like `content_specific | My SEO title` cause the default title pattern is `prepend`. Other
-values are `append` and `replace`.
-This will add the default description combined with the config specific one into a meta tag.
-The same will be done for the keywords.
-Duplicate content will be solved by a canonical link, redirect will be default (todo: later)
-
-###Later
+todo: insert correct link
 
 For the install guide and reference, see:
 
@@ -68,4 +46,4 @@ Unit and/or functional tests exist for this bundle. See the
 for a guide to running the tests.
 
 Thanks to
-[everyone who has contributed](https://github.com/symfony-cmf/ContentBundle/contributors) already.
+[everyone who has contributed](https://github.com/symfony-cmf/SeoBundle/contributors) already.
