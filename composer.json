@@ -1,10 +1,19 @@
 {
     "name": "symfony-cmf/seo-bundle",
+    "keywords": ["Symfony CMF"],
+    "homepage": "http://cmf.symfony.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Symfony CMF Community",
+            "homepage": "https://github.com/symfony-cmf/SeoBundle/contributors"
+        }
+    ],
     "minimum-stability": "dev",
-    "prefer-stable": false,
     "require": {
         "php": ">=5.3.3",
-        "symfony-cmf/symfony-cmf": "1.1.*@dev",
+        "symfony-cmf/routing-bundle": "1.2.*@dev",
+        "symfony-cmf/core-bundle": "1.1.*@dev",
         "sonata-project/seo-bundle": "1.1.4"
     },
     "require-dev": {
@@ -13,7 +22,6 @@
         "doctrine/phpcr-odm": "1.1.*@dev",
         "sonata-project/doctrine-phpcr-admin-bundle": "dev-master",
         "symfony-cmf/routing-bundle": "1.2.*@dev",
-        "phpunit/phpunit": "dev-master",
         "matthiasnoback/symfony-dependency-injection-test": "0.*",
         "matthiasnoback/symfony-config-test": "0.*"
 
