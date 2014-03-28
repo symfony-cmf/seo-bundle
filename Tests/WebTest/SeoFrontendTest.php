@@ -98,6 +98,5 @@ class SeoFrontendTest extends BaseTestCase
                 return 'canonical' === $node->attr('rel');
         });
         $this->assertEquals('/home', $linkCrawler->eq(0)->attr('href'));
-
     }
 }

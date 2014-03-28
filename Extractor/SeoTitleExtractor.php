@@ -28,7 +28,7 @@ class SeoTitleExtractor implements SeoExtractorInterface
      *
      * @param SeoTitleInterface $document
      */
-    public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
         if (!$document instanceof SeoTitleInterface) {
             throw new ModelNotSupported($document);

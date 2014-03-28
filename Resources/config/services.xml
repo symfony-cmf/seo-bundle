@@ -11,10 +11,11 @@
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_lister.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
 
-        <parameter key="cmf_seo.extractor_strategy.title">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.description">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_url">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_route">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.read_title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_url.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor</parameter>
     </parameters>
     <services>
         <service id="cmf_seo.config_values" class="%cmf_seo.config_values.class%">
@@ -36,16 +37,19 @@
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
 
-        <service id="cmf_seo.extractor_strategy.title" class="%cmf_seo.extractor_strategy.title%">
+        <service id="cmf_seo.extractor_strategy.title" class="%cmf_seo.extractor_strategy.title.class%">
             <tag name="cmf_seo.extractor"/>
         </service>
-        <service id="cmf_seo.extractor_strategy.description" class="%cmf_seo.extractor_strategy.description%">
+        <service id="cmf_seo.extractor_strategy.read_title" class="%cmf_seo.extractor_strategy.read_title.class%">
             <tag name="cmf_seo.extractor"/>
         </service>
-        <service id="cmf_seo.extractor_strategy.original_url" class="%cmf_seo.extractor_strategy.original_url%">
+        <service id="cmf_seo.extractor_strategy.description" class="%cmf_seo.extractor_strategy.description.class%">
             <tag name="cmf_seo.extractor"/>
         </service>
-        <service id="cmf_seo.extractor_strategy.original_route" class="%cmf_seo.extractor_strategy.original_route%">
+        <service id="cmf_seo.extractor_strategy.original_url" class="%cmf_seo.extractor_strategy.original_url.class%">
+            <tag name="cmf_seo.extractor"/>
+        </service>
+        <service id="cmf_seo.extractor_strategy.original_route" class="%cmf_seo.extractor_strategy.original_route.class%">
             <tag name="cmf_seo.extractor"/>
             <call method="setRouter">
                 <argument type="service" id="router.default" />
