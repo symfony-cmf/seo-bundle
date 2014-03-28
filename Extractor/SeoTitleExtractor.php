@@ -34,6 +34,8 @@ class SeoTitleExtractor implements SeoExtractorInterface
             throw new ModelNotSupported($document);
         }
 
-        $seoMetadata->setTitle($document->getSeoTitle());
+        if (null === $seoMetadata->getTitle() || '' === $seoMetadata->getTitle()) {
+            $seoMetadata->setTitle($document->getSeoTitle());
+        }
     }
 }

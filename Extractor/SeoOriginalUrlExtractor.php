@@ -31,7 +31,8 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
         if (!$document instanceof SeoOriginalUrlInterface) {
             throw new ModelNotSupported($document);
         }
-
-        $seoMetadata->setOriginalUrl($document->getSeoOriginalUrl());
+        if (null === $seoMetadata->getOriginalUrl() || '' === $seoMetadata->getOriginalUrl()) {
+            $seoMetadata->setOriginalUrl($document->getSeoOriginalUrl());
+        }
     }
 }

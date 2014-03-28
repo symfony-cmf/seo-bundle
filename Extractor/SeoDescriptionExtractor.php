@@ -33,6 +33,8 @@ class SeoDescriptionExtractor implements SeoExtractorInterface
             throw new ModelNotSupported($document);
         }
 
-        $seoMetadata->setMetaDescription($document->getSeoDescription());
+        if (null === $seoMetadata->getMetaDescription() || '' === $seoMetadata->getMetaDescription()) {
+           $seoMetadata->setMetaDescription($document->getSeoDescription());
+        }
     }
 }
