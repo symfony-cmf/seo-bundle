@@ -45,4 +45,4 @@ services:
          calls:
             - [ setTranslationDomain, [CmfSeoBundle]]
             - [ setRouteBuilder, [@sonata.admin.route.path_info_slashes]]
-            - [ setRootPath, [%cmf_seo.persistence.phpcr.content_basepath%]]
+            - [ setRootPath, [/test/content]]
