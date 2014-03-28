@@ -9,6 +9,7 @@
             <generator strategy="PARENT"/>
         </id>
         <node name="node"/>
+        <nodename name="name"/>
         <parent-document name="parentDocument"/>
     </document>
 </doctrine-mapping>

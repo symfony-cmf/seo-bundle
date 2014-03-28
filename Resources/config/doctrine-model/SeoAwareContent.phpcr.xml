@@ -11,8 +11,8 @@
             translator="child"
             >
         <locale name="locale" />
-        <nodename name="title"/>
-        <field name="body" type="string"  translated="true"/>
+        <field name="title" type="string" translated="true"/>
+        <field name="body" type="string" translated="true"/>
         <field name="seoMetadata" type="string" assoc="" nullable="true" />
 
         <lifecycle-callbacks>

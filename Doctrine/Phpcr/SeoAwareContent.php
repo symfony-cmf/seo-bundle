@@ -30,6 +30,13 @@ class SeoAwareContent extends SeoAwareContentModel
     protected $parentDocument;
 
     /**
+     * The local name of the node the document belongs to.
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Get the underlying PHPCR node of this content.
      *
      * @return NodeInterface
@@ -53,5 +60,21 @@ class SeoAwareContent extends SeoAwareContentModel
     public function getParentDocument()
     {
         return $this->parentDocument;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
