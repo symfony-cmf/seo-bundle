@@ -40,6 +40,7 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $routeRoot = $manager->find(null, '/test/routes/content');
 
         $content = new SeoAwareContent();
+        $content->setName('content-1');
         $content->setTitle('Content 1');
         $content->setBody('Content 1');
         $content->setParentDocument($contentRoot);
@@ -59,6 +60,7 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         unset($content, $route);
 
         $strategyContent = new SeoAwareContent();
+        $strategyContent->setName('strategy-title');
         $strategyContent->setTitle('Strategy title');
         $strategyContent->setBody('content of strategy test.');
         $strategyContent->setParentDocument($contentRoot);

@@ -40,6 +40,7 @@ class SeoMetadataPersistenceTest extends BaseTestCase
 
         //properties for the document itself
         $documentData = array(
+            'name'          => 'test-title',
             'title'         => 'test-title',
             'body'          => 'test-body',
             'seoMetadata'   => $metaDataClass,
