@@ -23,11 +23,20 @@ class SeoContentAdminExtensionTest extends BaseTestCase
         $this->client = $this->createClient();
     }
 
+    public function testAdminDashboard()
+    {
+        $crawler = $this->client->request('GET', '/admin/dashboard');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertCount(1, $crawler->filter('html:contains("SeoContent")'));
+    }
+
     public function testAdminExtensionExists()
     {
         $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/list');
         $res = $this->client->getResponse();
-
+        print($res);
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content 1")'));
     }
