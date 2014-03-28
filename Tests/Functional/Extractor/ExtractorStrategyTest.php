@@ -10,6 +10,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\ReadTitleExtractorDocument;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Router;
 
@@ -29,8 +30,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     private $seoMetadata;
 
     private $router;
-    private $readTitleDocument;
-
 
     public function setUp()
     {
@@ -50,11 +49,13 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->routeDocument = $this->getMock(
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\RouteExtractorDocument'
         );
-        $this->readTitleDocument = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\ReadTitleExtractorDocument'
-        );
 
         $this->seoMetadata = new SeoMetadata();
+    }
+
+    public function tearDown()
+    {
+        unset($this->seoMetadata);
     }
 
     public function testTitleExtractorStrategy()
@@ -185,15 +186,14 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $strategy = new TitleReadExtractor();
 
+        $document = new ReadTitleExtractorDocument();
         $this->assertFalse($strategy->supports($this->descriptionDocument));
         $this->assertFalse($strategy->supports($this->urlDocument));
         $this->assertFalse($strategy->supports($this->titleDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
-        $this->assertTrue($strategy->supports($this->readTitleDocument));
+        $this->assertTrue($strategy->supports($document));
 
-
-
-        $strategy->updateMetadata($this->readTitleDocument, $this->seoMetadata);
+        $strategy->updateMetadata($document, $this->seoMetadata);
 
         $this->assertEquals('title-test', $this->seoMetadata->getTitle());
     }
