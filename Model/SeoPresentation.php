@@ -31,11 +31,6 @@ class SeoPresentation implements SeoPresentationInterface
     private $sonataPage;
 
     /**
-     * SeoParameters, set in the configuration.
-     */
-    private $seoParameters;
-
-    /**
      * @var bool
      */
     private $redirectResponse = false;
@@ -89,11 +84,11 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * Method to add strategies by the compiler pass.
      *
-     * @param SeoExtractorInterface $strategy
+     * @param SeoExtractorInterface $extractor
      */
-    public function addExtractor(SeoExtractorInterface $strategy)
+    public function addExtractor(SeoExtractorInterface $extractor)
     {
-        $this->strategies[] = $strategy;
+        $this->strategies[] = $extractor;
     }
 
     /**
