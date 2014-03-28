@@ -46,6 +46,14 @@
           <source>list.label_title</source>
           <target>Title</target>
         </trans-unit>
+        <trans-unit id="filter.label_id">
+            <source>filter.label_id</source>
+            <target>ID</target>
+        </trans-unit>
+        <trans-unit id="filter.label_title">
+            <source>filter.label_title</source>
+            <target>Title</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
