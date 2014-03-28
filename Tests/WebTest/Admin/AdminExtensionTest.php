@@ -39,5 +39,10 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("content-1")'));
+
+        //test the exist of the labels
+        $this->assertCount(1, $crawler->filter('html:contains("ID")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Title")'));
+        $this->assertCount(1, $crawler->filter('html:contains("List SeoContent")'));
     }
 }

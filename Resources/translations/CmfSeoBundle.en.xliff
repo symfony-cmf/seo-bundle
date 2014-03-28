@@ -18,6 +18,10 @@
           <source>form.label_title</source>
           <target>Titel</target>
         </trans-unit>
+        <trans-unit id="form.label_id">
+          <source>form.label_id</source>
+          <target>ID</target>
+        </trans-unit>
         <trans-unit id="form.label_parent">
           <source>form.label_parent</source>
           <target>Parent</target>
@@ -33,6 +37,14 @@
         <trans-unit id="breadcrumb.link_seo_aware_content_list">
           <source>breadcrumb.link_seo_aware_content_list</source>
           <target>List SeoContent</target>
+        </trans-unit>
+        <trans-unit id="list.label_id">
+          <source>list.label_id</source>
+          <target>ID</target>
+        </trans-unit>
+        <trans-unit id="list.label_title">
+          <source>list.label_title</source>
+          <target>Title</target>
         </trans-unit>
     </body>
   </file>
