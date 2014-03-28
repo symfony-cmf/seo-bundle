@@ -31,11 +31,15 @@ class SeoAwareContent extends SeoAwareContentModel
 
     /**
      * The local name of the node the document belongs to.
+     *
+     * @var string
      */
     protected $name;
 
     /**
-     * @return mixed
+     * Get the underlying PHPCR node of this content.
+     *
+     * @return NodeInterface
      */
     public function getNode()
     {
@@ -59,7 +63,7 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
     public function setName($name)
     {
@@ -67,7 +71,7 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
