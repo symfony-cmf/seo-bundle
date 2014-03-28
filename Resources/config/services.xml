@@ -34,6 +34,7 @@
         </service>
         <service id="cmf_seo.event_lister.seo_content" class="%cmf_seo.event_lister.seo_content.class%">
             <argument type="service" id="cmf_seo.presentation"/>
+            <argument>%cmf_seo.content_key%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
 

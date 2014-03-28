@@ -50,6 +50,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->end()
                 ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue('canonical')->end()
+                ->scalarNode('content_key')->end()
             ->end()
         ;
 

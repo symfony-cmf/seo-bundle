@@ -2,7 +2,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor;
 
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteKeyExtractor;
@@ -29,13 +28,11 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     /** @var  SeoMetadata */
     private $seoMetadata;
 
-    private $router;
+    private $urlGenerator;
 
     public function setUp()
     {
-        $this->router = $this->getMockBuilder('Symfony\Component\Routing\Router')
-                             ->disableOriginalConstructor()
-                             ->getMock();
+        $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
 
         $this->titleDocument = $this->getMock(
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\TitleExtractorDocument'
@@ -102,7 +99,7 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($strategy->supports($this->titleDocument));
         $this->assertFalse($strategy->supports($this->urlDocument));
 
-        $route = $this->getMockBuilder('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route')
+        $route = $this->getMockBuilder('Symfony\Component\Routing\Route')
                       ->disableOriginalConstructor()
                       ->getMock();
 
@@ -110,11 +107,11 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
                             ->method('getSeoOriginalRoute')
                             ->will($this->returnValue($route));
 
-        $this->router->expects($this->once())
+        $this->urlGenerator->expects($this->once())
                      ->method('generate')
                      ->with($route)
                      ->will($this->returnValue('/seo-route'));
-        $strategy->setRouter($this->router);
+        $strategy->setRouter($this->urlGenerator);
 
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
 
@@ -122,7 +119,7 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
+     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
      */
     public function testRouteExtractorExceptions()
     {
@@ -157,7 +154,7 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-    * @expectedException Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
+    * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
     */
     public function testExceptionWhenServingWrongDocument()
     {
