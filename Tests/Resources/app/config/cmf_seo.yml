@@ -19,3 +19,9 @@ cmf_routing:
 
 framework:
     translator: { enabled: true, fallback: en }
+
+sonata_admin:
+    extensions:
+       cmf_seo.content.admin_extension:
+             implements:
+               - Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface
