@@ -35,7 +35,7 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
      *
      * @param SeoOriginalRouteInterface $document
      */
-    public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
         if (!$document instanceof SeoOriginalRouteInterface) {
             throw new ModelNotSupported($document);

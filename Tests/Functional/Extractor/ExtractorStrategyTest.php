@@ -8,7 +8,9 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteKeyExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\ReadTitleExtractorDocument;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Router;
 
@@ -28,7 +30,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     private $seoMetadata;
 
     private $router;
-
 
     public function setUp()
     {
@@ -50,6 +51,11 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->seoMetadata = new SeoMetadata();
+    }
+
+    public function tearDown()
+    {
+        unset($this->seoMetadata);
     }
 
     public function testTitleExtractorStrategy()
@@ -174,5 +180,21 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
+    }
+
+    public function testReadTitleExtractor()
+    {
+        $strategy = new TitleReadExtractor();
+
+        $document = new ReadTitleExtractorDocument();
+        $this->assertFalse($strategy->supports($this->descriptionDocument));
+        $this->assertFalse($strategy->supports($this->urlDocument));
+        $this->assertFalse($strategy->supports($this->titleDocument));
+        $this->assertFalse($strategy->supports($this->routeDocument));
+        $this->assertTrue($strategy->supports($document));
+
+        $strategy->updateMetadata($document, $this->seoMetadata);
+
+        $this->assertEquals('title-test', $this->seoMetadata->getTitle());
     }
 }

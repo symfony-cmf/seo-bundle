@@ -26,12 +26,13 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
         if (!$document instanceof SeoOriginalUrlInterface) {
             throw new ModelNotSupported($document);
         }
-
-        $seoMetadata->setOriginalUrl($document->getSeoOriginalUrl());
+        if (null === $seoMetadata->getOriginalUrl() || '' === $seoMetadata->getOriginalUrl()) {
+            $seoMetadata->setOriginalUrl($document->getSeoOriginalUrl());
+        }
     }
 }

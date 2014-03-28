@@ -32,8 +32,8 @@ interface SeoExtractorInterface
      *
      * This method is only called if supports returned true.
      *
-     * @param SeoAwareInterface $document
+     * @param                      $document
      * @param SeoMetadataInterface $seoMetadata
      */
-    public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata);
+    public function updateMetadata($document, SeoMetadataInterface $seoMetadata);
 }

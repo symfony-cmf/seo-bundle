@@ -27,12 +27,14 @@ class SeoDescriptionExtractor implements SeoExtractorInterface
      *
      * @param SeoDescriptionInterface $document
      */
-    public function updateMetadata(SeoAwareInterface $document, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
         if (!$document instanceof SeoDescriptionInterface) {
             throw new ModelNotSupported($document);
         }
 
-        $seoMetadata->setMetaDescription($document->getSeoDescription());
+        if (null === $seoMetadata->getMetaDescription() || '' === $seoMetadata->getMetaDescription()) {
+           $seoMetadata->setMetaDescription($document->getSeoDescription());
+        }
     }
 }

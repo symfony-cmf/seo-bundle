@@ -3,16 +3,9 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\ModelNotSupported;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
-/**
- * This strategy extracts the title from documents
- * implementing the SeoTitleInterface.
- *
- * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
- */
-class SeoTitleExtractor implements SeoExtractorInterface
+class TitleReadExtractor implements SeoExtractorInterface
 {
 
     /**
@@ -20,22 +13,21 @@ class SeoTitleExtractor implements SeoExtractorInterface
      */
     public function supports($document)
     {
-        return $document instanceof SeoTitleInterface;
+        return method_exists($document, 'getTitle');
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @param SeoTitleInterface $document
      */
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
-        if (!$document instanceof SeoTitleInterface) {
+        if (!method_exists($document, 'getTitle')) {
             throw new ModelNotSupported($document);
         }
 
         if (null === $seoMetadata->getTitle() || '' === $seoMetadata->getTitle()) {
-            $seoMetadata->setTitle($document->getSeoTitle());
+            $seoMetadata->setTitle($document->getTitle());
         }
     }
 }
+ 
