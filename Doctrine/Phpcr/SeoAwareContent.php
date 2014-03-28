@@ -2,39 +2,37 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
+use PHPCR\NodeInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareContent as SeoAwareContentModel;
 
 /**
  * The bundle's own content class which supports the SeoAwareInterface.
  *
- * This interface is responsible for serving the SeoMeta or been recognised
- * for an sonata admin extension.
- *
+ * This interface is responsible for serving the SeoMeta and being recognised
+ * by the sonata admin extension.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class SeoAwareContent extends SeoAwareContentModel
 {
     /**
-     * The node.
+     * The PHPCR node.
+     *
+     * @var NodeInterface
      */
     protected $node;
 
     /**
-     * The parent node.
+     * The parent document.
+     *
+     * @var object
      */
     protected $parentDocument;
 
     /**
-     * @param mixed $node
-     */
-    public function setNode($node)
-    {
-        $this->node = $node;
-    }
-
-    /**
-     * @return mixed
+     * Get the underlying PHPCR node of this content.
+     *
+     * @return NodeInterface
      */
     public function getNode()
     {
@@ -42,7 +40,7 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
-     * @param mixed $parent
+     * @param object $parent The parent document.
      */
     public function setParentDocument($parent)
     {
@@ -50,7 +48,7 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
-     * @return mixed
+     * @return object
      */
     public function getParentDocument()
     {

@@ -5,65 +5,64 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 /**
  * The interface for the SeoMetadata.
  *
- * This class should have getter and setter as well.
- *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 interface SeoMetadataInterface
 {
     /**
-     * Setter for the description
+     * Update the description.
      *
      * @param string $metaDescription
      */
     public function setMetaDescription($metaDescription);
 
     /**
-     * Getter for the description, shown in a meta tag
+     * Get the description for the meta tag.
      *
      * @return string
      */
     public function getMetaDescription();
 
     /**
-     * Setter for the Keywords
+     * Set the keywords.
      *
      * @param string $metaKeywords
      */
     public function setMetaKeywords($metaKeywords);
 
     /**
-     * Getter for the Keywords that are shown in a meta tag
+     * Get the Keywords for the meta tag
      *
      * @return string
      */
     public function getMetaKeywords();
 
     /**
-     * Setter for the originalUrl
+     * Set the original URL for content that has several URLs.
      *
      * @param string $originalUrl
      */
     public function setOriginalUrl($originalUrl);
 
     /**
-     * Getter for the original url, means the url where to redirectResponse
-     * or setting href property of the canonical link. This depends on the value
-     * of the originalUrl pattern.
+     * Get the original URL of this content.
+     *
+     * This will be used for the canonical link or to redirect to the original
+     * URL, depending on your settings.
      *
      * @return string
      */
     public function getOriginalUrl();
 
     /**
-     * Setter for the seo title
+     * Set the title.
      *
      * @param string $title
      */
     public function setTitle($title);
 
     /**
-     * Getter for the seo title
+     * Get the title.
      *
      * @return string
      */
@@ -73,7 +72,7 @@ interface SeoMetadataInterface
      * for the process of serialization for storing the seo metadata we
      * need to get all properties in an array
      *
-     * @return array
+     * @return array with all fields
      */
     public function toArray();
 }

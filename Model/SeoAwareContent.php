@@ -2,6 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Symfony\Component\Routing\Route;
 use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlInterface;
@@ -32,12 +33,12 @@ class SeoAwareContent implements
     protected $body;
 
     /**
-     * @var SeoMetadata
+     * @var SeoMetadataInterface
      */
     protected $seoMetadata;
 
     /**
-     * @var RouteObjectInterface[]
+     * @var Route[]
      */
     protected $routes;
 
@@ -90,7 +91,7 @@ class SeoAwareContent implements
      * Any content model can handle its seo properties. By implementing
      * this interface a model has to return its class for all the seo properties.
      *
-     * @return SeoMetadata
+     * @return SeoMetadataInterface
      */
     public function getSeoMetadata()
     {
@@ -98,13 +99,12 @@ class SeoAwareContent implements
     }
 
     /**
-     * @param SeoMetadata $seoMetadata
+     * @param SeoMetadataInterface $seoMetadata
      */
     public function setSeoMetadata($seoMetadata)
     {
         $this->seoMetadata= $seoMetadata;
     }
-
 
     /**
      * @return string|boolean The locale of this model or false if
@@ -141,7 +141,7 @@ class SeoAwareContent implements
     }
 
     /**
-     * @return \Symfony\Component\Routing\Route[] Route instances that point to this content
+     * @return Route[] The routes that point to this content
      */
     public function getRoutes()
     {
@@ -155,7 +155,9 @@ class SeoAwareContent implements
      */
     public function preFlush()
     {
-        $this->seoMetadata = $this->seoMetadata->toArray();
+        $this->seoMetadata = $this->seoMetadata instanceof SeoMetadataInterface
+            ? $this->seoMetadata->toArray()
+            : array();
     }
 
     /**
