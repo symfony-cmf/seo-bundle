@@ -9,19 +9,6 @@ use Sonata\DoctrinePHPCRAdminBundle\Admin\Admin;
 
 class SeoAwareContentAdmin extends Admin
 {
-    public function getNewInstance()
-    {
-        $new = parent::getNewInstance();
-        if ($this->hasRequest()) {
-            $parentId = $this->getRequest()->query->get('parent');
-            if (null !== $parentId) {
-                $new->setParent($this->getModelManager()->find(null, $parentId));
-            }
-        }
-
-        return $new;
-    }
-
     public function getExportFormats()
     {
         return array();
@@ -39,17 +26,9 @@ class SeoAwareContentAdmin extends Admin
     {
         $formMapper
             ->with('form.group_general')
-            ->add(
-                'parent',
-                'doctrine_phpcr_odm_tree',
-                array(
-                    'root_node' => $this->getRootPath(),
-                    'choice_list' => array(),
-                    'select_root_node' => true)
-            )
-            ->add('name', 'text')
-            ->add('title', 'text')
-            ->add('body', 'textarea', array('required' => false))
+                ->add('name', 'text')
+                ->add('title', 'text')
+                ->add('body', 'textarea', array('required' => false))
             ->end()
         ;
     }

@@ -45,4 +45,19 @@ class SeoContentAdminExtensionTest extends BaseTestCase
         $this->assertCount(1, $crawler->filter('html:contains("Title")'));
         $this->assertCount(1, $crawler->filter('html:contains("List SeoContent")'));
     }
+
+    public function testItemEditView()
+    {
+        $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-1/edit');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(200, $res->getStatusCode());
+
+        $this->assertCount(1, $crawler->filter('html:contains("Title")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Original url")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Meta description")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Meta keywords")'));
+    }
 }
+
+
