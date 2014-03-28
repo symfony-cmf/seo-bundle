@@ -42,7 +42,7 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $content = new SeoAwareContent();
         $content->setTitle('Content 1');
         $content->setBody('Content 1');
-        $content->setParent($contentRoot);
+        $content->setParentDocument($contentRoot);
         $metadata = new SeoMetadata();
         $metadata->setTitle('Title content 1');
         $metadata->setMetaDescription('Description of content 1.');
@@ -61,7 +61,7 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $strategyContent = new SeoAwareContent();
         $strategyContent->setTitle('Strategy title');
         $strategyContent->setBody('content of strategy test.');
-        $strategyContent->setParent($contentRoot);
+        $strategyContent->setParentDocument($contentRoot);
         //insert empty meta data
         $strategyMetadata = new SeoMetadata();
         $strategyMetadata->setTitle('');

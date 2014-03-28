@@ -23,7 +23,7 @@ class SeoAwareContent extends SeoAwareContentModel
     /**
      * The parent node.
      */
-    protected $parent;
+    protected $parentDocument;
 
     /**
      * @param mixed $node
@@ -44,16 +44,16 @@ class SeoAwareContent extends SeoAwareContentModel
     /**
      * @param mixed $parent
      */
-    public function setParent($parent)
+    public function setParentDocument($parent)
     {
-        $this->parent = $parent;
+        $this->parentDocument = $parent;
     }
 
     /**
      * @return mixed
      */
-    public function getParent()
+    public function getParentDocument()
     {
-        return $this->parent;
+        return $this->parentDocument;
     }
 }
