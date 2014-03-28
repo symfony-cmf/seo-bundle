@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping
+        https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd"
+        >
+
+    <mapped-superclass name="Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareContent"
+            referenceable="true"
+            translator="child"
+            >
+        <locale name="locale" />
+        <nodename name="title"/>
+        <field name="body" type="string"  translated="true"/>
+        <field name="seoMetadata" type="string" assoc="" nullable="true" />
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="preFlush"/>
+            <lifecycle-callback type="prePersist" method="preFlush"/>
+            <lifecycle-callback type="postLoad" method="postLoad"/>
+        </lifecycle-callbacks>
+
+        <referrers name="routes" referring-document="Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route" referenced-by="content">
+            <cascade><cascade-persist /></cascade>
+        </referrers>
+    </mapped-superclass>
+</doctrine-mapping>

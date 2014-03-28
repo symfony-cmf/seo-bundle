@@ -40,7 +40,6 @@ class SeoMetadataPersistenceTest extends BaseTestCase
 
         //properties for the document itself
         $documentData = array(
-            'name'          => 'test-node',
             'title'         => 'test-title',
             'body'          => 'test-body',
             'seoMetadata'   => $metaDataClass,
@@ -60,7 +59,7 @@ class SeoMetadataPersistenceTest extends BaseTestCase
         $this->dm->flush();
         $this->dm->clear();
 
-        $content = $this->dm->find(null, '/test/test-node');
+        $content = $this->dm->find(null, '/test/test-title');
 
         $this->assertNotNull($content);
 
