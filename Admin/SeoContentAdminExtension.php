@@ -22,7 +22,7 @@ class SeoContentAdminExtension extends AdminExtension
     public function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('form.group_seo')
+            ->with('form.group_seo', array('translation_domain' => 'CmfSeoBundle'))
                 ->add('seoMetadata', 'seo_metadata', array('label'=>false))
             ->end()
         ;

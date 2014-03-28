@@ -1,6 +1,8 @@
 cmf_seo:
     persistence:
-      phpcr: ~
+      phpcr:
+          use_sonata_admin: true
+
     title: "Default | %%content_title%%"
     description: "Default description. %%content_description%%"
     original_route_pattern: canonical
@@ -22,6 +24,25 @@ framework:
 
 sonata_admin:
     extensions:
-       cmf_seo.content.admin_extension:
-             implements:
+        cmf_seo.persistence.phpcr.admin_extension:
+            implements:
                - Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface
+    dashboard:
+        groups:
+            content:
+                label: Content
+                items:
+                    - sonata.admin.seo_content
+services:
+     sonata.admin.seo_content:
+         class: Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Admin\SeoAwareContentAdmin
+         tags:
+            - { name: sonata.admin, manager_type: doctrine_phpcr, label_catalogue: CmfSeoBundle, group: dashboard.cmf, label: dashboard.label_seo_content, label_translator_strategy: sonata.admin.label.strategy.underscore}
+         arguments:
+            - ~
+            - Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent
+            - SonataAdminBundle:CRUD
+         calls:
+            - [ setTranslationDomain, [CmfSeoBundle]]
+            - [ setRouteBuilder, [@sonata.admin.route.path_info_slashes]]
+            - [ setRootPath, [/test/content]]
