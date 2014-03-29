@@ -4,10 +4,9 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\ModelNotSupported;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * This strategy extracts the original route from documents
@@ -18,7 +17,7 @@ use Symfony\Component\Routing\Router;
 class SeoOriginalRouteExtractor implements SeoExtractorInterface
 {
     /**
-     * @var Router
+     * @var UrlGeneratorInterface
      */
     private $router;
 
@@ -53,9 +52,9 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
     /**
      * Setter for the symfony router.
      *
-     * @param Router $router
+     * @param UrlGeneratorInterface $router
      */
-    public function setRouter(Router $router)
+    public function setRouter(UrlGeneratorInterface $router)
     {
         $this->router = $router;
     }

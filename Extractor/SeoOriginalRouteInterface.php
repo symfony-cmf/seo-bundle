@@ -2,7 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
+use Symfony\Component\Routing\Route;
 
 /**
  * This interface is one of the ExtractorInterfaces to
@@ -17,12 +17,11 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 interface SeoOriginalRouteInterface
 {
     /**
-     * The method should return something that can be used to
-     * generate a absolute url.
+     * The method should return something that can be used to generate an
+     * absolute URL.
      *
-     * This means it should return a symfony cmf Route object,
-     * a symfony route key or a uuid of a route document stored
-     * with the phpcr.
+     * This may be a symfony route name or, when using the Symfony CMF
+     * DynamicRouter a Route object.
      *
      * @return Route|string
      */

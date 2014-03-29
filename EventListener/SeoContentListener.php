@@ -2,7 +2,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
-use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -23,11 +22,19 @@ class SeoContentListener
     private $seoPresentation;
 
     /**
-     * @param SeoPresentationInterface $seoPage
+     * @var string The key to look up the content in the request attributes
      */
-    public function __construct(SeoPresentationInterface $seoPage)
+    private $requestKey;
+
+    /**
+     * @param SeoPresentationInterface $seoPage Service Handling SEO information.
+     * @param string                   $requestKey      The key to look up the content
+     *                                                  in the request attributes.
+     */
+    public function __construct(SeoPresentationInterface $seoPage, $requestKey)
     {
         $this->seoPresentation = $seoPage;
+        $this->requestKey = $requestKey;
     }
 
     /**
@@ -35,8 +42,8 @@ class SeoContentListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if ($event->getRequest()->attributes->has(DynamicRouter::CONTENT_KEY)) {
-            $this->seoPresentation->updateSeoPage($event->getRequest()->attributes->get(DynamicRouter::CONTENT_KEY));
+        if ($event->getRequest()->attributes->has($this->requestKey)) {
+            $this->seoPresentation->updateSeoPage($event->getRequest()->attributes->get($this->requestKey));
 
             //have a look if the strategy is redirectResponse and if there is a route to redirectResponse to
             if ($response = $this->seoPresentation->getRedirectResponse()) {

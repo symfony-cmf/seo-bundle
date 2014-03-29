@@ -10,7 +10,6 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
-use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -18,7 +17,7 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
  * sonatas PageService.
  *
  */
-class SeoPresentationTest extends BaseTestCase
+class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 {
     /**
      * @var SeoPresentation

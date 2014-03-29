@@ -2,12 +2,11 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -26,10 +25,20 @@ class CmfSeoExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
         $this->loadSeoParameters($config, $container);
+
+        if (empty($config['content_key'])) {
+            if (! class_exists('Symfony\\Cmf\\Bundle\\RoutingBundle\\Routing\\DynamicRouter')) {
+                throw new \RuntimeException('You need to set the content_key when not using the CmfRoutingBundle DynamicRouter');
+            }
+            $contentKey = DynamicRouter::CONTENT_KEY;
+        } else {
+            $contentKey = $config['content_key'];
+        }
+        $container->setParameter($this->getAlias() . '.content_key', $contentKey);
 
         if ($config['persistence']['phpcr']['enabled']) {
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
@@ -48,9 +57,9 @@ class CmfSeoExtension extends Extension
         $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
 
         $keys = array(
-            'admin_class'               => 'admin_extension.class',
-            'document_class'             => 'document.class',
-            'content_basepath'          => 'content_basepath',
+            'admin_class'      => 'admin_extension.class',
+            'document_class'   => 'document.class',
+            'content_basepath' => 'content_basepath',
         );
 
         foreach ($keys as $sourceKey => $targetKey) {
