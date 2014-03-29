@@ -10,9 +10,9 @@ use Sonata\AdminBundle\Form\FormMapper;
  * for configuring seo metadata.
  *
  * To get this admin extension, you need to enable SonataAdminBundle support by
- * setting `cmf_seo.persistence.phpcr.use_sonata_admin` in the configuration to 
- * `true` (it defaults to `auto`, which means it'll use it when the 
- * SonataAdminBundle is registered). You will need your own Admin class with its 
+ * setting `cmf_seo.persistence.phpcr.use_sonata_admin` in the configuration to
+ * `true` (it defaults to `auto`, which means it'll use it when the
+ * SonataAdminBundle is registered). You will need your own Admin class with its
  * mapping and let the document implement the SeoAwareInterface.
  *
  * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>

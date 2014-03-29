@@ -6,10 +6,10 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Transforms the escaped percent characters back to normal percent 
+ * Transforms the escaped percent characters back to normal percent
  * characters, so it can be handled by tools like the Translator.
  *
- * This compiler must be registered as PassConfig::TYPE_OPTIMIZE, otherwise it 
+ * This compiler must be registered as PassConfig::TYPE_OPTIMIZE, otherwise it
  * causes conflicts with the ResolveParameterPass.
  *
  * @author Wouter J <wouter@wouterj.nl>

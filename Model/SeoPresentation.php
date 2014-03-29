@@ -190,7 +190,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Creates a concatenated list of keywords based on sonatas default 
+     * Creates a concatenated list of keywords based on sonatas default
      * values.
      *
      * @param string $contentKeywords

@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 /**
  * This listener takes care of documents which implements the SeoAwareInterface.
  *
- * In case of a match the listener calls a special presentation model to 
+ * In case of a match the listener calls a special presentation model to
  * prepare the SeoMetadata for putting it into sonatas Page Service.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>

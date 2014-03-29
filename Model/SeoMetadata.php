@@ -37,7 +37,7 @@ class SeoMetadata implements SeoMetadataInterface
 
     /**
      * Depending on the cmf_seo.title.pattern, this string will be prepend/append to a
-     * default title or will replace it. The default title is can be set in in 
+     * default title or will replace it. The default title is can be set in in
      * the configuration under cmf_seo.title.default.
      *
      * @var string

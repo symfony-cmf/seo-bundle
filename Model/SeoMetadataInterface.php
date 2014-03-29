@@ -70,7 +70,7 @@ interface SeoMetadataInterface
 
     /**
      * Returns the array representation of the metadata properties.
-     * 
+     *
      * This is needed for the process of serialization of the seo metadata.
      *
      * @return array
