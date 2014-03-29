@@ -5,7 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * A seo presentation takes a content object and updates the Sonata SeoPage
+ * A SEO presentation takes a content object and updates the Sonata SeoPage
  * from it.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
@@ -13,18 +13,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 interface SeoPresentationInterface
 {
     /**
-     * Update the sonata SeoPage service with the data retrieved from the $contentDocument.
+     * Updates the Sonata SeoPage service with the data retrieved from the $contentDocument.
      *
      * @param object $contentDocument The document to load data from.
      */
     public function updateSeoPage($contentDocument);
 
     /**
-     * Return the redirect response if the bundle is configured to redirect to
+     * Returns the redirect response if the bundle is configured to redirect to
      * the canonical URL and this content provided a canonical URL different
      * from the current URL. Returns false in all other cases.
      *
-     * @return bool|RedirectResponse
+     * @return boolean|RedirectResponse
      */
     public function getRedirectResponse();
 }

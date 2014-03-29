@@ -6,10 +6,11 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Transform the converted placeholders for the Translation component back
- * again, to avoid problems with the ResolverParameterCompiler.
+ * Transforms the escaped percent characters back to normal percent
+ * characters, so it can be handled by tools like the Translator.
  *
- * This compiler must be registered as PassConfig::TYPE_OPTIMIZE.
+ * This compiler must be registered as PassConfig::TYPE_OPTIMIZE, otherwise it
+ * causes conflicts with the ResolveParameterPass.
  *
  * @author Wouter J <wouter@wouterj.nl>
  */
@@ -18,11 +19,14 @@ class TransformToPlaceholderCompiler implements CompilerPassInterface
     /**
      * @var array
      */
-    private $parametersToFix;
+    private $parameterNames;
 
-    public function __construct(array $parametersToFix)
+    /**
+     * @param array $parameters The names of the parameters which should be unescaped
+     */
+    public function __construct(array $parameterNames)
     {
-        $this->parametersToFix = $parametersToFix;
+        $this->parameterNames = $parameterNames;
     }
 
     /**
@@ -30,9 +34,9 @@ class TransformToPlaceholderCompiler implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        foreach ($this->parametersToFix as $parameter) {
-            if ($container->hasParameter($parameter)) {
-                $container->setParameter($parameter, str_replace('%%', '%', $container->getParameter($parameter)));
+        foreach ($this->parameterNames as $parameterName) {
+            if ($container->hasParameter($parameterName)) {
+                $container->setParameter($parameterName, str_replace('%%', '%', $container->getParameter($parameterName)));
             }
         }
     }

@@ -50,7 +50,7 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
     }
 
     /**
-     * Setter for the URL generator.
+     * Sets the URL generator.
      *
      * @param UrlGeneratorInterface $router
      */

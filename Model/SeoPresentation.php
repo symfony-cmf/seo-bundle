@@ -11,9 +11,8 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
  * This presentation model prepares the data for the SeoPage service of the
  * SonataSeoBundle, which is able to provide the values to its Twig helpers.
  *
- * Preparing means:
- * Create the title/description by using the configured
- * translation keys with the help of Symfony's translator and the contents
+ * Preparing means that it creates the title/description by using the configured
+ * translation keys with the help of the Symfony Translator and the contents
  * SeoMetadata value as parameter.
  *
  * The original_route_pattern will decide how to handle duplicate
@@ -46,7 +45,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $sonataPage;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $redirectResponse = false;
 
@@ -97,7 +96,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Method to add strategies by the compiler pass.
+     * Adds strategies.
      *
      * @param SeoExtractorInterface $extractor
      */
@@ -107,9 +106,10 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Get the SeoMetadata based on the content document.
+     * Gets the SeoMetadata based on the content document.
      *
-     * @param $contentDocument
+     * @param object $contentDocument
+     *
      * @return SeoMetadata
      */
     private function getSeoMetadata($contentDocument)
@@ -190,10 +190,11 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * This method will use sonatas default values (if set) to
-     * create a concatenated list of keywords.
+     * Creates a concatenated list of keywords based on sonatas default
+     * values.
      *
-     * @param $contentKeywords
+     * @param string $contentKeywords
+     *
      * @return string
      */
     private function createKeywords($contentKeywords)

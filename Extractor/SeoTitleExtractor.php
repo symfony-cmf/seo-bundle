@@ -13,7 +13,6 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  */
 class SeoTitleExtractor implements SeoExtractorInterface
 {
-
     /**
      * {@inheritDoc}
      */

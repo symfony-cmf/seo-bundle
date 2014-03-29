@@ -7,12 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * A form type for editing the SeoMetadata.
+ * A form type for editing the SEO metadata.
  *
- * Documents, that implements the SeoAwareInterface and a sonata admin class to
- * do the backend stuff, will get this form type automatically.
+ * When using SonataAdmin for the backend and having documents that implement the SeoAwareInterface. The
+ * Sonata Admin will get this form type automatically.
  *
- * You can explicitly use this type with "$form->add('seoMetadata', 'seo_metadata');"
+ * You can explicitly use this type using the "seo_metadata" type.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -36,11 +36,9 @@ class SeoMetadataType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata',
-            )
-        );
+        $resolver->setDefaults(array(
+            'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata',
+        ));
     }
 
     /**
