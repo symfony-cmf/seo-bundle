@@ -112,4 +112,12 @@ class CmfSeoExtension extends Extension
     {
         return 'http://cmf.symfony.com/schema/dic/seo';
     }
+
+    /**
+        * {@inheritDoc}
+     */
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__.'/../Resources/config/schema';
+    }
 }
