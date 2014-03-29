@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="cmf_seo.config_values.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoConfigValues</parameter>
+        <parameter key="cmf_seo.config_values.class">Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues</parameter>
 
         <parameter key="cmf_seo.form.type.seo_metadata.class">Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType</parameter>
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>

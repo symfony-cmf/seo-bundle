@@ -6,6 +6,7 @@ use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the

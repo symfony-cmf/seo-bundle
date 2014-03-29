@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException;
 

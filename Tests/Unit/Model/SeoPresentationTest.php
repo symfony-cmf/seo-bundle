@@ -3,7 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoConfigValues;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
