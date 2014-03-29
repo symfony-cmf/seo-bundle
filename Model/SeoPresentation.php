@@ -138,9 +138,9 @@ class SeoPresentation implements SeoPresentationInterface
         $translationDomain = $this->configValues->getTranslationDomain();
 
         if ($seoMetadata->getTitle()) {
-            $pageTitle = null !== $this->configValues->getTitleKey()
+            $pageTitle = null !== $this->configValues->getTitle()
                 ? $this->translator->trans(
-                    $this->configValues->getTitleKey(),
+                    $this->configValues->getTitle(),
                     array('%content_title%' => $seoMetadata->getTitle()),
                     $translationDomain
                 )
@@ -151,9 +151,9 @@ class SeoPresentation implements SeoPresentationInterface
         }
 
         if ($seoMetadata->getMetaDescription()) {
-            $pageDescription = null !== $this->configValues->getDescriptionKey()
+            $pageDescription = null !== $this->configValues->getDescription()
                 ? $this->translator->trans(
-                    $this->configValues->getDescriptionKey(),
+                    $this->configValues->getDescription(),
                     array('%content_description%' => $seoMetadata->getMetaDescription()),
                     $translationDomain
                 )

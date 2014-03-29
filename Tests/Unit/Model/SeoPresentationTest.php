@@ -51,8 +51,8 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->pageService = new SeoPage();
         $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
         $this->configValues = new SeoConfigValues();
-        $this->configValues->setDescriptionKey('default_description');
-        $this->configValues->setTitleKey('default_title');
+        $this->configValues->setDescription('default_description');
+        $this->configValues->setTitle('default_title');
         $this->configValues->setOriginalUrlBehaviour(SeoPresentation::ORIGINAL_URL_CANONICAL);
         $this->configValues->setTranslationDomain(null);
 
@@ -96,7 +96,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     public function testContentTitle()
     {
         $this->seoMetadata->setTitle('Content title');
-        $this->configValues->setTitleKey(null);
+        $this->configValues->setTitle(null);
         $this->seoPresentation->updateSeoPage($this->document);
 
         $actualTitle = $this->pageService->getTitle();
@@ -122,7 +122,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     public function testContentDescription()
     {
         $this->seoMetadata->setMetaDescription('Content description.');
-        $this->configValues->setDescriptionKey(null);
+        $this->configValues->setDescription(null);
         $this->seoPresentation->updateSeoPage($this->document);
 
         $metas = $this->pageService->getMetas();

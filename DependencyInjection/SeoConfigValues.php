@@ -26,7 +26,7 @@ class SeoConfigValues
      *
      * @var string
      */
-    private $titleKey;
+    private $title;
 
     /**
      * The description translation key. The extracted description will be
@@ -34,7 +34,7 @@ class SeoConfigValues
      *
      * @var string
      */
-    private $descriptionKey;
+    private $description;
 
     /**
      * The original URL behaviour decides on how to handle content with several URLs.
@@ -46,19 +46,19 @@ class SeoConfigValues
     private $originalUrlBehaviour;
 
     /**
-     * @param string $descriptionKey
+     * @param string $description
      */
-    public function setDescriptionKey($descriptionKey)
+    public function setDescription($description)
     {
-        $this->descriptionKey = $descriptionKey;
+        $this->description= $description;
     }
 
     /**
      * @return string
      */
-    public function getDescriptionKey()
+    public function getDescription()
     {
-        return $this->descriptionKey;
+        return $this->description;
     }
 
     /**
@@ -83,19 +83,19 @@ class SeoConfigValues
     }
 
     /**
-     * @param string $titleKey
+     * @param string $title
      */
-    public function setTitleKey($titleKey)
+    public function setTitle($title)
     {
-        $this->titleKey = $titleKey;
+        $this->title= $title;
     }
 
     /**
      * @return string
      */
-    public function getTitleKey()
+    public function getTitle()
     {
-        return $this->titleKey;
+        return $this->title;
     }
 
     /**
