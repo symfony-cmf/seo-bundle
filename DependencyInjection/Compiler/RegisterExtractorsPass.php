@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class ExtractorTagCompiler implements CompilerPassInterface
+class RegisterExtractorsPass implements CompilerPassInterface
 {
 
     /**

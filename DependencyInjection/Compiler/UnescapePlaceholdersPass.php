@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Wouter J <wouter@wouterj.nl>
  */
-class TransformToPlaceholderCompiler implements CompilerPassInterface
+class UnescapePlaceholdersPass implements CompilerPassInterface
 {
     /**
      * @var array

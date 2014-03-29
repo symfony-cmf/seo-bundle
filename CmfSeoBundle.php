@@ -3,8 +3,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\ExtractorTagCompiler;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\TransformToPlaceholderCompiler;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterExtractorsPass;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\UnescapePlaceholdersPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -24,8 +24,8 @@ class CmfSeoBundle extends Bundle
             );
         }
 
-        $container->addCompilerPass(new ExtractorTagCompiler());
-        $container->addCompilerPass(new TransformToPlaceholderCompiler(array(
+        $container->addCompilerPass(new RegisterExtractorsPass());
+        $container->addCompilerPass(new UnescapePlaceholdersPass(array(
             'cmf_seo.title',
             'cmf_seo.description',
         )), PassConfig::TYPE_OPTIMIZE);
