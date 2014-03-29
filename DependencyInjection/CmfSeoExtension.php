@@ -9,9 +9,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 
 /**
- * This is the class that loads and manages your bundle configuration.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}.
+ * Loads and manages the bundle configuration.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -46,13 +44,13 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * Fits the phpcr settings to its position.
+     * Loads the phpcr integration.
      *
-     * @param $config
+     * @param array            $config
      * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
      */
-    public function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
+    public function loadPhpcr(array $config, XmlFileLoader $loader, ContainerBuilder $container)
     {
         $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
 
@@ -74,13 +72,13 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * Adds/loads the admin mapping if for the right values of the use_sonata_admin setting.
+     * Loads the sonata admin extension.
      *
-     * @param $config
+     * @param array            $config
      * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
      */
-    public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container)
+    public function loadSonataAdmin(array $config, XmlFileLoader $loader, ContainerBuilder $container)
     {
         $bundles = $container->getParameter('kernel.bundles');
         if ('auto' === $config['use_sonata_admin'] && !isset($bundles['SonataDoctrinePHPCRAdminBundle'])) {
@@ -91,12 +89,12 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * Does the seo parameters into a separate array to inject them at all.
+     * Puts the seo parameters into the container
      *
-     * @param $config
+     * @param array            $config
      * @param ContainerBuilder $container
      */
-    public function loadSeoParameters($config, ContainerBuilder $container)
+    public function loadSeoParameters(array $config, ContainerBuilder $container)
     {
         $params = array('translation_domain', 'title', 'description', 'original_route_pattern');
 

@@ -6,8 +6,8 @@ use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappin
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\ExtractorTagCompiler;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\TransformToPlaceholderCompiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class CmfSeoBundle extends Bundle
 {
