@@ -2,7 +2,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exception\ModelNotSupportedException;
 use Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -36,10 +35,6 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
      */
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
-        if (!$document instanceof SeoOriginalRouteInterface) {
-            throw new ModelNotSupportedException($document);
-        }
-
         $route = $document->getSeoOriginalRoute();
 
         try {

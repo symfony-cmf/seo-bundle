@@ -2,7 +2,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exception\ModelNotSupportedException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
@@ -28,10 +27,6 @@ class SeoTitleExtractor implements SeoExtractorInterface
      */
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
-        if (!$document instanceof SeoTitleInterface) {
-            throw new ModelNotSupportedException($document);
-        }
-
         if (null === $seoMetadata->getTitle() || '' === $seoMetadata->getTitle()) {
             $seoMetadata->setTitle($document->getSeoTitle());
         }
