@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 
 /**
  * This is a simple value object for storing the configuration values in a
