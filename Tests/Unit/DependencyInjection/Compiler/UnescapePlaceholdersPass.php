@@ -3,14 +3,14 @@
 namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection\Compiler;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterExtractorsPass;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\UnescapePlaceholdersPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
 {
     protected function registerCompilerPass(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterExtractorsPass(array(
+        $container->addCompilerPass(new UnescapePlaceholdersPass(array(
             'escaped_parameter',
             'unescaped_parameter',
         )));

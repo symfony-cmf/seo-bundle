@@ -23,7 +23,7 @@ class RegisterExtractorsPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->getDefinition('cmf_seo.presentation')) {
+        if (!$container->hasDefinition('cmf_seo.presentation')) {
             return;
         }
 
