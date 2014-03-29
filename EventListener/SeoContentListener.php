@@ -27,9 +27,9 @@ class SeoContentListener
     private $requestKey;
 
     /**
-     * @param SeoPresentationInterface $seoPage Service Handling SEO information.
-     * @param string                   $requestKey      The key to look up the content
-     *                                                  in the request attributes.
+     * @param SeoPresentationInterface $seoPage    Service Handling SEO information.
+     * @param string                   $requestKey The key to look up the content
+     *                                             in the request attributes.
      */
     public function __construct(SeoPresentationInterface $seoPage, $requestKey)
     {

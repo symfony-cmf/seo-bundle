@@ -9,4 +9,3 @@ class ReadTitleExtractorDocument
         return 'title-test';
     }
 }
- 

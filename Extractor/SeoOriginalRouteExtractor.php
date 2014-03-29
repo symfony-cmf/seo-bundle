@@ -2,7 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\ModelNotSupported;
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\ModelNotSupportedException;
 use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -19,7 +19,7 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
     /**
      * @var UrlGeneratorInterface
      */
-    private $router;
+    private $urlGenerator;
 
     /**
      * {@inheritDoc}
@@ -37,25 +37,25 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
         if (!$document instanceof SeoOriginalRouteInterface) {
-            throw new ModelNotSupported($document);
+            throw new ModelNotSupportedException($document);
         }
 
         $route = $document->getSeoOriginalRoute();
 
         try {
-            $seoMetadata->setOriginalUrl($this->router->generate($route));
-        } catch(RouteNotFoundException $e) {
+            $seoMetadata->setOriginalUrl($this->urlGenerator->generate($route));
+        } catch (RouteNotFoundException $e) {
             throw new SeoExtractorStrategyException('Unable to create a url.', 0, $e);
         }
     }
 
     /**
-     * Setter for the symfony router.
+     * Setter for the URL generator.
      *
      * @param UrlGeneratorInterface $router
      */
     public function setRouter(UrlGeneratorInterface $router)
     {
-        $this->router = $router;
+        $this->urlGenerator = $router;
     }
 }

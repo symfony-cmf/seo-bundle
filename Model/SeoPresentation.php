@@ -54,9 +54,9 @@ class SeoPresentation implements SeoPresentationInterface
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
-     * @param SeoPage $sonataPage
+     * @param SeoPage             $sonataPage
      * @param TranslatorInterface $translator
-     * @param SeoConfigValues $configValues
+     * @param SeoConfigValues     $configValues
      */
     public function __construct(SeoPage $sonataPage, TranslatorInterface $translator, SeoConfigValues $configValues)
     {
@@ -74,7 +74,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * @return bool|RedirectResponse
+     * {@inheritDoc}
      */
     public function getRedirectResponse()
     {
@@ -101,8 +101,8 @@ class SeoPresentation implements SeoPresentationInterface
     {
 
         $seoMetadata = $contentDocument instanceof SeoAwareInterface
-                        ? clone $contentDocument->getSeoMetadata()
-                        : new SeoMetadata()
+            ? clone $contentDocument->getSeoMetadata()
+            : new SeoMetadata()
         ;
 
         foreach ($this->strategies as $strategy) {
@@ -115,12 +115,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * This method will update sonatas SeoPage service.
-     *
-     * Depending on the contents SeoMetadata it will set
-     * a title, a meta description, meta keywords and
-     * (depending on the pattern) the canonical link or
-     * creates a RedirectResponse.
+     * {@inheritDoc}
      */
     public function updateSeoPage($contentDocument)
     {
@@ -129,12 +124,12 @@ class SeoPresentation implements SeoPresentationInterface
 
         if ($seoMetadata->getTitle()) {
             $pageTitle = null !== $this->configValues->getTitleKey()
-                            ? $this->translator->trans(
-                                $this->configValues->getTitleKey(),
-                                array('%content_title%' => $seoMetadata->getTitle()),
-                                $translationDomain
-                            )
-                            : $seoMetadata->getTitle();
+                ? $this->translator->trans(
+                    $this->configValues->getTitleKey(),
+                    array('%content_title%' => $seoMetadata->getTitle()),
+                    $translationDomain
+                )
+                : $seoMetadata->getTitle();
 
             $this->sonataPage->setTitle($pageTitle);
             $this->sonataPage->addMeta('names', 'title', $pageTitle);
@@ -142,12 +137,12 @@ class SeoPresentation implements SeoPresentationInterface
 
         if ($seoMetadata->getMetaDescription()) {
             $pageDescription = null !== $this->configValues->getDescriptionKey()
-                                ? $this->translator->trans(
-                                    $this->configValues->getDescriptionKey(),
-                                    array('%content_description%' => $seoMetadata->getMetaDescription()),
-                                    $translationDomain
-                                )
-                                : $seoMetadata->getMetaDescription();
+                ? $this->translator->trans(
+                    $this->configValues->getDescriptionKey(),
+                    array('%content_description%' => $seoMetadata->getMetaDescription()),
+                    $translationDomain
+                )
+                : $seoMetadata->getMetaDescription();
 
             $this->sonataPage->addMeta(
                 'names',
@@ -191,8 +186,8 @@ class SeoPresentation implements SeoPresentationInterface
     {
         $metas = $this->sonataPage->getMetas();
         $sonataKeywords = isset($metas['names']['keywords'][0])
-                           ? $metas['names']['keywords'][0]
-                           : '';
+           ? $metas['names']['keywords'][0]
+           : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '') . $contentKeywords;
     }

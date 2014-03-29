@@ -17,8 +17,9 @@ class ExtractorTagCompiler implements CompilerPassInterface
 {
 
     /**
-     * @param ContainerBuilder $container
-     * @throws \Symfony\Component\DependencyInjection\Exception\LogicException
+     * {@inheritDoc}
+     *
+     * @throws LogicException If a tagged service is not public.
      */
     public function process(ContainerBuilder $container)
     {

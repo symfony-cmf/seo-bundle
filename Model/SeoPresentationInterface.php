@@ -5,8 +5,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * A seo presentation has to handle the main content and update the Sonata
- * SeoPage from it.
+ * A seo presentation takes a content object and updates the Sonata SeoPage
+ * from it.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */

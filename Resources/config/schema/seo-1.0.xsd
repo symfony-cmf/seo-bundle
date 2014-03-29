@@ -15,6 +15,7 @@
         <xsd:attribute name="title" type="xsd:string"/>
         <xsd:attribute name="description" type="xsd:string" />
         <xsd:attribute name="original-route-pattern" type="original_route_pattern"/>
+        <xsd:attribute name="content_key" type="xsd:string" />
     </xsd:complexType>
 
     <xsd:complexType name="persistence">

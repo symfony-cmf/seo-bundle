@@ -3,42 +3,39 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
- * This is a simple value object for storing the config values
- * in a meaningful way.
+ * This is a simple value object for storing the configuration values in a
+ * meaningful way.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
 class SeoConfigValues
 {
     /**
-     * If you are using a separate translation domain for your keys
-     * (title, description) you can set it here.
+     * Specific translation domain to use for title and description.
      *
      * @var string
      */
     private $translationDomain;
 
     /**
-     * Use that key for define your default page's title and
-     * add a pattern for injecting a content specific title
-     * by the parameter %title%.
+     * The title translation key. The extracted title will be passed to the
+     * translator as %content_title%.
      *
      * @var string
      */
     private $titleKey;
 
     /**
-     * Use that key for define your default page's description and
-     * add a pattern for injecting a content specific description
-     * by the parameter %description%.
+     * The description translation key. The extracted description will be
+     * passed to the translator as %content_description%.
      *
      * @var string
      */
     private $descriptionKey;
 
     /**
-     * The original route pattern describes the the way how to handle
-     * duplicate content for a route.
+     * The original route pattern describes the the way how to handle content
+     * with more than one route.
      *
      * This value can be either "canonical" or "redirect".
      *

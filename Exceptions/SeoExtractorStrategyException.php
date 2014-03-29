@@ -9,5 +9,4 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Exceptions;
  */
 class SeoExtractorStrategyException extends \RuntimeException
 {
-
 }

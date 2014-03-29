@@ -31,7 +31,7 @@ class CmfSeoExtension extends Extension
         $this->loadSeoParameters($config, $container);
 
         if (empty($config['content_key'])) {
-            if (! class_exists('Symfony\\Cmf\\Bundle\\RoutingBundle\\Routing\\DynamicRouter')) {
+            if (! class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter')) {
                 throw new \RuntimeException('You need to set the content_key when not using the CmfRoutingBundle DynamicRouter');
             }
             $contentKey = DynamicRouter::CONTENT_KEY;

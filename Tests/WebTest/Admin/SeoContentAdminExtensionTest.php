@@ -59,5 +59,3 @@ class SeoContentAdminExtensionTest extends BaseTestCase
         $this->assertCount(1, $crawler->filter('html:contains("Meta keywords")'));
     }
 }
-
-
