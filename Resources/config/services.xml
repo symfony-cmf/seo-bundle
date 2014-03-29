@@ -22,7 +22,7 @@
             <call method="setTitleKey"><argument>%cmf_seo.title%</argument></call>
             <call method="setDescriptionKey"><argument>%cmf_seo.description%</argument></call>
             <call method="setTranslationDomain"><argument>%cmf_seo.translation_domain%</argument></call>
-            <call method="setOriginalRoutePattern"><argument>%cmf_seo.original_route_pattern%</argument></call>
+            <call method="setOriginalUrlBehaviour"><argument>%cmf_seo.original_route_pattern%</argument></call>
         </service>
         <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">
             <tag name="form.type" alias="seo_metadata" />

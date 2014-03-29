@@ -5,6 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Configuration;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 
 /**
  * This test will try to cover all configs.
@@ -31,7 +32,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'translation_domain'    => null,
             'title'             => 'default_title',
             'description'       => 'default_description',
-            'original_route_pattern'    => 'canonical',
+            'original_route_pattern'    => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'persistence' => array(
                 'phpcr' => array(
                     'document_class'    => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent',

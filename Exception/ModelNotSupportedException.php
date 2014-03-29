@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Exceptions;
+namespace Symfony\Cmf\Bundle\SeoBundle\Exception;
 
 /**
  * This class wraps "document not supported" exceptions that occurs in the
