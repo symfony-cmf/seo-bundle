@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class RegisterExtractorsPass implements CompilerPassInterface
 {
-
     /**
      * {@inheritDoc}
      *
@@ -33,11 +32,11 @@ class RegisterExtractorsPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $attributes) {
             $definition = $container->getDefinition($id);
             if (!$definition->isPublic()) {
-                throw new LogicException(sprintf('strategy "%s" must be public', $id));
+                throw new LogicException(sprintf('Strategy "%s" must be public.', $id));
             }
 
             $strategyDefinition->addMethodCall('addExtractor', array(
-                new Reference($id)
+                new Reference($id),
             ));
         }
     }
