@@ -174,27 +174,6 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/seo-route', $this->seoMetadata->getOriginalUrl());
     }
 
-    public function invalidTypes()
-    {
-        return array(
-            array(new SeoOriginalRouteExtractor()),
-            array(new SeoTitleExtractor()),
-            array(new SeoDescriptionExtractor()),
-            array(new SeoOriginalUrlExtractor()),
-            array(new TitleReadExtractor()),
-        );
-    }
-
-    /**
-     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException
-     *
-     * @dataProvider invalidTypes
-     */
-    public function testExceptionWhenServingWrongDocument(SeoExtractorInterface $strategy)
-    {
-        $strategy->updateMetadata($this, $this->seoMetadata);
-    }
-
     public function testReadTitleExtractor()
     {
         $strategy = new TitleReadExtractor();
