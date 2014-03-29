@@ -18,6 +18,7 @@ use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContentWithExtractors;
 
 class LoadContentData implements FixtureInterface, DependentFixtureInterface
 {
@@ -58,7 +59,7 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $manager->persist($route);
         unset($content, $route);
 
-        $strategyContent = new SeoAwareContent();
+        $strategyContent = new SeoAwareContentWithExtractors();
         $strategyContent->setName('strategy-title');
         $strategyContent->setTitle('Strategy title');
         $strategyContent->setBody('content of strategy test.');
