@@ -2,7 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Exceptions\ModelNotSupportedException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
@@ -19,8 +19,9 @@ interface SeoExtractorInterface
      * an interface or being instance of a specific class,
      * or introspection to see if a certain method exists.
      *
-     * @param                    $document
-     * @return boolean           whether this strategy supports $document
+     * @param object $document
+     *
+     * @return boolean whether this strategy supports $document
      */
     public function supports($document);
 
@@ -32,8 +33,12 @@ interface SeoExtractorInterface
      *
      * This method is only called if supports returned true.
      *
-     * @param                      $document
+     * @param object               $document
      * @param SeoMetadataInterface $seoMetadata
+     *
+     * @throws ModelNotSupportedException If $document is not supported by this
+     *                                    extractor. Call supports() first to
+     *                                    avoid this exception.
      */
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata);
 }

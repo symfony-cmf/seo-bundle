@@ -47,6 +47,8 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
+     * Set the parent document.
+     *
      * @param object $parent The parent document.
      */
     public function setParentDocument($parent)
@@ -55,6 +57,8 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
+     * Get the parent document.
+     *
      * @return object
      */
     public function getParentDocument()
@@ -63,6 +67,8 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
+     * Set the document name.
+     *
      * @param string $name
      */
     public function setName($name)
@@ -71,6 +77,8 @@ class SeoAwareContent extends SeoAwareContentModel
     }
 
     /**
+     * Get the document name.
+     *
      * @return string
      */
     public function getName()

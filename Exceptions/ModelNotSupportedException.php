@@ -8,7 +8,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Exceptions;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class DocumentNotSupport extends SeoExtractorStrategyException
+class ModelNotSupportedException extends SeoExtractorStrategyException
 {
     public function __construct($document, $code = 0, \Exception $previous = null)
     {

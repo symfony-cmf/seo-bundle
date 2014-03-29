@@ -45,7 +45,7 @@ class SeoMetadata implements SeoMetadataInterface
     private $title;
 
     /**
-     * @param string $metaDescription
+     * {@inheritDoc}
      */
     public function setMetaDescription($metaDescription)
     {
@@ -53,7 +53,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getMetaDescription()
     {
@@ -61,7 +61,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @param string $metaKeywords
+     * {@inheritDoc}
      */
     public function setMetaKeywords($metaKeywords)
     {
@@ -69,7 +69,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getMetaKeywords()
     {
@@ -77,7 +77,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @param string $originalUrl
+     * {@inheritDoc}
      */
     public function setOriginalUrl($originalUrl)
     {
@@ -85,7 +85,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getOriginalUrl()
     {
@@ -93,7 +93,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @param string $title
+     * {@inheritDoc}
      */
     public function setTitle($title)
     {
@@ -101,7 +101,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getTitle()
     {
@@ -121,10 +121,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * The properties of this class are stored as a field with assoac="true". To do so, this method
-     * will serve all values as an array.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function toArray()
     {
@@ -134,6 +131,5 @@ class SeoMetadata implements SeoMetadataInterface
             'metaKeywords'          => $this->getMetaKeywords(),
             'originalUrl'           => $this->getOriginalUrl()
         );
-
     }
 }

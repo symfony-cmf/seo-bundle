@@ -2,6 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Routing\Route;
 use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionInterface;
@@ -38,7 +39,9 @@ class SeoAwareContent implements
     protected $seoMetadata;
 
     /**
-     * @var Route[]
+     * A collection of route documents.
+     *
+     * @var Collection
      */
     protected $routes;
 

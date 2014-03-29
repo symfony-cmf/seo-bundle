@@ -5,9 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 /**
  * The interface is responsible to mark a document as a seo aware content.
  *
- * A listener on the kernel.request event will parse documents which
- * imports this interface and calling a presentation model
- * to put the SeoMetadata into sonatas PageService.
+ * Seo aware content stores a whole SeoMetadataInterface instance.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -15,11 +13,10 @@ interface SeoAwareInterface
 {
 
     /**
-     * To let a content be seo aware means in the SeoBundle to serve the SeoMetadata.
-     * This SeoMetadata contains the information to fill some meta tags or has
-     * the information of the original url of the content.
+     * The SeoMetadata contains the information to fill some meta tags and/or
+     * provides the original url of the content.
      *
-     * @return SeoMetadata
+     * @return SeoMetadataInterface
      */
     public function getSeoMetadata();
 }

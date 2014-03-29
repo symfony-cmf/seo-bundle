@@ -4,14 +4,11 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteKeyExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\ReadTitleExtractorDocument;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\Router;
 
 /**
  * This test covers the behavior of all provided strategies.

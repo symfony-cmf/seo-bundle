@@ -146,8 +146,6 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $seoPresentation->addExtractor(new SeoDescriptionExtractor());
         $seoPresentation->updateSeoPage(new AllStrategiesDocument());
 
-
-
         $metas = $this->pageService->getMetas();
         $actualDescription = $metas['names']['description'][0];
         $actualTitle = $this->pageService->getTitle();
