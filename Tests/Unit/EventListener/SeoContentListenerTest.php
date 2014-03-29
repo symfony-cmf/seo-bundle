@@ -10,33 +10,51 @@ class SeoContentListenerTest extends \PHPUnit_Framework_Testcase
 {
     public function testRedirectRoute()
     {
-        $seoPresentation = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation')
-                                      ->disableOriginalConstructor()
-                                      ->getMock();
+        $seoPresentation = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface');
 
         $redirectResponse = new RedirectResponse('/test');
-        $seoPresentation->expects($this->once())
-                        ->method('getRedirectResponse')
-                        ->will($this->returnValue($redirectResponse));
+        $seoPresentation
+            ->expects($this->once())
+            ->method('updateSeoPage')
+            ->with($this) // the content can be anything. use the test instance to not create another mock.
+        ;
+        $seoPresentation
+            ->expects($this->once())
+            ->method('getRedirectResponse')
+            ->will($this->returnValue($redirectResponse))
+        ;
 
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
 
-        $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
-                      ->disableOriginalConstructor()
-                      ->getMock();
-        $event->expects($this->any())
-              ->method('getRequest')
-              ->will($this->returnValue($request));
-        $event->expects($this->once())
-              ->method('setResponse')
-              ->with($redirectResponse);
+        $event = $this
+            ->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+        $event
+            ->expects($this->any())
+            ->method('getRequest')
+            ->will($this->returnValue($request))
+        ;
+        $event
+            ->expects($this->once())
+            ->method('setResponse')
+            ->with($redirectResponse)
+        ;
 
-        $attributes = $this->getMockBuilder('\Symfony\Component\HttpFoundation\ParameterBag')
-                           ->disableOriginalConstructor()
-                           ->getMock();
-        $attributes->expects($this->once())->method('has')->will($this->returnValue(true));
+        $attributes = $this->getMock('Symfony\Component\HttpFoundation\ParameterBag');
+        $attributes
+            ->expects($this->once())
+            ->method('has')
+            ->with(DynamicRouter::CONTENT_KEY)
+            ->will($this->returnValue(true))
+        ;
+        $attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with(DynamicRouter::CONTENT_KEY)
+            ->will($this->returnValue($this))
+        ;
         $request->attributes = $attributes;
 
         $seoListener = new SeoContentListener($seoPresentation, DynamicRouter::CONTENT_KEY);

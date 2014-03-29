@@ -2,7 +2,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest;
 
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Client;
 
 /**
@@ -45,7 +47,7 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertEquals('Default | Title content 1', $titleCrawler->text());
 
         //test the meta tag entries
-        $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
+        $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
                 $namesValue = $node->attr('names');
 
                 return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
@@ -60,8 +62,8 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertEquals($expectedMeta, $actualMeta);
 
         //test the setting of canonical link
-        $linkCrawler = $crawler->filter('head > link')->reduce(function ($node) {
-            return 'canonical' === $node->attr('rel');
+        $linkCrawler = $crawler->filter('head > link')->reduce(function (Crawler $node) {
+            return SeoPresentation::ORIGINAL_URL_CANONICAL === $node->attr('rel');
         });
         $this->assertEquals('/to/original', $linkCrawler->eq(0)->attr('href'));
     }
@@ -79,10 +81,10 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertEquals('Default | Strategy title', $titleCrawler->text());
 
         //test the meta tag entries
-        $metaCrawler = $crawler->filter('head > meta')->reduce(function ($node) {
-                $namesValue = $node->attr('names');
+        $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
+            $namesValue = $node->attr('names');
 
-                return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
+            return 'title' === $namesValue || 'description' === $namesValue ||'keywords' === $namesValue;
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');
@@ -94,8 +96,8 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertEquals($expectedMeta, $actualMeta);
 
         //test the setting of canonical link
-        $linkCrawler = $crawler->filter('head > link')->reduce(function ($node) {
-                return 'canonical' === $node->attr('rel');
+        $linkCrawler = $crawler->filter('head > link')->reduce(function (Crawler $node) {
+            return SeoPresentation::ORIGINAL_URL_CANONICAL === $node->attr('rel');
         });
         $this->assertEquals('/home', $linkCrawler->eq(0)->attr('href'));
     }

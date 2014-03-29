@@ -2,6 +2,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\Phpcr;
 
+use Doctrine\ODM\PHPCR\Document\Generic;
+use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
@@ -11,6 +13,16 @@ use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
  */
 class SeoMetadataPersistenceTest extends BaseTestCase
 {
+    /**
+     * @var DocumentManager;
+     */
+    private $dm;
+
+    /**
+     * @var Generic
+     */
+    private $base;
+
     public function setUp()
     {
         $this->db('PHPCR')->createTestNode();
@@ -32,8 +44,7 @@ class SeoMetadataPersistenceTest extends BaseTestCase
         $metaRefl = new \ReflectionClass($metaDataClass);
 
         foreach ($metaData as $key => $value) {
-            $refl = new \ReflectionClass($metaDataClass);
-            $prop = $refl->getProperty($key);
+            $prop = $metaRefl->getProperty($key);
             $prop->setAccessible(true);
             $prop->setValue($metaDataClass, $value);
         }

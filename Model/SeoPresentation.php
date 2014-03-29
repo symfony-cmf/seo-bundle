@@ -4,8 +4,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -25,6 +25,21 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class SeoPresentation implements SeoPresentationInterface
 {
+    /**
+     * Original URL should be output as canonical URL.
+     */
+    const ORIGINAL_URL_CANONICAL = 'canonical';
+
+    /**
+     * Redirect to original URL if not currently on original URL.
+     */
+    const ORIGINAL_URL_REDIRECT = 'redirect';
+
+    public static $originalUrlBehaviours = array(
+        SeoPresentation::ORIGINAL_URL_CANONICAL,
+        SeoPresentation::ORIGINAL_URL_REDIRECT,
+    );
+
     /**
      * @var SeoPage
      */
@@ -99,7 +114,6 @@ class SeoPresentation implements SeoPresentationInterface
      */
     private function getSeoMetadata($contentDocument)
     {
-
         $seoMetadata = $contentDocument instanceof SeoAwareInterface
             ? clone $contentDocument->getSeoMetadata()
             : new SeoMetadata()
@@ -161,11 +175,11 @@ class SeoPresentation implements SeoPresentationInterface
 
         $url = $seoMetadata->getOriginalUrl();
         if ($url) {
-            switch ($this->configValues->getOriginalRoutePattern()) {
-                case 'canonical':
+            switch ($this->configValues->getOriginalUrlBehaviour()) {
+                case self::ORIGINAL_URL_CANONICAL:
                     $this->sonataPage->setLinkCanonical($url);
                     break;
-                case 'redirect':
+                case self::ORIGINAL_URL_REDIRECT:
                     $this->setRedirectResponse(
                         new RedirectResponse($url)
                     );

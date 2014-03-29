@@ -10,6 +10,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -33,20 +34,26 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
      * @var SeoMetadata
      */
     private $seoMetadata;
+
+    /**
+     * @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
     private $translator;
+
     private $document;
+    /**
+     * @var SeoConfigValues
+     */
     private $configValues;
 
     public function setUp()
     {
         $this->pageService = new SeoPage();
-        $this->translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')
-                                 ->disableOriginalConstructor()
-                                 ->getMock();
+        $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
         $this->configValues = new SeoConfigValues();
         $this->configValues->setDescriptionKey('default_description');
         $this->configValues->setTitleKey('default_title');
-        $this->configValues->setOriginalRoutePattern('canonical');
+        $this->configValues->setOriginalUrlBehaviour(SeoPresentation::ORIGINAL_URL_CANONICAL);
         $this->configValues->setTranslationDomain(null);
 
         $this->seoPresentation = new SeoPresentation(
@@ -58,13 +65,12 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->seoMetadata = new SeoMetadata();
 
         // create the mock for the document
-        $this->document = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent')
-                               ->disableOriginalConstructor()
-                               ->getMock();
-        $this->document->expects($this->any())
-                       ->method('getSeoMetadata')
-                       ->will($this->returnValue($this->seoMetadata))
-            ;
+        $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent');
+        $this->document
+            ->expects($this->any())
+           ->method('getSeoMetadata')
+           ->will($this->returnValue($this->seoMetadata))
+        ;
     }
 
     public function tearDown()
@@ -75,10 +81,12 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     public function testDefaultTitle()
     {
         $this->seoMetadata->setTitle('Title test');
-        $this->translator->expects($this->once())
-                         ->method('trans')
-                         ->will($this->returnValue('Title test | Default Title'))
-            ;
+        $this->translator
+            ->expects($this->once())
+            ->method('trans')
+            ->with('default_title')
+            ->will($this->returnValue('Title test | Default Title'))
+        ;
         $this->seoPresentation->updateSeoPage($this->document);
 
         $actualTitle = $this->pageService->getTitle();
@@ -98,9 +106,11 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     public function testDefaultDescription()
     {
         $this->seoMetadata->setMetaDescription('Test description.');
-        $this->translator->expects($this->once())
-                         ->method('trans')
-                         ->will($this->returnValue('Default Description. Test description.'))
+        $this->translator
+            ->expects($this->once())
+            ->method('trans')
+            ->with('default_description')
+            ->will($this->returnValue('Default Description. Test description.'))
         ;
         $this->seoPresentation->updateSeoPage($this->document);
 
@@ -135,9 +145,10 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 
     public function testStrategies()
     {
-        $this->translator->expects($this->any())
-                         ->method('trans')
-                         ->will($this->returnValue('translation strategy test'))
+        $this->translator
+            ->expects($this->any())
+            ->method('trans')
+            ->will($this->returnValue('translation strategy test'))
         ;
 
         $seoPresentation = new SeoPresentation($this->pageService, $this->translator, $this->configValues);
@@ -148,11 +159,23 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 
         $metas = $this->pageService->getMetas();
         $actualDescription = $metas['names']['description'][0];
-        $actualTitle = $this->pageService->getTitle();
-        $actualLink = $this->pageService->getLinkCanonical();
-
-        $this->assertEquals('translation strategy test', $actualTitle);
         $this->assertEquals('translation strategy test', $actualDescription);
-        $this->assertEquals('/test-route', $actualLink);
+
+        $this->assertEquals('translation strategy test', $this->pageService->getTitle());
+        $this->assertEquals('/test-route', $this->pageService->getLinkCanonical());
+
+        $this->assertFalse($seoPresentation->getRedirectResponse());
+    }
+
+    public function testRedirect()
+    {
+        $this->configValues->setOriginalUrlBehaviour(SeoPresentation::ORIGINAL_URL_REDIRECT);
+        $seoPresentation = new SeoPresentation($this->pageService, $this->translator, $this->configValues);
+        $this->seoMetadata->setOriginalUrl('/redirect/target');
+
+        $seoPresentation->updateSeoPage($this->document);
+        $redirect = $seoPresentation->getRedirectResponse();
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $redirect);
+        $this->assertEquals('/redirect/target', $redirect->getTargetUrl());
     }
 }

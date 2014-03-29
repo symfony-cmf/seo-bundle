@@ -2,6 +2,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException;
+
 /**
  * This is a simple value object for storing the configuration values in a
  * meaningful way.
@@ -34,14 +36,13 @@ class SeoConfigValues
     private $descriptionKey;
 
     /**
-     * The original route pattern describes the the way how to handle content
-     * with more than one route.
+     * The original URL behaviour decides on how to handle content with several URLs.
      *
-     * This value can be either "canonical" or "redirect".
+     * This value needs to be one of the ORIGINAL_URL_* constants in SeoPresentation.
      *
      * @var string
      */
-    private $originalRoutePattern;
+    private $originalUrlBehaviour;
 
     /**
      * @param string $descriptionKey
@@ -60,19 +61,24 @@ class SeoConfigValues
     }
 
     /**
-     * @param string $originalRouteStrategy
+     * @param string $behaviour One of the constants from SeoPresentation.
      */
-    public function setOriginalRoutePattern($originalRouteStrategy)
+    public function setOriginalUrlBehaviour($behaviour)
     {
-        $this->originalRoutePattern = $originalRouteStrategy;
+        if (! in_array($behaviour, SeoPresentation::$originalUrlBehaviours)) {
+            throw new SeoExtractorStrategyException(
+                sprintf('Behaviour "%s" not supported by SeoPresentation.', $behaviour)
+            );
+        }
+        $this->originalUrlBehaviour = $behaviour;
     }
 
     /**
      * @return string
      */
-    public function getOriginalRoutePattern()
+    public function getOriginalUrlBehaviour()
     {
-        return $this->originalRoutePattern;
+        return $this->originalUrlBehaviour;
     }
 
     /**

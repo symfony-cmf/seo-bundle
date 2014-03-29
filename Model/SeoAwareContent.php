@@ -2,6 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Routing\Route;
 use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
@@ -44,6 +45,11 @@ class SeoAwareContent implements
      * @var Collection
      */
     protected $routes;
+
+    public function __construct()
+    {
+        $this->routes = new ArrayCollection();
+    }
 
     /**
      * @return mixed

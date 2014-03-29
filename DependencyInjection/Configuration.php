@@ -2,6 +2,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -49,7 +50,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('translation_domain')->defaultValue(null)->end()
                 ->scalarNode('title')->end()
                 ->scalarNode('description')->end()
-                ->scalarNode('original_route_pattern')->defaultValue('canonical')->end()
+                ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
                 ->scalarNode('content_key')->end()
             ->end()
         ;

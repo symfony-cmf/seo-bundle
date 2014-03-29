@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Exceptions;
+namespace Symfony\Cmf\Bundle\SeoBundle\Exception;
 
 /**
  * Exception for wrong handling with seo extractor strategies.

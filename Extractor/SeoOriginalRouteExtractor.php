@@ -2,8 +2,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\ModelNotSupportedException;
-use Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\ModelNotSupportedException;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

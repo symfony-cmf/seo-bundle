@@ -3,12 +3,14 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\ReadTitleExtractorDocument;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * This test covers the behavior of all provided strategies.
@@ -17,32 +19,41 @@ use Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\ReadTitleEx
  */
 class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $titleDocument;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $descriptionDocument;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $routeDocument;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $urlDocument;
 
-    /** @var  SeoMetadata */
+    /**
+     * @var SeoMetadata
+     */
     private $seoMetadata;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     private $urlGenerator;
 
     public function setUp()
     {
         $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
 
-        $this->titleDocument = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\TitleExtractorDocument'
-        );
-        $this->descriptionDocument = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\DescriptionExtractorDocument'
-        );
-        $this->urlDocument = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\UrlExtractorDocument'
-        );
-        $this->routeDocument = $this->getMock(
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor\Fixtures\RouteExtractorDocument'
-        );
+        $this->titleDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleInterface');
+        $this->descriptionDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionInterface');
+        $this->urlDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlInterface');
+        $this->routeDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteInterface');
 
         $this->seoMetadata = new SeoMetadata();
     }
@@ -60,9 +71,11 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($strategy->supports($this->routeDocument));
         $this->assertTrue($strategy->supports($this->titleDocument));
 
-        $this->titleDocument->expects($this->once())
-                            ->method('getSeoTitle')
-                            ->will($this->returnValue('seo-title'));
+        $this->titleDocument
+            ->expects($this->once())
+            ->method('getSeoTitle')
+            ->will($this->returnValue('seo-title'))
+        ;
 
         $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
 
@@ -80,7 +93,8 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
 
         $this->descriptionDocument->expects($this->once())
             ->method('getSeoDescription')
-            ->will($this->returnValue('seo-description'));
+            ->will($this->returnValue('seo-description'))
+        ;
 
         $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
 
@@ -97,17 +111,20 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($strategy->supports($this->urlDocument));
 
         $route = $this->getMockBuilder('Symfony\Component\Routing\Route')
-                      ->disableOriginalConstructor()
-                      ->getMock();
-
-        $this->routeDocument->expects($this->once())
-                            ->method('getSeoOriginalRoute')
-                            ->will($this->returnValue($route));
-
-        $this->urlGenerator->expects($this->once())
-                     ->method('generate')
-                     ->with($route)
-                     ->will($this->returnValue('/seo-route'));
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+        $this->routeDocument
+            ->expects($this->once())
+            ->method('getSeoOriginalRoute')
+            ->will($this->returnValue($route))
+        ;
+        $this->urlGenerator
+            ->expects($this->once())
+            ->method('generate')
+            ->with($route)
+            ->will($this->returnValue('/seo-route'))
+        ;
         $strategy->setRouter($this->urlGenerator);
 
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
@@ -116,19 +133,24 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
+     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException
      */
     public function testRouteExtractorExceptions()
     {
-        //should throw cause not supported
-        $strategy = new SeoOriginalRouteExtractor();
-        $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
-
         //throws cause a route object expected
         $strategy = new SeoOriginalRouteExtractor();
-        $this->routeDocument->expects($this->once())
-                            ->method('getSeoOriginalRoute')
-                            ->will($this->returnValue('no route'));
+        $this->routeDocument
+            ->expects($this->once())
+            ->method('getSeoOriginalRoute')
+            ->will($this->returnValue('no route'))
+        ;
+        $this->urlGenerator
+            ->expects($this->once())
+            ->method('generate')
+            ->with('no route')
+            ->will($this->throwException(new RouteNotFoundException()))
+        ;
+        $strategy->setRouter($this->urlGenerator);
         $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
     }
 
@@ -141,39 +163,36 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($strategy->supports($this->titleDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
 
-        $this->urlDocument->expects($this->once())
-                          ->method('getSeoOriginalUrl')
-                          ->will($this->returnValue('/seo-route'));
+        $this->urlDocument
+            ->expects($this->once())
+            ->method('getSeoOriginalUrl')
+            ->will($this->returnValue('/seo-route'))
+        ;
 
         $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
 
         $this->assertEquals('/seo-route', $this->seoMetadata->getOriginalUrl());
     }
 
-    /**
-    * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exceptions\SeoExtractorStrategyException
-    */
-    public function testExceptionWhenServingWrongDocument()
+    public function invalidTypes()
     {
-        $strategy = new SeoOriginalRouteExtractor();
-        $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
+        return array(
+            array(new SeoOriginalRouteExtractor()),
+            array(new SeoTitleExtractor()),
+            array(new SeoDescriptionExtractor()),
+            array(new SeoOriginalUrlExtractor()),
+            array(new TitleReadExtractor()),
+        );
+    }
 
-        $strategy = new SeoTitleExtractor();
-        $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
-
-        $strategy = new SeoDescriptionExtractor();
-        $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->urlDocument, $this->seoMetadata);
-
-        $strategy = new SeoOriginalUrlExtractor();
-        $strategy->updateMetadata($this->descriptionDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->routeDocument, $this->seoMetadata);
-        $strategy->updateMetadata($this->titleDocument, $this->seoMetadata);
+    /**
+     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException
+     *
+     * @dataProvider invalidTypes
+     */
+    public function testExceptionWhenServingWrongDocument(SeoExtractorInterface $strategy)
+    {
+        $strategy->updateMetadata($this, $this->seoMetadata);
     }
 
     public function testReadTitleExtractor()
@@ -181,9 +200,9 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy = new TitleReadExtractor();
 
         $document = new ReadTitleExtractorDocument();
+        $this->assertFalse($strategy->supports($this->titleDocument));
         $this->assertFalse($strategy->supports($this->descriptionDocument));
         $this->assertFalse($strategy->supports($this->urlDocument));
-        $this->assertFalse($strategy->supports($this->titleDocument));
         $this->assertFalse($strategy->supports($this->routeDocument));
         $this->assertTrue($strategy->supports($document));
 
