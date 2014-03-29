@@ -25,7 +25,6 @@
         "symfony-cmf/routing-bundle": "1.2.*@dev",
         "matthiasnoback/symfony-dependency-injection-test": "0.*",
         "matthiasnoback/symfony-config-test": "0.*"
-
     },
     "suggest": {
         "symfony-cmf/menu-bundle": "Have editable menus for content",

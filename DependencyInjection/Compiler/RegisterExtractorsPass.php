@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class ExtractorTagCompiler implements CompilerPassInterface
+class RegisterExtractorsPass implements CompilerPassInterface
 {
 
     /**
@@ -23,7 +23,7 @@ class ExtractorTagCompiler implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->getDefinition('cmf_seo.presentation')) {
+        if (!$container->hasDefinition('cmf_seo.presentation')) {
             return;
         }
 
