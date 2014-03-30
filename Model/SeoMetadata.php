@@ -41,6 +41,21 @@ class SeoMetadata implements SeoMetadataInterface
      */
     private $title;
 
+    public static function createFromArray(array $data)
+    {
+        $keys = array('title', 'metaDescription', 'metaKeywords', 'originalUrl');
+        $metadata = new self();
+        foreach ($data as $key => $value) {
+            if (!in_array($key, $keys)) {
+                continue;
+            }
+
+            $metadata->{'set'.ucfirst($key)}($value);
+        }
+
+        return $metadata;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -103,18 +118,6 @@ class SeoMetadata implements SeoMetadataInterface
     public function getTitle()
     {
         return $this->title;
-    }
-
-
-    /**
-     * Just to get a string representation of the object.
-     * @todo have a look if i still need it that way
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return serialize($this);
     }
 
     /**

@@ -76,4 +76,6 @@ interface SeoMetadataInterface
      * @return array
      */
     public function toArray();
+
+    public static function createFromArray(array $data);
 }
