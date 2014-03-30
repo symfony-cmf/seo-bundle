@@ -47,7 +47,7 @@ class SeoContentListener
 
             // look if the strategy is redirectResponse and if there is a route to redirectResponse to
             $response = $this->seoPresentation->getRedirectResponse();
-            if ($this->canBeRedirected($event->getRequest(), $response)) {
+            if (false !== $response && $this->canBeRedirected($event->getRequest(), $response)) {
                 $event->setResponse($response);
             }
         }
