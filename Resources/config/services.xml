@@ -9,7 +9,7 @@
 
         <parameter key="cmf_seo.form.type.seo_metadata.class">Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType</parameter>
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>
-        <parameter key="cmf_seo.event_lister.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
+        <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
         <parameter key="cmf_seo.persistence.phpcr.listener">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadataListener</parameter>
 
     </parameters>
@@ -32,7 +32,7 @@
             <argument type="service" id="cmf_seo.config_values" />
         </service>
 
-        <service id="cmf_seo.event_lister.seo_content" class="%cmf_seo.event_lister.seo_content.class%">
+        <service id="cmf_seo.event_listener.seo_content" class="%cmf_seo.event_listener.seo_content.class%">
             <argument type="service" id="cmf_seo.presentation"/>
             <argument>%cmf_seo.content_key%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
