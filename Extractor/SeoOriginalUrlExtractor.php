@@ -30,7 +30,7 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
      */
     public function supports($document)
     {
-        return $document instanceof SeoOriginalUrlInterface;
+        return $document instanceof SeoOriginalUrlReadInterface;
     }
 
     /**

@@ -16,7 +16,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
  * This strategy extracts the title from documents implementing the
- * SeoTitleInterface.
+ * SeoTitleReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -27,13 +27,13 @@ class SeoTitleExtractor implements SeoExtractorInterface
      */
     public function supports($document)
     {
-        return $document instanceof SeoTitleInterface;
+        return $document instanceof SeoTitleReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoTitleInterface $document
+     * @param SeoTitleReadInterface $document
      */
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {

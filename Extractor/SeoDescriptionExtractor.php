@@ -16,7 +16,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
  * This strategy extracts the description from documents implementing the
- * SeoDescriptionInterface.
+ * SeoDescriptionReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -27,13 +27,13 @@ class SeoDescriptionExtractor implements SeoExtractorInterface
      */
     public function supports($document)
     {
-        return $document instanceof SeoDescriptionInterface;
+        return $document instanceof SeoDescriptionReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoDescriptionInterface $document
+     * @param SeoDescriptionReadInterface $document
      */
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {

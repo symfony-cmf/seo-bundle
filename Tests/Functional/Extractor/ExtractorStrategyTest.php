@@ -60,10 +60,10 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
 
-        $this->titleDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleInterface');
-        $this->descriptionDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionInterface');
-        $this->urlDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlInterface');
-        $this->routeDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteInterface');
+        $this->titleDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleReadInterface');
+        $this->descriptionDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface');
+        $this->urlDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlReadInterface');
+        $this->routeDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteReadInterface');
 
         $this->seoMetadata = new SeoMetadata();
     }

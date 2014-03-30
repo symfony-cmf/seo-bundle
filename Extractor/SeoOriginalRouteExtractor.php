@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * This strategy extracts the original route from documents
- * implementing the SeoOriginalRouteInterface.
+ * implementing the SeoOriginalRouteReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -35,13 +35,13 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
      */
     public function supports($document)
     {
-        return $document instanceof SeoOriginalRouteInterface;
+        return $document instanceof SeoOriginalRouteReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoOriginalRouteInterface $document
+     * @param SeoOriginalRouteReadInterface $document
      */
     public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
     {
