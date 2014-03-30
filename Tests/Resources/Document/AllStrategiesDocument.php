@@ -64,4 +64,8 @@ class AllStrategiesDocument implements
     {
         return $this->seoMetadata;
     }
+
+    public function setSeoMetadata($metadata)
+    {
+    }
 }

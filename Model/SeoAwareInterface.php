@@ -16,4 +16,15 @@ interface SeoAwareInterface
      * @return SeoMetadataInterface
      */
     public function getSeoMetadata();
+
+    /**
+     * Sets the SEO metadata for this document.
+     *
+     * This method is used by a listener, which converts the metadata to a 
+     * plain array in order to persist it and converts it back when the object
+     * is fetched.
+     *
+     * @param array|SeoMetadataInterface $metadata
+     */
+    public function setSeoMetadata($metadata);
 }

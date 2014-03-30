@@ -29,43 +29,10 @@ class SeoAwareContent extends ContentBase implements SeoAwareInterface
     }
 
     /**
-     * @param SeoMetadataInterface $seoMetadata
+     * {@inheritDoc}
      */
-    public function setSeoMetadata(SeoMetadataInterface $seoMetadata)
+    public function setSeoMetadata($seoMetadata)
     {
-        $this->seoMetadata= $seoMetadata;
+        $this->seoMetadata = $seoMetadata;
     }
-
-    /**
-     * @PHPCRODM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->seoMetadata = $this->seoMetadata instanceof SeoMetadataInterface
-            ? $this->seoMetadata->toArray()
-            : array();
-    }
-
-    /**
-     * @PHPCRODM\PrePersist
-     */
-    public function prePersist()
-    {
-        $this->preUpdate();
-    }
-
-    /**
-     * @PHPCRODM\PostLoad
-     */
-    public function postLoad()
-    {
-        $persistedData = $this->seoMetadata;
-        $this->seoMetadata = new SeoMetadata();
-        foreach ($persistedData as $property => $value) {
-            if (method_exists($this->seoMetadata, 'set' . ucfirst($property))) {
-                $this->seoMetadata->{'set' . ucfirst($property)}($value);
-            }
-        }
-    }
-    
 }
