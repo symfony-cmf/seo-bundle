@@ -8,56 +8,92 @@ use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 
 class SeoContentListenerTest extends \PHPUnit_Framework_Testcase
 {
-    public function testRedirectRoute()
-    {
-        $seoPresentation = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface');
+    protected $seoPresentation;
+    protected $request;
+    protected $event;
+    protected $listener;
 
-        $redirectResponse = new RedirectResponse('/test');
-        $seoPresentation
+    public function setUp()
+    {
+        $this->seoPresentation = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface');
+        $this->request = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $this->event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->listener = new SeoContentListener($this->seoPresentation, DynamicRouter::CONTENT_KEY);
+    }
+
+    /**
+     * @dataProvider getRedirectRouteData
+     */
+    public function testRedirectRoute($targetUrl, $redirect = true, $currentPath = '/test')
+    {
+        $redirectResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\RedirectResponse')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $redirectResponse->expects($this->any())
+            ->method('getTargetUrl')
+            ->will($this->returnValue($targetUrl));
+
+        $content = new \stdClass();
+        $this->seoPresentation
             ->expects($this->once())
             ->method('updateSeoPage')
-            ->with($this) // the content can be anything. use the test instance to not create another mock.
+            ->with($content)
         ;
-        $seoPresentation
-            ->expects($this->once())
+        $this->seoPresentation
+            ->expects($this->any())
             ->method('getRedirectResponse')
             ->will($this->returnValue($redirectResponse))
         ;
 
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-
-        $event = $this
-            ->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $event
+        $this->event
             ->expects($this->any())
             ->method('getRequest')
-            ->will($this->returnValue($request))
+            ->will($this->returnValue($this->request))
         ;
-        $event
-            ->expects($this->once())
+        $this->event
+            ->expects($redirect ? $this->once() : $this->never())
             ->method('setResponse')
             ->with($redirectResponse)
         ;
 
         $attributes = $this->getMock('Symfony\Component\HttpFoundation\ParameterBag');
         $attributes
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('has')
             ->with(DynamicRouter::CONTENT_KEY)
             ->will($this->returnValue(true))
         ;
         $attributes
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('get')
             ->with(DynamicRouter::CONTENT_KEY)
-            ->will($this->returnValue($this))
+            ->will($this->returnValue($content))
         ;
-        $request->attributes = $attributes;
+        $this->request->attributes = $attributes;
+        $this->request
+            ->expects($this->any())
+            ->method('getBaseUrl')
+            ->will($this->returnValue(''))
+        ;
+        $this->request
+            ->expects($this->any())
+            ->method('getPathInfo')
+            ->will($this->returnValue($currentPath))
+        ;
 
-        $seoListener = new SeoContentListener($seoPresentation, DynamicRouter::CONTENT_KEY);
-        $seoListener->onKernelRequest($event);
+        $this->listener->onKernelRequest($this->event);
+    }
+
+    public function getRedirectRouteData()
+    {
+        return array(
+            array('/test_redirect'),
+            array('/test', false),
+            array('/test?a', false),
+            array('/test', false, '/test#b'),
+            array('/test?a', false, '/test#b'),
+        );
     }
 }
