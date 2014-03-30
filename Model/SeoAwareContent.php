@@ -13,9 +13,6 @@ use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
 
 class SeoAwareContent implements
     SeoAwareInterface,
-    SeoTitleInterface,
-    SeoDescriptionInterface,
-    SeoOriginalUrlInterface,
     TranslatableInterface,
     RouteReferrersInterface
 {
@@ -181,46 +178,5 @@ class SeoAwareContent implements
                 $this->seoMetadata->{'set' . ucfirst($property)}($value);
             }
         }
-    }
-
-    /**
-     * Provide a title of this page to be used in SEO context.
-     *
-     * @return string
-     */
-    public function getSeoTitle()
-    {
-        $seoTitle = $this->getSeoMetadata()->getTitle();
-
-        return null === $seoTitle || '' === $seoTitle
-            ? $this->getTitle()
-            : $seoTitle;
-    }
-
-    /**
-     * Provide a description of this page to be used in SEO context.
-     *
-     * @return string
-     */
-    public function getSeoDescription()
-    {
-        $seoDescription = $this->getSeoMetadata()->getMetaDescription();
-
-        return null === $seoDescription || '' == $seoDescription
-            ? substr($this->getBody(), 0, 200).' ...'
-            : $seoDescription;
-    }
-
-    /**
-     * The method returns the absolute url as a string to redirect to
-     * or set to the canonical link.
-     *
-     * @return string
-     */
-    public function getSeoOriginalUrl()
-    {
-        $seoOriginalUrl = $this->getSeoMetadata()->getOriginalUrl();
-
-        return null === $seoOriginalUrl || '' === $seoOriginalUrl ? '/home' : $seoOriginalUrl;
     }
 }
