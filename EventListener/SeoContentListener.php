@@ -4,6 +4,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This listener takes care of documents which implements the SeoAwareInterface.
@@ -44,9 +46,22 @@ class SeoContentListener
             $this->seoPresentation->updateSeoPage($event->getRequest()->attributes->get($this->requestKey));
 
             // look if the strategy is redirectResponse and if there is a route to redirectResponse to
-            if ($response = $this->seoPresentation->getRedirectResponse()) {
+            $response = $this->seoPresentation->getRedirectResponse();
+            if ($this->canBeRedirected($event->getRequest(), $response)) {
                 $event->setResponse($response);
             }
         }
+    }
+
+    protected function canBeRedirected(Request $request, RedirectResponse $response)
+    {
+        $targetRequest = Request::create($response->getTargetUrl());
+        $stripUrl = function ($path) {
+            return preg_replace('/#.+$/', '', $path);
+        };
+        $targetPath = $stripUrl($targetRequest->getBaseUrl().$targetRequest->getPathInfo());
+        $currentPath = $stripUrl($request->getBaseUrl().$request->getPathInfo());
+
+        return $targetPath !== $currentPath;
     }
 }

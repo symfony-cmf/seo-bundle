@@ -52,11 +52,18 @@ class SeoContentListenerTest extends \PHPUnit_Framework_Testcase
             ->method('getRequest')
             ->will($this->returnValue($this->request))
         ;
-        $this->event
-            ->expects($redirect ? $this->once() : $this->never())
-            ->method('setResponse')
-            ->with($redirectResponse)
-        ;
+        if ($redirect) {
+            $this->event
+                ->expects($this->once())
+                ->method('setResponse')
+                ->with($redirectResponse)
+            ;
+        } else {
+            $this->event
+                ->expects($this->never())
+                ->method('setResponse')
+            ;
+        }
 
         $attributes = $this->getMock('Symfony\Component\HttpFoundation\ParameterBag');
         $attributes
@@ -90,6 +97,7 @@ class SeoContentListenerTest extends \PHPUnit_Framework_Testcase
     {
         return array(
             array('/test_redirect'),
+            array('/a/test'),
             array('/test', false),
             array('/test?a', false),
             array('/test', false, '/test#b'),
