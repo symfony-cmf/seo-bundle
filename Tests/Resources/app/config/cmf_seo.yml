@@ -40,7 +40,7 @@ services:
             - { name: sonata.admin, manager_type: doctrine_phpcr, label_catalogue: CmfSeoBundle, group: dashboard.cmf, label: dashboard.label_seo_content, label_translator_strategy: sonata.admin.label.strategy.underscore}
          arguments:
             - ~
-            - Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent
+            - Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent
             - SonataAdminBundle:CRUD
          calls:
             - [ setTranslationDomain, [CmfSeoBundle]]

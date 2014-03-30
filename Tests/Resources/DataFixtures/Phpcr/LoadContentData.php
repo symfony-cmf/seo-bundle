@@ -16,9 +16,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContentWithExtractors;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors;
 
 class LoadContentData implements FixtureInterface, DependentFixtureInterface
 {
@@ -44,40 +44,38 @@ class LoadContentData implements FixtureInterface, DependentFixtureInterface
         $content->setTitle('Content 1');
         $content->setBody('Content 1');
         $content->setParentDocument($contentRoot);
+
         $metadata = new SeoMetadata();
         $metadata->setTitle('Title content 1');
         $metadata->setMetaDescription('Description of content 1.');
         $metadata->setMetaKeywords('content1, content');
         $metadata->setOriginalUrl('/to/original');
+
         $content->setSeoMetadata($metadata);
+
         $manager->persist($content);
 
         $route = new Route();
         $route->setPosition($routeRoot, 'content-1');
         $route->setContent($content);
         $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+
         $manager->persist($route);
-        unset($content, $route);
 
-        $strategyContent = new SeoAwareContentWithExtractors();
-        $strategyContent->setName('strategy-title');
-        $strategyContent->setTitle('Strategy title');
-        $strategyContent->setBody('content of strategy test.');
-        $strategyContent->setParentDocument($contentRoot);
-        //insert empty meta data
-        $strategyMetadata = new SeoMetadata();
-        $strategyMetadata->setTitle('');
-        $strategyMetadata->setOriginalUrl('');
-        $strategyMetadata->setMetaDescription('');
-        $strategyMetadata->setMetaKeywords('strategy, test');
-        $strategyContent->setSeoMetadata($strategyMetadata);
-        $manager->persist($strategyContent);
+        $content = new ContentWithExtractors();
+        $content->setName('strategy-title');
+        $content->setTitle('Strategy title');
+        $content->setBody('content of strategy test.');
+        $content->setParentDocument($contentRoot);
 
-        $strategyRoute = new Route();
-        $strategyRoute->setPosition($routeRoot, 'strategy-content');
-        $strategyRoute->setContent($strategyContent);
-        $strategyRoute->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
-        $manager->persist($strategyRoute);
+        $manager->persist($content);
+
+        $route = new Route();
+        $route->setPosition($routeRoot, 'strategy-content');
+        $route->setContent($content);
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+
+        $manager->persist($route);
 
         $manager->flush();
     }

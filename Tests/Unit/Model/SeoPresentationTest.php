@@ -65,7 +65,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->seoMetadata = new SeoMetadata();
 
         // create the mock for the document
-        $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent');
+        $this->document = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
         $this->document
             ->expects($this->any())
            ->method('getSeoMetadata')

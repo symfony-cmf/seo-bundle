@@ -9,6 +9,9 @@ use Sonata\DoctrinePHPCRAdminBundle\Admin\Admin;
 
 class SeoAwareContentAdmin extends Admin
 {
+    protected $baseRouteName = 'cmf_seo_aware_content';
+    protected $baseRoutePattern = 'cmf/seo/seoawarecontent';
+
     public function getExportFormats()
     {
         return array();

@@ -91,7 +91,6 @@ class SeoFrontendTest extends BaseTestCase
         $expectedMeta = array(
             'Default | Strategy title',
             'Default description. content of strategy test. ...',
-            'strategy, test',
         );
         $this->assertEquals($expectedMeta, $actualMeta);
 
