@@ -137,11 +137,7 @@ class SeoAwareContentWithExtractorsModel implements
      */
     public function getSeoTitle()
     {
-        $seoTitle = $this->getSeoMetadata()->getTitle();
-
-        return null === $seoTitle || '' === $seoTitle
-            ? $this->getTitle()
-            : $seoTitle;
+        return $this->getTitle();
     }
 
     /**
@@ -151,11 +147,7 @@ class SeoAwareContentWithExtractorsModel implements
      */
     public function getSeoDescription()
     {
-        $seoDescription = $this->getSeoMetadata()->getMetaDescription();
-
-        return null === $seoDescription || '' == $seoDescription
-            ? substr($this->getBody(), 0, 200).' ...'
-            : $seoDescription;
+        return substr($this->getBody(), 0, 200).' ...';
     }
 
     /**
