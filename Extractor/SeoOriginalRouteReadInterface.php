@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of the Symfony CMF package.
+ *
+ * (c) 2011-2014 Symfony CMF
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Symfony\Component\Routing\Route;
@@ -14,7 +24,7 @@ use Symfony\Component\Routing\Route;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoOriginalRouteInterface
+interface SeoOriginalRouteReadInterface
 {
     /**
      * Returns something that can be used to generate an absolute URL.

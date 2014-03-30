@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of the Symfony CMF package.
+ *
+ * (c) 2011-2014 Symfony CMF
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 /**
@@ -12,7 +22,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoDescriptionInterface
+interface SeoDescriptionReadInterface
 {
     /**
      * Provide a description of this page to be used in SEO context.

@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of the Symfony CMF package.
+ *
+ * (c) 2011-2014 Symfony CMF
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
@@ -50,10 +60,10 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
 
-        $this->titleDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleInterface');
-        $this->descriptionDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionInterface');
-        $this->urlDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlInterface');
-        $this->routeDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteInterface');
+        $this->titleDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleReadInterface');
+        $this->descriptionDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface');
+        $this->urlDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlReadInterface');
+        $this->routeDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteReadInterface');
 
         $this->seoMetadata = new SeoMetadata();
     }
