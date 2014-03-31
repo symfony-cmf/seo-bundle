@@ -1,11 +1,9 @@
 cmf_seo:
-    persistence:
-      phpcr:
-          use_sonata_admin: true
-
+    persistence: { phpcr: true }
     title: "Default | %%content_title%%"
     description: "Default description. %%content_description%%"
     original_route_pattern: canonical
+    sonata_admin_extension: true
 
 cmf_routing:
     dynamic:
@@ -24,7 +22,7 @@ framework:
 
 sonata_admin:
     extensions:
-        cmf_seo.persistence.phpcr.admin_extension:
+        cmf_seo.admin_extension:
             implements:
                - Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface
     dashboard:

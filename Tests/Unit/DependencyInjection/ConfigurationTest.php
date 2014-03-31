@@ -39,19 +39,16 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testDefaultsForAllConfigFormats()
     {
         $expectedConfiguration = array(
-            'translation_domain'    => null,
-            'title'             => 'default_title',
-            'description'       => 'default_description',
-            'original_route_pattern'    => SeoPresentation::ORIGINAL_URL_CANONICAL,
+            'translation_domain'     => null,
+            'title'                  => 'default_title',
+            'description'            => 'default_description',
+            'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'persistence' => array(
-                'phpcr' => array(
-                    'document_class'    => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent',
-                    'admin_class'       => 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension',
-                    'content_basepath'  => '/cms/content',
-                    'use_sonata_admin'  => 'auto',
-                    'enabled'           => false,
-                ),
+                'phpcr' => array('enabled' => false),
+                'orm' => array('enabled' => false),
             ),
+            'metadata_listener'      => 'auto',
+            'sonata_admin_extension' => 'auto',
         );
 
         $sources = array_map(function ($path) {

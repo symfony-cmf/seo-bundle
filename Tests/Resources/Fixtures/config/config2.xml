@@ -1,12 +1,9 @@
 <config xmlns="http://cmf.symfony.com/schema/dic/seo"
     translation-domain="messages"
     original-route-pattern="redirect"
-    content-key="foo">
-    <persistence>
-        <phpcr document-class="Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent"
-            admin-class="Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension"
-            content-basepath="/cms/content"
-            use-sonata-admin="auto"
-        />
-    </persistence>
+    content-key="foo"
+    metadata-listener="auto"
+    sonata-admin-extension="auto">
+
+    <persistence phpcr="true" />
 </config>
