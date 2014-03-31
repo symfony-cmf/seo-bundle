@@ -45,11 +45,11 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'original_route_pattern'    => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'persistence' => array(
                 'phpcr' => array(
-                    'document_class'    => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent',
-                    'admin_class'       => 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension',
-                    'content_basepath'  => '/cms/content',
-                    'use_sonata_admin'  => 'auto',
-                    'enabled'           => false,
+                    'document_class'        => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent',
+                    'admin_class'           => 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension',
+                    'use_metadata_listener' => false,
+                    'use_sonata_admin'      => 'auto',
+                    'enabled'               => false,
                 ),
             ),
         );

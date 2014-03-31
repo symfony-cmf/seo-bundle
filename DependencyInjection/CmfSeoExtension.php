@@ -68,13 +68,16 @@ class CmfSeoExtension extends Extension
         $keys = array(
             'admin_class'      => 'admin_extension.class',
             'document_class'   => 'document.class',
-            'content_basepath' => 'content_basepath',
         );
 
         foreach ($keys as $sourceKey => $targetKey) {
             if (isset($config[$sourceKey])) {
                 $container->setParameter($this->getAlias() . '.persistence.phpcr.'.$targetKey, $config[$sourceKey]);
             }
+        }
+
+        if ($config['use_metadata_listener']) {
+            $loader->load('doctrine-phpcr.xml');
         }
 
         if ($config['use_sonata_admin']) {

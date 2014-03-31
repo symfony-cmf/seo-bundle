@@ -38,6 +38,16 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('phpcr')
                             ->addDefaultsIfNotSet()
                             ->canBeEnabled()
+                            ->beforeNormalization()
+                                ->always()
+                                ->then(function ($v) {
+                                    if (null === $v['use_metadata_listener']) {
+                                        $v['use_metadata_listener'] = $v['enabled'];
+                                    }
+
+                                    return $v;
+                                })
+                            ->end()
                             ->children()
                                 ->scalarNode('document_class')
                                     ->defaultValue('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent')
@@ -45,7 +55,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('admin_class')
                                     ->defaultValue('Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension')
                                 ->end()
-                                ->scalarNode('content_basepath')->defaultValue('/cms/content')->end()
+                                ->booleanNode('use_metadata_listener')->defaultValue(null)->end()
                                 ->enumNode('use_sonata_admin')
                                     ->values(array(true, false, 'auto'))
                                     ->defaultValue('auto')

@@ -28,7 +28,7 @@
         <xsd:attribute name="enabled" type="xsd:boolean" />
         <xsd:attribute name="document-class" type="xsd:string" />
         <xsd:attribute name="admin-class" type="xsd:string" />
-        <xsd:attribute name="content-basepath" type="xsd:string" />
+        <xsd:attribute name="use-metadata-listener" type="xsd:boolean" />
         <xsd:attribute name="use-sonata-admin" type="enable_auto" />
     </xsd:complexType>
 

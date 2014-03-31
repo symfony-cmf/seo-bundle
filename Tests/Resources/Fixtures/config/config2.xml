@@ -5,7 +5,7 @@
     <persistence>
         <phpcr document-class="Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoAwareContent"
             admin-class="Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension"
-            content-basepath="/cms/content"
+            use-metadata-listener="true"
             use-sonata-admin="auto"
         />
     </persistence>
