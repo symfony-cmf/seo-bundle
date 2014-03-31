@@ -27,12 +27,7 @@
         "matthiasnoback/symfony-config-test": "0.*"
     },
     "suggest": {
-        "symfony-cmf/menu-bundle": "Have editable menus for content",
-        "symfony-cmf/routing-bundle": "Have editable routes for content",
-        "friendsofsymfony/rest-bundle": "Improved handling for different output formats",
-        "doctrine/phpcr-odm": "To persist content with the PHP content repository",
-        "doctrine/phpcr-bundle": "To integrate PHPCR-ODM with Symfony",
-        "sonata-project/doctrine-phpcr-admin-bundle": "To provide admin interfaces for the content"
+        "sonata-project/doctrine-phpcr-admin-bundle": "To provide admin interfaces for the seo metadata"
     },
     "autoload":{
         "psr-0":{
