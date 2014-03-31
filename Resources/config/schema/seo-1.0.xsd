@@ -16,26 +16,13 @@
         <xsd:attribute name="description" type="xsd:string" />
         <xsd:attribute name="original-route-pattern" type="original_route_pattern" />
         <xsd:attribute name="content-key" type="xsd:string" />
+        <xsd:attribute name="metadata-listener" type="enable_auto" />
+        <xsd:attribute name="sonata-admin-extension" type="enable_auto" />
     </xsd:complexType>
 
     <xsd:complexType name="persistence">
-        <xsd:sequence>
-            <xsd:element name="phpcr" type="phpcr" minOccurs="0" />
-            <xsd:element name="orm" type="orm" minOccurs="0" />
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="orm">
-        <xsd:attribute name="enabled" type="xsd:boolean" />
-        <xsd:attribute name="use-metadata-listener" type="xsd:boolean" />
-    </xsd:complexType>
-
-    <xsd:complexType name="phpcr">
-        <xsd:attribute name="enabled" type="xsd:boolean" />
-        <xsd:attribute name="document-class" type="xsd:string" />
-        <xsd:attribute name="admin-class" type="xsd:string" />
-        <xsd:attribute name="use-metadata-listener" type="xsd:boolean" />
-        <xsd:attribute name="use-sonata-admin" type="enable_auto" />
+        <xsd:attribute name="phpcr" type="xsd:boolean" />
+        <xsd:attribute name="orm" type="xsd:boolean" />
     </xsd:complexType>
 
     <xsd:simpleType name="enable_auto">

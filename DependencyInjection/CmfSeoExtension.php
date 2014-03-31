@@ -49,57 +49,63 @@ class CmfSeoExtension extends Extension
         }
         $container->setParameter($this->getAlias() . '.content_key', $contentKey);
 
-        if ($config['persistence']['phpcr']['enabled']) {
-            $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
+        $persistenceType = null;
+        switch (true) {
+            case $this->isConfigEnabled($container, $config['persistence']['phpcr']):
+                $persistenceType = 'phpcr';
+                break;
+
+            case $this->isConfigEnabled($container, $config['persistence']['orm']):
+                $persistenceType = 'orm';
+                break;
         }
 
-        foreach (array('phpcr' => 'doctrine_phpcr', 'orm' => 'doctrine') as $adapter => $tagPrefix) {
-            if ($config['persistence'][$adapter]['use_metadata_listener']) {
+        if (null !== $persistenceType) {
+            if ($config['metadata_listener']) {
                 $loader->load('doctrine-listener.xml');
+
+                switch ($persistenceType) {
+                    case 'phpcr':
+                        $tagPrefix = 'doctrine_phpcr';
+                        break;
+
+                    case 'orm':
+                        $tagPrefix = 'orm';
+                        break;
+                }
+
                 $definition = $container->getDefinition('cmf_seo.persistence.metadata_listener');
                 $definition->addTag($tagPrefix.'.event_subscriber');
             }
-        }
-    }
 
-    /**
-     * Loads the phpcr integration.
-     *
-     * @param array            $config
-     * @param XmlFileLoader    $loader
-     * @param ContainerBuilder $container
-     */
-    public function loadPhpcr(array $config, XmlFileLoader $loader, ContainerBuilder $container)
-    {
-        $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
+            if ($config['sonata_admin_extension']) {
+                switch ($persistenceType) {
+                    case 'phpcr':
+                        $sonataBundle = 'SonataDoctrinePHPCRAdminBundle';
+                        break;
 
-        $keys = array(
-            'admin_class'      => 'admin_extension.class',
-            'document_class'   => 'document.class',
-        );
+                    case 'orm':
+                        $sonataBundle = 'SonataDoctrineORMBundle';
+                        break;
+                }
 
-        foreach ($keys as $sourceKey => $targetKey) {
-            if (isset($config[$sourceKey])) {
-                $container->setParameter($this->getAlias() . '.persistence.phpcr.'.$targetKey, $config[$sourceKey]);
+                $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundle);
             }
         }
-
-        if ($config['use_sonata_admin']) {
-            $this->loadSonataAdmin($config, $loader, $container);
-        }
     }
 
     /**
-     * Loads the sonata admin extension.
+     * Loads the sonata admin extension for ORM.
      *
-     * @param array            $config
+     * @param mixed            $config
      * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
+     * @param string           $bundle     The required SonataAdmin adapter bundle
      */
-    public function loadSonataAdmin(array $config, XmlFileLoader $loader, ContainerBuilder $container)
+    public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container, $bundle)
     {
         $bundles = $container->getParameter('kernel.bundles');
-        if ('auto' === $config['use_sonata_admin'] && !isset($bundles['SonataDoctrinePHPCRAdminBundle'])) {
+        if ('auto' === $config && !isset($bundles[$bundle])) {
             return;
         }
 
