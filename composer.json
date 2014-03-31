@@ -27,7 +27,9 @@
         "matthiasnoback/symfony-config-test": "0.*"
     },
     "suggest": {
-        "sonata-project/doctrine-phpcr-admin-bundle": "To provide admin interfaces for the seo metadata"
+        "sonata-project/doctrine-phpcr-admin-bundle": "To provide an admin extension for the seo metadata",
+        "doctrine/phpcr-bundle": "To persist the metadata in PHPCR ODM documents",
+        "doctrine/doctrine-bundle": "To persist the metadata in ORM entities"
     },
     "autoload":{
         "psr-0":{
