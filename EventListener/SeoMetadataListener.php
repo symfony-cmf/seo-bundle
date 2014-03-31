@@ -10,7 +10,7 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;

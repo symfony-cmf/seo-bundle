@@ -51,6 +51,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'use_sonata_admin'      => 'auto',
                     'enabled'               => false,
                 ),
+                'orm' => array(
+                    'enabled' => false,
+                    'use_metadata_listener' => false,
+                ),
             ),
         );
 

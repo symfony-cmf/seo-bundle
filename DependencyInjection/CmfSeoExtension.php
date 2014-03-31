@@ -52,6 +52,14 @@ class CmfSeoExtension extends Extension
         if ($config['persistence']['phpcr']['enabled']) {
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
         }
+
+        foreach (array('phpcr' => 'doctrine_phpcr', 'orm' => 'doctrine') as $adapter => $tagPrefix) {
+            if ($config['persistence'][$adapter]['use_metadata_listener']) {
+                $loader->load('doctrine-listener.xml');
+                $definition = $container->getDefinition('cmf_seo.persistence.metadata_listener');
+                $definition->addTag($tagPrefix.'.event_subscriber');
+            }
+        }
     }
 
     /**
@@ -74,10 +82,6 @@ class CmfSeoExtension extends Extension
             if (isset($config[$sourceKey])) {
                 $container->setParameter($this->getAlias() . '.persistence.phpcr.'.$targetKey, $config[$sourceKey]);
             }
-        }
-
-        if ($config['use_metadata_listener']) {
-            $loader->load('doctrine-phpcr.xml');
         }
 
         if ($config['use_sonata_admin']) {
