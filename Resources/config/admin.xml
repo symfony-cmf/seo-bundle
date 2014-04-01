@@ -10,7 +10,7 @@
 
     <services>
         <service id="cmf_seo.admin_extension" class="%cmf_seo.admin_extension.class%">
-            <tag name="sonata.admin.extension" global="true" />
+            <tag name="sonata.admin.extension" />
         </service>
     </services>
 </container>

@@ -35,11 +35,10 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
     public function testAdminDashboard()
     {
-        $crawler = $this->client->request('GET', '/admin/dashboard');
+        $this->client->request('GET', '/admin/dashboard');
         $res = $this->client->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
-        $this->assertCount(1, $crawler->filter('html:contains("SeoContent")'));
     }
 
     public function testAdminExtensionExists()
@@ -49,11 +48,6 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("content-1")'));
-
-        //test the exist of the labels
-        $this->assertCount(1, $crawler->filter('html:contains("ID")'));
-        $this->assertCount(1, $crawler->filter('html:contains("Title")'));
-        $this->assertCount(1, $crawler->filter('html:contains("List SeoContent")'));
     }
 
     public function testItemEditView()
@@ -63,9 +57,10 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
         $this->assertEquals(200, $res->getStatusCode());
 
-        $this->assertCount(1, $crawler->filter('html:contains("Title")'));
+        $this->assertCount(1, $crawler->filter('html:contains("SeoConfiguration")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Page title")'));
         $this->assertCount(1, $crawler->filter('html:contains("Original url")'));
-        $this->assertCount(1, $crawler->filter('html:contains("Meta description")'));
-        $this->assertCount(1, $crawler->filter('html:contains("Meta keywords")'));
+        $this->assertCount(1, $crawler->filter('html:contains("description")'));
+        $this->assertCount(1, $crawler->filter('html:contains("keywords")'));
     }
 }
