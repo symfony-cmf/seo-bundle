@@ -157,7 +157,7 @@ class SeoPresentation implements SeoPresentationInterface
                 : $seoMetadata->getTitle();
 
             $this->sonataPage->setTitle($pageTitle);
-            $this->sonataPage->addMeta('names', 'title', $pageTitle);
+            $this->sonataPage->addMeta('name', 'title', $pageTitle);
         }
 
         if ($seoMetadata->getMetaDescription()) {
@@ -170,7 +170,7 @@ class SeoPresentation implements SeoPresentationInterface
                 : $seoMetadata->getMetaDescription();
 
             $this->sonataPage->addMeta(
-                'names',
+                'name',
                 'description',
                 $pageDescription
             );
@@ -178,7 +178,7 @@ class SeoPresentation implements SeoPresentationInterface
 
         if ($seoMetadata->getMetaKeywords()) {
             $this->sonataPage->addMeta(
-                'names',
+                'name',
                 'keywords',
                 $this->createKeywords($seoMetadata->getMetaKeywords())
             );
@@ -211,8 +211,8 @@ class SeoPresentation implements SeoPresentationInterface
     private function createKeywords($contentKeywords)
     {
         $metas = $this->sonataPage->getMetas();
-        $sonataKeywords = isset($metas['names']['keywords'][0])
-           ? $metas['names']['keywords'][0]
+        $sonataKeywords = isset($metas['name']['keywords'][0])
+           ? $metas['name']['keywords'][0]
            : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '') . $contentKeywords;
