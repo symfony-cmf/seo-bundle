@@ -125,7 +125,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->seoPresentation->updateSeoPage($this->document);
 
         $metas = $this->pageService->getMetas();
-        $actualDescription = $metas['names']['description'][0];
+        $actualDescription = $metas['name']['description'][0];
         $this->assertEquals('Default Description. Test description.', $actualDescription);
     }
 
@@ -136,7 +136,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->seoPresentation->updateSeoPage($this->document);
 
         $metas = $this->pageService->getMetas();
-        $actualDescription = $metas['names']['description'][0];
+        $actualDescription = $metas['name']['description'][0];
         $this->assertEquals('Content description.', $actualDescription);
     }
 
@@ -144,12 +144,12 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     {
         $this->seoMetadata->setMetaKeywords('key1, key2');
         //to set it here is the same as it was set in the sonata_seo settings
-        $this->pageService->addMeta('names', 'keywords', 'default, other');
+        $this->pageService->addMeta('name', 'keywords', 'default, other');
         $this->seoPresentation->updateSeoPage($this->document);
         $keywords = $this->pageService->getMetas();
         $this->assertEquals(
             'default, other, key1, key2',
-            $keywords['names']['keywords'][0]
+            $keywords['name']['keywords'][0]
         );
     }
 
@@ -168,7 +168,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $seoPresentation->updateSeoPage(new AllStrategiesDocument());
 
         $metas = $this->pageService->getMetas();
-        $actualDescription = $metas['names']['description'][0];
+        $actualDescription = $metas['name']['description'][0];
         $this->assertEquals('translation strategy test', $actualDescription);
 
         $this->assertEquals('translation strategy test', $this->pageService->getTitle());
