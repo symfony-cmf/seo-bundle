@@ -136,10 +136,10 @@ class SeoMetadata implements SeoMetadataInterface
     public function toArray()
     {
         return array(
-            'title'                 => $this->getTitle(),
-            'metaDescription'       => $this->getMetaDescription(),
-            'metaKeywords'          => $this->getMetaKeywords(),
-            'originalUrl'           => $this->getOriginalUrl()
+            'title'                 => $this->getTitle() ?: '',
+            'metaDescription'       => $this->getMetaDescription() ?: '',
+            'metaKeywords'          => $this->getMetaKeywords() ?: '',
+            'originalUrl'           => $this->getOriginalUrl() ?: '',
         );
     }
 }
