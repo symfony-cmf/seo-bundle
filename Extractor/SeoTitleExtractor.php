@@ -25,20 +25,20 @@ class SeoTitleExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports($document)
+    public function supports($object)
     {
-        return $document instanceof SeoTitleReadInterface;
+        return $object instanceof SeoTitleReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoTitleReadInterface $document
+     * @param SeoTitleReadInterface $object
      */
-    public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
     {
         if (null === $seoMetadata->getTitle() || '' === $seoMetadata->getTitle()) {
-            $seoMetadata->setTitle($document->getSeoTitle());
+            $seoMetadata->setTitle($object->getSeoTitle());
         }
     }
 }

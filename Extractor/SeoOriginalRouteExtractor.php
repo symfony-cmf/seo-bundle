@@ -33,19 +33,19 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports($document)
+    public function supports($object)
     {
-        return $document instanceof SeoOriginalRouteReadInterface;
+        return $object instanceof SeoOriginalRouteReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoOriginalRouteReadInterface $document
+     * @param SeoOriginalRouteReadInterface $object
      */
-    public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
     {
-        $route = $document->getSeoOriginalRoute();
+        $route = $object->getSeoOriginalRoute();
 
         try {
             $seoMetadata->setOriginalUrl($this->urlGenerator->generate($route));

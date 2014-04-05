@@ -117,22 +117,22 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Gets the SeoMetadata based on the content document.
+     * Gets the SeoMetadata based on the object that contains the content.
      *
-     * @param object $contentDocument
+     * @param object $contentObject
      *
      * @return SeoMetadata
      */
-    private function getSeoMetadata($contentDocument)
+    private function getSeoMetadata($contentObject)
     {
-        $seoMetadata = $contentDocument instanceof SeoAwareInterface
-            ? clone $contentDocument->getSeoMetadata()
+        $seoMetadata = $contentObject instanceof SeoAwareInterface
+            ? clone $contentObject->getSeoMetadata()
             : new SeoMetadata()
         ;
 
         foreach ($this->strategies as $strategy) {
-            if ($strategy->supports($contentDocument)) {
-                $strategy->updateMetadata($contentDocument, $seoMetadata);
+            if ($strategy->supports($contentObject)) {
+                $strategy->updateMetadata($contentObject, $seoMetadata);
             }
         }
 
@@ -142,9 +142,9 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * {@inheritDoc}
      */
-    public function updateSeoPage($contentDocument)
+    public function updateSeoPage($contentObject)
     {
-        $seoMetadata = $this->getSeoMetadata($contentDocument);
+        $seoMetadata = $this->getSeoMetadata($contentObject);
         $translationDomain = $this->configValues->getTranslationDomain();
 
         if ($seoMetadata->getTitle()) {
