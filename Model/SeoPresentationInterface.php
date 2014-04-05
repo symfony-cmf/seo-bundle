@@ -25,9 +25,9 @@ interface SeoPresentationInterface
     /**
      * Updates the Sonata SeoPage service with the data retrieved from the $contentDocument.
      *
-     * @param object $contentDocument The document to load data from.
+     * @param object $contentObject The document to load data from.
      */
-    public function updateSeoPage($contentDocument);
+    public function updateSeoPage($contentObject);
 
     /**
      * Returns the redirect response if the bundle is configured to redirect to

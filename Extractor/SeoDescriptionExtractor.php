@@ -25,20 +25,20 @@ class SeoDescriptionExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports($document)
+    public function supports($object)
     {
-        return $document instanceof SeoDescriptionReadInterface;
+        return $object instanceof SeoDescriptionReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoDescriptionReadInterface $document
+     * @param SeoDescriptionReadInterface $object
      */
-    public function updateMetadata($document, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
     {
         if (null === $seoMetadata->getMetaDescription() || '' === $seoMetadata->getMetaDescription()) {
-           $seoMetadata->setMetaDescription($document->getSeoDescription());
+           $seoMetadata->setMetaDescription($object->getSeoDescription());
         }
     }
 }

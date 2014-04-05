@@ -28,11 +28,11 @@ interface SeoExtractorInterface
      * an interface or being instance of a specific class,
      * or introspection to see if a certain method exists.
      *
-     * @param object $document
+     * @param object $object
      *
-     * @return boolean whether this strategy supports $document
+     * @return boolean whether this strategy supports $object
      */
-    public function supports($document);
+    public function supports($object);
 
     /**
      * Update the metadata object with information from this document.
@@ -42,8 +42,8 @@ interface SeoExtractorInterface
      *
      * This method is should only be called if supports returned true.
      *
-     * @param object               $document
+     * @param object               $object
      * @param SeoMetadataInterface $seoMetadata
      */
-    public function updateMetadata($document, SeoMetadataInterface $seoMetadata);
+    public function updateMetadata($object, SeoMetadataInterface $seoMetadata);
 }
