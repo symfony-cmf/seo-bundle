@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * This listener takes care of content objects which implements the SeoAwareInterface.
+ * This listener takes care of content implementing the SeoAwareInterface.
  *
  * In case of a match the listener calls a special presentation model to
  * prepare the SeoMetadata for putting it into sonatas Page Service.

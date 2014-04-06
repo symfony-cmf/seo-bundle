@@ -18,7 +18,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 
 /**
- * Serializes the SeoMetadata of a Document, so it can savely be saved.
+ * Serializes the SeoMetadata of the seo aware content, so it can savely be saved.
  *
  * @author Wouter J <wouter@wouterj.nl>
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
@@ -36,12 +36,12 @@ class SeoMetadataListener implements EventSubscriber
 
     public function preUpdate(LifecycleEventArgs $args)
     {
-        $document = $args->getObject();
-        if (!$document instanceof SeoAwareInterface) {
+        $content = $args->getObject();
+        if (!$content instanceof SeoAwareInterface) {
             return;
         }
 
-        $document->setSeoMetadata($document->getSeoMetadata()->toArray());
+        $content->setSeoMetadata($content->getSeoMetadata()->toArray());
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -51,11 +51,11 @@ class SeoMetadataListener implements EventSubscriber
 
     public function postLoad(LifecycleEventArgs $args)
     {
-        $document = $args->getObject();
-        if (!$document instanceof SeoAwareInterface) {
+        $content = $args->getObject();
+        if (!$content instanceof SeoAwareInterface) {
             return;
         }
 
-        $document->setSeoMetadata(SeoMetadata::createFromArray($document->getSeoMetadata()));
+        $content->setSeoMetadata(SeoMetadata::createFromArray($content->getSeoMetadata()));
     }
 }

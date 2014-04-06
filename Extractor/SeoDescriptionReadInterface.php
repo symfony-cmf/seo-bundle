@@ -14,9 +14,9 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 /**
  * This interface is one of the ExtractorInterfaces to
- * get document properties for updating the SeoMetadata.
+ * get content properties for updating the SeoMetadata.
  *
- * If you want to have a document that is able to update its
+ * If you want to have a content that is able to update its
  * description for the SeoMetadata on its own, you should implement
  * this interface.
  *
