@@ -39,7 +39,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testDefaultsForAllConfigFormats()
     {
         $expectedConfiguration = array(
-            'translation_domain'     => null,
+            'translation_domain'     => 'messages',
             'title'                  => 'default_title',
             'description'            => 'default_description',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
