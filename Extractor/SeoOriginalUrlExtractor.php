@@ -38,8 +38,6 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
      */
     public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
     {
-        if (null === $seoMetadata->getOriginalUrl() || '' === $seoMetadata->getOriginalUrl()) {
-            $seoMetadata->setOriginalUrl($object->getSeoOriginalUrl());
-        }
+        $seoMetadata->setOriginalUrl($object->getSeoOriginalUrl());
     }
 }
