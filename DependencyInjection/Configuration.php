@@ -44,7 +44,7 @@ class Configuration implements ConfigurationInterface
                         ->end() // orm
                     ->end()
                 ->end() // persistence
-                ->scalarNode('translation_domain')->defaultValue(null)->end()
+                ->scalarNode('translation_domain')->defaultValue('messages')->end()
                 ->scalarNode('title')->end()
                 ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
