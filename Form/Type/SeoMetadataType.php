@@ -34,10 +34,10 @@ class SeoMetadataType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text')
-            ->add('originalUrl', 'text')
-            ->add('metaDescription', 'textarea')
-            ->add('metaKeywords', 'textarea')
+            ->add('title', 'text', array('required' => false))
+            ->add('originalUrl', 'text', array('required' => false))
+            ->add('metaDescription', 'textarea', array('required' => false))
+            ->add('metaKeywords', 'textarea', array('required' => false))
         ;
     }
 
