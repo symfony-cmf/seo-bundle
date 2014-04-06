@@ -14,6 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
@@ -45,6 +46,10 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $urlDocument;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $keywordsDocument;
 
     /**
      * @var SeoMetadata
@@ -64,6 +69,7 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
         $this->descriptionDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface');
         $this->urlDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlReadInterface');
         $this->routeDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteReadInterface');
+        $this->keywordsDocument = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsReadInterface');
 
         $this->seoMetadata = new SeoMetadata();
     }
@@ -110,6 +116,27 @@ class ExtractorStrategyTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('seo-description', $this->seoMetadata->getMetaDescription());
     }
+
+    public function testKeywordsExtractor()
+    {
+        $strategy = new SeoKeywordsExtractor();
+
+        $this->assertTrue($strategy->supports($this->keywordsDocument));
+        $this->assertFalse($strategy->supports($this->descriptionDocument));
+        $this->assertFalse($strategy->supports($this->routeDocument));
+        $this->assertFalse($strategy->supports($this->titleDocument));
+        $this->assertFalse($strategy->supports($this->urlDocument));
+
+        $this->keywordsDocument->expects($this->once())
+            ->method('getSeoKeywords')
+            ->will($this->returnValue('key1, key2'))
+        ;
+
+        $strategy->updateMetadata($this->keywordsDocument, $this->seoMetadata);
+
+        $this->assertEquals('key1, key2', $this->seoMetadata->getMetaKeywords());
+    }
+
 
     public function testRouteExtractor()
     {

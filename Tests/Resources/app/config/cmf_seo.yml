@@ -1,3 +1,9 @@
+sonata_seo:
+    page:
+        metas:
+            name:
+                keywords: "testkey"
+
 cmf_seo:
     persistence: { phpcr: true }
     title: "Default | %%content_title%%"

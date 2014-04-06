@@ -13,6 +13,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsReadInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlReadInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleReadInterface;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
@@ -23,7 +24,8 @@ use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 class ContentWithExtractors extends ContentBase implements
     SeoTitleReadInterface,
     SeoDescriptionReadInterface,
-    SeoOriginalUrlReadInterface
+    SeoOriginalUrlReadInterface,
+    SeoKeywordsReadInterface
 {
     /**
      * Provide a title of this page to be used in SEO context.
@@ -54,5 +56,16 @@ class ContentWithExtractors extends ContentBase implements
     public function getSeoOriginalUrl()
     {
         return '/home';
+    }
+
+    /**
+     * Provide a list of the content's keywords for this page to be
+     * used in SEO context.
+     *
+     * @return string
+     */
+    public function getSeoKeywords()
+    {
+        return 'test, key';
     }
 }
