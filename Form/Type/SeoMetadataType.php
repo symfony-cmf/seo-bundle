@@ -19,8 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * A form type for editing the SEO metadata.
  *
- * When using SonataAdmin for the backend and having documents that implement the SeoAwareInterface. The
- * Sonata Admin will get this form type automatically.
+ * When using SonataAdmin for the backend and having content that implement 
+ * the SeoAwareInterface. The Sonata Admin will get this form type automatically.
  *
  * You can explicitly use this type using the "seo_metadata" type.
  *
