@@ -37,8 +37,13 @@ class SeoKeywordsExtractor implements SeoExtractorInterface
      */
     public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
     {
-        if (null === $seoMetadata->getMetaKeywords() || '' === $seoMetadata->getMetaKeywords()) {
-           $seoMetadata->setMetaKeywords($object->getSeoKeywords());
+        $keywords = $object->getSeoKeywords();
+        if (null === $keywords || '' === $keywords) {
+
+            if (is_array($keywords)) {
+                $keywords = implode(', ', $keywords);
+            }
+            $seoMetadata->setMetaKeywords($keywords);
         }
     }
 }

@@ -25,10 +25,10 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 interface SeoKeywordsReadInterface
 {
     /**
-     * Provide a list of the content's keywords for this page to be
+     * Provides a list of keywords for this page to be
      * used in SEO context.
      *
-     * @return string
+     * @return string|array
      */
     public function getSeoKeywords();
 }
