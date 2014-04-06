@@ -37,8 +37,6 @@ class SeoDescriptionExtractor implements SeoExtractorInterface
      */
     public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
     {
-        if (null === $seoMetadata->getMetaDescription() || '' === $seoMetadata->getMetaDescription()) {
-           $seoMetadata->setMetaDescription($object->getSeoDescription());
-        }
+        $seoMetadata->setMetaDescription($object->getSeoDescription());
     }
 }

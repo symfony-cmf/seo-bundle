@@ -54,7 +54,7 @@ class SeoFrontendTest extends BaseTestCase
 
         //test the title
         $titleCrawler = $crawler->filter('head > title');
-        $this->assertEquals('Default | Title content 1', $titleCrawler->text());
+        $this->assertEquals('Default | Content 1', $titleCrawler->text());
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
@@ -65,7 +65,7 @@ class SeoFrontendTest extends BaseTestCase
 
         $actualMeta = $metaCrawler->extract('content', 'content');
         $expectedMeta = array(
-            'Default | Title content 1',
+            'Default | Content 1',
             'Default description. Description of content 1.',
             'content1, content',
         );
