@@ -23,7 +23,7 @@ use Sonata\AdminBundle\Form\FormMapper;
  * setting `cmf_seo.persistence.phpcr.use_sonata_admin` in the configuration to
  * `true` (it defaults to `auto`, which means it'll use it when the
  * SonataAdminBundle is registered). You will need your own Admin class with its
- * mapping and let the document implement the SeoAwareInterface.
+ * mapping and let the content implement the SeoAwareInterface.
  *
  * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>
  */

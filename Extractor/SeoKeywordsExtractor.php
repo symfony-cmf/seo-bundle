@@ -33,11 +33,11 @@ class SeoKeywordsExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      *
-     * @param SeoKeywordsReadInterface $object
+     * @param SeoKeywordsReadInterface $content
      */
-    public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $keywords = $object->getSeoKeywords();
+        $keywords = $content->getSeoKeywords();
         if (null === $seoMetadata->getMetaKeywords() || '' === $seoMetadata->getMetaKeywords()) {
             if (is_array($keywords)) {
                 $keywords = implode(', ', $keywords);

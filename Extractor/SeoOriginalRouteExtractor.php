@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * This strategy extracts the original route from documents
+ * This strategy extracts the original route from content
  * implementing the SeoOriginalRouteReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
@@ -33,19 +33,19 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports($object)
+    public function supports($content)
     {
-        return $object instanceof SeoOriginalRouteReadInterface;
+        return $content instanceof SeoOriginalRouteReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoOriginalRouteReadInterface $object
+     * @param SeoOriginalRouteReadInterface $content
      */
-    public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $route = $object->getSeoOriginalRoute();
+        $route = $content->getSeoOriginalRoute();
 
         try {
             $seoMetadata->setOriginalUrl($this->urlGenerator->generate($route));

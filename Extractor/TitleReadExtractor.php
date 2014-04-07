@@ -15,7 +15,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This strategy extracts the title from documents with a getTitle() method.
+ * This strategy extracts the title from content with a getTitle() method.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -24,16 +24,16 @@ class TitleReadExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports($object)
+    public function supports($content)
     {
-        return method_exists($object, 'getTitle');
+        return method_exists($content, 'getTitle');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $seoMetadata->setTitle($object->getTitle());
+        $seoMetadata->setTitle($content->getTitle());
     }
 }

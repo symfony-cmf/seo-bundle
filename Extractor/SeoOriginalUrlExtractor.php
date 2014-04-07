@@ -28,16 +28,16 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports($object)
+    public function supports($content)
     {
-        return $object instanceof SeoOriginalUrlReadInterface;
+        return $content instanceof SeoOriginalUrlReadInterface;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function updateMetadata($object, SeoMetadataInterface $seoMetadata)
+    public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $seoMetadata->setOriginalUrl($object->getSeoOriginalUrl());
+        $seoMetadata->setOriginalUrl($content->getSeoOriginalUrl());
     }
 }

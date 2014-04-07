@@ -15,9 +15,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 /**
  * This class is a container for the metadata.
  *
- * This data will be served to sonatas PageService if the
- * document implements SeoAwareInterface.
- *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class SeoMetadata implements SeoMetadataInterface
