@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.0.0-RC1
+---------
+
 * **2014-04-07**: The extractors now override the `SeoMetadata` retrieved from the `SeoAwareInterface`
 * **2014-04-06**: The `SeoMetadata` changed the defaults to `''` instead of `null`
 
