@@ -34,6 +34,8 @@ class TitleReadExtractor implements SeoExtractorInterface
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $seoMetadata->setTitle($content->getTitle());
+        if (!$seoMetadata->getTitle()) {
+            $seoMetadata->setTitle($content->getTitle());
+        }
     }
 }
