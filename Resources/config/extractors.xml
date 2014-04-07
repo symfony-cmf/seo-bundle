@@ -8,6 +8,7 @@
         <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor</parameter>
         <parameter key="cmf_seo.extractor_strategy.read_title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor</parameter>
         <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.keywords.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsExtractor</parameter>
         <parameter key="cmf_seo.extractor_strategy.original_url.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor</parameter>
         <parameter key="cmf_seo.extractor_strategy.original_route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor</parameter>
     </parameters>
@@ -22,6 +23,10 @@
         </service>
 
         <service id="cmf_seo.extractor_strategy.description" class="%cmf_seo.extractor_strategy.description.class%">
+            <tag name="cmf_seo.extractor"/>
+        </service>
+
+        <service id="cmf_seo.extractor_strategy.keywords" class="%cmf_seo.extractor_strategy.keywords.class%">
             <tag name="cmf_seo.extractor"/>
         </service>
 

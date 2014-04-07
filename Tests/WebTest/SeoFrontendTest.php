@@ -65,9 +65,9 @@ class SeoFrontendTest extends BaseTestCase
 
         $actualMeta = $metaCrawler->extract('content', 'content');
         $expectedMeta = array(
+            'testkey, content1, content',
             'Default | Content 1',
             'Default description. Description of content 1.',
-            'content1, content',
         );
         $this->assertEquals($expectedMeta, $actualMeta);
 
@@ -78,7 +78,7 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertEquals('/to/original', $linkCrawler->eq(0)->attr('href'));
     }
 
-    public function testStrategies()
+    public function testExtractors()
     {
         $crawler = $this->client->request('GET', '/content/strategy-content');
         $res = $this->client->getResponse();
@@ -99,6 +99,7 @@ class SeoFrontendTest extends BaseTestCase
 
         $actualMeta = $metaCrawler->extract('content', 'content');
         $expectedMeta = array(
+            'testkey, test, key',
             'Default | Strategy title',
             'Default description. content of strategy test. ...',
         );
