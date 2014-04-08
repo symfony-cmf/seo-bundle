@@ -35,10 +35,8 @@
         </service>
 
         <service id="cmf_seo.extractor_strategy.original_route" class="%cmf_seo.extractor_strategy.original_route.class%">
+            <argument type="service" id="router" />
             <tag name="cmf_seo.extractor"/>
-            <call method="setRouter">
-                <argument type="service" id="router" />
-            </call>
         </service>
     </services>
 
