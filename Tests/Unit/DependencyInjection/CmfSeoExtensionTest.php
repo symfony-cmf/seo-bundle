@@ -10,10 +10,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 class CmfSeoExtensionTest extends AbstractExtensionTestCase{
 
     /**
-     * Return an array of container extensions you need to be registered for each test (usually just the container
-     * extension you are testing.
-     *
-     * @return ExtensionInterface[]
+     * {@inheritDoc}
      */
     protected function getContainerExtensions()
     {
@@ -25,8 +22,8 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
     public function testDefaults()
     {
         $this->load(array(
-           'title'          => 'Default title',
-            'description'   => 'Default description.'
+            'title'         => 'Default title',
+            'description'   => 'Default description.',
         ));
 
         $this->assertContainerBuilderHasParameter('cmf_seo.title', 'Default title');
@@ -46,14 +43,21 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
             )
         );
         $this->load(array(
-            'title'          => 'Default title',
-            'description'   =>  'Default description.',
+            'title'         => 'Default title',
+            'description'   => 'Default description.',
             'persistence'   => array(
-                'orm'     =>  true,
+                'phpcr' => true,
             )
         ));
 
         $this->assertContainerBuilderHasService('cmf_seo.persistence.metadata_listener', '%cmf_seo.persistence.metadata_listener.class%');
+
+        $this->assertEquals(
+            array('doctrine_phpcr.event_subscriber'),
+            array_keys(
+                $this->container->getDefinition('cmf_seo.persistence.metadata_listener')->getTags()
+            )
+        );
     }
 
     public function testPersistenceORM()
@@ -67,15 +71,20 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
         );
 
         $this->load(array(
-            'title'          => 'Default title',
-            'description'   =>  'Default description.',
+            'title'         => 'Default title',
+            'description'   => 'Default description.',
             'persistence'   => array(
-                'phpcr'     =>  true,
-            )
+                'orm'   => true,
+            ),
         ));
 
         $this->assertContainerBuilderHasService('cmf_seo.persistence.metadata_listener', '%cmf_seo.persistence.metadata_listener.class%');
-        // todo would like to test something like: assertContainerBuilderHasServiceWithTag()
+        $this->assertEquals(
+            array('orm.event_subscriber'),
+            array_keys(
+                $this->container->getDefinition('cmf_seo.persistence.metadata_listener')->getTags()
+            )
+        );
     }
 
     public function testAdminExtension()
@@ -89,12 +98,12 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
         );
 
         $this->load(array(
-            'title'          => 'Default title',
-            'description'   =>  'Default description.',
-            'sonata_admin_extension' => true,
-            'persistence'   => array(
-                'phpcr'     =>  true,
-            )
+            'title'                     => 'Default title',
+            'description'               => 'Default description.',
+            'sonata_admin_extension'    => true,
+            'persistence'               => array(
+                'phpcr' => true,
+            ),
         ));
 
         $this->assertContainerBuilderHasService('cmf_seo.admin_extension', '%cmf_seo.admin_extension.class%');
