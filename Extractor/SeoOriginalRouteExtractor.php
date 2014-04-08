@@ -30,6 +30,11 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
      */
     private $urlGenerator;
 
+    public function __construct(UrlGeneratorInterface $urlGenerator)
+    {
+        $this->urlGenerator = $urlGenerator;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -52,15 +57,5 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
         } catch (RouteNotFoundException $e) {
             throw new SeoExtractorStrategyException('Unable to create a url.', 0, $e);
         }
-    }
-
-    /**
-     * Sets the URL generator.
-     *
-     * @param UrlGeneratorInterface $router
-     */
-    public function setRouter(UrlGeneratorInterface $router)
-    {
-        $this->urlGenerator = $router;
     }
 }
