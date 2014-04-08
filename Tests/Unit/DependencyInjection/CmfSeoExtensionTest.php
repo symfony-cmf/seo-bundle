@@ -109,4 +109,3 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
         $this->assertContainerBuilderHasService('cmf_seo.admin_extension', '%cmf_seo.admin_extension.class%');
     }
 }
- 
