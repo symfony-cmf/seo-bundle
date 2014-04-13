@@ -8,6 +8,7 @@
         <parameter key="cmf_seo.config_values.class">Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues</parameter>
 
         <parameter key="cmf_seo.form.type.seo_metadata.class">Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType</parameter>
+        <parameter key="cmf_seo.cache.file.class">Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache</parameter>
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener</parameter>
 
@@ -25,10 +26,19 @@
             <tag name="form.type" alias="seo_metadata" />
         </service>
 
+        <service id="cmf_seo.cache.file" class="%cmf_seo.cache.file.class%">
+            <argument>%kernel.cache_dir%/cmf_seo</argument>
+
+            <tag name="kernel.cache_warmer" />
+        </service>
+
+        <service id="cmf_seo.cache" alias="cmf_seo.cache.file" />
+
         <service id="cmf_seo.presentation" class="%cmf_seo.presentation.class%">
             <argument type="service" id="sonata.seo.page" />
             <argument type="service" id="translator" />
             <argument type="service" id="cmf_seo.config_values" />
+            <argument type="service" id="cmf_seo.cache" />
         </service>
 
         <service id="cmf_seo.event_listener.seo_content" class="%cmf_seo.event_listener.seo_content.class%">
