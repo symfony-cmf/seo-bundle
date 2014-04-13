@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -63,7 +64,7 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * @var SeoExtractorInterface[]
      */
-    private $strategies = array();
+    private $extractors = array();
 
     /**
      * @var TranslatorInterface
@@ -76,18 +77,25 @@ class SeoPresentation implements SeoPresentationInterface
     private $configValues;
 
     /**
+     * @var null|CacheInterface
+     */
+    private $cache;
+
+    /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
      * @param SeoPage             $sonataPage
      * @param TranslatorInterface $translator
      * @param SeoConfigValues     $configValues
+     * @param CacheInterface      $cache
      */
-    public function __construct(SeoPage $sonataPage, TranslatorInterface $translator, SeoConfigValues $configValues)
+    public function __construct(SeoPage $sonataPage, TranslatorInterface $translator, SeoConfigValues $configValues, CacheInterface $cache = null)
     {
         $this->sonataPage = $sonataPage;
         $this->translator = $translator;
         $this->configValues = $configValues;
+        $this->cache = $cache;
     }
 
     /**
@@ -107,13 +115,13 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Adds strategies.
+     * Adds extractors.
      *
      * @param SeoExtractorInterface $extractor
      */
     public function addExtractor(SeoExtractorInterface $extractor)
     {
-        $this->strategies[] = $extractor;
+        $this->extractors[] = $extractor;
     }
 
     /**
@@ -130,13 +138,37 @@ class SeoPresentation implements SeoPresentationInterface
             : new SeoMetadata()
         ;
 
-        foreach ($this->strategies as $strategy) {
-            if ($strategy->supports($content)) {
-                $strategy->updateMetadata($content, $seoMetadata);
+        $cachingAvailable = (boolean) $this->cache;
+        if ($cachingAvailable) {
+            $extractors = $this->cache->loadExtractorsFromCache(get_class($content));
+
+            if (null === $extractors || !$extractors->isFresh()) {
+                $extractors = $this->getExtractorsForContent($content);
+                $this->cache->putExtractorsInCache(get_class($content), $extractors);
             }
+        } else {
+            $extractors = $this->getExtractorsForContent($content);
+        }
+
+        foreach ($extractors as $extractor) {
+            $extractor->updateMetadata($content, $seoMetadata);
         }
 
         return $seoMetadata;
+    }
+
+    /**
+     * Returns the extractors for content.
+     *
+     * @param object $content
+     *
+     * @return array
+     */
+    private function getExtractorsForContent($content)
+    {
+        return array_filter($this->extractors, function ($extractor) use ($content) {
+            return $extractor->supports($content);
+        });
     }
 
     /**
