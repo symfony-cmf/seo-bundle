@@ -20,13 +20,18 @@ class FileCache implements CacheInterface
 {
     private $dir;
 
-    public function __construct($dir)
+    public function __construct($baseDir, $dir)
     {
-        if (!is_dir($dir)) {
+        if (!is_dir($baseDir)) {
             throw new \InvalidArgumentException(sprintf('The directory "%s" does not exist.', $dir));
         }
-        if (!is_writable($dir)) {
+        if (!is_writable($baseDir)) {
             throw new \InvalidArgumentException(sprintf('The directory "%s" is not writable.', $dir));
+        }
+
+        $dir = $baseDir.DIRECTORY_SEPARATOR.$dir;
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
         }
 
         $this->dir = rtrim($dir, '\\/');
