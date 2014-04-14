@@ -10,7 +10,7 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

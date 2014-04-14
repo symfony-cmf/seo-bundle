@@ -12,14 +12,14 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 
 /**
  * An extractor strategy updates the SeoMetadata from a content.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoExtractorInterface
+interface ExtractorInterface
 {
     /**
      * Check whether the strategy supports this content.

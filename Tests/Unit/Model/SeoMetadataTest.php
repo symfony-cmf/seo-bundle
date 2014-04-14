@@ -13,7 +13,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
 
 /**
  * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>

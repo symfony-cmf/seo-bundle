@@ -12,7 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Client;

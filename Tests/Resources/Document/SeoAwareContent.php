@@ -12,9 +12,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 
 /**

@@ -12,20 +12,20 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsReadInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlReadInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 
 /**
  * @PHPCRODM\Document(referenceable=true)
  */
 class ContentWithExtractors extends ContentBase implements
-    SeoTitleReadInterface,
-    SeoDescriptionReadInterface,
-    SeoOriginalUrlReadInterface,
-    SeoKeywordsReadInterface
+    TitleReadInterface,
+    DescriptionReadInterface,
+    OriginalUrlReadInterface,
+    KeywordsReadInterface
 {
     /**
      * Provide a title of this page to be used in SEO context.

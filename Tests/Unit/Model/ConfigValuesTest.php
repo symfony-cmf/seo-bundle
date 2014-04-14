@@ -13,23 +13,23 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class SeoConfigValuesTest extends \PHPUnit_Framework_Testcase
+class ConfigValuesTest extends \PHPUnit_Framework_Testcase
 {
     /**
-     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException
+     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exception\ExtractorStrategyException
      */
     public function testInvalidStrategy()
     {
-        $configValues = new SeoConfigValues();
+        $configValues = new ConfigValues();
         $configValues->setOriginalUrlBehaviour('nonexistent');
     }
 }

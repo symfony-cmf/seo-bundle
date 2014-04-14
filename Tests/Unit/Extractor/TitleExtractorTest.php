@@ -12,15 +12,15 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor;
 
-class SeoTitleExtractorTest extends BaseTestCase
+class TitleExtractorTest extends BaseTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
-        $this->extractor = new SeoTitleExtractor();
+        $this->extractor = new TitleExtractor();
         $this->extractMethod = 'getSeoTitle';
         $this->metadataMethod = 'setTitle';
     }
@@ -28,8 +28,8 @@ class SeoTitleExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface')),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
         );
     }
 }

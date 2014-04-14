@@ -12,7 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

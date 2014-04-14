@@ -10,7 +10,7 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle;
 
 /**
  * This interface is responsible to mark a content to be aware of SEO

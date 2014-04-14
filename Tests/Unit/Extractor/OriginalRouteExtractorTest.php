@@ -12,9 +12,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalRouteExtractor;
 
-class SeoOriginalRouteExtractorTest extends BaseTestCase
+class OriginalRouteExtractorTest extends BaseTestCase
 {
     protected $urlGenerator;
 
@@ -23,7 +23,7 @@ class SeoOriginalRouteExtractorTest extends BaseTestCase
         parent::setUp();
 
         $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
-        $this->extractor = new SeoOriginalRouteExtractor($this->urlGenerator);
+        $this->extractor = new OriginalRouteExtractor($this->urlGenerator);
         $this->extractMethod = 'getSeoOriginalRoute';
         $this->metadataMethod = 'setOriginalUrl';
     }
@@ -31,8 +31,8 @@ class SeoOriginalRouteExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalRouteReadInterface')),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
         );
     }
 

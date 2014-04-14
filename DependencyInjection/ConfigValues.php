@@ -12,8 +12,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\ExtractorStrategyException;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 
 /**
  * This is a simple value object for storing the configuration values in a
@@ -21,7 +21,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
-class SeoConfigValues
+class ConfigValues
 {
     /**
      * Specific translation domain to use for title and description.
@@ -77,7 +77,7 @@ class SeoConfigValues
     public function setOriginalUrlBehaviour($behaviour)
     {
         if (! in_array($behaviour, SeoPresentation::$originalUrlBehaviours)) {
-            throw new SeoExtractorStrategyException(
+            throw new ExtractorStrategyException(
                 sprintf('Behaviour "%s" not supported by SeoPresentation.', $behaviour)
             );
         }

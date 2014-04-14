@@ -12,31 +12,31 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 
 /**
- * This strategy extracts the description from contents implementing the
- * SeoDescriptionReadInterface.
+ * This strategy extracts the title from content implementing the
+ * TitleReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoDescriptionExtractor implements SeoExtractorInterface
+class TitleExtractor implements ExtractorInterface
 {
     /**
      * {@inheritDoc}
      */
     public function supports($content)
     {
-        return $content instanceof SeoDescriptionReadInterface;
+        return $content instanceof TitleReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoDescriptionReadInterface $content
+     * @param TitleReadInterface $content
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $seoMetadata->setMetaDescription($content->getSeoDescription());
+        $seoMetadata->setTitle($content->getSeoTitle());
     }
 }

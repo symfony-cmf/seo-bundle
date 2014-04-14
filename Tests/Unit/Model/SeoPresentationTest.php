@@ -13,14 +13,14 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -28,7 +28,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * This model is responsible for putting the SeoMetadata into
  * sonatas PageService.
  */
-class SeoPresentationTest extends \PHPUnit_Framework_Testcase
+class PresentationTest extends \PHPUnit_Framework_Testcase
 {
     private $seoPresentation;
     private $pageService;
@@ -41,7 +41,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     {
         $this->pageService = $this->getMock('Sonata\SeoBundle\Seo\SeoPage');
         $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $this->configValues = new SeoConfigValues();
+        $this->configValues = new ConfigValues();
         $this->configValues->setDescription('default_description');
         $this->configValues->setTitle('default_title');
         $this->configValues->setOriginalUrlBehaviour(SeoPresentation::ORIGINAL_URL_CANONICAL);
@@ -52,7 +52,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             $this->configValues
         );
 
-        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata');
+        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoMetadata');
 
         $this->content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
         $this->content
@@ -228,7 +228,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             ->method('trans')
             ->will($this->returnValue('translation strategy test'))
         ;
-        $extractor = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface');
+        $extractor = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
         $extractor
             ->expects($this->any())
             ->method('supports')

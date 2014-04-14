@@ -13,10 +13,10 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoContentListener;
+use Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener;
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 
-class SeoContentListenerTest extends \PHPUnit_Framework_Testcase
+class ContentListenerTest extends \PHPUnit_Framework_Testcase
 {
     protected $seoPresentation;
     protected $request;
@@ -25,12 +25,12 @@ class SeoContentListenerTest extends \PHPUnit_Framework_Testcase
 
     public function setUp()
     {
-        $this->seoPresentation = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface');
+        $this->seoPresentation = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoPresentationInterface');
         $this->request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $this->event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->listener = new SeoContentListener($this->seoPresentation, DynamicRouter::CONTENT_KEY);
+        $this->listener = new ContentListener($this->seoPresentation, DynamicRouter::CONTENT_KEY);
     }
 
     /**

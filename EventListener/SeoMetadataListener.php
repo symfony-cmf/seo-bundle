@@ -14,8 +14,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
 
 /**
  * Serializes the SeoMetadata of the seo aware content, so it can savely be saved.
