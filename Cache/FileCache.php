@@ -74,8 +74,11 @@ class FileCache implements CacheInterface
      * @param string $target
      *
      * @throws \RuntimeException When the renaming can't be completed succesfully
+     *
+     * @author Johannes M. Schmitt <schmittjoh@gmail.com>
      */
-    private function renameFile($source, $target) {
+    private function renameFile($source, $target)
+    {
         if (false === @rename($source, $target)) {
             if (defined('PHP_WINDOWS_VERSION_BUILD')) {
                 if (false === copy($source, $target)) {
