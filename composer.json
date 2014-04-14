@@ -16,7 +16,8 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.3",
         "symfony-cmf/core-bundle": "1.1.*@dev",
-        "sonata-project/seo-bundle": "1.1.*@dev"
+        "sonata-project/seo-bundle": "1.1.*@dev",
+        "doctrine/collections": "1.*"
     },
     "require-dev": {
         "symfony-cmf/testing": "dev-master",

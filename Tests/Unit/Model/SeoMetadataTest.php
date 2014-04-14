@@ -10,6 +10,9 @@
  */
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 
 /**
@@ -24,13 +27,46 @@ class SeoMetadataTest extends \PHPUnit_Framework_TestCase {
 
         $actual = $seoMetadata->toArray();
         $expected = array(
-            'title'                 => '',
-            'metaDescription'       => '',
-            'metaKeywords'          => '',
-            'originalUrl'           => '',
+            'title'           => '',
+            'metaDescription' => '',
+            'metaKeywords'    => '',
+            'originalUrl'     => '',
         );
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @dataProvider getExtraProperties
+     */
+    public function testExtraProperties($expectedType, $expectedKey, $expectedValue)
+    {
+        $metadata = new SeoMetadata();
+        $metadata->addExtraProperty(new ExtraProperty($expectedKey, $expectedValue, $expectedType));
+
+        $expected = array(
+            $expectedType.'_'.$expectedKey => $expectedValue,
+            'title'           => '',
+            'metaDescription' => '',
+            'metaKeywords'    => '',
+            'originalUrl'     => '',
+        );
+
+        $this->assertEquals($expected, $metadata->toArray());
+
+        $expectedCollection = new ArrayCollection();
+        $expectedCollection->add(new ExtraProperty($expectedKey, $expectedValue, $expectedType));
+
+        $this->assertEquals($expectedCollection, $metadata::createFromArray($expected)->getExtraProperties());
+    }
+
+    public function getExtraProperties()
+    {
+        return array(
+            array('property', 'og:title', 'arbitrary title'),
+            array('name', 'robots', 'index, follow'),
+            array('http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
+        );
     }
 }
  

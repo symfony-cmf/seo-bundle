@@ -12,6 +12,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * This class is a container for the metadata.
  *
@@ -48,11 +51,25 @@ class SeoMetadata implements SeoMetadataInterface
      */
     private $title;
 
+    /**
+     * To store extra properties.
+     *
+     * @var Collection
+     */
+    private $extraProperties;
+
+    public function __construct()
+    {
+        $this->extraProperties = new ArrayCollection();
+    }
+
     public static function createFromArray(array $data)
     {
         $keys = array('title', 'metaDescription', 'metaKeywords', 'originalUrl');
         $metadata = new self();
         foreach ($data as $key => $value) {
+            $metadata->createProperty($metadata, $key, $value);
+
             if (!in_array($key, $keys)) {
                 continue;
             }
@@ -61,6 +78,30 @@ class SeoMetadata implements SeoMetadataInterface
         }
 
         return $metadata;
+    }
+
+    /**
+     * A helper for the construction process.
+     *
+     * This method checks if the types are allowed and creates a meta property 
+     * from the type, key and value.
+     *
+     * @param SeoMetadataInterface $metadata
+     * @param string               $persistedKey
+     * @param string               $persistedValue
+     */
+    public function createProperty(SeoMetadataInterface $metadata, $persistedKey, $persistedValue)
+    {
+        $type = array_filter(ExtraProperty::getAllowedTypes(), function($possibleType) use ($persistedKey) {
+            return !strncmp($persistedKey, $possibleType, strlen($possibleType));
+        });
+
+        if (!$type || !is_array($type)) {
+            return;
+        }
+
+        $type = reset($type);
+        $metadata->addExtraProperty(new ExtraProperty(substr($persistedKey, strlen($type.'_')), $persistedValue, $type));
     }
 
     /**
@@ -130,13 +171,70 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
+    public function setExtraProperties(Collection $extraProperties)
+    {
+        $this->extraProperties = $extraProperties;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExtraProperties()
+    {
+        return $this->extraProperties;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addExtraProperty(ExtraProperty $property)
+    {
+        $this->extraProperties->add($property);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeExtraProperty(ExtraProperty $property)
+    {
+        $this->extraProperties->removeElement($property);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function toArray()
     {
-        return array(
-            'title'                 => $this->getTitle() ?: '',
-            'metaDescription'       => $this->getMetaDescription() ?: '',
-            'metaKeywords'          => $this->getMetaKeywords() ?: '',
-            'originalUrl'           => $this->getOriginalUrl() ?: '',
+        return array_merge(
+            array(
+                'title'           => $this->getTitle() ?: '',
+                'metaDescription' => $this->getMetaDescription() ?: '',
+                'metaKeywords'    => $this->getMetaKeywords() ?: '',
+                'originalUrl'     => $this->getOriginalUrl() ?: '',
+            ),
+            $this->getExtraPropertiesArray()
         );
+    }
+
+    /**
+     * All extra properties will be added to a flat array
+     * to persist them with an assoc mapping.
+     *
+     * This method just creates an array of them with keys that are
+     * prefixed with "property_", "http-equiv_" or "name_".
+     *
+     * @return array
+     */
+    private function getExtraPropertiesArray()
+    {
+        /** @var ExtraProperty[] $properties */
+        $properties = $this->extraProperties->toArray();
+        $result = array();
+
+        foreach ($properties as $property) {
+            $result[$property->getType().'_'.$property->getKey()] = $property->getValue();
+        }
+
+        return $result;
     }
 }

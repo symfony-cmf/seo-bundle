@@ -38,6 +38,7 @@ class SeoMetadataType extends AbstractType
             ->add('originalUrl', 'text', array('required' => false))
             ->add('metaDescription', 'textarea', array('required' => false))
             ->add('metaKeywords', 'textarea', array('required' => false))
+            ->add('extraProperties', 'seo_extra_property', array('data_class' => null))
         ;
     }
 

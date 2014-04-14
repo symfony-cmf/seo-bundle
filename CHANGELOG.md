@@ -4,6 +4,7 @@ Changelog
 1.0.0-RC2
 ---------
 
+* **2014-04-14**: Add possibility for arbitrary properties with extractors, persistence and admin support
 * **2014-04-11**: drop Symfony 2.2 compatibility
 
 1.0.0-RC1
