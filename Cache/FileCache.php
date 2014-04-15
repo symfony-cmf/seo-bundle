@@ -11,12 +11,16 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Cache;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
+use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
+
 /**
  * Caches extractors in the file system, using one file per content object.
  *
  * @author Wouter J <wouter@wouterj.nl>
  */
-class FileCache implements CacheInterface
+class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInterface
 {
     private $dir;
 
@@ -106,6 +110,19 @@ class FileCache implements CacheInterface
      */
     public function warmUp($cacheDir)
     {
-        mkdir($this->dir, 0777, true);
+        if (!is_dir($this->dir)) {
+            mkdir($this->dir, 0777, true);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clear($cacheDir)
+    {
+        $filesystem = new Filesystem();
+        if (is_dir($this->dir)) {
+            $filesystem->remove($this->dir);
+        }
     }
 }
