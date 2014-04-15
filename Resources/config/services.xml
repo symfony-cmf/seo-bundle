@@ -31,6 +31,7 @@
             <argument>cmf_seo</argument>
 
             <tag name="kernel.cache_warmer" />
+            <tag name="kernel.cache_clearer" />
         </service>
 
         <service id="cmf_seo.cache" alias="cmf_seo.cache.file" />
