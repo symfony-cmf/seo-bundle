@@ -12,15 +12,15 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsExtractor;
 
-class SeoKeywordsExtractorTest extends BaseTestCase
+class KeywordsExtractorTest extends BaseTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
-        $this->extractor = new SeoKeywordsExtractor();
+        $this->extractor = new KeywordsExtractor();
         $this->extractMethod = 'getSeoKeywords';
         $this->metadataMethod = 'setMetaKeywords';
     }
@@ -28,8 +28,8 @@ class SeoKeywordsExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsReadInterface')),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
         );
     }
 }

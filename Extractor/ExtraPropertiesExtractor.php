@@ -15,7 +15,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 
 /**
  * This strategy extracts additional properties from contents implementing the
@@ -23,7 +23,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class ExtraPropertiesExtractor implements SeoExtractorInterface
+class ExtraPropertiesExtractor implements ExtractorInterface
 {
     /**
      * {@inheritDoc}

@@ -4,8 +4,30 @@ Changelog
 1.0.0-RC2
 ---------
 
+* **2014-04-17**: The `Seo` prefix is removed from a lot of classes (FQCN is
+  shown here without the `Symfony\Cmf\Bundle\SeoBundle` part):
+
+     * `DependencyInjection\SeoConfigValues` -> `DependencyInjection\ConfigValues`
+     * `EventListener\SeoContentListener` -> `EventListener\ContentListener`
+     * `Exception\SeoExtractorStrategyException` -> `Exception\ExtractorStrategyException`
+     * `Extractor\SeoDescriptionExtractor` -> `Extractor\DescriptionExtractor`
+     * `Extractor\SeoDescriptionReadInterface` -> `Extractor\DescriptionReadInterface`
+     * `Extractor\SeoExtractorInterface` -> `Extractor\ExtractorInterface`
+     * `Extractor\SeoKeywordsExtractor` -> `Extractor\KeywordsExtractor`
+     * `Extractor\SeoKeywordsReadInterface` -> `Extractor\KeywordsReadInterface`
+     * `Extractor\SeoOriginalRouteExtractor` -> `Extractor\OriginalRouteExtractor`
+     * `Extractor\SeoOriginalRouteReadInterface` -> `Extractor\OriginalRouteReadInterface`
+     * `Extractor\SeoOriginalUrlExtractor` -> `Extractor\OriginalUrlExtractor`
+     * `Extractor\SeoOriginalUrlReadInterface` -> `Extractor\OriginalUrlReadInterface`
+     * `Extractor\SeoTitleExtractor` -> `Extractor\TitleExtractor`
+     * `Extractor\SeoTitleReadInterface` -> `Extractor\TitleReadInterface`
+
+* **2014-04-17**: The classes in the `Model` namespace are moved to the root
+  namespace (`Symfony\Cmf\Bundle\SeoBundle`)
+
 * **2014-04-17**: Add possibility for extra properties with extractors,
   persistence and admin support.
+
 * **2014-04-11**: drop Symfony 2.2 compatibility
 
 1.0.0-RC1

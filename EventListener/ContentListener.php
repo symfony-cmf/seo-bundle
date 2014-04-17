@@ -12,7 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentationInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentationInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoContentListener
+class ContentListener
 {
     /**
      * @var SeoPresentationInterface

@@ -12,17 +12,16 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exception\ModelNotSupportedException;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 
 /**
  * This extractor sets the absolute URL on the SeoMetadata.
  *
- * If you have a Symfony Route, use the SeoOriginalRouteExtractor.
+ * If you have a Symfony Route, use the OriginalRouteExtractor.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
-class SeoOriginalUrlExtractor implements SeoExtractorInterface
+class OriginalUrlExtractor implements ExtractorInterface
 {
 
     /**
@@ -30,7 +29,7 @@ class SeoOriginalUrlExtractor implements SeoExtractorInterface
      */
     public function supports($content)
     {
-        return $content instanceof SeoOriginalUrlReadInterface;
+        return $content instanceof OriginalUrlReadInterface;
     }
 
     /**

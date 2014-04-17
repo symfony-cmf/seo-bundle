@@ -12,15 +12,15 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor;
 
-class SeoOriginalUrlExtractorTest extends BaseTestCase
+class OriginalUrlExtractorTest extends BaseTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
-        $this->extractor = new SeoOriginalUrlExtractor();
+        $this->extractor = new OriginalUrlExtractor();
         $this->extractMethod = 'getSeoOriginalUrl';
         $this->metadataMethod = 'setOriginalUrl';
     }
@@ -28,8 +28,8 @@ class SeoOriginalUrlExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface')),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
         );
     }
 }

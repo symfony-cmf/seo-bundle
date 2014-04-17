@@ -10,10 +10,11 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
 
 /**
  * This class is a container for the metadata.
@@ -24,8 +25,8 @@ class SeoMetadata implements SeoMetadataInterface
 {
     /**
      * This string contains the information where we will find the original content.
-     * Depending on the setting for the cmf_seo.original_route_pattern, it 
-     * will do a redirect to this url or create a canonical link with this 
+     * Depending on the setting for the cmf_seo.original_route_pattern, it
+     * will do a redirect to this url or create a canonical link with this
      * value as the href attribute.
      *
      * @var string
@@ -83,7 +84,7 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * A helper for the construction process.
      *
-     * This method checks if the types are allowed and creates a meta property 
+     * This method checks if the types are allowed and creates a meta property
      * from the type, key and value.
      *
      * @param SeoMetadataInterface $metadata

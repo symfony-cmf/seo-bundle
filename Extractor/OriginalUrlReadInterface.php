@@ -21,7 +21,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
-interface SeoOriginalUrlReadInterface
+interface OriginalUrlReadInterface
 {
     /**
      * The method returns the absolute URL as a string to redirect to or set to

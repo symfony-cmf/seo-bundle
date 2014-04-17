@@ -15,7 +15,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Configuration;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 
 /**
  * This test will try to cover all configs.

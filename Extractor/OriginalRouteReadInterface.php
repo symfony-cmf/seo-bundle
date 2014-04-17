@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Route;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoOriginalRouteReadInterface
+interface OriginalRouteReadInterface
 {
     /**
      * Returns something that can be used to generate an absolute URL.

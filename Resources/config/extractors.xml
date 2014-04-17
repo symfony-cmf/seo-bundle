@@ -5,12 +5,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor</parameter>
         <parameter key="cmf_seo.extractor_strategy.read_title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.keywords.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_url.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.keywords.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_url.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor</parameter>
+        <parameter key="cmf_seo.extractor_strategy.original_route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalRouteExtractor</parameter>
     </parameters>
 
     <services>

@@ -12,9 +12,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 
 /**
@@ -26,7 +25,7 @@ class SeoAwareContent extends ContentBase implements SeoAwareInterface
      * @PHPCRODM\String(assoc="", nullable=true)
      */
     protected $seoMetadata;
-    
+
     /**
      * Any content model can handle its seo properties. By implementing
      * this interface a model has to return its class for all the seo properties.

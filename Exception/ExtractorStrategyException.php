@@ -17,6 +17,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Exception;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoExtractorStrategyException extends \RuntimeException
+class ExtractorStrategyException extends \RuntimeException
 {
 }

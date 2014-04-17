@@ -12,15 +12,15 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor;
 
-class SeoDescriptionExtractorTest extends BaseTestCase
+class DescriptionExtractorTest extends BaseTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
-        $this->extractor = new SeoDescriptionExtractor();
+        $this->extractor = new DescriptionExtractor();
         $this->extractMethod = 'getSeoDescription';
         $this->metadataMethod = 'setMetaDescription';
     }
@@ -28,8 +28,8 @@ class SeoDescriptionExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface')),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
         );
     }
 }

@@ -13,17 +13,17 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalUrlReadInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoTitleReadInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
 
 class AllStrategiesDocument implements
     SeoAwareInterface,
-    SeoDescriptionReadInterface,
-    SeoTitleReadInterface,
-    SeoOriginalUrlReadInterface
+    DescriptionReadInterface,
+    TitleReadInterface,
+    OriginalUrlReadInterface
 {
 
     protected $seoMetadata;

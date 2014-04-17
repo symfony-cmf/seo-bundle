@@ -10,13 +10,13 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoExtractorInterface;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\SeoConfigValues;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
 
 /**
@@ -87,10 +87,10 @@ class SeoPresentation implements SeoPresentationInterface
      *
      * @param SeoPage             $sonataPage
      * @param TranslatorInterface $translator
-     * @param SeoConfigValues     $configValues
+     * @param ConfigValues        $configValues
      * @param CacheInterface      $cache
      */
-    public function __construct(SeoPage $sonataPage, TranslatorInterface $translator, SeoConfigValues $configValues, CacheInterface $cache = null)
+    public function __construct(SeoPage $sonataPage, TranslatorInterface $translator, ConfigValues $configValues, CacheInterface $cache = null)
     {
         $this->sonataPage = $sonataPage;
         $this->translator = $translator;
@@ -117,9 +117,9 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * Adds extractors.
      *
-     * @param SeoExtractorInterface $extractor
+     * @param ExtractorInterface $extractor
      */
-    public function addExtractor(SeoExtractorInterface $extractor)
+    public function addExtractor(ExtractorInterface $extractor)
     {
         $this->extractors[] = $extractor;
     }

@@ -57,6 +57,8 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
      * Checks if the cache needs to be updated or not.
      *
      * @param null|integer $timestamp
+     *
+     * @return boolean whether cache needs to be updated.
      */
     public function isFresh($timestamp = null)
     {

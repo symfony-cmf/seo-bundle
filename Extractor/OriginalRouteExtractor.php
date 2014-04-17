@@ -12,18 +12,18 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exception\SeoExtractorStrategyException;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\ExtractorStrategyException;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * This strategy extracts the original route from content
- * implementing the SeoOriginalRouteReadInterface.
+ * implementing the OriginalRouteReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoOriginalRouteExtractor implements SeoExtractorInterface
+class OriginalRouteExtractor implements ExtractorInterface
 {
     /**
      * @var UrlGeneratorInterface
@@ -40,13 +40,13 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
      */
     public function supports($content)
     {
-        return $content instanceof SeoOriginalRouteReadInterface;
+        return $content instanceof OriginalRouteReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoOriginalRouteReadInterface $content
+     * @param OriginalRouteReadInterface $content
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
@@ -55,7 +55,7 @@ class SeoOriginalRouteExtractor implements SeoExtractorInterface
         try {
             $seoMetadata->setOriginalUrl($this->urlGenerator->generate($route));
         } catch (RouteNotFoundException $e) {
-            throw new SeoExtractorStrategyException('Unable to create a url.', 0, $e);
+            throw new ExtractorStrategyException('Unable to create a url.', 0, $e);
         }
     }
 }

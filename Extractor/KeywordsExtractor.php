@@ -12,28 +12,28 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
 
 /**
  * This strategy extracts the keywords from documents implementing the
- * SeoKeywordsReadInterface.
+ * KeywordsReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoKeywordsExtractor implements SeoExtractorInterface
+class KeywordsExtractor implements ExtractorInterface
 {
     /**
      * {@inheritDoc}
      */
     public function supports($object)
     {
-        return $object instanceof SeoKeywordsReadInterface;
+        return $object instanceof KeywordsReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param SeoKeywordsReadInterface $content
+     * @param KeywordsReadInterface $content
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {

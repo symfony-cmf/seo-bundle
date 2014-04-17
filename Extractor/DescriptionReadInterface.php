@@ -16,17 +16,18 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
  * This interface is one of the ExtractorInterfaces to
  * get content properties for updating the SeoMetadata.
  *
- * If you want to have a content that is able to update its title for the
- * SeoMetadata on its own, you should implement this interface.
+ * If you want to have a content that is able to update its
+ * description for the SeoMetadata on its own, you should implement
+ * this interface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoTitleReadInterface
+interface DescriptionReadInterface
 {
     /**
-     * Provides a title of this page to be used in SEO context.
+     * Provide a description of this page to be used in SEO context.
      *
      * @return string
      */
-    public function getSeoTitle();
+    public function getSeoDescription();
 }

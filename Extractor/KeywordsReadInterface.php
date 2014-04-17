@@ -22,7 +22,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface SeoKeywordsReadInterface
+interface KeywordsReadInterface
 {
     /**
      * Provides a list of keywords for this page to be
