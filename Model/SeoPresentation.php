@@ -179,6 +179,16 @@ class SeoPresentation implements SeoPresentationInterface
         $seoMetadata = $this->getSeoMetadata($content);
         $translationDomain = $this->configValues->getTranslationDomain();
 
+        if ($properties = $seoMetadata->getExtraProperties()) {
+            foreach ($properties as $property) {
+                $this->sonataPage->addMeta(
+                    $property->getType(),
+                    $property->getKey(),
+                    $property->getValue()
+                );
+            }
+        }
+
         if ($seoMetadata->getTitle()) {
             $pageTitle = null !== $this->configValues->getTitle()
                 ? $this->translator->trans(
@@ -229,7 +239,6 @@ class SeoPresentation implements SeoPresentationInterface
                     break;
             }
         }
-
     }
 
     /**

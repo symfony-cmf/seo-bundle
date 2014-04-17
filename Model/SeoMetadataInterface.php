@@ -12,6 +12,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 /**
  * The interface for the SeoMetadata.
  *
@@ -77,6 +79,26 @@ interface SeoMetadataInterface
      * @return string
      */
     public function getTitle();
+
+    /**
+     * @param Collection $extraProperties
+     */
+    public function setExtraProperties(Collection $extraProperties);
+
+    /**
+     * @return Collection
+     */
+    public function getExtraProperties();
+
+    /**
+     * @param ExtraProperty $property
+     */
+    public function addExtraProperty(ExtraProperty $property);
+
+    /**
+     * @param ExtraProperty $property
+     */
+    public function removeExtraProperty(ExtraProperty $property);
 
     /**
      * Returns the array representation of the metadata properties.

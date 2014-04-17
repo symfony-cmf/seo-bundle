@@ -32,8 +32,6 @@ class SeoOriginalRouteExtractorTest extends BaseTestCase
     {
         return array(
             array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoOriginalRouteReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoDescriptionReadInterface'), false),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\SeoKeywordsReadInterface'), false),
             array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
         );
     }
