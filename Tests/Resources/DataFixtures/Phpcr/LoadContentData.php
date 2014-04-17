@@ -26,7 +26,6 @@ class LoadContentData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         NodeHelper::createPath($manager->getPhpcrSession(), '/test');
-        $root = $manager->find(null, '/test');
 
         NodeHelper::createPath($manager->getPhpcrSession(), '/test/content');
         NodeHelper::createPath($manager->getPhpcrSession(), '/test/routes/content');

@@ -12,15 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
-use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AllStrategiesDocument;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor;
-use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class ConfigValuesTest extends \PHPUnit_Framework_Testcase
 {

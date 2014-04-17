@@ -32,7 +32,7 @@ class UnescapePlaceholdersPass implements CompilerPassInterface
     private $parameterNames;
 
     /**
-     * @param array $parameters The names of the parameters which should be unescaped
+     * @param array $parameterNames The names of the parameters which should be unescaped
      */
     public function __construct(array $parameterNames)
     {

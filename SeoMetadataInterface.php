@@ -13,6 +13,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Doctrine\Common\Collections\Collection;
+use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
 
 /**
  * The interface for the SeoMetadata.
