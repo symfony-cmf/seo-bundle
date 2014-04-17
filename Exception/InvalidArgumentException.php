@@ -17,5 +17,4 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Exception;
  */
 class InvalidArgumentException extends \RuntimeException
 {
-
 }

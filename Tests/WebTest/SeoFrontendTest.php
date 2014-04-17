@@ -115,7 +115,7 @@ class SeoFrontendTest extends BaseTestCase
     /**
      * @dataProvider getExtraProperties
      */
-    public function testArbitraryProperties($pathName, $contentTitle, $expectedType, $expectedKey, $expectedValue)
+    public function testExtraProperties($pathName, $contentTitle, $expectedType, $expectedKey, $expectedValue)
     {
         $crawler = $this->client->request('GET', '/content/'.$pathName);
         $res = $this->client->getResponse();
@@ -136,9 +136,9 @@ class SeoFrontendTest extends BaseTestCase
     public function getExtraProperties()
     {
         return array(
-            array('content-arbitrary-property', 'Content arbitrary property', 'property', 'og:title', 'arbitrary title'),
-            array('content-arbitrary-name', 'Content name attribute', 'name', 'robots', 'index, follow'),
-            array('content-arbitrary-http', 'Content http-equiv attribute', 'http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
+            array('content-extra-property', 'Content extra property', 'property', 'og:title', 'extra title'),
+            array('content-extra-name', 'Content name attribute', 'name', 'robots', 'index, follow'),
+            array('content-extra-http', 'Content http-equiv attribute', 'http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
         );
     }
 }

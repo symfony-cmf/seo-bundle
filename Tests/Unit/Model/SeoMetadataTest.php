@@ -63,10 +63,9 @@ class SeoMetadataTest extends \PHPUnit_Framework_TestCase {
     public function getExtraProperties()
     {
         return array(
-            array('property', 'og:title', 'arbitrary title'),
+            array('property', 'og:title', 'extra title'),
             array('name', 'robots', 'index, follow'),
             array('http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
         );
     }
 }
- 

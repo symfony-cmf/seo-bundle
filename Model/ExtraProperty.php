@@ -15,22 +15,21 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 
 /**
- * A simple value object for storing key-value pairs of
- * arbitrary metadata.
+ * A simple value object for storing key-value pairs of additional metadata.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
 class ExtraProperty
 {
     /**
-     * The key for an arbitrary property.
+     * The key of this property.
      *
      * @var string
      */
     private $key;
 
     /**
-     * The value of an arbitrary property.
+     * The value of this property.
      *
      * @var string
      */
@@ -48,7 +47,7 @@ class ExtraProperty
     private $type;
 
     /**
-     * An array to store the possible values for the meta types.
+     * Supported meta types.
      *
      * @var array
      */
@@ -106,6 +105,11 @@ class ExtraProperty
         return $this->value;
     }
 
+    /**
+     * List of supported types for extra properties.
+     *
+     * @return array
+     */
     public static function getAllowedTypes()
     {
         return self::$allowedTypes;

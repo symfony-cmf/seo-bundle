@@ -18,8 +18,8 @@ use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
- * This strategy extracts the arbitrary properties from contents implementing the
- * SeoArbitraryPropertiesReadInterface.
+ * This strategy extracts additional properties from contents implementing the
+ * SeoExtraPropertiesReadInterface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */

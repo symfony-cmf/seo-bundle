@@ -73,20 +73,20 @@ class LoadContentData implements FixtureInterface
         $manager->persist($route);
 
         $content = new SeoAwareContent();
-        $content->setName('content-arbitrary-property');
-        $content->setTitle('Content arbitrary property');
-        $content->setBody('Content for arbitrary properties - meta tag with property attribute.');
+        $content->setName('content-extra-property');
+        $content->setTitle('Content extra property');
+        $content->setBody('Content for extra properties - meta tag with property attribute.');
         $content->setParentDocument($contentRoot);
 
         $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new ExtraProperty('og:title', 'arbitrary title', 'property'));
+        $metadata->addExtraProperty(new ExtraProperty('og:title', 'extra title', 'property'));
 
         $content->setSeoMetadata($metadata);
 
         $manager->persist($content);
 
         $route = new Route();
-        $route->setPosition($routeRoot, 'content-arbitrary-property');
+        $route->setPosition($routeRoot, 'content-extra-property');
         $route->setContent($content);
         $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
 
@@ -94,7 +94,7 @@ class LoadContentData implements FixtureInterface
 
         // content for the name attribute in the meta tag
         $content = new SeoAwareContent();
-        $content->setName('content-arbitrary-name');
+        $content->setName('content-extra-name');
         $content->setTitle('Content name attribute');
         $content->setBody('Content for setting a meta tag with name attribute.');
         $content->setParentDocument($contentRoot);
@@ -107,7 +107,7 @@ class LoadContentData implements FixtureInterface
         $manager->persist($content);
 
         $route = new Route();
-        $route->setPosition($routeRoot, 'content-arbitrary-name');
+        $route->setPosition($routeRoot, 'content-extra-name');
         $route->setContent($content);
         $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
 
@@ -115,7 +115,7 @@ class LoadContentData implements FixtureInterface
 
         // content for the http-equiv attribute in meta tag
         $content = new SeoAwareContent();
-        $content->setName('content-arbitrary-http');
+        $content->setName('content-extra-http');
         $content->setTitle('Content http-equiv attribute');
         $content->setBody('Content for setting a meta tag with http-equiv attribute.');
         $content->setParentDocument($contentRoot);
@@ -128,7 +128,7 @@ class LoadContentData implements FixtureInterface
         $manager->persist($content);
 
         $route = new Route();
-        $route->setPosition($routeRoot, 'content-arbitrary-http');
+        $route->setPosition($routeRoot, 'content-extra-http');
         $route->setContent($content);
         $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
 

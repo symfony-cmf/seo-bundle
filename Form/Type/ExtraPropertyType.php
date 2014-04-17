@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Form type for the arbitrary properties.
+ * Form type for the extra properties.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
  */
@@ -42,7 +42,7 @@ class ExtraPropertyType extends AbstractType
         $builder
             ->add('key', 'text')
             ->add('value', 'text')
-            ;
+        ;
 
         // add a select field depending on the allowed types
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
