@@ -12,6 +12,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
@@ -37,6 +40,13 @@ class ExtraPropertiesExtractor implements SeoExtractorInterface
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $seoMetadata->setExtraProperties($content->getSeoExtraProperties());
+        $properties = $content->getSeoExtraProperties();
+        if (is_array($properties)) {
+            $properties = new ArrayCollection($properties);
+        } elseif (!$properties instanceof Collection) {
+            throw new InvalidArgumentException(sprintf('getSeoExtraProperties should return an array or an implementation of Doctrine\Common\Collections\Collection, "%s" given instead.', is_object($properties) ? get_class($properties) : gettype($properties)));
+        }
+
+        $seoMetadata->setExtraProperties($properties);
     }
 }

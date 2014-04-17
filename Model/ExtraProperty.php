@@ -11,6 +11,7 @@
 
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 
 /**
@@ -59,7 +60,7 @@ class ExtraProperty
         $this->value = $value;
 
         if (!in_array($type, self::$allowedTypes)) {
-            throw new InvalidArgumentException(sprintf('Type %s not allowed for meta tags.', $type));
+            throw new InvalidArgumentException(sprintf('Type "%s" is not allowed for meta tags, use one of: %s', $type, implode(', ', self::$allowedTypes)));
         }
 
         $this->type = $type;
