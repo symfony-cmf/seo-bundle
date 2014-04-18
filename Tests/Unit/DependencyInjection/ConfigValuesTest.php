@@ -10,7 +10,7 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 

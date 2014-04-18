@@ -9,8 +9,7 @@
  * file that was distributed with this source code.
  */
 
-
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
