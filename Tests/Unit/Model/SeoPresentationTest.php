@@ -15,6 +15,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
+use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -340,5 +341,23 @@ class PresentationTest extends \PHPUnit_Framework_Testcase
         $seoPresentation->updateSeoPage($this->content);
 
         return array($seoPresentation, $cache, $extractors);
+    }
+
+    public function testSeoAwareWithoutCurrentMetadata()
+    {
+        $content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
+        $content
+            ->expects($this->any())
+            ->method('getSeoMetadata')
+            ->will($this->returnValue(null))
+        ;
+
+        $content
+            ->expects($this->once())
+            ->method('setSeoMetadata')
+            ->with($this->callback(function ($c) { return $c instanceof SeoMetadata; }))
+        ;
+
+        $this->seoPresentation->updateSeoPage($content);
     }
 }

@@ -18,6 +18,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -133,10 +134,20 @@ class SeoPresentation implements SeoPresentationInterface
      */
     private function getSeoMetadata($content)
     {
-        $seoMetadata = $content instanceof SeoAwareInterface
-            ? clone $content->getSeoMetadata()
-            : new SeoMetadata()
-        ;
+        if ($content instanceof SeoAwareInterface) {
+            $contentSeoMetadata = $content->getSeoMetadata();
+
+            if ($contentSeoMetadata instanceof SeoMetadataInterface) {
+                $seoMetadata = clone $contentSeoMetadata;
+            } elseif (null === $contentSeoMetadata) {
+                $seoMetadata = new SeoMetadata();
+                $content->setSeoMetadata($seoMetadata); // make sure it has metadata the next time
+            } else {
+                throw new InvalidArgumentException('getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given', is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata));
+            }
+        } else {
+            $seoMetadata = new SeoMetadata();
+        }
 
         $cachingAvailable = (boolean) $this->cache;
         if ($cachingAvailable) {
