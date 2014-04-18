@@ -15,7 +15,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
-use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
  * This strategy extracts additional properties from contents implementing the

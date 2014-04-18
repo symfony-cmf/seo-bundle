@@ -53,7 +53,7 @@ class SeoMetadataType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\SeoMetadata',
+            'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata',
         ));
     }
 
