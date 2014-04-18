@@ -53,11 +53,18 @@ class ExtraProperty
      */
     private static $allowedTypes = array('name', 'property', 'http-equiv');
 
-    public function __construct($key, $value, $type)
+    public function __construct($key = null, $value = null, $type = null)
     {
-        $this->key = $key;
-        $this->value = $value;
+        $this->setKey($key);
+        $this->setValue($value);
 
+        if (null !== $type) {
+            $this->setType($type);
+        }
+    }
+
+    public function setType($type)
+    {
         if (!in_array($type, self::$allowedTypes)) {
             throw new InvalidArgumentException(sprintf('Type "%s" is not allowed for meta tags, use one of: %s', $type, implode(', ', self::$allowedTypes)));
         }

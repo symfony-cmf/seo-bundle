@@ -46,13 +46,12 @@ class ExtraPropertyType extends AbstractType
 
         // add a select field depending on the allowed types
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-            $form = $event->getForm();
-            $choice = array();
+            $choices = array();
             foreach (ExtraProperty::getAllowedTypes() as $type) {
-                $choice[] = array('label' => $type, 'value' => $type);
+                $choices[$type] = $type;
             }
 
-            $form->add('type', 'collection', array('options' => array('choices' => $choice)));
+            $event->getForm()->add('type', 'choice', array('choices' => $choices));
         });
     }
 
@@ -63,9 +62,8 @@ class ExtraPropertyType extends AbstractType
     {
         $resolver->setDefaults(array(
             'label'        => false,
-            'allow_add'    => true,
-            'allow_delete' => true,
             'required'     => false,
+            'data_class'   => 'Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty',
         ));
     }
 }

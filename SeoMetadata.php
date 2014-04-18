@@ -69,13 +69,11 @@ class SeoMetadata implements SeoMetadataInterface
         $keys = array('title', 'metaDescription', 'metaKeywords', 'originalUrl');
         $metadata = new self();
         foreach ($data as $key => $value) {
-            $metadata->createProperty($metadata, $key, $value);
-
-            if (!in_array($key, $keys)) {
-                continue;
+            if (in_array($key, $keys)) {
+                $metadata->{'set'.ucfirst($key)}($value);
+            } else {
+                $metadata->createProperty($metadata, $key, $value);
             }
-
-            $metadata->{'set'.ucfirst($key)}($value);
         }
 
         return $metadata;
@@ -228,11 +226,9 @@ class SeoMetadata implements SeoMetadataInterface
      */
     private function getExtraPropertiesArray()
     {
-        /** @var ExtraProperty[] $properties */
-        $properties = $this->extraProperties->toArray();
         $result = array();
 
-        foreach ($properties as $property) {
+        foreach ($this->extraProperties as $property) {
             $result[$property->getType().'_'.$property->getKey()] = $property->getValue();
         }
 
