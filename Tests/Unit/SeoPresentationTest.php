@@ -47,7 +47,7 @@ class PresentationTest extends \PHPUnit_Framework_Testcase
             $this->configValues
         );
 
-        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoMetadata');
+        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata');
 
         $this->content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
         $this->content

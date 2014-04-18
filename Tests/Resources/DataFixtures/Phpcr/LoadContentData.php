@@ -16,7 +16,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors;

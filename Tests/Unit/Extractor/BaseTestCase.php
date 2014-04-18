@@ -23,7 +23,7 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface');
+        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface');
     }
 
     /**

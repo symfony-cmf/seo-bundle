@@ -10,7 +10,7 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle;
+namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
