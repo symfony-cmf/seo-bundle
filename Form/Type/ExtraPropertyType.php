@@ -31,7 +31,7 @@ class ExtraPropertyType extends AbstractType
      */
     public function getName()
     {
-        return 'seo_extra_property';
+        return 'seo_extra';
     }
 
     /**

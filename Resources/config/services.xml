@@ -28,7 +28,7 @@
         </service>
 
         <service id="cmf_seo.form.type.seo_extra_property" class="%cmf_seo.form.type.seo_extra_property.class%">
-            <tag name="form.type" alias="seo_extra_property" />
+            <tag name="form.type" alias="seo_extra" />
         </service>
 
         <service id="cmf_seo.cache.file" class="%cmf_seo.cache.file.class%">

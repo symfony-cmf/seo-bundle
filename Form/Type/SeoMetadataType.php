@@ -44,6 +44,16 @@ class SeoMetadataType extends AbstractType
                 'allow_add'    => true,
                 'allow_delete' => true,
             ))
+            ->add('extraNames', 'collection', array(
+                'type' => new ExtraPropertyType(),
+                'allow_add'    => true,
+                'allow_delete' => true,
+            ))
+            ->add('extraHttp', 'collection', array(
+                'type' => new ExtraPropertyType(),
+                'allow_add'    => true,
+                'allow_delete' => true,
+            ))
         ;
     }
 
