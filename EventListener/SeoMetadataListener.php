@@ -30,7 +30,8 @@ class SeoMetadataListener implements EventSubscriber
         return array(
             'preUpdate',
             'prePersist',
-            'postLoad'
+            'postLoad',
+            'bindTranslation',
         );
     }
 
@@ -45,6 +46,11 @@ class SeoMetadataListener implements EventSubscriber
     }
 
     public function prePersist(LifecycleEventArgs $args)
+    {
+        $this->preUpdate($args);
+    }
+
+    public function bindTranslation(LifecycleEventArgs $args)
     {
         $this->preUpdate($args);
     }
