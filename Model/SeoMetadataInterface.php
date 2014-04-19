@@ -92,12 +92,12 @@ interface SeoMetadataInterface
     public function getExtraProperties();
 
     /**
-     * @param Extra $property
+     * @param Extra $extra
      */
-    public function addExtraProperty(Extra $property);
+    public function addExtraProperty(Extra $extra);
 
     /**
-     * @param Extra $property
+     * @param Extra $extra
      */
-    public function removeExtraProperty(Extra $property);
+    public function removeExtraProperty(Extra $extra);
 }

@@ -162,16 +162,16 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function addExtraProperty(Extra $property)
+    public function addExtraProperty(Extra $extra)
     {
-        $this->extraProperties->add($property);
+        $this->extraProperties->add($extra);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removeExtraProperty(Extra $property)
+    public function removeExtraProperty(Extra $extra)
     {
-        $this->extraProperties->removeElement($property);
+        $this->extraProperties->removeElement($extra);
     }
 }
