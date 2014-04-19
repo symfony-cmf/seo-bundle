@@ -12,6 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
+use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterExtractorsPass;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\UnescapePlaceholdersPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -27,5 +28,18 @@ class CmfSeoBundle extends Bundle
             'cmf_seo.title',
             'cmf_seo.description',
         )), PassConfig::TYPE_OPTIMIZE);
+
+        if (class_exists('Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass')) {
+            $container->addCompilerPass(
+                DoctrinePhpcrMappingsPass::createXmlMappingDriver(
+                    array(
+                        realpath(__DIR__ . '/Resources/config/doctrine-model') => 'Symfony\Cmf\Bundle\SeoBundle\Model',
+                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr',
+                    ),
+                    array('cmf_seo.manager_name'),
+                    'cmf_seo.backend_type_phpcr'
+                )
+            );
+        }
     }
 }
