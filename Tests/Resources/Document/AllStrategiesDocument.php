@@ -17,7 +17,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 
 class AllStrategiesDocument implements
     SeoAwareInterface,

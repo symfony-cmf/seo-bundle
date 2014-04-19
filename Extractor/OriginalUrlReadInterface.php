@@ -19,7 +19,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
  * If you want to have a content that is able to update its original URL for
  * the SeoMetadata on its own, you should implement this interface.
  *
- * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
+ * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>
  */
 interface OriginalUrlReadInterface
 {

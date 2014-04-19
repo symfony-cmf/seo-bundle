@@ -16,8 +16,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors;
 
@@ -46,7 +45,6 @@ class LoadContentData implements FixtureInterface
         $metadata->setOriginalUrl('/to/original');
 
         $content->setSeoMetadata($metadata);
-
         $manager->persist($content);
 
         $route = new Route();
@@ -72,62 +70,21 @@ class LoadContentData implements FixtureInterface
         $manager->persist($route);
 
         $content = new SeoAwareContent();
-        $content->setName('content-extra-property');
-        $content->setTitle('Content extra property');
-        $content->setBody('Content for extra properties - meta tag with property attribute.');
+        $content->setName('content-extra');
+        $content->setTitle('Content extra');
+        $content->setBody('Content for extra properties.');
         $content->setParentDocument($contentRoot);
 
         $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new ExtraProperty('og:title', 'extra title', 'property'));
+        $metadata->addExtraProperty('og:title', 'extra title');
+        $metadata->addExtraName('robots', 'index, follow');
+        $metadata->addExtraHttp('Content-Type', 'text/html; charset=utf-8');
 
         $content->setSeoMetadata($metadata);
-
         $manager->persist($content);
 
         $route = new Route();
-        $route->setPosition($routeRoot, 'content-extra-property');
-        $route->setContent($content);
-        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
-
-        $manager->persist($route);
-
-        // content for the name attribute in the meta tag
-        $content = new SeoAwareContent();
-        $content->setName('content-extra-name');
-        $content->setTitle('Content name attribute');
-        $content->setBody('Content for setting a meta tag with name attribute.');
-        $content->setParentDocument($contentRoot);
-
-        $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new ExtraProperty('robots', 'index, follow', 'name'));
-
-        $content->setSeoMetadata($metadata);
-
-        $manager->persist($content);
-
-        $route = new Route();
-        $route->setPosition($routeRoot, 'content-extra-name');
-        $route->setContent($content);
-        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
-
-        $manager->persist($route);
-
-        // content for the http-equiv attribute in meta tag
-        $content = new SeoAwareContent();
-        $content->setName('content-extra-http');
-        $content->setTitle('Content http-equiv attribute');
-        $content->setBody('Content for setting a meta tag with http-equiv attribute.');
-        $content->setParentDocument($contentRoot);
-
-        $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new ExtraProperty('Content-Type', 'text/html; charset=utf-8', 'http-equiv'));
-
-        $content->setSeoMetadata($metadata);
-
-        $manager->persist($content);
-
-        $route = new Route();
-        $route->setPosition($routeRoot, 'content-extra-http');
+        $route->setPosition($routeRoot, 'content-extra');
         $route->setContent($content);
         $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
 

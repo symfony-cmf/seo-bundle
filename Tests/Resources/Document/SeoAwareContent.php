@@ -22,7 +22,7 @@ use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 class SeoAwareContent extends ContentBase implements SeoAwareInterface
 {
     /**
-     * @PHPCRODM\String(assoc="", nullable=true)
+     * @PHPCRODM\Child(nodeName="seo-metadata")
      */
     protected $seoMetadata;
 

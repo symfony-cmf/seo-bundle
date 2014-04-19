@@ -12,6 +12,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+
 /**
  * This interface is responsible to mark a content to be aware of SEO
  * metadata.

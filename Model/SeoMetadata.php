@@ -12,10 +12,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
-
 /**
  * This class is a container for the metadata.
  *
@@ -23,6 +19,16 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
  */
 class SeoMetadata implements SeoMetadataInterface
 {
+    /**
+     * Id for the document.
+     */
+    private $id;
+
+    /**
+     * For translatable metadata.
+     */
+    private $locale;
+
     /**
      * This string contains the information where we will find the original content.
      * Depending on the setting for the cmf_seo.original_route_pattern, it
@@ -53,54 +59,56 @@ class SeoMetadata implements SeoMetadataInterface
     private $title;
 
     /**
-     * To store extra properties.
+     * To store meta tags for type property.
      *
-     * @var Collection
+     * @var array
      */
-    private $extraProperties;
+    private $extraProperties = array();
 
-    public function __construct()
+    /**
+     * To store extra meta tags for type name.
+     *
+     * @var array
+     */
+    private $extraNames = array();
+
+    /**
+     * To store meta tags for type http-equiv.
+     *
+     * @var array
+     */
+    private $extraHttp = array();
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
     {
-        $this->extraProperties = new ArrayCollection();
-    }
-
-    public static function createFromArray(array $data)
-    {
-        $keys = array('title', 'metaDescription', 'metaKeywords', 'originalUrl');
-        $metadata = new self();
-        foreach ($data as $key => $value) {
-            if (in_array($key, $keys)) {
-                $metadata->{'set'.ucfirst($key)}($value);
-            } else {
-                $metadata->createProperty($metadata, $key, $value);
-            }
-        }
-
-        return $metadata;
+        $this->id = $id;
     }
 
     /**
-     * A helper for the construction process.
-     *
-     * This method checks if the types are allowed and creates a meta property
-     * from the type, key and value.
-     *
-     * @param SeoMetadataInterface $metadata
-     * @param string               $persistedKey
-     * @param string               $persistedValue
+     * @return mixed
      */
-    public function createProperty(SeoMetadataInterface $metadata, $persistedKey, $persistedValue)
+    public function getId()
     {
-        $type = array_filter(ExtraProperty::getAllowedTypes(), function($possibleType) use ($persistedKey) {
-            return !strncmp($persistedKey, $possibleType, strlen($possibleType));
-        });
+        return $this->id;
+    }
 
-        if (!$type || !is_array($type)) {
-            return;
-        }
+    /**
+     * @param mixed $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 
-        $type = reset($type);
-        $metadata->addExtraProperty(new ExtraProperty(substr($persistedKey, strlen($type.'_')), $persistedValue, $type));
+    /**
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
     /**
@@ -170,7 +178,7 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraProperties(Collection $extraProperties)
+    public function setExtraProperties(array $extraProperties)
     {
         $this->extraProperties = $extraProperties;
     }
@@ -186,52 +194,86 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function addExtraProperty(ExtraProperty $property)
+    public function addExtraProperty($key, $value)
     {
-        $this->extraProperties->add($property);
+        $this->extraProperties[$key] = (string)$value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removeExtraProperty(ExtraProperty $property)
+    public function removeExtraProperty($key)
     {
-        $this->extraProperties->removeElement($property);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function toArray()
-    {
-        return array_merge(
-            array(
-                'title'           => $this->getTitle() ?: '',
-                'metaDescription' => $this->getMetaDescription() ?: '',
-                'metaKeywords'    => $this->getMetaKeywords() ?: '',
-                'originalUrl'     => $this->getOriginalUrl() ?: '',
-            ),
-            $this->getExtraPropertiesArray()
-        );
-    }
-
-    /**
-     * All extra properties will be added to a flat array
-     * to persist them with an assoc mapping.
-     *
-     * This method just creates an array of them with keys that are
-     * prefixed with "property_", "http-equiv_" or "name_".
-     *
-     * @return array
-     */
-    private function getExtraPropertiesArray()
-    {
-        $result = array();
-
-        foreach ($this->extraProperties as $property) {
-            $result[$property->getType().'_'.$property->getKey()] = $property->getValue();
+        if (array_key_exists($key, $this->extraProperties)) {
+            unset($this->extraProperties[$key]);
         }
+    }
 
-        return $result;
+    /**
+     * {@inheritDoc}
+     */
+    public function setExtraNames(array $extraNames)
+    {
+        $this->extraNames = $extraNames;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExtraNames()
+    {
+        return $this->extraNames;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addExtraName($key, $value)
+    {
+        $this->extraNames[$key] = (string)$value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeExtraName($key)
+    {
+        if (array_key_exists($key, $this->extraNames)) {
+            unset($this->extraNames[$key]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setExtraHttp(array $extraHttp)
+    {
+        $this->extraHttp = $extraHttp;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExtraHttp()
+    {
+        return $this->extraHttp;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addExtraHttp($key, $value)
+    {
+        $this->extraHttp[$key] = (string)$value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeExtraHttp($key)
+    {
+        if (array_key_exists($key, $this->extraHttp)) {
+            unset($this->extraHttp[$key]);
+        }
     }
 }

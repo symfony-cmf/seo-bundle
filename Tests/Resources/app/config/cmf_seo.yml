@@ -1,3 +1,6 @@
+framework:
+    translator: { enabled: true, fallback: en }
+
 sonata_seo:
     page:
         metas:
@@ -5,48 +8,12 @@ sonata_seo:
                 keywords: "testkey"
 
 cmf_seo:
-    persistence: { phpcr: true }
     title: "Default | %%content_title%%"
     description: "Default description. %%content_description%%"
     original_route_pattern: canonical
-    sonata_admin_extension: true
 
 cmf_routing:
-    dynamic:
-        enabled: true
-        persistence:
-            phpcr:
-                route_basepath: /test/routes
-                enabled: true
     chain:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
-
-framework:
-    translator: { enabled: true, fallback: en }
-
-sonata_admin:
-    extensions:
-        cmf_seo.admin_extension:
-            implements:
-               - Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface
-    dashboard:
-        groups:
-            content:
-                label: Content
-                items:
-                    - sonata.admin.seo_content
-services:
-     sonata.admin.seo_content:
-         class: Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Admin\SeoAwareContentAdmin
-         tags:
-            - { name: sonata.admin, manager_type: doctrine_phpcr, label_catalogue: CmfSeoBundle, group: dashboard.cmf, label: dashboard.label_seo_content, label_translator_strategy: sonata.admin.label.strategy.underscore}
-         arguments:
-            - ~
-            - Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent
-            - SonataAdminBundle:CRUD
-         calls:
-            - [ setTranslationDomain, [CmfSeoBundle]]
-            - [ setRouteBuilder, [@sonata.admin.route.path_info_slashes]]
-            - [ setRootPath, [/test/content]]

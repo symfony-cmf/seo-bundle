@@ -8,7 +8,6 @@
         <parameter key="cmf_seo.config_values.class">Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues</parameter>
 
         <parameter key="cmf_seo.form.type.seo_metadata.class">Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType</parameter>
-        <parameter key="cmf_seo.form.type.seo_extra_property.class">Symfony\Cmf\Bundle\SeoBundle\Form\Type\ExtraPropertyType</parameter>
         <parameter key="cmf_seo.cache.file.class">Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache</parameter>
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener</parameter>
@@ -25,10 +24,6 @@
 
         <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">
             <tag name="form.type" alias="seo_metadata" />
-        </service>
-
-        <service id="cmf_seo.form.type.seo_extra_property" class="%cmf_seo.form.type.seo_extra_property.class%">
-            <tag name="form.type" alias="seo_extra_property" />
         </service>
 
         <service id="cmf_seo.cache.file" class="%cmf_seo.cache.file.class%">

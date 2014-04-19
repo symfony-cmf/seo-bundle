@@ -19,7 +19,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  *
  * If you have a Symfony Route, use the OriginalRouteExtractor.
  *
- * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
+ * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>
  */
 class OriginalUrlExtractor implements ExtractorInterface
 {
