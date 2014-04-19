@@ -61,23 +61,6 @@ class CmfSeoExtension extends Extension
         }
 
         if (null !== $persistenceType) {
-            if ($config['metadata_listener']) {
-                $loader->load('doctrine-listener.xml');
-
-                switch ($persistenceType) {
-                    case 'phpcr':
-                        $tagPrefix = 'doctrine_phpcr';
-                        break;
-
-                    case 'orm':
-                        $tagPrefix = 'orm';
-                        break;
-                }
-
-                $definition = $container->getDefinition('cmf_seo.persistence.metadata_listener');
-                $definition->addTag($tagPrefix.'.event_subscriber');
-            }
-
             if ($config['sonata_admin_extension']) {
                 switch ($persistenceType) {
                     case 'phpcr':

@@ -49,9 +49,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
                 'phpcr' => true,
             )
         ));
-
-        $this->assertContainerBuilderHasService('cmf_seo.persistence.metadata_listener', 'Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoMetadataListener');
-        $this->assertContainerBuilderHasServiceDefinitionWithTag('cmf_seo.persistence.metadata_listener', 'doctrine_phpcr.event_subscriber');
     }
 
     public function testPersistenceORM()
@@ -71,9 +68,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
                 'orm'   => true,
             ),
         ));
-
-        $this->assertContainerBuilderHasService('cmf_seo.persistence.metadata_listener', 'Symfony\Cmf\Bundle\SeoBundle\EventListener\SeoMetadataListener');
-        $this->assertContainerBuilderHasServiceDefinitionWithTag('cmf_seo.persistence.metadata_listener', 'doctrine.event_subscriber');
     }
 
     public function testAdminExtension()

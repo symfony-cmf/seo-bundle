@@ -14,7 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 
 /**
  * This class is a container for the metadata.
@@ -53,54 +53,30 @@ class SeoMetadata implements SeoMetadataInterface
     private $title;
 
     /**
-     * To store extra properties.
+     * To store meta tags for type property.
      *
      * @var Collection
      */
     private $extraProperties;
 
+    /**
+     * To store extra meta tags for type name.
+     *
+     * @var Collection
+     */
+    private $extraNames;
+
+    /**
+     * To store meta tags for type http-equiv.
+     * @var Collection
+     */
+    private $extraHttp;
+
     public function __construct()
     {
         $this->extraProperties = new ArrayCollection();
-    }
-
-    public static function createFromArray(array $data)
-    {
-        $keys = array('title', 'metaDescription', 'metaKeywords', 'originalUrl');
-        $metadata = new self();
-        foreach ($data as $key => $value) {
-            if (in_array($key, $keys)) {
-                $metadata->{'set'.ucfirst($key)}($value);
-            } else {
-                $metadata->createProperty($metadata, $key, $value);
-            }
-        }
-
-        return $metadata;
-    }
-
-    /**
-     * A helper for the construction process.
-     *
-     * This method checks if the types are allowed and creates a meta property
-     * from the type, key and value.
-     *
-     * @param SeoMetadataInterface $metadata
-     * @param string               $persistedKey
-     * @param string               $persistedValue
-     */
-    public function createProperty(SeoMetadataInterface $metadata, $persistedKey, $persistedValue)
-    {
-        $type = array_filter(ExtraProperty::getAllowedTypes(), function($possibleType) use ($persistedKey) {
-            return !strncmp($persistedKey, $possibleType, strlen($possibleType));
-        });
-
-        if (!$type || !is_array($type)) {
-            return;
-        }
-
-        $type = reset($type);
-        $metadata->addExtraProperty(new ExtraProperty(substr($persistedKey, strlen($type.'_')), $persistedValue, $type));
+        $this->extraNames = new ArrayCollection();
+        $this->extraHttp = new ArrayCollection();
     }
 
     /**
@@ -186,7 +162,7 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function addExtraProperty(ExtraProperty $property)
+    public function addExtraProperty(Extra $property)
     {
         $this->extraProperties->add($property);
     }
@@ -194,44 +170,8 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function removeExtraProperty(ExtraProperty $property)
+    public function removeExtraProperty(Extra $property)
     {
         $this->extraProperties->removeElement($property);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function toArray()
-    {
-        return array_merge(
-            array(
-                'title'           => $this->getTitle() ?: '',
-                'metaDescription' => $this->getMetaDescription() ?: '',
-                'metaKeywords'    => $this->getMetaKeywords() ?: '',
-                'originalUrl'     => $this->getOriginalUrl() ?: '',
-            ),
-            $this->getExtraPropertiesArray()
-        );
-    }
-
-    /**
-     * All extra properties will be added to a flat array
-     * to persist them with an assoc mapping.
-     *
-     * This method just creates an array of them with keys that are
-     * prefixed with "property_", "http-equiv_" or "name_".
-     *
-     * @return array
-     */
-    private function getExtraPropertiesArray()
-    {
-        $result = array();
-
-        foreach ($this->extraProperties as $property) {
-            $result[$property->getType().'_'.$property->getKey()] = $property->getValue();
-        }
-
-        return $result;
     }
 }

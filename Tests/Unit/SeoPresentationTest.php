@@ -12,7 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
@@ -149,41 +149,6 @@ class PresentationTest extends \PHPUnit_Framework_Testcase
 
         // test
         $this->seoPresentation->updateSeoPage($this->content);
-    }
-
-    /**
-     * @dataProvider getExtraProperties
-     */
-    public function testExtraProperties($expectedType, $expectedKey, $expectedValue)
-    {
-        // promises
-        $propertyCollection = new ArrayCollection();
-        $propertyCollection->add(new ExtraProperty($expectedKey, $expectedValue, $expectedType));
-
-        $this->seoMetadata
-            ->expects($this->any())
-            ->method('getExtraProperties')
-            ->will($this->returnValue($propertyCollection))
-        ;
-
-        // predictions
-        $this->pageService
-            ->expects($this->once())
-            ->method('addMeta')
-            ->with($expectedType, $expectedKey, $expectedValue)
-        ;
-
-        // test
-        $this->seoPresentation->updateSeoPage($this->content);
-    }
-
-    public function getExtraProperties()
-    {
-        return array(
-            array('property', 'og:title', 'extra title'),
-            array('name', 'robots', 'index, follow'),
-            array('http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
-        );
     }
 
     public function testSettingKeywordsToSeoPage()

@@ -3,7 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtraPropertiesExtractor;
 
 class ExtraPropertiesExtractorTest extends BaseTestCase
@@ -47,18 +47,18 @@ class ExtraPropertiesExtractorTest extends BaseTestCase
         return array(
             array(
                 array(
-                    new ExtraProperty('og:title', 'Hello', 'property'),
-                    new ExtraProperty('og:description', 'lorem ipsum', 'property')
+                    new Extra('og:title', 'Hello', 'property'),
+                    new Extra('og:description', 'lorem ipsum', 'property')
                 ),
                 new ArrayCollection(array(
-                    new ExtraProperty('og:title', 'Hello', 'property'),
-                    new ExtraProperty('og:description', 'lorem ipsum', 'property')
+                    new Extra('og:title', 'Hello', 'property'),
+                    new Extra('og:description', 'lorem ipsum', 'property')
                 )),
             ),
             array(
                 new ArrayCollection(array(
-                    new ExtraProperty('og:title', 'Hello', 'property'),
-                    new ExtraProperty('og:description', 'lorem ipsum', 'property')
+                    new Extra('og:title', 'Hello', 'property'),
+                    new Extra('og:description', 'lorem ipsum', 'property')
                 )),
             ),
         );

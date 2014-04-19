@@ -13,7 +13,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 
 /**
  * The interface for the SeoMetadata.
@@ -92,23 +92,12 @@ interface SeoMetadataInterface
     public function getExtraProperties();
 
     /**
-     * @param ExtraProperty $property
+     * @param Extra $property
      */
-    public function addExtraProperty(ExtraProperty $property);
+    public function addExtraProperty(Extra $property);
 
     /**
-     * @param ExtraProperty $property
+     * @param Extra $property
      */
-    public function removeExtraProperty(ExtraProperty $property);
-
-    /**
-     * Returns the array representation of the metadata properties.
-     *
-     * This is needed for the process of serialization of the seo metadata.
-     *
-     * @return array
-     */
-    public function toArray();
-
-    public static function createFromArray(array $data);
+    public function removeExtraProperty(Extra $property);
 }

@@ -13,7 +13,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Doctrine\Common\Collections\Collection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 
 /**
  * This interface is one of the ExtractorInterfaces to
@@ -29,7 +29,7 @@ interface ExtraPropertiesReadInterface
     /**
      * Provides a list of ExtraProperty values for this page's SEO context.
      *
-     * @return Collection|ExtraProperty[] Either a Collection or a plain array
+     * @return Collection|Extra[] Either a Collection or a plain array
      *      of ExtraProperty instances.
      */
     public function getSeoExtraProperties();

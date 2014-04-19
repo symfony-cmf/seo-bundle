@@ -17,7 +17,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors;
 
@@ -78,7 +78,7 @@ class LoadContentData implements FixtureInterface
         $content->setParentDocument($contentRoot);
 
         $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new ExtraProperty('og:title', 'extra title', 'property'));
+        $metadata->addExtraProperty(new Extra('og:title', 'extra title', 'property'));
 
         $content->setSeoMetadata($metadata);
 
@@ -99,7 +99,7 @@ class LoadContentData implements FixtureInterface
         $content->setParentDocument($contentRoot);
 
         $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new ExtraProperty('robots', 'index, follow', 'name'));
+        $metadata->addExtraProperty(new Extra('robots', 'index, follow', 'name'));
 
         $content->setSeoMetadata($metadata);
 
@@ -120,7 +120,7 @@ class LoadContentData implements FixtureInterface
         $content->setParentDocument($contentRoot);
 
         $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new ExtraProperty('Content-Type', 'text/html; charset=utf-8', 'http-equiv'));
+        $metadata->addExtraProperty(new Extra('Content-Type', 'text/html; charset=utf-8', 'http-equiv'));
 
         $content->setSeoMetadata($metadata);
 

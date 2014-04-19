@@ -12,7 +12,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Form\Type;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -43,16 +43,6 @@ class ExtraPropertyType extends AbstractType
             ->add('key', 'text')
             ->add('value', 'text')
         ;
-
-        // add a select field depending on the allowed types
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-            $choices = array();
-            foreach (ExtraProperty::getAllowedTypes() as $type) {
-                $choices[$type] = $type;
-            }
-
-            $event->getForm()->add('type', 'choice', array('choices' => $choices));
-        });
     }
 
     /**
