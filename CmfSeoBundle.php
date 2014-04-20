@@ -23,23 +23,20 @@ class CmfSeoBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterExtractorsPass());
-        $container->addCompilerPass(new UnescapePlaceholdersPass(array(
-            'cmf_seo.title',
-            'cmf_seo.description',
-        )), PassConfig::TYPE_OPTIMIZE);
-
         if (class_exists('Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass')) {
             $container->addCompilerPass(
                 DoctrinePhpcrMappingsPass::createXmlMappingDriver(
                     array(
                         realpath(__DIR__ . '/Resources/config/doctrine-model') => 'Symfony\Cmf\Bundle\SeoBundle\Model',
-                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr',
-                    ),
-                    array('cmf_seo.manager_name'),
-                    'cmf_seo.backend_type_phpcr'
+                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr'
+                    )
                 )
             );
         }
+        $container->addCompilerPass(new RegisterExtractorsPass());
+        $container->addCompilerPass(new UnescapePlaceholdersPass(array(
+            'cmf_seo.title',
+            'cmf_seo.description',
+        )), PassConfig::TYPE_OPTIMIZE);
     }
 }

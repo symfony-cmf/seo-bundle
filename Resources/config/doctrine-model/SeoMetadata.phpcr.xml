@@ -6,17 +6,21 @@
         https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd"
         >
 
-    <document name="Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata"
+    <mapped-superclass name="Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata"
               referenceable="true"
               translator="attribute"
             >
+        <id name="id">
+            <generator strategy="PARENT"/>
+        </id>
+        <locale name="locale" />
         <field name="title" type="string" nullable="true" translated="true"/>
         <field name="metaDescription" type="string" nullable="true" translated="true"/>
         <field name="metaKeywords" type="string" nullable="true" translated="true"/>
         <field name="originalUrl" type="string" nullable="true" />
 
-        <field name="extraNames" assoc="" nullable="true" translated="true" />
-        <field name="extraProperties" assoc="" nullable="true" translated="true" />
-        <field name="extraHttp" assoc="" nullable="true" translated="true" />
-    </document>
+        <field name="extraNames" type="string" assoc="" nullable="true" translated="true" />
+        <field name="extraProperties" type="string" assoc="" nullable="true" translated="true" />
+        <field name="extraHttp" type="string" assoc="" nullable="true" translated="true" />
+    </mapped-superclass>
 </doctrine-mapping>

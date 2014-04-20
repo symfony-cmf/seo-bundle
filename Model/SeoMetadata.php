@@ -24,6 +24,16 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 class SeoMetadata implements SeoMetadataInterface
 {
     /**
+     * Node path for the document.
+     */
+    private $id;
+
+    /**
+     * For translatable metadata.
+     */
+    private $locale;
+
+    /**
      * This string contains the information where we will find the original content.
      * Depending on the setting for the cmf_seo.original_route_pattern, it
      * will do a redirect to this url or create a canonical link with this
@@ -55,28 +65,54 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * To store meta tags for type property.
      *
-     * @var Collection
+     * @var array
      */
     private $extraProperties;
 
     /**
      * To store extra meta tags for type name.
      *
-     * @var Collection
+     * @var array
      */
     private $extraNames;
 
     /**
      * To store meta tags for type http-equiv.
-     * @var Collection
+     *
+     * @var array
      */
     private $extraHttp;
 
-    public function __construct()
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
     {
-        $this->extraProperties = new ArrayCollection();
-        $this->extraNames = new ArrayCollection();
-        $this->extraHttp = new ArrayCollection();
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
     /**
@@ -146,9 +182,11 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraProperties(Collection $extraProperties)
+    public function setExtraProperties($extraProperties)
     {
-        $this->extraProperties = $extraProperties;
+        foreach($extraProperties as $extra) {
+            $this->extraProperties[$extra->key] = (string)$extra->value;
+        }
     }
 
     /**
@@ -164,7 +202,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function addExtraProperty(Extra $extra)
     {
-        $this->extraProperties->add($extra);
+        $this->extraProperties[$extra->key] = (string)$extra->value;
     }
 
     /**
@@ -172,6 +210,80 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function removeExtraProperty(Extra $extra)
     {
-        $this->extraProperties->removeElement($extra);
+        if (array_key_exists($extra->key, $this->extraProperties)) {
+            unset($this->extraProperties[$extra->key]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setExtraNames($extraNames)
+    {
+        foreach($extraNames as $extra) {
+            $this->extraNames[$extra->key] = (string)$extra->value;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExtraNames()
+    {
+        return $this->extraNames;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addExtraName(Extra $extra)
+    {
+        $this->extraNames[$extra->key] = (string)$extra->value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeExtraName(Extra $extra)
+    {
+        if (array_key_exists($extra->key, $this->extraNames)) {
+            unset($this->extraNames[$extra->key]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setExtraHttp($extraHttp)
+    {
+        foreach($extraHttp as $extra) {
+            $this->extraHttp[$extra->key] = (string)$extra->value;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExtraHttp()
+    {
+        return $this->extraHttp;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addExtraHttp(Extra $extra)
+    {
+        $this->extraHttp[$extra->key] = (string)$extra->value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeExtraHttp(Extra $extra)
+    {
+        if (array_key_exists($extra->key, $this->extraHttp)) {
+            unset($this->extraHttp[$extra->key]);
+        }
     }
 }

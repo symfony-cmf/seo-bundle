@@ -84,7 +84,7 @@ interface SeoMetadataInterface
     /**
      * @param Collection $extraProperties
      */
-    public function setExtraProperties(Collection $extraProperties);
+    public function setExtraProperties($extraProperties);
 
     /**
      * @return Collection
