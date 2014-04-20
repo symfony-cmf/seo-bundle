@@ -11,12 +11,10 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
+use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
-use Symfony\Cmf\Bundle\SeoBundle\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -319,7 +317,7 @@ class PresentationTest extends \PHPUnit_Framework_Testcase
         $content
             ->expects($this->once())
             ->method('setSeoMetadata')
-            ->with($this->callback(function ($c) { return $c instanceof SeoMetadata; }))
+            ->with($this->callback(function ($c) { return $c instanceof SeoMetadataInterface; }))
         ;
 
         $this->seoPresentation->updateSeoPage($content);

@@ -53,7 +53,7 @@ class ExtraPropertyType extends AbstractType
         $resolver->setDefaults(array(
             'label'        => false,
             'required'     => false,
-            'data_class'   => 'Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty',
+            'data_class'   => null,
         ));
     }
 }

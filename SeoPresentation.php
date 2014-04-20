@@ -65,7 +65,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $redirectResponse = false;
 
     /**
-     * @var SeoExtractorInterface[]
+     * @var ExtractorInterface[]
      */
     private $extractors = array();
 
@@ -75,7 +75,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $translator;
 
     /**
-     * @var SeoConfigValues
+     * @var ConfigValues
      */
     private $configValues;
 
@@ -140,7 +140,8 @@ class SeoPresentation implements SeoPresentationInterface
             $contentSeoMetadata = $content->getSeoMetadata();
 
             if ($contentSeoMetadata instanceof SeoMetadataInterface) {
-                $seoMetadata = clone $contentSeoMetadata;
+                #$seoMetadata = clone $contentSeoMetadata;
+                $seoMetadata = $this->cloneMetadata($contentSeoMetadata);
             } elseif (null === $contentSeoMetadata) {
                 $seoMetadata = new SeoMetadata();
                 $content->setSeoMetadata($seoMetadata); // make sure it has metadata the next time
@@ -206,7 +207,6 @@ class SeoPresentation implements SeoPresentationInterface
 
         if ($extraHttp = $seoMetadata->getExtraHttp()) {
             foreach ($extraHttp as $key => $value) {
-                print("set $key to $value \n");
                 $this->sonataPage->addMeta('http-equiv', $key, $value);
             }
         }
@@ -279,5 +279,19 @@ class SeoPresentation implements SeoPresentationInterface
            : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '') . $contentKeywords;
+    }
+
+    private function cloneMetadata(SeoMetadataInterface $contentSeoMetadata)
+    {
+        $metadata = new SeoMetadata();
+        $metadata->setTitle($contentSeoMetadata->getTitle());
+        $metadata->setMetaKeywords($contentSeoMetadata->getMetaKeywords());
+        $metadata->setMetaDescription($contentSeoMetadata->getMetaDescription());
+        $metadata->setOriginalUrl($contentSeoMetadata->getOriginalUrl());
+        $metadata->setExtraProperties($contentSeoMetadata->getExtraProperties()?:array());
+        $metadata->setExtraNames($contentSeoMetadata->getExtraNames()?:array());
+        $metadata->setExtraHttp($contentSeoMetadata->getExtraHttp()?:array());
+
+        return $metadata;
     }
 }

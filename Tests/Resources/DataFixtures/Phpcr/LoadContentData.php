@@ -16,8 +16,8 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors;
 
@@ -38,18 +38,15 @@ class LoadContentData implements FixtureInterface
         $content->setTitle('Content 1');
         $content->setBody('Content 1');
         $content->setParentDocument($contentRoot);
-        $manager->persist($content);
 
         $metadata = new SeoMetadata();
-        $metadata->setParentDocument($content);
-        $metadata->setName('seo-metadata');
         $metadata->setTitle('Title content 1');
         $metadata->setMetaDescription('Description of content 1.');
         $metadata->setMetaKeywords('content1, content');
         $metadata->setOriginalUrl('/to/original');
-        $manager->persist($metadata);
 
         $content->setSeoMetadata($metadata);
+        $manager->persist($content);
 
         $route = new Route();
         $route->setPosition($routeRoot, 'content-1');
@@ -80,14 +77,11 @@ class LoadContentData implements FixtureInterface
         $content->setParentDocument($contentRoot);
 
         $metadata = new SeoMetadata();
-        $metadata->setParentDocument($content);
-        $metadata->setName('seo-metadata');
         $metadata->addExtraProperty(new Extra('og:title', 'extra title'));
         $metadata->addExtraName(new Extra('robots', 'index, follow'));
         $metadata->addExtraHttp(new Extra('Content-Type', 'text/html; charset=utf-8'));
 
         $content->setSeoMetadata($metadata);
-        $manager->persist($metadata);
         $manager->persist($content);
 
         $route = new Route();

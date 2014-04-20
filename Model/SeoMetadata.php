@@ -67,21 +67,21 @@ class SeoMetadata implements SeoMetadataInterface
      *
      * @var array
      */
-    private $extraProperties;
+    private $extraProperties = array();
 
     /**
      * To store extra meta tags for type name.
      *
      * @var array
      */
-    private $extraNames;
+    private $extraNames = array();
 
     /**
      * To store meta tags for type http-equiv.
      *
      * @var array
      */
-    private $extraHttp;
+    private $extraHttp = array();
 
     /**
      * @param mixed $id
@@ -184,8 +184,12 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function setExtraProperties($extraProperties)
     {
-        foreach($extraProperties as $extra) {
-            $this->extraProperties[$extra->key] = (string)$extra->value;
+        foreach($extraProperties as $key => $extra) {
+            if ($extra instanceof Extra) {
+                $this->extraProperties[$extra->key] = (string)$extra->value;
+            } else {
+                $this->extraProperties[$key] = $extra;
+            }
         }
     }
 
@@ -220,8 +224,13 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function setExtraNames($extraNames)
     {
-        foreach($extraNames as $extra) {
-            $this->extraNames[$extra->key] = (string)$extra->value;
+        foreach($extraNames as $key => $extra) {
+            if ($extra instanceof Extra) {
+                $this->extraNames[$extra->key] = (string)$extra->value;
+            } else {
+                $this->extraNames[$key] = $extra;
+            }
+
         }
     }
 
@@ -256,8 +265,13 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function setExtraHttp($extraHttp)
     {
-        foreach($extraHttp as $extra) {
-            $this->extraHttp[$extra->key] = (string)$extra->value;
+        foreach($extraHttp as $key => $extra) {
+            if ($extra instanceof Extra) {
+                $this->extraHttp[$extra->key] = (string)$extra->value;
+            } else{
+                $this->extraHttp[$key] = $extra;
+            }
+
         }
     }
 

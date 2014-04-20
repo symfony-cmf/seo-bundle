@@ -82,15 +82,24 @@ interface SeoMetadataInterface
     public function getTitle();
 
     /**
-     * @param Collection $extraProperties
+     * @param array
      */
     public function setExtraProperties($extraProperties);
 
     /**
-     * @return Collection
+     * @return array
      */
     public function getExtraProperties();
 
+    /**
+     * @return array
+     */
+    public function getExtraNames();
+
+    /**
+     * @return array
+     */
+    public function getExtraHttp();
     /**
      * @param Extra $extra
      */

@@ -5,7 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\PHPCR;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
@@ -38,8 +38,6 @@ class SeoMetadataTest extends BaseTestCase {
         );
 
         $seoMetadata = new SeoMetadata();
-        $seoMetadata->setParentDocument($content);
-        $seoMetadata->setName('seo-metadata');
 
         foreach ($data as $key => $value) {
             if (is_array($value)) {
@@ -52,8 +50,6 @@ class SeoMetadataTest extends BaseTestCase {
             }
         }
 
-        $this->dm->persist($seoMetadata);
-
         $content->setSeoMetadata($seoMetadata);
         $this->dm->persist($content);
         $this->dm->flush();
@@ -63,13 +59,15 @@ class SeoMetadataTest extends BaseTestCase {
 
         $this->assertNotNull($content);
 
+        $persistedSeoMetadata = $content->getSeoMetadata();
+
         foreach ($data as $key => $value) {
             if ('extraProperty' === $key) {
-                $v = $seoMetadata->getExtraProperties();
+                $v = $persistedSeoMetadata->getExtraProperties();
             } elseif ('extraName' === $key) {
-                $v = $seoMetadata->getExtraNames();
+                $v = $persistedSeoMetadata->getExtraNames();
             } else {
-                $v = $seoMetadata->{'get'.ucfirst($key)}($value);
+                $v = $persistedSeoMetadata->{'get'.ucfirst($key)}($value);
             }
 
             $this->assertEquals($value, $v);

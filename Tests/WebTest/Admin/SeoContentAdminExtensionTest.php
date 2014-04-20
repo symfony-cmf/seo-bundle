@@ -72,6 +72,5 @@ class SeoContentAdminExtensionTest extends BaseTestCase
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Key")'));
         $this->assertCount(1, $crawler->filter('html:contains("Value")'));
-        $this->assertCount(1, $crawler->filter('html:contains("Type")'));
     }
 }
