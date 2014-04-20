@@ -14,6 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
@@ -191,13 +192,22 @@ class SeoPresentation implements SeoPresentationInterface
         $seoMetadata = $this->getSeoMetadata($content);
         $translationDomain = $this->configValues->getTranslationDomain();
 
-        if ($properties = $seoMetadata->getExtraProperties()) {
-            foreach ($properties as $property) {
-                $this->sonataPage->addMeta(
-                    $property->getType(),
-                    $property->getKey(),
-                    $property->getValue()
-                );
+        if ($extraProperties = $seoMetadata->getExtraProperties()) {
+            foreach ($extraProperties as $key => $value) {
+                $this->sonataPage->addMeta('property', $key, $value);
+            }
+        }
+
+        if ($extraNames = $seoMetadata->getExtraNames()) {
+            foreach ($extraNames as $key => $value) {
+                $this->sonataPage->addMeta('name', $key, $value);
+            }
+        }
+
+        if ($extraHttp = $seoMetadata->getExtraHttp()) {
+            foreach ($extraHttp as $key => $value) {
+                print("set $key to $value \n");
+                $this->sonataPage->addMeta('http-equiv', $key, $value);
             }
         }
 
