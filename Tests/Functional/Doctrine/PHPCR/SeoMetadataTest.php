@@ -32,22 +32,15 @@ class SeoMetadataTest extends BaseTestCase {
             'metaDescription' => 'Seo Description',
             'metaKeywords'    => 'Seo, Keys',
             'originalUrl'     => '/test',
-            'extraProperty'   => array('og:title'     => 'Extra title'),
-            'extraName'       => array('robots'       => 'index, follow'),
+            'extraProperties'   => array('og:title'     => 'Extra title'),
+            'extraNames'       => array('robots'       => 'index, follow'),
             'extraHttp'       => array('content-type' => 'text/html'),
         );
 
         $seoMetadata = new SeoMetadata();
 
         foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $extraKey => $extraValue) {
-                    $seoMetadata->{'add'.ucfirst($key)}(new Extra($extraKey, $extraValue));
-                }
-
-            } else {
-                $seoMetadata->{'set'.ucfirst($key)}($value);
-            }
+            $seoMetadata->{'set'.ucfirst($key)}($value);
         }
 
         $content->setSeoMetadata($seoMetadata);
@@ -62,13 +55,7 @@ class SeoMetadataTest extends BaseTestCase {
         $persistedSeoMetadata = $content->getSeoMetadata();
 
         foreach ($data as $key => $value) {
-            if ('extraProperty' === $key) {
-                $v = $persistedSeoMetadata->getExtraProperties();
-            } elseif ('extraName' === $key) {
-                $v = $persistedSeoMetadata->getExtraNames();
-            } else {
-                $v = $persistedSeoMetadata->{'get'.ucfirst($key)}($value);
-            }
+            $v = $persistedSeoMetadata->{'get'.ucfirst($key)}($value);
 
             $this->assertEquals($value, $v);
         }

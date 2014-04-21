@@ -53,7 +53,7 @@ class SeoContentAdminExtensionTest extends BaseTestCase
     public function testItemEditView()
     {
         $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-1/edit');
-        $res = $this->client->getResponse();
+        $res = $this->client->getResponse(); print($res);
 
         $this->assertEquals(200, $res->getStatusCode());
 

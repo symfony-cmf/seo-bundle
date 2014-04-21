@@ -77,9 +77,9 @@ class LoadContentData implements FixtureInterface
         $content->setParentDocument($contentRoot);
 
         $metadata = new SeoMetadata();
-        $metadata->addExtraProperty(new Extra('og:title', 'extra title'));
-        $metadata->addExtraName(new Extra('robots', 'index, follow'));
-        $metadata->addExtraHttp(new Extra('Content-Type', 'text/html; charset=utf-8'));
+        $metadata->addExtraProperty('og:title', 'extra title');
+        $metadata->addExtraName('robots', 'index, follow');
+        $metadata->addExtraHttp('Content-Type', 'text/html; charset=utf-8');
 
         $content->setSeoMetadata($metadata);
         $manager->persist($content);

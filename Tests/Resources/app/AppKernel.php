@@ -17,6 +17,7 @@ class AppKernel extends TestKernel
             new \Sonata\SeoBundle\SonataSeoBundle(),
             new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
+            new \Burgov\Bundle\KeyValueFormBundle\BurgovKeyValueFormBundle(),
         ));
     }
 

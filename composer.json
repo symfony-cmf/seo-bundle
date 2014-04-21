@@ -16,7 +16,8 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.3",
         "sonata-project/seo-bundle": "1.1.*@dev",
-        "doctrine/collections": "1.*"
+        "doctrine/collections": "1.*",
+        "burgov/key-value-form-bundle": "1.0.*@dev"
     },
     "require-dev": {
         "symfony-cmf/testing": "dev-master",

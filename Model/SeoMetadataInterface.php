@@ -84,7 +84,7 @@ interface SeoMetadataInterface
     /**
      * @param array
      */
-    public function setExtraProperties($extraProperties);
+    public function setExtraProperties(array $extraProperties);
 
     /**
      * @return array
@@ -100,13 +100,15 @@ interface SeoMetadataInterface
      * @return array
      */
     public function getExtraHttp();
-    /**
-     * @param Extra $extra
-     */
-    public function addExtraProperty(Extra $extra);
 
     /**
-     * @param Extra $extra
+     * @param string $key
+     * @param string $value
      */
-    public function removeExtraProperty(Extra $extra);
+    public function addExtraProperty($key, $value);
+
+    /**
+     * @param string $key
+     */
+    public function removeExtraProperty($key);
 }

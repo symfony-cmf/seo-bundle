@@ -41,9 +41,7 @@ class ExtraPropertiesExtractor implements ExtractorInterface
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
         $properties = $content->getSeoExtraProperties();
-        if (is_array($properties)) {
-            $properties = new ArrayCollection($properties);
-        } elseif (!$properties instanceof Collection) {
+        if (!is_array($properties)) {
             throw new InvalidArgumentException(sprintf('getSeoExtraProperties should return an array or an implementation of Doctrine\Common\Collections\Collection, "%s" given instead.', is_object($properties) ? get_class($properties) : gettype($properties)));
         }
 

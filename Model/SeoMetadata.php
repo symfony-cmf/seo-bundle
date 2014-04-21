@@ -182,15 +182,9 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraProperties($extraProperties)
+    public function setExtraProperties(array $extraProperties)
     {
-        foreach($extraProperties as $key => $extra) {
-            if ($extra instanceof Extra) {
-                $this->extraProperties[$extra->key] = (string)$extra->value;
-            } else {
-                $this->extraProperties[$key] = $extra;
-            }
-        }
+        $this->extraProperties = $extraProperties;
     }
 
     /**
@@ -204,18 +198,18 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function addExtraProperty(Extra $extra)
+    public function addExtraProperty($key, $value)
     {
-        $this->extraProperties[$extra->key] = (string)$extra->value;
+        $this->extraProperties[$key] = (string)$value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removeExtraProperty(Extra $extra)
+    public function removeExtraProperty($key)
     {
-        if (array_key_exists($extra->key, $this->extraProperties)) {
-            unset($this->extraProperties[$extra->key]);
+        if (array_key_exists($key, $this->extraProperties)) {
+            unset($this->extraProperties[$key]);
         }
     }
 
@@ -224,14 +218,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function setExtraNames($extraNames)
     {
-        foreach($extraNames as $key => $extra) {
-            if ($extra instanceof Extra) {
-                $this->extraNames[$extra->key] = (string)$extra->value;
-            } else {
-                $this->extraNames[$key] = $extra;
-            }
-
-        }
+        $this->extraNames = $extraNames;
     }
 
     /**
@@ -245,34 +232,27 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function addExtraName(Extra $extra)
+    public function addExtraName($key, $value)
     {
-        $this->extraNames[$extra->key] = (string)$extra->value;
+        $this->extraNames[$key] = (string)$value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removeExtraName(Extra $extra)
+    public function removeExtraName($key)
     {
-        if (array_key_exists($extra->key, $this->extraNames)) {
-            unset($this->extraNames[$extra->key]);
+        if (array_key_exists($key, $this->extraNames)) {
+            unset($this->extraNames[$key]);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setExtraHttp($extraHttp)
+    public function setExtraHttp(array $extraHttp)
     {
-        foreach($extraHttp as $key => $extra) {
-            if ($extra instanceof Extra) {
-                $this->extraHttp[$extra->key] = (string)$extra->value;
-            } else{
-                $this->extraHttp[$key] = $extra;
-            }
-
-        }
+        $this->extraHttp = $extraHttp;
     }
 
     /**
@@ -286,18 +266,18 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function addExtraHttp(Extra $extra)
+    public function addExtraHttp($key, $value)
     {
-        $this->extraHttp[$extra->key] = (string)$extra->value;
+        $this->extraHttp[$key] = (string)$value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removeExtraHttp(Extra $extra)
+    public function removeExtraHttp($key)
     {
-        if (array_key_exists($extra->key, $this->extraHttp)) {
-            unset($this->extraHttp[$extra->key]);
+        if (array_key_exists($key, $this->extraHttp)) {
+            unset($this->extraHttp[$key]);
         }
     }
 }
