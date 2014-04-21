@@ -20,7 +20,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 class SeoMetadata implements SeoMetadataInterface
 {
     /**
-     * Node path for the document.
+     * Id for the document.
      */
     private $id;
 
