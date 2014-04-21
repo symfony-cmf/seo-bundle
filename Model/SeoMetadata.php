@@ -12,10 +12,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
-
 /**
  * This class is a container for the metadata.
  *
@@ -216,7 +212,7 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraNames($extraNames)
+    public function setExtraNames(array $extraNames)
     {
         $this->extraNames = $extraNames;
     }

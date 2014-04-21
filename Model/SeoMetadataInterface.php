@@ -12,9 +12,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
-
 /**
  * The interface for the SeoMetadata.
  *
@@ -87,6 +84,16 @@ interface SeoMetadataInterface
     public function setExtraProperties(array $extraProperties);
 
     /**
+     * @param array
+     */
+    public function setExtraNames(array $extraNames);
+
+    /**
+     * @param array
+     */
+    public function setExtraHttp(array $extraHttp);
+
+    /**
      * @return array
      */
     public function getExtraProperties();
@@ -102,13 +109,26 @@ interface SeoMetadataInterface
     public function getExtraHttp();
 
     /**
+     * Add a key-value pair for meta attribute property.
+     *
      * @param string $key
      * @param string $value
      */
     public function addExtraProperty($key, $value);
 
     /**
+     * Add a key-value pair for meta attribute name.
+     *
      * @param string $key
+     * @param string $value
      */
-    public function removeExtraProperty($key);
+    public function addExtraName($key, $value);
+
+    /**
+     * Add a key-value pair for meta attribute http-equiv.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function addExtraHttp($key, $value);
 }

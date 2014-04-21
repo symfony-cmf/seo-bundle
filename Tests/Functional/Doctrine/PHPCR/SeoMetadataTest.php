@@ -3,10 +3,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\PHPCR;
 
-
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
@@ -61,4 +58,3 @@ class SeoMetadataTest extends BaseTestCase {
         }
     }
 }
- 

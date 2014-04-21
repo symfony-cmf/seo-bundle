@@ -2,8 +2,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\Extra;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtraPropertiesExtractor;
 
 class ExtraPropertiesExtractorTest extends BaseTestCase
@@ -28,15 +26,35 @@ class ExtraPropertiesExtractorTest extends BaseTestCase
      */
     public function testExtracting()
     {
-        $document = $this->getMock('ExtractedDocument', array('getSeoExtraProperties'));
+        $document = $this->getMock('ExtractedDocument', array('getSeoExtraProperties', 'getSeoExtraNames', 'getSeoExtraHttp'));
         $document->expects($this->any())
             ->method('getSeoExtraProperties')
             ->will($this->returnValue(array('og:title' => 'Extra Title')));
         ;
 
+        $document->expects($this->any())
+            ->method('getSeoExtraNames')
+            ->will($this->returnValue(array('robots' => 'index, follow')));
+        ;
+
+        $document->expects($this->any())
+            ->method('getSeoExtraHttp')
+            ->will($this->returnValue(array('Content-Type' => 'text/html; charset=utf-8')));
+        ;
+
         $this->seoMetadata->expects($this->once())
-            ->method('setExtraProperties')
-            ->with($this->equalTo(array('og:title' => 'Extra Title')))
+            ->method('addExtraProperty')
+            ->with($this->equalTo('og:title'), $this->equalTo('Extra Title'))
+        ;
+
+        $this->seoMetadata->expects($this->once())
+            ->method('addExtraName')
+            ->with($this->equalTo('robots'), $this->equalTo('index, follow'))
+        ;
+
+        $this->seoMetadata->expects($this->once())
+            ->method('addExtraHttp')
+            ->with($this->equalTo('Content-Type'), $this->equalTo('text/html; charset=utf-8'))
         ;
 
         $this->extractor->updateMetadata($document, $this->seoMetadata);
