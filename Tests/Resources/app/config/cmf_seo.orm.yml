@@ -1,0 +1,9 @@
+cmf_seo:
+    persistence: { orm: true }
+
+cmf_routing:
+    dynamic:
+        persistence:
+            orm:
+                enabled: true
+
