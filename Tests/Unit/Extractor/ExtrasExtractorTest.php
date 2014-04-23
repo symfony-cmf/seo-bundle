@@ -2,21 +2,21 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtraPropertiesExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasExtractor;
 
-class ExtraPropertiesExtractorTest extends BaseTestCase
+class ExtrasExtractorTest extends BaseTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
-        $this->extractor = new ExtraPropertiesExtractor();
+        $this->extractor = new ExtrasExtractor();
     }
 
     public function getSupportsData()
     {
         return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtraPropertiesReadInterface')),
+            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasReadInterface')),
             array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
         );
     }
@@ -26,20 +26,14 @@ class ExtraPropertiesExtractorTest extends BaseTestCase
      */
     public function testExtracting()
     {
-        $document = $this->getMock('ExtractedDocument', array('getSeoExtraProperties', 'getSeoExtraNames', 'getSeoExtraHttp'));
+        $document = $this->getMock('ExtractedDocument', array('getSeoExtras'));
         $document->expects($this->any())
-            ->method('getSeoExtraProperties')
-            ->will($this->returnValue(array('og:title' => 'Extra Title')));
-        ;
-
-        $document->expects($this->any())
-            ->method('getSeoExtraNames')
-            ->will($this->returnValue(array('robots' => 'index, follow')));
-        ;
-
-        $document->expects($this->any())
-            ->method('getSeoExtraHttp')
-            ->will($this->returnValue(array('Content-Type' => 'text/html; charset=utf-8')));
+            ->method('getSeoExtras')
+            ->will($this->returnValue(array(
+                'property'   => array('og:title' => 'Extra Title'),
+                'name'       => array('robots' => 'index, follow'),
+                'http-equiv' => array('Content-Type' => 'text/html; charset=utf-8'),
+            )));
         ;
 
         $this->seoMetadata->expects($this->once())

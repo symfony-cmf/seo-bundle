@@ -23,41 +23,44 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class ExtraPropertiesExtractor implements ExtractorInterface
+class ExtrasExtractor implements ExtractorInterface
 {
     /**
      * {@inheritDoc}
      */
     public function supports($content)
     {
-        return $content instanceof ExtraPropertiesReadInterface;
+        return $content instanceof ExtrasReadInterface;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param ExtraPropertiesReadInterface $content
+     * @param ExtrasReadInterface $content
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $methods = array(
-            'getSeoExtraProperties' => 'addExtraProperty',
-            'getSeoExtraNames'      => 'addExtraName',
-            'getSeoExtraHttp'       => 'addExtraHttp',
+        $allowedTypesMethodMapping = array(
+            'property'   => 'addExtraProperty',
+            'name'       => 'addExtraName',
+            'http-equiv' => 'addExtraHttp'
         );
 
-        foreach ($methods as $contentInterface => $metaAdder) {
-            $properties = $content->{$contentInterface}();
-            if (!is_array($properties)) {
-                throw new InvalidArgumentException(sprintf(
-                    '%s should return an array "%s" given instead.',
-                    $contentInterface,
-                    is_object($properties) ? get_class($properties) : gettype($properties)
-                ));
+        $contentExtras = $content->getSeoExtras();
+
+        foreach ($contentExtras as $type => $extras) {
+            if (!array_key_exists($type, $allowedTypesMethodMapping)) {
+                throw new InvalidArgumentException(
+                    printf(
+                        'Extras type %s not in the list of allowed ones %s.',
+                        $type,
+                        implode(', ', $allowedTypesMethodMapping)
+                    )
+                );
             }
 
-            foreach ($properties as $key => $value) {
-                $seoMetadata->{$metaAdder}($key, $value);
+            foreach ($extras as $key => $value) {
+                $seoMetadata->{$allowedTypesMethodMapping[$type]}($key, $value);
             }
         }
     }

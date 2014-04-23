@@ -23,29 +23,22 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface ExtraPropertiesReadInterface
+interface ExtrasReadInterface
 {
     /**
-     * Provides a list of extras as key-values-pairs
+     * Provides a list of extras as key-values pairs
      * for this page's SEO context and meta type property.
      *
-     * @return array
-     */
-    public function getSeoExtraProperties();
-
-    /**
-     * Provides a list of extras as key-values-pairs
-     * for this page's SEO context and meta type name.
+     * Different types should be grouped in different arrays.
+     *
+     * Example return:
+     *  array(
+     *       'property'   => array('og:title' => 'Extra Title'),
+     *       'name'       => array('robots' => 'index, follow'),
+     *       'http-equiv' => array('Content-Type' => 'text/html; charset=utf-8'),
+     *   )
      *
      * @return array
      */
-    public function getSeoExtraNames();
-
-    /**
-     * Provides a list of extras as key-values-pairs
-     * for this page's SEO context and meta type http-equiv.
-     *
-     * @return array
-     */
-    public function getSeoExtraHttp();
+    public function getSeoExtras();
 }
