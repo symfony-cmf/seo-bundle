@@ -21,9 +21,6 @@ class ExtrasExtractorTest extends BaseTestCase
         );
     }
 
-    /**
-     * @dataProvider getExtractingData
-     */
     public function testExtracting()
     {
         $document = $this->getMock('ExtractedDocument', array('getSeoExtras'));
@@ -52,17 +49,5 @@ class ExtrasExtractorTest extends BaseTestCase
         ;
 
         $this->extractor->updateMetadata($document, $this->seoMetadata);
-    }
-
-    public function getExtractingData()
-    {
-        return array(
-                array('og:title', 'Hello', 'property'),
-                array('og:description', 'lorem ipsum', 'property'),
-                array('og:title', 'Hello', 'property'),
-                array('og:description', 'lorem ipsum', 'property'),
-                array('og:title', 'Hello', 'property'),
-                array('og:description', 'lorem ipsum', 'property'),
-        );
     }
 }
