@@ -7,13 +7,10 @@ class AppKernel extends TestKernel
 {
     public function configure()
     {
-        $this->requireBundleSet('default');
+        $this->requireBundleSets(array('default', 'sonata_admin'));
 
         if ('phpcr' === $this->environment) {
-            $this->requireBundleSets(array(
-                'phpcr_odm',
-                'sonata_admin',
-            ));
+            $this->requireBundleSet('phpcr_odm');
         } elseif ('orm' === $this->environment) {
             $this->requireBundleSet('doctrine_orm');
         }
@@ -29,5 +26,11 @@ class AppKernel extends TestKernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config.php');
+
+        if ('phpcr' === $this->environment) {
+            $loader->load(__DIR__.'/config/config_phpcr.php');
+        } elseif ('orm' === $this->environment) {
+            $loader->load(__DIR__.'/config/config_orm.php');
+        }
     }
 }

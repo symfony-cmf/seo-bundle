@@ -1,18 +1,6 @@
 framework:
     translator: { enabled: true, fallback: en }
 
-sonata_admin:
-    extensions:
-        cmf_seo.admin_extension:
-            implements:
-               - Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface
-    dashboard:
-        groups:
-            content:
-                label: Content
-                items:
-                    - sonata.admin.seo_content
-
 sonata_seo:
     page:
         metas:
@@ -30,3 +18,15 @@ cmf_routing:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
+
+sonata_admin:
+    extensions:
+        cmf_seo.admin_extension:
+            implements:
+               - Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface
+    dashboard:
+        groups:
+            content:
+                label: Content
+                items:
+                    - sonata.admin.seo_content

@@ -23,6 +23,7 @@
         "symfony-cmf/testing": "dev-master",
         "doctrine/phpcr-bundle": "1.1.*@dev",
         "doctrine/phpcr-odm": "1.1.*@dev",
+        "doctrine/orm": "2.4.*@dev",
         "sonata-project/doctrine-phpcr-admin-bundle": "1.1.*@dev",
         "symfony-cmf/routing-bundle": "1.2.*@dev",
         "symfony-cmf/core-bundle": "1.1.*@dev",

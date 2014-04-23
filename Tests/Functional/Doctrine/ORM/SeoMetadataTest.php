@@ -48,8 +48,8 @@ class SeoMetadataTest extends ComponentBaseTestCase
             'metaDescription' => 'Seo Description',
             'metaKeywords'    => 'Seo, Keys',
             'originalUrl'     => '/test',
-            'extraProperties'   => array('og:title'     => 'Extra title'),
-            'extraNames'       => array('robots'       => 'index, follow'),
+            'extraProperties' => array('og:title'     => 'Extra title'),
+            'extraNames'      => array('robots'       => 'index, follow'),
             'extraHttp'       => array('content-type' => 'text/html'),
         );
 
@@ -60,6 +60,7 @@ class SeoMetadataTest extends ComponentBaseTestCase
         }
 
         $content->setSeoMetadata($seoMetadata);
+        print('DB: '.get_class($this->getDm()));
         $this->getDm()->persist($content);
         $this->getDm()->flush();
         $this->getDm()->clear();
