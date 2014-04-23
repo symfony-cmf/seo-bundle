@@ -11,22 +11,9 @@ cmf_seo:
     title: "Default | %%content_title%%"
     description: "Default description. %%content_description%%"
     original_route_pattern: canonical
-    sonata_admin_extension: true
 
 cmf_routing:
     chain:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
-
-sonata_admin:
-    extensions:
-        cmf_seo.admin_extension:
-            implements:
-               - Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface
-    dashboard:
-        groups:
-            content:
-                label: Content
-                items:
-                    - sonata.admin.seo_content

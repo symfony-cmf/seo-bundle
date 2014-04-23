@@ -7,10 +7,10 @@ class AppKernel extends TestKernel
 {
     public function configure()
     {
-        $this->requireBundleSets(array('default', 'sonata_admin'));
+        $this->requireBundleSet('default');
 
         if ('phpcr' === $this->environment) {
-            $this->requireBundleSet('phpcr_odm');
+            $this->requireBundleSets(array('phpcr_odm', 'sonata_admin'));
         } elseif ('orm' === $this->environment) {
             $this->requireBundleSet('doctrine_orm');
         }

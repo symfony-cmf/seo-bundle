@@ -1,5 +1,6 @@
 cmf_seo:
     persistence: { phpcr: true }
+    sonata_admin_extension: true
 
 cmf_routing:
     dynamic:
@@ -22,3 +23,15 @@ services:
             - [ setTranslationDomain, [CmfSeoBundle]]
             - [ setRouteBuilder, [@sonata.admin.route.path_info_slashes]]
             - [ setRootPath, [/test/content]]
+
+sonata_admin:
+    extensions:
+        cmf_seo.admin_extension:
+            implements:
+               - Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface
+    dashboard:
+        groups:
+            content:
+                label: Content
+                items:
+                    - sonata.admin.seo_content

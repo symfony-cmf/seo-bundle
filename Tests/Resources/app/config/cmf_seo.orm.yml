@@ -6,4 +6,3 @@ cmf_routing:
         persistence:
             orm:
                 enabled: true
-

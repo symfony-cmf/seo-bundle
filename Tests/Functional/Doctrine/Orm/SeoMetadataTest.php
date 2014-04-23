@@ -1,12 +1,12 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\ORM;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\Orm;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Model\SeoAwareOrmContent;
-use Symfony\Cmf\Component\Testing\Functional\BaseTestCase as ComponentBaseTestCase;
+use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
-class SeoMetadataTest extends ComponentBaseTestCase
+class SeoMetadataTest extends BaseTestCase
 {
     protected function getKernelConfiguration()
     {
@@ -15,24 +15,7 @@ class SeoMetadataTest extends ComponentBaseTestCase
         );
     }
 
-    protected function clearDb($model)
-    {
-        if (is_array($model)) {
-            foreach ($model as $singleModel) {
-                $this->clearDb($singleModel);
-            }
-        }
-
-        $items = $this->getDm()->getRepository($model)->findAll();
-
-        foreach ($items as $item) {
-            $this->getDm()->remove($item);
-        }
-
-        $this->getDm()->flush();
-    }
-
-    protected function getDm()
+    protected function getEm()
     {
         return $this->db('ORM')->getOm();
     }
@@ -60,12 +43,12 @@ class SeoMetadataTest extends ComponentBaseTestCase
         }
 
         $content->setSeoMetadata($seoMetadata);
-        print('DB: '.get_class($this->getDm()));
-        $this->getDm()->persist($content);
-        $this->getDm()->flush();
-        $this->getDm()->clear();
 
-        $content = $this->getDm()
+        $this->getEm()->persist($content);
+        $this->getEm()->flush();
+        $this->getEm()->clear();
+
+        $content = $this->getEm()
                         ->getRepository('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Model\SeoAwareOrmContent')
                         ->findBy(array('name' => 'Seo Aware test'));
 
