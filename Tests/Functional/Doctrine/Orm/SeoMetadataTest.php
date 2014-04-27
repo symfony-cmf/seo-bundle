@@ -3,7 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\Orm;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Model\SeoAwareOrmContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity\SeoAwareOrmContent;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 class SeoMetadataTest extends BaseTestCase
