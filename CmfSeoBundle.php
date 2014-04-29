@@ -82,7 +82,6 @@ class CmfSeoBundle extends Bundle
             DoctrineOrmMappingsPass::createXmlMappingDriver(
                 array(
                     realpath(__DIR__ . '/Resources/config/doctrine-model') => 'Symfony\Cmf\Bundle\SeoBundle\Model',
-                    realpath(__DIR__ . '/Resources/config/doctrine-orm') => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Orm',
                 ),
                 array('cmf_routing.dynamic.persistence.orm.manager_name'),
                 'cmf_routing.backend_type_orm'

@@ -13,19 +13,24 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @PHPCRODM\MappedSuperclass(referenceable=true)
+ * @ORM\MappedSuperclass
  */
 class ContentBase
 {
     /**
      * @PHPCRODM\Id
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     *  @PHPCRODM\Node
+     * @PHPCRODM\Node
      */
     protected $node;
 
@@ -35,17 +40,19 @@ class ContentBase
     protected $parentDocument;
 
     /**
-     *  @PHPCRODM\Nodename
+     * @PHPCRODM\Nodename
      */
     protected $name;
 
     /**
      * @PHPCRODM\String
+     * @ORM\Column(type="string")
      */
     protected $title;
 
     /**
      * @PHPCRODM\String
+     * @ORM\Column(type="text")
      */
     protected $body;
 
@@ -75,6 +82,8 @@ class ContentBase
     public function setParentDocument($parent)
     {
         $this->parentDocument = $parent;
+
+        return $this;
     }
 
     /**
@@ -95,6 +104,8 @@ class ContentBase
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -121,6 +132,8 @@ class ContentBase
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -137,5 +150,7 @@ class ContentBase
     public function setBody($body)
     {
         $this->body = $body;
+
+        return $this;
     }
 }

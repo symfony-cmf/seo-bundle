@@ -43,5 +43,7 @@ class SeoAwareContent extends ContentBase implements SeoAwareInterface
     public function setSeoMetadata($seoMetadata)
     {
         $this->seoMetadata = $seoMetadata;
+
+        return $this;
     }
 }

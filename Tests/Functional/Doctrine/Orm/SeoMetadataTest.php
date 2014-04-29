@@ -23,24 +23,21 @@ class SeoMetadataTest extends BaseTestCase
     public function testSeoMetadata()
     {
         $content = new SeoAwareOrmContent();
-        $content->setTitle('Seo Aware test');
-        $content->setBody('Content for SeoAware Test');
-
-        $data = array(
-            'title'           => 'Seo Title',
-            'metaDescription' => 'Seo Description',
-            'metaKeywords'    => 'Seo, Keys',
-            'originalUrl'     => '/test',
-            'extraProperties' => array('og:title'     => 'Extra title'),
-            'extraNames'      => array('robots'       => 'index, follow'),
-            'extraHttp'       => array('content-type' => 'text/html'),
-        );
+        $content
+            ->setTitle('Seo Aware test')
+            ->setBody('Content for SeoAware Test')
+        ;
 
         $seoMetadata = new SeoMetadata();
-
-        foreach ($data as $key => $value) {
-            $seoMetadata->{'set'.ucfirst($key)}($value);
-        }
+        $seoMetadata
+            ->setTitle('Seo Title')
+            ->setMetaDescription('Seo Description')
+            ->setMetaKeywords('Seo, Keys')
+            ->setOriginalUrl('/test')
+            ->setExtraProperties(array('og:title' => 'Extra title'))
+            ->setExtraNames(array('robots' => 'index, follow'))
+            ->setExtraHttp(array('content-type' => 'text/html'))
+        ;
 
         $content->setSeoMetadata($seoMetadata);
 
@@ -49,17 +46,12 @@ class SeoMetadataTest extends BaseTestCase
         $this->getEm()->clear();
 
         $content = $this->getEm()
-                        ->getRepository('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Model\SeoAwareOrmContent')
-                        ->findBy(array('name' => 'Seo Aware test'));
+                        ->getRepository('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity\SeoAwareOrmContent')
+                        ->findOneByTitle('Seo Aware test');
 
         $this->assertNotNull($content);
 
         $persistedSeoMetadata = $content->getSeoMetadata();
-
-        foreach ($data as $key => $value) {
-            $v = $persistedSeoMetadata->{'get'.ucfirst($key)}($value);
-
-            $this->assertEquals($value, $v);
-        }
+        $this->assertEquals($seoMetadata, $persistedSeoMetadata);
     }
 }

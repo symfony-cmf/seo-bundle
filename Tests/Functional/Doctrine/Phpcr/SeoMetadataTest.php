@@ -19,28 +19,26 @@ class SeoMetadataTest extends BaseTestCase
     public function testSeoMetadataMapping()
     {
         $content = new SeoAwareContent();
-        $content->setTitle('Seo Aware test');
-        $content->setName('seo-aware');
-        $content->setParentDocument($this->dm->find(null, '/test'));
-        $content->setBody('Content for SeoAware Test');
-
-        $data = array(
-            'title'           => 'Seo Title',
-            'metaDescription' => 'Seo Description',
-            'metaKeywords'    => 'Seo, Keys',
-            'originalUrl'     => '/test',
-            'extraProperties' => array('og:title'     => 'Extra title'),
-            'extraNames'      => array('robots'       => 'index, follow'),
-            'extraHttp'       => array('content-type' => 'text/html'),
-        );
+        $content
+            ->setTitle('Seo Aware test')
+            ->setName('seo-aware')
+            ->setParentDocument($this->dm->find(null, '/test'))
+            ->setBody('Content for SeoAware Test')
+        ;
 
         $seoMetadata = new SeoMetadata();
-
-        foreach ($data as $key => $value) {
-            $seoMetadata->{'set'.ucfirst($key)}($value);
-        }
+        $seoMetadata
+            ->setTitle('Seo Title')
+            ->setMetaDescription('Seo Description')
+            ->setMetaKeywords('Seo, Keys')
+            ->setOriginalUrl('/test')
+            ->setExtraProperties(array('og:title' => 'Extra title'))
+            ->setExtraNames(array('robots' => 'index, follow'))
+            ->setExtraHttp(array('content-type' => 'text/html'))
+        ;
 
         $content->setSeoMetadata($seoMetadata);
+
         $this->dm->persist($content);
         $this->dm->flush();
         $this->dm->clear();
@@ -50,11 +48,6 @@ class SeoMetadataTest extends BaseTestCase
         $this->assertNotNull($content);
 
         $persistedSeoMetadata = $content->getSeoMetadata();
-
-        foreach ($data as $key => $value) {
-            $v = $persistedSeoMetadata->{'get'.ucfirst($key)}($value);
-
-            $this->assertEquals($value, $v);
-        }
+        $this->assertEquals($seoMetadata, $persistedSeoMetadata);
     }
 }

@@ -41,6 +41,8 @@ class SeoMetadata extends SeoMetadataModel
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -57,6 +59,8 @@ class SeoMetadata extends SeoMetadataModel
     public function setNode($node)
     {
         $this->node = $node;
+
+        return $this;
     }
 
     /**
@@ -73,6 +77,8 @@ class SeoMetadata extends SeoMetadataModel
     public function setParentDocument($parentDocument)
     {
         $this->parentDocument = $parentDocument;
+
+        return $this;
     }
 
     /**
