@@ -13,7 +13,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
-use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 
 /**
@@ -22,7 +22,7 @@ use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 class SeoAwareContent extends ContentBase implements SeoAwareInterface
 {
     /**
-     * @PHPCRODM\String(assoc="", nullable=true)
+     * @PHPCRODM\Child(nodeName="seo-metadata")
      */
     protected $seoMetadata;
 
@@ -43,5 +43,7 @@ class SeoAwareContent extends ContentBase implements SeoAwareInterface
     public function setSeoMetadata($seoMetadata)
     {
         $this->seoMetadata = $seoMetadata;
+
+        return $this;
     }
 }

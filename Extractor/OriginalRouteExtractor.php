@@ -13,7 +13,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Exception\ExtractorStrategyException;
-use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

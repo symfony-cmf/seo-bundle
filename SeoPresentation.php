@@ -13,6 +13,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
@@ -63,7 +65,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $redirectResponse = false;
 
     /**
-     * @var SeoExtractorInterface[]
+     * @var ExtractorInterface[]
      */
     private $extractors = array();
 
@@ -73,7 +75,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $translator;
 
     /**
-     * @var SeoConfigValues
+     * @var ConfigValues
      */
     private $configValues;
 
@@ -138,12 +140,16 @@ class SeoPresentation implements SeoPresentationInterface
             $contentSeoMetadata = $content->getSeoMetadata();
 
             if ($contentSeoMetadata instanceof SeoMetadataInterface) {
-                $seoMetadata = clone $contentSeoMetadata;
+                $seoMetadata = $this->copyMetadata($contentSeoMetadata);
             } elseif (null === $contentSeoMetadata) {
                 $seoMetadata = new SeoMetadata();
                 $content->setSeoMetadata($seoMetadata); // make sure it has metadata the next time
             } else {
-                throw new InvalidArgumentException('getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given', is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata));
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given',
+                        is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata))
+                );
             }
         } else {
             $seoMetadata = new SeoMetadata();
@@ -190,13 +196,21 @@ class SeoPresentation implements SeoPresentationInterface
         $seoMetadata = $this->getSeoMetadata($content);
         $translationDomain = $this->configValues->getTranslationDomain();
 
-        if ($properties = $seoMetadata->getExtraProperties()) {
-            foreach ($properties as $property) {
-                $this->sonataPage->addMeta(
-                    $property->getType(),
-                    $property->getKey(),
-                    $property->getValue()
-                );
+        if ($extraProperties = $seoMetadata->getExtraProperties()) {
+            foreach ($extraProperties as $key => $value) {
+                $this->sonataPage->addMeta('property', $key, $value);
+            }
+        }
+
+        if ($extraNames = $seoMetadata->getExtraNames()) {
+            foreach ($extraNames as $key => $value) {
+                $this->sonataPage->addMeta('name', $key, $value);
+            }
+        }
+
+        if ($extraHttp = $seoMetadata->getExtraHttp()) {
+            foreach ($extraHttp as $key => $value) {
+                $this->sonataPage->addMeta('http-equiv', $key, $value);
             }
         }
 
@@ -268,5 +282,26 @@ class SeoPresentation implements SeoPresentationInterface
            : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '') . $contentKeywords;
+    }
+
+    /**
+     * Copy the metadata object to sanitize it and remove doctrine traces.
+     *
+     * @param SeoMetadataInterface $contentSeoMetadata
+     *
+     * @return SeoMetadata
+     */
+    private function copyMetadata(SeoMetadataInterface $contentSeoMetadata)
+    {
+        $metadata = new SeoMetadata();
+        $metadata->setTitle($contentSeoMetadata->getTitle());
+        $metadata->setMetaKeywords($contentSeoMetadata->getMetaKeywords());
+        $metadata->setMetaDescription($contentSeoMetadata->getMetaDescription());
+        $metadata->setOriginalUrl($contentSeoMetadata->getOriginalUrl());
+        $metadata->setExtraProperties($contentSeoMetadata->getExtraProperties()?:array());
+        $metadata->setExtraNames($contentSeoMetadata->getExtraNames()?:array());
+        $metadata->setExtraHttp($contentSeoMetadata->getExtraHttp()?:array());
+
+        return $metadata;
     }
 }

@@ -22,8 +22,9 @@ Changelog
      * `Extractor\SeoTitleExtractor` -> `Extractor\TitleExtractor`
      * `Extractor\SeoTitleReadInterface` -> `Extractor\TitleReadInterface`
 
-* **2014-04-17**: The classes in the `Model` namespace are moved to the root
-  namespace (`Symfony\Cmf\Bundle\SeoBundle`)
+* **2014-04-17**: The `SeoAwareInterface`, `SeoPresentation` and
+  `SeoPresentationInterface` class in the `Symfony\Cmf\Bundle\SeoBundle\Model`
+  namespace are moved to the root namespace (`Symfony\Cmf\Bundle\SeoBundle`)
 
 * **2014-04-17**: Add possibility for extra properties with extractors,
   persistence and admin support.

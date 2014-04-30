@@ -10,7 +10,7 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Admin;
+namespace Symfony\Cmf\Bundle\SeoBundle\Admin\Extension;
 
 use Sonata\AdminBundle\Admin\AdminExtension;
 use Sonata\AdminBundle\Form\FormMapper;

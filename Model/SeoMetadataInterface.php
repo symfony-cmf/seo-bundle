@@ -10,10 +10,7 @@
  */
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle;
-
-use Doctrine\Common\Collections\Collection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\ExtraProperty;
+namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 /**
  * The interface for the SeoMetadata.
@@ -82,33 +79,56 @@ interface SeoMetadataInterface
     public function getTitle();
 
     /**
-     * @param Collection $extraProperties
+     * @param array
      */
-    public function setExtraProperties(Collection $extraProperties);
+    public function setExtraProperties(array $extraProperties);
 
     /**
-     * @return Collection
+     * @param array
+     */
+    public function setExtraNames(array $extraNames);
+
+    /**
+     * @param array
+     */
+    public function setExtraHttp(array $extraHttp);
+
+    /**
+     * @return array
      */
     public function getExtraProperties();
 
     /**
-     * @param ExtraProperty $property
-     */
-    public function addExtraProperty(ExtraProperty $property);
-
-    /**
-     * @param ExtraProperty $property
-     */
-    public function removeExtraProperty(ExtraProperty $property);
-
-    /**
-     * Returns the array representation of the metadata properties.
-     *
-     * This is needed for the process of serialization of the seo metadata.
-     *
      * @return array
      */
-    public function toArray();
+    public function getExtraNames();
 
-    public static function createFromArray(array $data);
+    /**
+     * @return array
+     */
+    public function getExtraHttp();
+
+    /**
+     * Add a key-value pair for meta attribute property.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function addExtraProperty($key, $value);
+
+    /**
+     * Add a key-value pair for meta attribute name.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function addExtraName($key, $value);
+
+    /**
+     * Add a key-value pair for meta attribute http-equiv.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function addExtraHttp($key, $value);
 }

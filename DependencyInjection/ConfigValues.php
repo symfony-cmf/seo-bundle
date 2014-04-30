@@ -19,7 +19,7 @@ use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
  * This is a simple value object for storing the configuration values in a
  * meaningful way.
  *
- * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
+ * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>
  */
 class ConfigValues
 {

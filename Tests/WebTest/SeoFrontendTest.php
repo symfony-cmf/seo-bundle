@@ -115,13 +115,13 @@ class SeoFrontendTest extends BaseTestCase
     /**
      * @dataProvider getExtraProperties
      */
-    public function testExtraProperties($pathName, $contentTitle, $expectedType, $expectedKey, $expectedValue)
+    public function testExtraProperties($expectedType, $expectedKey, $expectedValue)
     {
-        $crawler = $this->client->request('GET', '/content/'.$pathName);
+        $crawler = $this->client->request('GET', '/content/content-extra');
         $res = $this->client->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
-        $this->assertCount(1, $crawler->filter('html:contains("'.$contentTitle.'")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Content extra")'));
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) use($expectedType, $expectedKey) {
@@ -136,9 +136,9 @@ class SeoFrontendTest extends BaseTestCase
     public function getExtraProperties()
     {
         return array(
-            array('content-extra-property', 'Content extra property', 'property', 'og:title', 'extra title'),
-            array('content-extra-name', 'Content name attribute', 'name', 'robots', 'index, follow'),
-            array('content-extra-http', 'Content http-equiv attribute', 'http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
+            array('property', 'og:title', 'extra title'),
+            array('name', 'robots', 'index, follow'),
+            array('http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
         );
     }
 }

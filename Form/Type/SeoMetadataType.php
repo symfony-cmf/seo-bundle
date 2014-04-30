@@ -39,11 +39,9 @@ class SeoMetadataType extends AbstractType
             ->add('originalUrl', 'text', array('required' => false))
             ->add('metaDescription', 'textarea', array('required' => false))
             ->add('metaKeywords', 'textarea', array('required' => false))
-            ->add('extraProperties', 'collection', array(
-                'type' => new ExtraPropertyType(),
-                'allow_add'    => true,
-                'allow_delete' => true,
-            ))
+            ->add('extraProperties', 'burgov_key_value', array('value_type' => 'text'))
+            ->add('extraNames', 'burgov_key_value', array('value_type' => 'text'))
+            ->add('extraHttp', 'burgov_key_value', array('value_type' => 'text'))
         ;
     }
 
@@ -53,7 +51,7 @@ class SeoMetadataType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\SeoMetadata',
+            'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata',
         ));
     }
 

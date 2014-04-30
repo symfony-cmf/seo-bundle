@@ -12,14 +12,14 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Extractor;
 
-use Symfony\Cmf\Bundle\SeoBundle\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
 /**
  * This extractor sets the absolute URL on the SeoMetadata.
  *
  * If you have a Symfony Route, use the OriginalRouteExtractor.
  *
- * @author Maximilian Berghoff <Maximilian.Berghoff@onit-gmbh.de>
+ * @author Maximilian Berghoff <maximilian.berghoff@gmx.de>
  */
 class OriginalUrlExtractor implements ExtractorInterface
 {
