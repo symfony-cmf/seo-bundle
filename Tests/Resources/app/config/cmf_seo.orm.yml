@@ -3,6 +3,7 @@ cmf_seo:
 
 cmf_routing:
     dynamic:
+        enabled: true
         persistence:
             orm:
                 enabled: true

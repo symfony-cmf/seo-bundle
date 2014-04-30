@@ -49,50 +49,54 @@ class CmfSeoExtension extends Extension
         }
         $container->setParameter($this->getAlias() . '.content_key', $contentKey);
 
-        $persistenceType = null;
-        switch (true) {
-            case $this->isConfigEnabled($container, $config['persistence']['phpcr']):
-                $persistenceType = 'phpcr';
-                break;
-
-            case $this->isConfigEnabled($container, $config['persistence']['orm']):
-                $persistenceType = 'orm';
-                break;
+        $sonataBundles = array();
+        if ($this->isConfigEnabled($container, $config['persistence']['phpcr'])) {
+            $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
+            $container->setParameter(
+                $this->getAlias() . '.persistence.phpcr.manager_name',
+                $config['persistence']['phpcr']['manager_name']
+            );
+            $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
         }
 
-        if (null !== $persistenceType) {
-            if ($config['sonata_admin_extension']) {
-                switch ($persistenceType) {
-                    case 'phpcr':
-                        $sonataBundle = 'SonataDoctrinePHPCRAdminBundle';
-                        break;
+        if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
+            $container->setParameter($this->getAlias() . '.backend_type_orm', true);
+            $container->setParameter(
+                $this->getAlias() . '.persistence.orm.manager_name',
+                $config['persistence']['orm']['manager_name']
+            );
+            $sonataBundles[] = 'SonataDoctrineORMBundle';
+        }
 
-                    case 'orm':
-                        $sonataBundle = 'SonataDoctrineORMBundle';
-                        break;
-                }
-
-                $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundle);
-            }
+        if (count($sonataBundles) && $config['sonata_admin_extension']) {
+            $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
         }
     }
 
     /**
-     * Loads the sonata admin extension for ORM.
+     * Loads the sonata admin extension if at least one supported backend is loaded.
      *
-     * @param mixed            $config
+     * @param string|bool      $config    Either 'auto' or true.
      * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
-     * @param string           $bundle     The required SonataAdmin adapter bundle
+     * @param array            $sonata    List of sonata bundles that are enabled.
      */
-    public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container, $bundle)
+    public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container, array $sonata)
     {
-        $bundles = $container->getParameter('kernel.bundles');
-        if ('auto' === $config && !isset($bundles[$bundle])) {
+        if (true === $config) {
+            $loader->load('admin.xml');
+
             return;
         }
 
-        $loader->load('admin.xml');
+        $bundles = $container->getParameter('kernel.bundles');
+        foreach ($sonata as $bundle) {
+            if ('auto' === $config && isset($bundles[$bundle])) {
+                $loader->load('admin.xml');
+
+                return;
+            }
+        }
     }
 
     /**

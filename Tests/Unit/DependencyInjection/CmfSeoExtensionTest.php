@@ -2,10 +2,8 @@
 
 namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection;
 
-
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
-use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class CmfSeoExtensionTest extends AbstractExtensionTestCase{
 

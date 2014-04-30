@@ -1,30 +1,28 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\Orm;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity\SeoAwareOrmContent;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\Phpcr;
+
+use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 class SeoMetadataTest extends BaseTestCase
 {
-    protected function getKernelConfiguration()
+    public function setUp()
     {
-        return array(
-            'environment' => 'orm',
-        );
+        $this->db('PHPCR')->createTestNode();
+        $this->dm = $this->db('PHPCR')->getOm();
+        $this->base = $this->dm->find(null, '/test');
     }
 
-    protected function getEm()
+    public function testSeoMetadataMapping()
     {
-        return $this->db('ORM')->getOm();
-    }
-
-    public function testSeoMetadata()
-    {
-        $content = new SeoAwareOrmContent();
+        $content = new SeoAwareContent();
         $content
             ->setTitle('Seo Aware test')
+            ->setName('seo-aware')
+            ->setParentDocument($this->dm->find(null, '/test'))
             ->setBody('Content for SeoAware Test')
         ;
 
@@ -41,13 +39,11 @@ class SeoMetadataTest extends BaseTestCase
 
         $content->setSeoMetadata($seoMetadata);
 
-        $this->getEm()->persist($content);
-        $this->getEm()->flush();
-        $this->getEm()->clear();
+        $this->dm->persist($content);
+        $this->dm->flush();
+        $this->dm->clear();
 
-        $content = $this->getEm()
-                        ->getRepository('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity\SeoAwareOrmContent')
-                        ->findOneByTitle('Seo Aware test');
+        $content = $this->dm->find(null, '/test/seo-aware');
 
         $this->assertNotNull($content);
 

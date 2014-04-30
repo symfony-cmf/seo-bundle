@@ -44,8 +44,14 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'description'            => 'default_description',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'persistence' => array(
-                'phpcr' => array('enabled' => false),
-                'orm' => array('enabled' => false),
+                'phpcr' => array(
+                    'enabled' => false,
+                    'manager_name' => null,
+                ),
+                'orm' => array(
+                    'enabled' => false,
+                    'manager_name' => null,
+                ),
             ),
             'metadata_listener'      => 'auto',
             'sonata_admin_extension' => 'auto',

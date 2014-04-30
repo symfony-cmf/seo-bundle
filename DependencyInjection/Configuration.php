@@ -37,10 +37,18 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('phpcr')
+                            ->addDefaultsIfNotSet()
                             ->canBeEnabled()
+                            ->children()
+                                ->scalarNode('manager_name')->defaultNull()->end()
+                            ->end()
                         ->end() // phpcr
                         ->arrayNode('orm')
+                            ->addDefaultsIfNotSet()
                             ->canBeEnabled()
+                            ->children()
+                                ->scalarNode('manager_name')->defaultNull()->end()
+                            ->end()
                         ->end() // orm
                     ->end()
                 ->end() // persistence

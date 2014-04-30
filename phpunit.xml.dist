@@ -6,7 +6,16 @@
 
     <testsuites>
         <testsuite name="Symfony SeoBundle Test Suite">
-            <directory>./Tests</directory>
+            <directory>./Tests/Unit</directory>
+        </testsuite>
+
+        <testsuite name="phpcr">
+            <directory>./Tests/WebTest</directory>
+            <directory>./Tests/Functional/Doctrine/Phpcr</directory>
+        </testsuite>
+
+        <testsuite name="orm">
+            <directory>./Tests/Functional/Doctrine/Orm</directory>
         </testsuite>
     </testsuites>
 

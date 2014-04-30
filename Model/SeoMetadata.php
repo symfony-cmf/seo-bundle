@@ -85,6 +85,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -101,6 +103,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
+        return $this;
     }
 
     /**
@@ -117,6 +121,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
+
+        return $this;
     }
 
     /**
@@ -133,6 +139,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setMetaKeywords($metaKeywords)
     {
         $this->metaKeywords = $metaKeywords;
+
+        return $this;
     }
 
     /**
@@ -149,6 +157,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setOriginalUrl($originalUrl)
     {
         $this->originalUrl = $originalUrl;
+
+        return $this;
     }
 
     /**
@@ -165,6 +175,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -181,6 +193,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setExtraProperties(array $extraProperties)
     {
         $this->extraProperties = $extraProperties;
+
+        return $this;
     }
 
     /**
@@ -215,6 +229,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setExtraNames(array $extraNames)
     {
         $this->extraNames = $extraNames;
+
+        return $this;
     }
 
     /**
@@ -249,6 +265,8 @@ class SeoMetadata implements SeoMetadataInterface
     public function setExtraHttp(array $extraHttp)
     {
         $this->extraHttp = $extraHttp;
+
+        return $this;
     }
 
     /**

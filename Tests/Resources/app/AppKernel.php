@@ -10,7 +10,10 @@ class AppKernel extends TestKernel
         $this->requireBundleSet('default');
 
         if ('phpcr' === $this->environment) {
-            $this->requireBundleSets(array('phpcr_odm', 'sonata_admin'));
+            $this->requireBundleSets(array(
+                'phpcr_odm',
+                'sonata_admin_phpcr',
+            ));
         } elseif ('orm' === $this->environment) {
             $this->requireBundleSet('doctrine_orm');
         }
@@ -18,8 +21,8 @@ class AppKernel extends TestKernel
         $this->addBundles(array(
             new \Sonata\SeoBundle\SonataSeoBundle(),
             new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
-            new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new \Burgov\Bundle\KeyValueFormBundle\BurgovKeyValueFormBundle(),
+            new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
         ));
     }
 

@@ -146,7 +146,11 @@ class SeoPresentation implements SeoPresentationInterface
                 $seoMetadata = new SeoMetadata();
                 $content->setSeoMetadata($seoMetadata); // make sure it has metadata the next time
             } else {
-                throw new InvalidArgumentException('getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given', is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata));
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given',
+                        is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata))
+                );
             }
         } else {
             $seoMetadata = new SeoMetadata();
