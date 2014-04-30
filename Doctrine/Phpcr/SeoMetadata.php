@@ -21,11 +21,6 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata as SeoMetadataModel;
 class SeoMetadata extends SeoMetadataModel
 {
     /**
-     * The documents phpcr node.
-     */
-    protected $node;
-
-    /**
      * The node's name.
      */
     protected $name;
@@ -37,6 +32,7 @@ class SeoMetadata extends SeoMetadataModel
 
     /**
      * @param string $name
+     * @return SeoMetadata
      */
     public function setName($name)
     {
@@ -54,25 +50,8 @@ class SeoMetadata extends SeoMetadataModel
     }
 
     /**
-     * @param NodeInterface $node
-     */
-    public function setNode($node)
-    {
-        $this->node = $node;
-
-        return $this;
-    }
-
-    /**
-     * @return NodeInterface
-     */
-    public function getNode()
-    {
-        return $this->node;
-    }
-
-    /**
      * @param NodeInterface $parentDocument
+     * @return SeoMetadata
      */
     public function setParentDocument($parentDocument)
     {
