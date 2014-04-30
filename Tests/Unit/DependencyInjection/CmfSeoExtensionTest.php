@@ -87,6 +87,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase{
             ),
         ));
 
-        $this->assertContainerBuilderHasService('cmf_seo.admin_extension', 'Symfony\Cmf\Bundle\SeoBundle\Admin\SeoContentAdminExtension');
+        $this->assertContainerBuilderHasService('cmf_seo.admin_extension', 'Symfony\Cmf\Bundle\SeoBundle\Admin\Extension\SeoContentAdminExtension');
     }
 }

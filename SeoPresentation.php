@@ -140,8 +140,7 @@ class SeoPresentation implements SeoPresentationInterface
             $contentSeoMetadata = $content->getSeoMetadata();
 
             if ($contentSeoMetadata instanceof SeoMetadataInterface) {
-                #$seoMetadata = clone $contentSeoMetadata;
-                $seoMetadata = $this->cloneMetadata($contentSeoMetadata);
+                $seoMetadata = $this->copyMetadata($contentSeoMetadata);
             } elseif (null === $contentSeoMetadata) {
                 $seoMetadata = new SeoMetadata();
                 $content->setSeoMetadata($seoMetadata); // make sure it has metadata the next time
@@ -285,7 +284,14 @@ class SeoPresentation implements SeoPresentationInterface
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '') . $contentKeywords;
     }
 
-    private function cloneMetadata(SeoMetadataInterface $contentSeoMetadata)
+    /**
+     * Copy the metadata object to sanitize it and remove doctrine traces.
+     *
+     * @param SeoMetadataInterface $contentSeoMetadata
+     *
+     * @return SeoMetadata
+     */
+    private function copyMetadata(SeoMetadataInterface $contentSeoMetadata)
     {
         $metadata = new SeoMetadata();
         $metadata->setTitle($contentSeoMetadata->getTitle());
