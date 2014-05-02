@@ -52,7 +52,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'manager_name' => null,
                 ),
             ),
-            'metadata_listener'      => 'auto',
             'sonata_admin_extension' => 'auto',
         );
 
