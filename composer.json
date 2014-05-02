@@ -16,8 +16,7 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.3",
         "sonata-project/seo-bundle": "1.1.*@dev",
-        "doctrine/collections": "1.*",
-        "burgov/key-value-form-bundle": "1.0.*@dev"
+        "doctrine/collections": "1.*"
     },
     "require-dev": {
         "symfony-cmf/testing": "dev-master",
@@ -28,13 +27,15 @@
         "symfony-cmf/routing-bundle": "1.2.*@dev",
         "symfony-cmf/core-bundle": "1.1.*@dev",
         "matthiasnoback/symfony-dependency-injection-test": "0.*",
-        "matthiasnoback/symfony-config-test": "0.*"
+        "matthiasnoback/symfony-config-test": "0.*",
+        "burgov/key-value-form-bundle": "1.0.*"
     },
     "suggest": {
         "sonata-project/doctrine-phpcr-admin-bundle": "To provide an admin extension for the seo metadata",
         "doctrine/phpcr-bundle": "To persist the metadata in PHPCR ODM documents",
         "doctrine/doctrine-bundle": "To persist the metadata in ORM entities",
-        "doctrine/orm": "2.4.*@dev"
+        "doctrine/orm": "2.4.*@dev",
+        "burgov/key-value-form-bundle": "To edit the seo metadata 'extra' fields"
     },
     "autoload":{
         "psr-0":{
