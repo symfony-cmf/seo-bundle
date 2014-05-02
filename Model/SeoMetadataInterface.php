@@ -80,17 +80,17 @@ interface SeoMetadataInterface
     public function getTitle();
 
     /**
-     * @param array|KeyValueContainer
+     * @param array|\Traversable|KeyValueContainer
      */
     public function setExtraProperties($extraProperties);
 
     /**
-     * @param array|KeyValueContainer
+     * @param array|\Traversable|KeyValueContainer
      */
     public function setExtraNames($extraNames);
 
     /**
-     * @param array|KeyValueContainer
+     * @param array|\Traversable|KeyValueContainer
      */
     public function setExtraHttp($extraHttp);
 

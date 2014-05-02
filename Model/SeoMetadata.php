@@ -297,16 +297,29 @@ class SeoMetadata implements SeoMetadataInterface
         }
     }
 
+    /**
+     * Extract an array out of $data or throw an exception if not possible.
+     *
+     * @param array|KeyValueContainer|\Traversable $data Something that can be converted to an array.
+     *
+     * @return array Native array representation of $data
+     *
+     * @throws InvalidArgumentException If $data can not be converted to an array.
+     */
     private function toArray($data)
     {
+        if (is_array($data)) {
+            return $data;
+        }
+
         if ($data instanceof KeyValueContainer) {
-            $data = $data->toArray();
+            return $data->toArray();
         }
 
-        if (!is_array($data)) {
-            throw new InvalidArgumentException(sprintf('Expected either an array or KeyValueContainer, got "%s"', is_object($data) ? getclass($data) : get_type($data)));
+        if ($data instanceof \Traversable) {
+            return iterator_to_array($data);
         }
 
-        return $data;
+        throw new InvalidArgumentException(sprintf('Expected array, Traversable or KeyValueContainer, got "%s"', is_object($data) ? getclass($data) : get_type($data)));
     }
 }
