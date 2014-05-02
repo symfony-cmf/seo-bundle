@@ -11,6 +11,7 @@
 
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+use Burgov\Bundle\KeyValueFormBundle\KeyValueContainer;
 
 /**
  * This class is a container for the metadata.
@@ -190,9 +191,9 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraProperties(array $extraProperties)
+    public function setExtraProperties($extraProperties)
     {
-        $this->extraProperties = $extraProperties;
+        $this->extraProperties = $this->toArray($extraProperties);
 
         return $this;
     }
@@ -206,29 +207,20 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param $key
+     * @param $value
      */
     public function addExtraProperty($key, $value)
     {
-        $this->extraProperties[$key] = (string)$value;
+        $this->extraProperties[$key] = $value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removeExtraProperty($key)
+    public function setExtraNames($extraNames)
     {
-        if (array_key_exists($key, $this->extraProperties)) {
-            unset($this->extraProperties[$key]);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setExtraNames(array $extraNames)
-    {
-        $this->extraNames = $extraNames;
+        $this->extraNames = $this->toArray($extraNames);
 
         return $this;
     }
@@ -242,29 +234,20 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param $key
+     * @param $value
      */
     public function addExtraName($key, $value)
     {
-        $this->extraNames[$key] = (string)$value;
+        $this->extraNames[$key] = $value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removeExtraName($key)
+    public function setExtraHttp($extraHttp)
     {
-        if (array_key_exists($key, $this->extraNames)) {
-            unset($this->extraNames[$key]);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setExtraHttp(array $extraHttp)
-    {
-        $this->extraHttp = $extraHttp;
+        $this->extraHttp = $this->toArray($extraHttp);
 
         return $this;
     }
@@ -278,20 +261,24 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param $key
+     * @param $value
      */
     public function addExtraHttp($key, $value)
     {
-        $this->extraHttp[$key] = (string)$value;
+        $this->extraHttp[$key] = $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function removeExtraHttp($key)
+    private function toArray($data)
     {
-        if (array_key_exists($key, $this->extraHttp)) {
-            unset($this->extraHttp[$key]);
+        if ($data instanceof KeyValueContainer) {
+            $data = $data->toArray();
         }
+
+        if (!is_array($data)) {
+                throw new \InvalidArgumentException('expected array');
+        }
+
+        return $data;
     }
 }

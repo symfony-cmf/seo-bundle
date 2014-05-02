@@ -79,19 +79,19 @@ interface SeoMetadataInterface
     public function getTitle();
 
     /**
-     * @param array
+     * @param KeyValueContainer
      */
-    public function setExtraProperties(array $extraProperties);
+    public function setExtraProperties($extraProperties);
 
     /**
-     * @param array
+     * @param KeyValueContainer
      */
-    public function setExtraNames(array $extraNames);
+    public function setExtraNames($extraNames);
 
     /**
-     * @param array
+     * @param KeyValueContainer
      */
-    public function setExtraHttp(array $extraHttp);
+    public function setExtraHttp($extraHttp);
 
     /**
      * @return array
@@ -111,24 +111,24 @@ interface SeoMetadataInterface
     /**
      * Add a key-value pair for meta attribute property.
      *
-     * @param string $key
-     * @param string $value
+     * @param $key
+     * @param $value
      */
     public function addExtraProperty($key, $value);
 
     /**
      * Add a key-value pair for meta attribute name.
      *
-     * @param string $key
-     * @param string $value
+     * @param $key
+     * @param $value
      */
     public function addExtraName($key, $value);
 
     /**
      * Add a key-value pair for meta attribute http-equiv.
      *
-     * @param string $key
-     * @param string $value
+     * @param $key
+     * @param $value
      */
     public function addExtraHttp($key, $value);
 }
