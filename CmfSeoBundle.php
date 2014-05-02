@@ -19,17 +19,12 @@ use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterExtractorsPass;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\UnescapePlaceholdersPass;
 
 class CmfSeoBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new RegisterExtractorsPass());
-        $container->addCompilerPass(new UnescapePlaceholdersPass(array(
-            'cmf_seo.title',
-            'cmf_seo.description',
-        )), PassConfig::TYPE_OPTIMIZE);
 
         $this->buildPhpcrCompilerPass($container);
         $this->buildOrmCompilerPass($container);
