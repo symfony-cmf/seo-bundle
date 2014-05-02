@@ -12,6 +12,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Burgov\Bundle\KeyValueFormBundle\KeyValueContainer;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
+
 /**
  * This class is a container for the metadata.
  *
@@ -190,9 +193,9 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraProperties(array $extraProperties)
+    public function setExtraProperties($extraProperties)
     {
-        $this->extraProperties = $extraProperties;
+        $this->extraProperties = $this->toArray($extraProperties);
 
         return $this;
     }
@@ -226,9 +229,9 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraNames(array $extraNames)
+    public function setExtraNames($extraNames)
     {
-        $this->extraNames = $extraNames;
+        $this->extraNames = $this->toArray($extraNames);
 
         return $this;
     }
@@ -262,9 +265,9 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * {@inheritDoc}
      */
-    public function setExtraHttp(array $extraHttp)
+    public function setExtraHttp($extraHttp)
     {
-        $this->extraHttp = $extraHttp;
+        $this->extraHttp = $this->toArray($extraHttp);
 
         return $this;
     }
@@ -293,5 +296,18 @@ class SeoMetadata implements SeoMetadataInterface
         if (array_key_exists($key, $this->extraHttp)) {
             unset($this->extraHttp[$key]);
         }
+    }
+
+    private function toArray($data)
+    {
+        if ($data instanceof KeyValueContainer) {
+            $data = $data->toArray();
+        }
+
+        if (!is_array($data)) {
+            throw new InvalidArgumentException(sprintf('Expected either an array or KeyValueContainer, got "%s"', is_object($data) ? getclass($data) : get_type($data)));
+        }
+
+        return $data;
     }
 }

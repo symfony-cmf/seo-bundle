@@ -12,6 +12,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
+use Burgov\Bundle\KeyValueFormBundle\KeyValueContainer;
+
 /**
  * The interface for the SeoMetadata.
  *
@@ -79,19 +81,19 @@ interface SeoMetadataInterface
     public function getTitle();
 
     /**
-     * @param array
+     * @param array|KeyValueContainer
      */
-    public function setExtraProperties(array $extraProperties);
+    public function setExtraProperties($extraProperties);
 
     /**
-     * @param array
+     * @param array|KeyValueContainer
      */
-    public function setExtraNames(array $extraNames);
+    public function setExtraNames($extraNames);
 
     /**
-     * @param array
+     * @param array|KeyValueContainer
      */
-    public function setExtraHttp(array $extraHttp);
+    public function setExtraHttp($extraHttp);
 
     /**
      * @return array
