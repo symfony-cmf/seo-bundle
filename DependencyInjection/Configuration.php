@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
@@ -57,10 +56,6 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
                 ->scalarNode('content_key')->end()
-                ->enumNode('metadata_listener')
-                    ->values(array(true, false, 'auto'))
-                    ->defaultValue('auto')
-                ->end()
                 ->enumNode('sonata_admin_extension')
                     ->values(array(true, false, 'auto'))
                     ->defaultValue('auto')

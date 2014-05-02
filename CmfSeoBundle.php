@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
@@ -20,22 +19,16 @@ use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterExtractorsPass;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\UnescapePlaceholdersPass;
 
 class CmfSeoBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new RegisterExtractorsPass());
-        $container->addCompilerPass(new UnescapePlaceholdersPass(array(
-            'cmf_seo.title',
-            'cmf_seo.description',
-        )), PassConfig::TYPE_OPTIMIZE);
 
         $this->buildPhpcrCompilerPass($container);
         $this->buildOrmCompilerPass($container);
     }
-
 
     /**
      * Creates and registers compiler passes for PHPCR-ODM mapping if both the

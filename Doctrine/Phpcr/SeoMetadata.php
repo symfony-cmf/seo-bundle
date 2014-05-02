@@ -9,29 +9,29 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
-use PHPCR\NodeInterface;
+use Doctrine\ODM\PHPCR\HierarchyInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata as SeoMetadataModel;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoMetadata extends SeoMetadataModel
+class SeoMetadata extends SeoMetadataModel implements HierarchyInterface
 {
     /**
-     * The node's name.
+     * @var string
      */
     protected $name;
 
     /**
-     * The node's parent document.
+     * @var object
      */
     protected $parentDocument;
 
     /**
      * @param string $name
+     *
      * @return SeoMetadata
      */
     public function setName($name)
@@ -50,8 +50,7 @@ class SeoMetadata extends SeoMetadataModel
     }
 
     /**
-     * @param NodeInterface $parentDocument
-     * @return SeoMetadata
+     * {@inheritDoc}
      */
     public function setParentDocument($parentDocument)
     {
@@ -61,10 +60,26 @@ class SeoMetadata extends SeoMetadataModel
     }
 
     /**
-     * @return NodeInterface
+     * @deprecated use setParentDocument
+     */
+    public function setParent($parent)
+    {
+        return $this->setParentDocument($parent);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function getParentDocument()
     {
         return $this->parentDocument;
+    }
+
+    /**
+     * @deprecated use getParentDocument
+     */
+    public function getParent()
+    {
+        return $this->getParentDocument();
     }
 }

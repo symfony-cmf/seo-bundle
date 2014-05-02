@@ -21,7 +21,7 @@ use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
  * This model is responsible for putting the SeoMetadata into
  * sonatas PageService.
  */
-class PresentationTest extends \PHPUnit_Framework_Testcase
+class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 {
     private $seoPresentation;
     private $pageService;

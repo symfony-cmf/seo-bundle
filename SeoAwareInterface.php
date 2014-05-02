@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
@@ -32,7 +31,7 @@ interface SeoAwareInterface
     /**
      * Sets the SEO metadata for this content.
      *
-     * This method is used by a listener, which converts the metadata to a 
+     * This method is used by a listener, which converts the metadata to a
      * plain array in order to persist it and converts it back when the content
      * is fetched.
      *

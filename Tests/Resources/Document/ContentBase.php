@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;

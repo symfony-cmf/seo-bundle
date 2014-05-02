@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
@@ -53,7 +52,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'manager_name' => null,
                 ),
             ),
-            'metadata_listener'      => 'auto',
             'sonata_admin_extension' => 'auto',
         );
 

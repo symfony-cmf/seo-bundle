@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
 
 use Burgov\Bundle\KeyValueFormBundle\KeyValueContainer;
@@ -213,7 +212,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function addExtraProperty($key, $value)
     {
-        $this->extraProperties[$key] = (string)$value;
+        $this->extraProperties[$key] = (string) $value;
     }
 
     /**
@@ -249,7 +248,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function addExtraName($key, $value)
     {
-        $this->extraNames[$key] = (string)$value;
+        $this->extraNames[$key] = (string) $value;
     }
 
     /**
@@ -285,7 +284,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function addExtraHttp($key, $value)
     {
-        $this->extraHttp[$key] = (string)$value;
+        $this->extraHttp[$key] = (string) $value;
     }
 
     /**

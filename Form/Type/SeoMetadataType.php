@@ -9,13 +9,11 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Form\Type\ExtraPropertyType;
 
 /**
  * A form type for editing the SEO metadata.
