@@ -3,7 +3,6 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 /**

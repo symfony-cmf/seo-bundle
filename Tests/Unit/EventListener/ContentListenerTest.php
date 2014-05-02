@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;

@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Symfony\Cmf\Component\Testing\Unit\XmlSchemaTestCase;
@@ -31,4 +30,3 @@ class XmlSchemaTest extends XmlSchemaTestCase
         }
     }
 }
-

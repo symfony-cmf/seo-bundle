@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
@@ -35,7 +34,6 @@ class CmfSeoBundle extends Bundle
         $this->buildPhpcrCompilerPass($container);
         $this->buildOrmCompilerPass($container);
     }
-
 
     /**
      * Creates and registers compiler passes for PHPCR-ODM mapping if both the

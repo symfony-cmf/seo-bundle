@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
 abstract class BaseTestCase extends \PHPUnit_Framework_TestCase

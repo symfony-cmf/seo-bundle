@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection\Compiler;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\UnescapePlaceholdersPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
+class UnescapePlaceholdersPassTest extends AbstractCompilerPassTestCase
 {
     protected function registerCompilerPass(ContainerBuilder $container)
     {

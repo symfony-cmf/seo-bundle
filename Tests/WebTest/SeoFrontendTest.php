@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest;
 
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
@@ -124,7 +123,7 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertCount(1, $crawler->filter('html:contains("Content extra")'));
 
         //test the meta tag entries
-        $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) use($expectedType, $expectedKey) {
+        $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) use ($expectedType, $expectedKey) {
             return $expectedKey === $node->attr($expectedType);
         });
 

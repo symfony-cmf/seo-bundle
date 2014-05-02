@@ -5,8 +5,8 @@ namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 
-class CmfSeoExtensionTest extends AbstractExtensionTestCase{
-
+class CmfSeoExtensionTest extends AbstractExtensionTestCase
+{
     /**
      * {@inheritDoc}
      */

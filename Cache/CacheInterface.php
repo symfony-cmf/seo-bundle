@@ -12,7 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Cache;
 
 /**
- * Classes implementing this interface are able to cache extractors for 
+ * Classes implementing this interface are able to cache extractors for
  * content objects.
  *
  * @author Wouter J <wouter@wouterj.nl>
