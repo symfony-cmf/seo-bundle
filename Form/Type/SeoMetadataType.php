@@ -20,7 +20,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Form\Type\ExtraPropertyType;
 /**
  * A form type for editing the SEO metadata.
  *
- * When using SonataAdmin for the backend and having content that implement 
+ * When using SonataAdmin for the backend and having content that implement
  * the SeoAwareInterface. The Sonata Admin will get this form type automatically.
  *
  * You can explicitly use this type using the "seo_metadata" type.
@@ -39,9 +39,9 @@ class SeoMetadataType extends AbstractType
             ->add('originalUrl', 'text', array('required' => false))
             ->add('metaDescription', 'textarea', array('required' => false))
             ->add('metaKeywords', 'textarea', array('required' => false))
-            ->add('extraProperties', 'burgov_key_value', array('value_type' => 'text'))
-            ->add('extraNames', 'burgov_key_value', array('value_type' => 'text'))
-            ->add('extraHttp', 'burgov_key_value', array('value_type' => 'text'))
+            ->add('extraProperties', 'burgov_key_value', array('required' => false, 'value_type' => 'text'))
+            ->add('extraNames', 'burgov_key_value', array('required' => false, 'value_type' => 'text'))
+            ->add('extraHttp', 'burgov_key_value', array('required' => false, 'value_type' => 'text'))
         ;
     }
 
