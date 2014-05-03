@@ -56,9 +56,9 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
         $this->assertEquals(200, $res->getStatusCode());
 
-        $this->assertCount(1, $crawler->filter('html:contains("SeoConfiguration")'));
+        $this->assertCount(1, $crawler->filter('html:contains("SEO")'));
         $this->assertCount(1, $crawler->filter('html:contains("Page title")'));
-        $this->assertCount(1, $crawler->filter('html:contains("Original url")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Original URL")'));
         $this->assertCount(1, $crawler->filter('html:contains("description")'));
         $this->assertCount(1, $crawler->filter('html:contains("keywords")'));
     }

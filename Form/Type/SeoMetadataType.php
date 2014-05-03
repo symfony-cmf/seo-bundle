@@ -32,20 +32,26 @@ class SeoMetadataType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $keyValueOptions = array(
-            'required' => false,
-            'value_type' => 'text',
-            'use_container_object' => true,
-        );
-
         $builder
-            ->add('title', 'text', array('required' => false))
-            ->add('originalUrl', 'text', array('required' => false))
-            ->add('metaDescription', 'textarea', array('required' => false))
-            ->add('metaKeywords', 'textarea', array('required' => false))
-            ->add('extraProperties', 'burgov_key_value', $keyValueOptions)
-            ->add('extraNames', 'burgov_key_value', $keyValueOptions)
-            ->add('extraHttp', 'burgov_key_value', $keyValueOptions)
+            ->add('title', 'text', array('label' => 'form.label_title'))
+            ->add('originalUrl', 'text', array('label'=> 'form.label_originalUrl'))
+            ->add('metaDescription', 'textarea', array('label' => 'form.label_metaDescription'))
+            ->add('metaKeywords', 'textarea', array('label' => 'form.label_metaKeywords'))
+            ->add('extraProperties', 'burgov_key_value', array(
+                'label' => 'form.label_extraProperties',
+                'value_type' => 'text',
+                'use_container_object' => true,
+            ))
+            ->add('extraNames', 'burgov_key_value', array(
+                'label' => 'form.label_extraNames',
+                'value_type' => 'text',
+                'use_container_object' => true,
+            ))
+            ->add('extraHttp', 'burgov_key_value', array(
+                'label' => 'form.label_extraHttp',
+                'value_type' => 'text',
+                'use_container_object' => true,
+            ))
         ;
     }
 
@@ -56,6 +62,8 @@ class SeoMetadataType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata',
+            'translation_domain' => 'CmfSeoBundle',
+            'required' => false,
         ));
     }
 
