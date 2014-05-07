@@ -28,10 +28,25 @@ use Sonata\AdminBundle\Form\FormMapper;
  */
 class SeoContentAdminExtension extends AdminExtension
 {
+    /**
+     * @var string
+     */
+    protected $formGroup;
+
+    /**
+     * @param string $formGroup group name to use for form mapper
+     */
+    public function __construct($formGroup = 'form.group_seo')
+    {
+        $this->formGroup = $formGroup;
+    }
+
     public function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('form.group_seo', array('translation_domain' => 'CmfSeoBundle'))
+            ->with($this->formGroup, array(
+                'translation_domain' => 'CmfSeoBundle',
+            ))
                 ->add('seoMetadata', 'seo_metadata', array('label' => false))
             ->end()
         ;

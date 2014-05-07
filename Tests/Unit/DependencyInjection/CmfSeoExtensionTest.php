@@ -79,10 +79,10 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
 
         $this->load(array(
-            'title'                     => 'Default title',
-            'description'               => 'Default description.',
-            'sonata_admin_extension'    => true,
-            'persistence'               => array(
+            'title'                  => 'Default title',
+            'description'            => 'Default description.',
+            'sonata_admin_extension' => true,
+            'persistence'            => array(
                 'phpcr' => true,
             ),
         ));

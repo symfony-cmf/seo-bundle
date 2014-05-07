@@ -67,7 +67,7 @@ class CmfSeoExtension extends Extension
             $sonataBundles[] = 'SonataDoctrineORMBundle';
         }
 
-        if (count($sonataBundles) && $config['sonata_admin_extension']) {
+        if (count($sonataBundles) && $config['sonata_admin_extension']['enabled']) {
             $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
         }
     }
@@ -82,20 +82,22 @@ class CmfSeoExtension extends Extension
      */
     public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container, array $sonata)
     {
-        if (true === $config) {
-            $loader->load('admin.xml');
-
-            return;
-        }
-
-        $bundles = $container->getParameter('kernel.bundles');
-        foreach ($sonata as $bundle) {
-            if ('auto' === $config && isset($bundles[$bundle])) {
-                $loader->load('admin.xml');
-
+        if ('auto' === $config['enabled']) {
+            $bundles = $container->getParameter('kernel.bundles');
+            $found = false;
+            foreach ($sonata as $bundle) {
+                if (isset($bundles[$bundle])) {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
                 return;
             }
         }
+
+        $container->setParameter($this->getAlias() . '.sonata_admin_extension.form_group', $config['form_group']);
+        $loader->load('admin.xml');
     }
 
     /**
