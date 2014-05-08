@@ -10,6 +10,7 @@
 
     <services>
         <service id="cmf_seo.admin_extension" class="%cmf_seo.admin_extension.class%">
+            <argument>%cmf_seo.sonata_admin_extension.form_group%</argument>
             <tag name="sonata.admin.extension" />
         </service>
     </services>

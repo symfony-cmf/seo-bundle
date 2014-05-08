@@ -52,7 +52,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'manager_name' => null,
                 ),
             ),
-            'sonata_admin_extension' => 'auto',
+            'sonata_admin_extension' => array(
+                'enabled' => 'auto',
+                'form_group' => 'form.group_seo',
+            ),
         );
 
         $sources = array_map(function ($path) {

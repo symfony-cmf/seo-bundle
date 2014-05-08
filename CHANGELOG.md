@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.0
+-----
+
+* **2014-05-07**: Cleanup configuration for Sonata. `sonata_admin_extension` is now
+  `sonata_admin_extension.enabled`.
+
 1.0.0-RC2
 ---------
 
