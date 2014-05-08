@@ -12,12 +12,13 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
 use Doctrine\ODM\PHPCR\HierarchyInterface;
+use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata as SeoMetadataModel;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SeoMetadata extends SeoMetadataModel implements HierarchyInterface
+class SeoMetadata extends SeoMetadataModel implements HierarchyInterface, TranslatableInterface
 {
     /**
      * @var string
