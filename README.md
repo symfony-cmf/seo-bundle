@@ -19,9 +19,7 @@ aware for Search Engine Optimisation (SEO).
 
 For the install guide and reference, see:
 
-This bundle will be documented once the CMF 1.1 is released.
-Meanwhile find the documentation in progress in this [PR](https://github.com/symfony-cmf/symfony-cmf-docs/pull/442
-[WIP] Documenting the SeoBundle).
+* [SeoBundle documentation](http://symfony.com/doc/master/cmf/bundles/seo/index.html)
 
 See also:
 
