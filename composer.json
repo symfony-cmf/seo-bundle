@@ -38,12 +38,11 @@
         "doctrine/orm": "2.4.*@dev",
         "burgov/key-value-form-bundle": "To edit the seo metadata 'extra' fields"
     },
-    "autoload":{
-        "psr-0":{
-            "Symfony\\Cmf\\Bundle\\SeoBundle": ""
+    "autoload": {
+        "psr-4": {
+            "Symfony\\Cmf\\Bundle\\SeoBundle\\": ""
         }
     },
-    "target-dir": "Symfony/Cmf/Bundle/SeoBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
