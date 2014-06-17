@@ -12,7 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -92,8 +92,12 @@ class SeoPresentation implements SeoPresentationInterface
      * @param ConfigValues        $configValues
      * @param CacheInterface      $cache
      */
-    public function __construct(SeoPage $sonataPage, TranslatorInterface $translator, ConfigValues $configValues, CacheInterface $cache = null)
-    {
+    public function __construct(
+        SeoPage $sonataPage,
+        TranslatorInterface $translator,
+        ConfigValues $configValues,
+        CacheInterface $cache = null
+    ) {
         $this->sonataPage = $sonataPage;
         $this->translator = $translator;
         $this->configValues = $configValues;
@@ -131,6 +135,7 @@ class SeoPresentation implements SeoPresentationInterface
      *
      * @param object $content
      *
+     * @throws Exception\InvalidArgumentException
      * @return SeoMetadata
      */
     private function getSeoMetadata($content)
@@ -147,7 +152,8 @@ class SeoPresentation implements SeoPresentationInterface
                 throw new InvalidArgumentException(
                     sprintf(
                         'getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given',
-                        is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata))
+                        is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata)
+                    )
                 );
             }
         } else {
