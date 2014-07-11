@@ -72,6 +72,13 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('form_group')->defaultValue('form.group_seo')->end()
                     ->end()
                 ->end()
+                ->arrayNode('alternate_locale')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('provider_id')->defaultNull()->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
