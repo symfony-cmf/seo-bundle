@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="cmf_seo.controller.exception.class">Symfony\Cmf\Bundle\SeoBundle\Controller\ExceptionController</parameter>
+    </parameters>
+
+    <services>
+        <service id="cmf_seo.controller.exception" class="%cmf_seo.controller.exception.class%">
+            <argument type="service" id="twig" />
+            <argument>%kernel.debug%</argument>
+            <argument type="service" id="doctrine_phpcr" />
+            <call method="setManagerRegistry">
+                <argument type="service" id="doctrine_phpcr" />
+            </call>
+            <tag name="kernel.exception" />
+        </service>
+    </services>
+
+</container>
