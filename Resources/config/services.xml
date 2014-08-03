@@ -12,6 +12,8 @@
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener</parameter>
 
+        <parameter key="cmf_seo.error_handling.matcher.presentation.class">Symfony\Cmf\Bundle\SeoBundle\ErrorHandling\BestMatchPresentation</parameter>
+
     </parameters>
 
     <services>
@@ -48,6 +50,12 @@
             <argument>%cmf_seo.content_key%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
+
+        <service id="cmf_seo.error_handling.matcher.presentation" class="%cmf_seo.error_handling.matcher.presentation.class%">
+            <argument type="service" id="twig" />
+            <argument>%kernel.debug%</argument>
+        </service>
+
     </services>
 
 </container>

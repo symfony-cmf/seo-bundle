@@ -60,6 +60,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled'  => false,
                 'provider_id' => null,
             ),
+            'error_handling' => array(
+                'enabled' => false,
+            )
         );
 
         $sources = array_map(function ($path) {
