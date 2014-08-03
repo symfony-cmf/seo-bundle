@@ -79,7 +79,7 @@ class CmfSeoExtension extends Extension
         }
 
         if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
-            $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
+            $this->loadAlternateLocaleProvider($config['alternate_locale'], $loader, $container);
         }
     }
 
@@ -168,7 +168,7 @@ class CmfSeoExtension extends Extension
      * @param array             $config
      * @param ContainerBuilder $container
      */
-    private function loadAlternateLocaleProvider($config, ContainerBuilder $container)
+    private function loadAlternateLocaleProvider($config, XmlFileLoader $loader, ContainerBuilder $container)
     {
 
         $alternateLocaleProvider = empty($config['provider_id'])
@@ -185,5 +185,7 @@ class CmfSeoExtension extends Extension
                 )
             ;
         }
+
+        $loader->load('phpcr.xml');
     }
 }

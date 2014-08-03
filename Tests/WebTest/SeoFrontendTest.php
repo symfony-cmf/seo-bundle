@@ -163,4 +163,12 @@ class SeoFrontendTest extends BaseTestCase
         $expectedArray = array(array('alternate', 'http://localhost/en/alternate-locale-content', 'en'));
         $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
     }
+
+    public function testErrorHandling()
+    {
+        $crawler = $this->client->request('GET', '/content/content-extr');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(404, $res->getStatusCode());
+    }
 }
