@@ -27,6 +27,7 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 class BestMatchPresentation extends ExceptionController
 {
     /**
+<<<<<<< HEAD
      * Chain of matcher.
      *
      * @var array|BestMatcherInterface[]

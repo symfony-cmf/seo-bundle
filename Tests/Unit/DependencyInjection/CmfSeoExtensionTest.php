@@ -160,4 +160,31 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             array('group' => 'parent')
         );
     }
+
+    public function testErrorHandlingPHPCR()
+    {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array(
+                'DoctrinePHPCRBundle' => true
+            )
+        );
+        $this->load(array(
+            'persistence'   => array(
+                'phpcr' => true,
+            ),
+            'error_handling' => true
+        ));
+
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error_handling.matcher.ancestor',
+            'cmf_seo.cmf_seo.best_matcher',
+            array('type' => 'ancestor')
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error_handling.matcher.parent',
+            'cmf_seo.cmf_seo.best_matcher',
+            array('type' => 'parent')
+        );
+    }
 }
