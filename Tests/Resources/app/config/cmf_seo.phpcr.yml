@@ -43,3 +43,6 @@ sonata_admin:
                 label: Content
                 items:
                     - sonata.admin.seo_content
+
+twig:
+    exception_controller: cmf_seo.controller.exception

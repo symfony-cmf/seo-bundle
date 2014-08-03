@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ca11815-48bf-4006-8fbf-69d0b453c2f4" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Controller/ExceptionController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Resources/config/phpcr.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.md" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/Unit/DependencyInjection/CmfSeoExtensionTest.php" afterPath="$PROJECT_DIR$/Tests/Unit/DependencyInjection/CmfSeoExtensionTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/WebTest/SeoFrontendTest.php" afterPath="$PROJECT_DIR$/Tests/WebTest/SeoFrontendTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml" afterPath="$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml" />
     </list>
     <ignored path="SeoBundle.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,9 +34,14 @@
       <file leaf-file-name="SeoFrontendTest.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tests/WebTest/SeoFrontendTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.6666667" vertical-offset="1044" max-vertical-offset="3096">
-              <caret line="69" column="10" selection-start-line="69" selection-start-column="10" selection-end-line="69" selection-end-column="10" />
-              <folding />
+            <state vertical-scroll-proportion="-0.6666667" vertical-offset="1206" max-vertical-offset="3258">
+              <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+              <folding>
+                <element signature="e#281#330#0#PHP" expanded="false" />
+                <marker date="1412180239275" expanded="true" signature="894:6873" placeholder="{...}" />
+                <marker date="1412180239275" expanded="true" signature="6549:6555" placeholder="{...}" />
+                <marker date="1412180239275" expanded="true" signature="6596:6871" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,8 +49,8 @@
       <file leaf-file-name="cmf_seo.phpcr.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="918">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="972">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -86,8 +94,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.25852782" vertical-offset="0" max-vertical-offset="1188">
-              <caret line="8" column="74" selection-start-line="8" selection-start-column="74" selection-end-line="8" selection-end-column="74" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1188">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -339,16 +347,21 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Tests/WebTest/SeoFrontendTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6666667" vertical-offset="1044" max-vertical-offset="3078">
-          <caret line="69" column="10" selection-start-line="69" selection-start-column="10" selection-end-line="69" selection-end-column="10" />
-          <folding />
+        <state vertical-scroll-proportion="-0.6666667" vertical-offset="1206" max-vertical-offset="3258">
+          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+          <folding>
+            <element signature="e#281#330#0#PHP" expanded="false" />
+            <marker date="1412180239275" expanded="true" signature="894:6873" placeholder="{...}" />
+            <marker date="1412180239275" expanded="true" signature="6549:6555" placeholder="{...}" />
+            <marker date="1412180239275" expanded="true" signature="6596:6871" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="918">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="972">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -392,8 +405,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25852782" vertical-offset="0" max-vertical-offset="1188">
-          <caret line="8" column="74" selection-start-line="8" selection-start-column="74" selection-end-line="8" selection-end-column="74" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1188">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

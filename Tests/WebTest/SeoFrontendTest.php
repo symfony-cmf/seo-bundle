@@ -141,6 +141,7 @@ class SeoFrontendTest extends BaseTestCase
         );
     }
 
+<<<<<<< HEAD
     public function testAlternateLanguages()
     {
         $crawler = $this->client->request('GET', '/en/alternate-locale-content');
@@ -162,6 +163,14 @@ class SeoFrontendTest extends BaseTestCase
         $linkCrawler = $crawler->filter('head > link');
         $expectedArray = array(array('alternate', 'http://localhost/en/alternate-locale-content', 'en'));
         $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
+=======
+    public function testErrorHandling()
+    {
+        $crawler = $this->client->request('GET', '/content/content-extr');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(404, $res->getStatusCode());
+>>>>>>> first work
     }
 
     public function testErrorHandling()
