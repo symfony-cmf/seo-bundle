@@ -13,6 +13,10 @@ namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
 
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController;
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\FlattenException;
+use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 /**
  * This presentation model enriches the the values to render the
@@ -39,11 +43,50 @@ class BestMatchPresentation extends ExceptionController
      */
     protected $matcherChain = array();
 
-    public function createMatches()
-    {
+    /**
+     * @param Request              $request
+     * @param FlattenException     $exception
+     * @param DebugLoggerInterface $logger
+     * @param string               $_format
+     * @return Response
+     */
+    public function showAction(
+        Request $request,
+        FlattenException $exception,
+        DebugLoggerInterface $logger = null,
+        $_format = 'html'
+    ) {
+        $code = $exception->getStatusCode();
 
+        if (404 !== $code) {
+            return parent::showAction($request, $exception, $logger, $_format);
+        }
+
+        $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
+        $bestMatches = array();
+
+        foreach ($this->matcherChain as $type => $matcher) {
+            $bestMatches[$type] = $matcher->create($request);
+        }
+
+        return new Response($this->twig->render(
+            $this->findTemplate($request, $_format, $code, $this->debug),
+            array(
+                'status_code'    => $code,
+                'status_text'    => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
+                'exception'      => $exception,
+                'logger'         => $logger,
+                'currentContent' => $currentContent,
+                'best_matches'   => $bestMatches,
+            )
+        ));
     }
 
+    /**
+     * @param BestMatcherInterface      $matcher
+     * @param string                    $type
+     * @throws InvalidArgumentException
+     */
     public function addMatcher(BestMatcherInterface $matcher, $type)
     {
         if (self::MATCH_TYPE_ANCESTOR !== $type && self::MATCH_TYPE_PARENT !== $type) {

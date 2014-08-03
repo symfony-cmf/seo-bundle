@@ -17,3 +17,6 @@ cmf_routing:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
+
+twig:
+    exception_controller: cmf_seo.error_handling.matcher.presentation:showAction
