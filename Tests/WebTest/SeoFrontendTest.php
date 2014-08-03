@@ -140,4 +140,12 @@ class SeoFrontendTest extends BaseTestCase
             array('http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
         );
     }
+
+    public function testErrorHandling()
+    {
+        $crawler = $this->client->request('GET', '/content/content-extr');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(404, $res->getStatusCode());
+    }
 }

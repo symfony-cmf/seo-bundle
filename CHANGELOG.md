@@ -1,6 +1,7 @@
 Changelog
 =========
 
+* **2014-02-08**: Custom exception controller for error handling
 * **2014-06-06**: Updated to PSR-4 autoloading
 
 1.0.0

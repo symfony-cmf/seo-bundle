@@ -56,6 +56,8 @@ class CmfSeoExtension extends Extension
                 $config['persistence']['phpcr']['manager_name']
             );
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
+
+            $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
         }
 
         if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
@@ -130,5 +132,15 @@ class CmfSeoExtension extends Extension
     public function getXsdValidationBasePath()
     {
         return __DIR__.'/../Resources/config/schema';
+    }
+
+    /**
+     * @param $config
+     * @param XmlFileLoader $loader
+     * @param ContainerBuilder $container
+     */
+    private function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
+    {
+        $loader->load('phpcr.xml');
     }
 }
