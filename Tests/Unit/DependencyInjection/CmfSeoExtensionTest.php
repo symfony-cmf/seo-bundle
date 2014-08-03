@@ -107,6 +107,10 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
     public function testErrorHandlingPHPCR()
     {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array()
+        );
         $this->load(array(
             'persistence'   => array(
                 'phpcr' => true,
