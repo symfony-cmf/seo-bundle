@@ -165,9 +165,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
     {
         $this->container->setParameter(
             'kernel.bundles',
-            array(
-                'DoctrinePHPCRBundle' => true
-            )
+            array()
         );
         $this->load(array(
             'persistence'   => array(
