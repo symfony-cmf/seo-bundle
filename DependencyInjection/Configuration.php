@@ -72,6 +72,10 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('form_group')->defaultValue('form.group_seo')->end()
                     ->end()
                 ->end()
+                ->arrayNode('error_handling')
+                        ->addDefaultsIfNotSet()
+                        ->canBeEnabled()
+                ->end()
             ->end()
         ;
 

@@ -29,6 +29,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('cmf_seo.translation_domain', 'messages');
         $this->assertContainerBuilderHasParameter('cmf_seo.original_route_pattern', 'canonical');
         $this->assertContainerBuilderHasParameter('cmf_seo.content_key', 'contentDocument');
+        $this->assertContainerBuilderHasService('cmf_seo.error_handling.matcher.presentation');
     }
 
     public function testPersistencePHPCR()
@@ -88,5 +89,26 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         ));
 
         $this->assertContainerBuilderHasService('cmf_seo.admin_extension', 'Symfony\Cmf\Bundle\SeoBundle\Admin\Extension\SeoContentAdminExtension');
+    }
+
+    public function testErrorHandlingPHPCR()
+    {
+        $this->load(array(
+            'persistence'   => array(
+                'phpcr' => true,
+            ),
+            'error_handling' => true
+        ));
+
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error_handling.matcher.ancestor',
+            'cmf_seo.cmf_seo.best_matcher',
+            array('type' => 'ancestor')
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error_handling.matcher.parent',
+            'cmf_seo.cmf_seo.best_matcher',
+            array('type' => 'parent')
+        );
     }
 }

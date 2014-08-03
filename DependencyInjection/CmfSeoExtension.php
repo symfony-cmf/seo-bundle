@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -56,8 +57,6 @@ class CmfSeoExtension extends Extension
                 $config['persistence']['phpcr']['manager_name']
             );
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
-
-            $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
         }
 
         if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
@@ -71,6 +70,10 @@ class CmfSeoExtension extends Extension
 
         if (count($sonataBundles) && $config['sonata_admin_extension']['enabled']) {
             $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
+        }
+
+        if ($this->isConfigEnabled($container, $config['error_handling'])) {
+            $this->loadErrorHandling($config['error_handling'], $loader, $container);
         }
     }
 
@@ -139,8 +142,12 @@ class CmfSeoExtension extends Extension
      * @param XmlFileLoader $loader
      * @param ContainerBuilder $container
      */
-    private function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
+    private function loadErrorHandling($config, XmlFileLoader $loader, ContainerBuilder $container)
     {
-        $loader->load('phpcr.xml');
+        if ($container->hasParameter($this->getAlias().'.backend_type_phpcr')
+            && $container->getParameter($this->getAlias().'.backend_type_phpcr')
+        ) {
+            $loader->load('matcher_phpcr.xml');
+        }
     }
 }
