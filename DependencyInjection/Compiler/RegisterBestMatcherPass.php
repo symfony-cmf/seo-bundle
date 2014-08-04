@@ -21,11 +21,11 @@ class RegisterBestMatcherPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('"cmf_seo.error_handling.matcher.presentation')) {
+        if (!$container->hasDefinition('cmf_seo.error_handling.matcher.presentation')) {
             return;
         }
 
-        $strategyDefinition = $container->getDefinition('"cmf_seo.error_handling.matcher.presentation');
+        $presentationDefinition = $container->getDefinition('cmf_seo.error_handling.matcher.presentation');
         $taggedServices = $container->findTaggedServiceIds('cmf_seo.best_matcher');
 
         foreach ($taggedServices as $id => $attributes) {
@@ -34,9 +34,16 @@ class RegisterBestMatcherPass implements CompilerPassInterface
                 throw new LogicException(sprintf('Strategy "%s" must be public.', $id));
             }
 
-            $group = isset($attributes['group']) ?: 'default';
+            $group = null;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['group'])) {
+                    $group = $attribute['group'];
+                    break;
+                }
+            }
+            $group = null !== $group ? $group : 'default';
 
-            $strategyDefinition->addMethodCall('addMatcher', array(new Reference($id), $group));
+            $presentationDefinition->addMethodCall('addMatcher', array(new Reference($id), $group));
         }
     }
 }

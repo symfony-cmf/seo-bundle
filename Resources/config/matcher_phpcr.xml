@@ -14,13 +14,13 @@
             <call method="setManagerRegistry">
                 <argument type="service" id="doctrine_phpcr" />
             </call>
-            <tag name="cmf_seo.cmf_seo.best_matcher" type="parent" />
+            <tag name="cmf_seo.best_matcher" group="parent" />
         </service>
         <service id="cmf_seo.error_handling.matcher.ancestor" class="%cmf_seo.error_handling.matcher.ancestor.class%">
             <call method="setManagerRegistry">
                 <argument type="service" id="doctrine_phpcr" />
             </call>
-            <tag name="cmf_seo.cmf_seo.best_matcher" type="ancestor" />
+            <tag name="cmf_seo.best_matcher" group="ancestor" />
         </service>
 
     </services>

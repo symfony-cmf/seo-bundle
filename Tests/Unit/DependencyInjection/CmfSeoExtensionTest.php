@@ -106,13 +106,13 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.error_handling.matcher.ancestor',
-            'cmf_seo.cmf_seo.best_matcher',
-            array('type' => 'ancestor')
+            'cmf_seo.best_matcher',
+            array('group' => 'ancestor')
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.error_handling.matcher.parent',
-            'cmf_seo.cmf_seo.best_matcher',
-            array('type' => 'parent')
+            'cmf_seo.best_matcher',
+            array('group' => 'parent')
         );
     }
 }
