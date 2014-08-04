@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ca11815-48bf-4006-8fbf-69d0b453c2f4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Resources/app/Resources/TwigBundle/views/Exception/error.html.twig" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Controller/ExceptionController.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php" afterPath="$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/Unit/DependencyInjection/CmfSeoExtensionTest.php" afterPath="$PROJECT_DIR$/Tests/Unit/DependencyInjection/CmfSeoExtensionTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/WebTest/SeoFrontendTest.php" afterPath="$PROJECT_DIR$/Tests/WebTest/SeoFrontendTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml" afterPath="$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Tests/Resources/app/Resources/TwigBundle/views/Exception/error.html.twig" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php" afterPath="$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/Resources/app/Resources/TwigBundle/views/Exception/exception.html.twig" afterPath="$PROJECT_DIR$/Tests/Resources/app/Resources/TwigBundle/views/Exception/exception.html.twig" />
     </list>
     <ignored path="SeoBundle.iws" />
@@ -78,10 +74,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BestMatchPresentation.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BestMatchPresentation.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.93594307" vertical-offset="1022" max-vertical-offset="1656">
+            <state vertical-scroll-proportion="-19.481482" vertical-offset="1022" max-vertical-offset="1656">
               <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
               <folding>
                 <element signature="e#281#342#0#PHP" expanded="true" />
@@ -112,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegisterBestMatcherPass.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RegisterBestMatcherPass.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.148149" vertical-offset="374" max-vertical-offset="936">
-              <caret line="45" column="100" selection-start-line="45" selection-start-column="100" selection-end-line="45" selection-end-column="100" />
+            <state vertical-scroll-proportion="0.3594306" vertical-offset="374" max-vertical-offset="936">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -170,9 +166,9 @@
         <option value="$PROJECT_DIR$/ErrorHandling/AncestorBestMatcher.php" />
         <option value="$PROJECT_DIR$/ErrorHandling/ParentBestMatcher.php" />
         <option value="$PROJECT_DIR$/ErrorHandling/PhpcrBestMatcher.php" />
-        <option value="$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php" />
         <option value="$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml" />
         <option value="$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php" />
+        <option value="$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php" />
       </list>
     </option>
   </component>
@@ -517,14 +513,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.148149" vertical-offset="374" max-vertical-offset="936">
-          <caret line="45" column="100" selection-start-line="45" selection-start-column="100" selection-end-line="45" selection-end-column="100" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="918">
@@ -535,11 +523,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.93594307" vertical-offset="1022" max-vertical-offset="1656">
+        <state vertical-scroll-proportion="-19.481482" vertical-offset="1022" max-vertical-offset="1656">
           <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
           <folding>
             <element signature="e#281#342#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3594306" vertical-offset="374" max-vertical-offset="936">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
