@@ -34,14 +34,9 @@ class RegisterBestMatcherPass implements CompilerPassInterface
                 throw new LogicException(sprintf('Strategy "%s" must be public.', $id));
             }
 
-            if (!isset($attributes['type'])) {
-                throw new LogicException('You have to set a BestMatcher type.');
-            }
+            $group = isset($attributes['group']) ?: 'default';
 
-            $strategyDefinition->addMethodCall('addMatcher', array(
-                new Reference($id),
-                $attributes['type']
-            ));
+            $strategyDefinition->addMethodCall('addMatcher', array(new Reference($id), $group));
         }
     }
 }

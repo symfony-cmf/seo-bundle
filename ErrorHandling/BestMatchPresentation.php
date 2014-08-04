@@ -27,16 +27,6 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 class BestMatchPresentation extends ExceptionController
 {
     /**
-     * Type/shortcut for a best matcher handling the parent.
-     */
-    const MATCH_TYPE_PARENT = 'parent';
-
-    /**
-     * Type/shortcut for best matcher handling the ancestors
-     */
-    const MATCH_TYPE_ANCESTOR = 'ancestor';
-
-    /**
      * Chain of matcher.
      *
      * @var array|BestMatcherInterface[]
@@ -65,8 +55,8 @@ class BestMatchPresentation extends ExceptionController
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
         $bestMatches = array();
 
-        foreach ($this->matcherChain as $type => $matcher) {
-            $bestMatches[$type] = $matcher->create($request);
+        foreach ($this->matcherChain as $group => $matcher) {
+            $bestMatches[$group] = $matcher->create($request);
         }
 
         return new Response($this->twig->render(
@@ -84,26 +74,15 @@ class BestMatchPresentation extends ExceptionController
 
     /**
      * @param BestMatcherInterface      $matcher
-     * @param string                    $type
+     * @param string                    $group   Unique per Chain.
      * @throws InvalidArgumentException
      */
-    public function addMatcher(BestMatcherInterface $matcher, $type)
+    public function addMatcher(BestMatcherInterface $matcher, $group)
     {
-        if (self::MATCH_TYPE_ANCESTOR !== $type && self::MATCH_TYPE_PARENT !== $type) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    '%s is not supported as a matcher type. use one of %s or %s',
-                    $type,
-                    self::MATCH_TYPE_PARENT,
-                    self::MATCH_TYPE_ANCESTOR
-                )
-            );
+        if (array_key_exists($group, $this->matcherChain)) {
+            throw new InvalidArgumentException(sprintf('You can only add on matcher with group %s.', $group));
         }
 
-        if (array_key_exists($type, $this->matcherChain)) {
-            throw new InvalidArgumentException(sprintf('You can only add on matcher with type %s.', $type));
-        }
-
-        $this->matcherChain[$type] = $matcher;
+        $this->matcherChain[$group] = $matcher;
     }
 }
