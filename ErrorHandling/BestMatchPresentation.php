@@ -59,8 +59,10 @@ class BestMatchPresentation extends ExceptionController
             $bestMatches[$group] = $matcher->create($request);
         }
 
+        $template = $this->findTemplate($request, $_format, $code, $this->debug);
+
         return new Response($this->twig->render(
-            $this->findTemplate($request, $_format, $code, $this->debug),
+            $template,
             array(
                 'status_code'    => $code,
                 'status_text'    => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
