@@ -147,5 +147,7 @@ class SeoFrontendTest extends BaseTestCase
         $res = $this->client->getResponse();
 
         $this->assertEquals(404, $res->getStatusCode());
+        $this->assertCount(1, $crawler->filter('html:contains("Exception-Test")'));
+
     }
 }
