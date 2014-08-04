@@ -12,6 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * This BestMatcher will try to detect a parent route of a given uri.
@@ -25,6 +26,14 @@ class ParentBestMatcher extends PhpcrBestMatcher
      */
     public function create(Request $request)
     {
+        $routes = new RouteCollection();
+        $uriAsArray = explode('/', $request->getUri());
+        if (count($uriAsArray) <= 1) {
+            return $routes;
+        }
+
+        $uriAsArray = array_shift($uriAsArray);
+        $parentUri = implode('/', $uriAsArray);
 
     }
 }
