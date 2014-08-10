@@ -51,7 +51,8 @@ class CmfSeoBundle extends Bundle
                     realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr'
                 ),
                 array('cmf_seo.dynamic.persistence.phpcr.manager_name'),
-                'cmf_seo.backend_type_phpcr'
+                'cmf_seo.backend_type_phpcr',
+                array('CmfSeoBundle' => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr')
             )
         );
     }
@@ -77,7 +78,8 @@ class CmfSeoBundle extends Bundle
                     realpath(__DIR__ . '/Resources/config/doctrine-model') => 'Symfony\Cmf\Bundle\SeoBundle\Model',
                 ),
                 array('cmf_routing.dynamic.persistence.orm.manager_name'),
-                'cmf_routing.backend_type_orm'
+                'cmf_routing.backend_type_orm',
+                array('CmfSeoBundle' => 'Symfony\Cmf\Bundle\SeoBundle\Model')
             )
         );
     }
