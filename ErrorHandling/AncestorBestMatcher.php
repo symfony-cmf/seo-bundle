@@ -12,6 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * This BestMatcher tries to create a route collection of
@@ -27,6 +28,28 @@ class AncestorBestMatcher extends PhpcrBestMatcher
      */
     public function create(Request $request)
     {
-        // TODO: Implement create() method.
+        $routes = new RouteCollection();
+        $uriAsArray = explode('/', $request->getUri());
+        if (count($uriAsArray) <= 1) {
+            return $routes;
+        }
+
+        $uriAsArray = array_shift($uriAsArray);
+        $parentUri = implode('/', $uriAsArray);
+
+        $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
+        $parentRoute = $manager->getRepository('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route')
+            ->find($parentUri);
+
+        if (!$parentRoute) {
+            return $routes;
+        }
+
+        $childRoutes = $manager->getChildren($parentRoute);
+        foreach ($childRoutes->toArray() as $childRoute) {
+            $routes->add($childRoute->getName(), $childRoute);
+        }
+
+        return $routes;
     }
 }
