@@ -60,7 +60,7 @@ class BestMatchPresentation extends ExceptionController
         }
 
         $template = $this->findTemplate($request, $_format, $code, $this->debug);
-
+print('doing it now');
         return new Response($this->twig->render(
             $template,
             array(
