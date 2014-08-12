@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ca11815-48bf-4006-8fbf-69d0b453c2f4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ErrorHandling/AncestorBestMatcher.php" afterPath="$PROJECT_DIR$/ErrorHandling/AncestorBestMatcher.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ErrorHandling/ParentBestMatcher.php" afterPath="$PROJECT_DIR$/ErrorHandling/ParentBestMatcher.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Tests/Unit/ErrorHandling/AncestorBestMatcherTest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Tests/Unit/ErrorHandling/ParentBestMatcherTest.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php" afterPath="$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/config/matcher_phpcr.xml" afterPath="$PROJECT_DIR$/Resources/config/matcher_phpcr.xml" />
     </list>
     <ignored path="SeoBundle.iws" />
@@ -52,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="matcher_phpcr.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="matcher_phpcr.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Resources/config/matcher_phpcr.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.030560272" vertical-offset="0" max-vertical-offset="756">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -72,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BestMatchPresentation.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BestMatchPresentation.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1656">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.39145908" vertical-offset="752" max-vertical-offset="1656">
+              <caret line="61" column="81" selection-start-line="61" selection-start-column="81" selection-end-line="61" selection-end-column="81" />
               <folding>
                 <element signature="e#281#342#0#PHP" expanded="true" />
               </folding>
@@ -164,10 +165,10 @@
         <option value="$PROJECT_DIR$/Tests/Resources/app/config/cmf_seo.phpcr.yml" />
         <option value="$PROJECT_DIR$/DependencyInjection/Compiler/RegisterBestMatcherPass.php" />
         <option value="$PROJECT_DIR$/Tests/Resources/app/Resources/TwigBundle/views/Exception/exception.html.twig" />
-        <option value="$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php" />
         <option value="$PROJECT_DIR$/ErrorHandling/ParentBestMatcher.php" />
         <option value="$PROJECT_DIR$/ErrorHandling/AncestorBestMatcher.php" />
         <option value="$PROJECT_DIR$/Resources/config/matcher_phpcr.xml" />
+        <option value="$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php" />
       </list>
     </option>
   </component>
@@ -546,16 +547,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1656">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#281#342#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ErrorHandling/ParentBestMatcher.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.0" vertical-offset="234" max-vertical-offset="864">
@@ -563,6 +554,14 @@
           <folding>
             <element signature="e#281#329#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/config/matcher_phpcr.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -574,11 +573,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/config/matcher_phpcr.xml">
+    <entry file="file://$PROJECT_DIR$/ErrorHandling/BestMatchPresentation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030560272" vertical-offset="0" max-vertical-offset="756">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.39145908" vertical-offset="752" max-vertical-offset="1656">
+          <caret line="61" column="81" selection-start-line="61" selection-start-column="81" selection-end-line="61" selection-end-column="81" />
+          <folding>
+            <element signature="e#281#342#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
