@@ -28,19 +28,22 @@ abstract class PhpcrBestMatcher implements BestMatcherInterface
     protected $managerRegistry;
 
     /**
-     * @param ManagerRegistry $managerRegistry
+     * By concatenating the routeBasePath and the url
+     * we will get the absolute path a route document
+     * should be persisted with.
+     *
+     * @var string
      */
-    public function setManagerRegistry($managerRegistry)
-    {
-        $this->managerRegistry = $managerRegistry;
-    }
+    protected $routeBasePath;
 
     /**
-     * @return ManagerRegistry
+     * @param ManagerRegistry $managerRegistry
+     * @param $routeBasePath
      */
-    public function getManagerRegistry()
+    public function __construct(ManagerRegistry $managerRegistry, $routeBasePath)
     {
-        return $this->managerRegistry;
+        $this->managerRegistry = $managerRegistry;
+        $this->routeBasePath = $routeBasePath;
     }
 
     /**
