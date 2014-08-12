@@ -12,6 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use PHPCR\Util\PathHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
@@ -29,18 +30,11 @@ class ParentBestMatcher extends PhpcrBestMatcher
     public function create(Request $request)
     {
         $routes = new RouteCollection();
-        $uriAsArray = explode('/', $request->getUri());
-        if (count($uriAsArray) <= 1) {
-            return $routes;
-        }
+        $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
+        $parentPath = PathHelper::getParentPath($this->routeBasePath.'/'.$request->getUri());
 
-        $uriAsArray = array_shift($uriAsArray);
-        $parentUri = implode('/', $uriAsArray);
-
-        $parentRoute = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route')
-            ->find('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route', $parentUri);
-
-        if ($parentRoute) {
+        $parentRoute = $manager->find('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route', $parentPath);
+        if (!$parentRoute) {
             return $routes;
         }
 
