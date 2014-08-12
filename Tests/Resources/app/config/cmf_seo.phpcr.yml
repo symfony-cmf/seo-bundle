@@ -5,6 +5,9 @@ cmf_seo:
         phpcr:  ~
     error_handling: ~
 
+twig:
+    exception_controller: cmf_seo.error_handling.matcher.presentation:showAction
+
 cmf_routing:
     dynamic:
         enabled: true
