@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.1.0-RC1
+---------
+
 * **2014-06-06**: Updated to PSR-4 autoloading
 
 1.0.0
