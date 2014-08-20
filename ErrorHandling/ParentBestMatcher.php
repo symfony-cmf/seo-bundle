@@ -29,16 +29,18 @@ class ParentBestMatcher extends PhpcrBestMatcher
      */
     public function create(Request $request)
     {
-        $routes = new RouteCollection();
+        $routes = array();
         $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
-        $parentPath = PathHelper::getParentPath($this->routeBasePath.'/'.$request->getUri());
+        $parentPath = PathHelper::getParentPath($this->routeBasePath.$request->getPathInfo());
 
-        $parentRoute = $manager->find('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route', $parentPath);
+        $parentRoute = $manager->find(null, $parentPath);
         if (!$parentRoute) {
             return $routes;
         }
 
-        $routes->add($parentRoute->getName(), $parentRoute);
+        if ($parentRoute instanceof \Symfony\Component\Routing\Route) {
+            $routes[$parentRoute->getName()] = $parentRoute;
+        }
 
         return $routes;
     }
