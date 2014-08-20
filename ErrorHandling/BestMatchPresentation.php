@@ -60,8 +60,8 @@ class BestMatchPresentation extends ExceptionController
         }
 
         $template = $this->findTemplate($request, $_format, $code, $this->debug);
-print('doing it now');
-        return new Response($this->twig->render(
+
+        $response = new Response($this->twig->render(
             $template,
             array(
                 'status_code'    => $code,
@@ -72,6 +72,9 @@ print('doing it now');
                 'best_matches'   => $bestMatches,
             )
         ));
+        $response->setStatusCode($code);
+
+        return $response;
     }
 
     /**
