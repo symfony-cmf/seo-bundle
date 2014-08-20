@@ -118,6 +118,8 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'alternate_locale' => array(
                 'enabled' => true
             ),
+
+            'error_handling' => true,
         ));
 
         $this->assertContainerBuilderHasService(
@@ -145,8 +147,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.event_listener.seo_content',
             'setAlternateLocaleProvider',
             array($this->container->getDefinition('some_alternate_locale_provider'))
-            'error_handling' => true
-        ));
+        );
 
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.error_handling.matcher.ancestor',
