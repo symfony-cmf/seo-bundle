@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\EventListener;
 
+use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentationInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,8 +38,13 @@ class ContentListener
     private $requestKey;
 
     /**
-     * @param SeoPresentationInterface $seoPage    Service Handling SEO information.
-     * @param string                   $requestKey The key to look up the content in the request attributes.
+     * @var AlternateLocaleProviderInterface|null
+     */
+    private $alternateLocaleProvider;
+
+    /**
+     * @param SeoPresentationInterface $seoPage Service Handling SEO information.
+     * @param string $requestKey The key to look up the content in the request attributes.
      */
     public function __construct(SeoPresentationInterface $seoPage, $requestKey)
     {
@@ -52,12 +58,19 @@ class ContentListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         if ($event->getRequest()->attributes->has($this->requestKey)) {
-            $this->seoPresentation->updateSeoPage($event->getRequest()->attributes->get($this->requestKey));
+            $content = $event->getRequest()->attributes->get($this->requestKey);
+            $this->seoPresentation->updateSeoPage($content);
 
             // look if the strategy is redirectResponse and if there is a route to redirectResponse to
             $response = $this->seoPresentation->getRedirectResponse();
             if (false !== $response && $this->canBeRedirected($event->getRequest(), $response)) {
                 $event->setResponse($response);
+            }
+
+            if (null !== $this->alternateLocaleProvider) {
+                $this->seoPresentation->updateAlternateLocales(
+                    $this->alternateLocaleProvider->createForContent($content)
+                );
             }
         }
     }
@@ -72,5 +85,13 @@ class ContentListener
         $currentPath = $stripUrl($request->getBaseUrl().$request->getPathInfo());
 
         return $targetPath !== $currentPath;
+    }
+
+    /**
+     * @param AlternateLocaleProviderInterface $alternateLocaleProvider
+     */
+    public function setAlternateLocaleProvider($alternateLocaleProvider)
+    {
+        $this->alternateLocaleProvider = $alternateLocaleProvider;
     }
 }

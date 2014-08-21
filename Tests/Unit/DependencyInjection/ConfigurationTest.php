@@ -56,6 +56,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled' => 'auto',
                 'form_group' => 'form.group_seo',
             ),
+            'alternate_locale' => array(
+                'enabled'  => false,
+                'provider_id' => null,
+            ),
         );
 
         $sources = array_map(function ($path) {

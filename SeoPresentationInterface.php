@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
+use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocaleCollection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -36,4 +37,11 @@ interface SeoPresentationInterface
      * @return boolean|RedirectResponse
      */
     public function getRedirectResponse();
+
+    /**
+     * Updates alternate locale information on the Sonata SeoPage service.
+     *
+     * @param AlternateLocaleCollection $collection
+     */
+    public function updateAlternateLocales(AlternateLocaleCollection $collection);
 }

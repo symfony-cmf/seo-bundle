@@ -16,6 +16,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AlternateLocaleContent;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors;
 
@@ -88,6 +89,42 @@ class LoadContentData implements FixtureInterface
         $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
 
         $manager->persist($route);
+
+        $alternateLocaleContent = new AlternateLocaleContent();
+        $alternateLocaleContent->setName('alternate-locale-content');
+        $alternateLocaleContent->setTitle('Alternate locale content');
+        $alternateLocaleContent->setBody('Body of some alternate locate content');
+        $alternateLocaleContent->setParentDocument($contentRoot);
+        $manager->persist($alternateLocaleContent);
+        $manager->bindTranslation($alternateLocaleContent, 'en');
+
+        // creating the locale base routes as generic for now
+        NodeHelper::createPath($manager->getPhpcrSession(), '/test/routes/de');
+        NodeHelper::createPath($manager->getPhpcrSession(), '/test/routes/en');
+
+        $deRoute = $manager->find(null, '/test/routes/de');
+        $enRoute = $manager->find(null, '/test/routes/en');
+
+        $alternateLocaleRoute = new Route();
+        $alternateLocaleRoute->setPosition($enRoute, 'alternate-locale-content');
+        $alternateLocaleRoute->setContent($alternateLocaleContent);
+        $alternateLocaleRoute->setDefault(
+            '_controller',
+            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction'
+        );
+        $manager->persist($alternateLocaleRoute);
+
+        $alternateLocaleContent->setTitle('Alternative Sprachen');
+        $manager->bindTranslation($alternateLocaleContent, 'de');
+
+        $alternateLocaleRoute = new Route();
+        $alternateLocaleRoute->setPosition($deRoute, 'alternate-locale-content');
+        $alternateLocaleRoute->setContent($alternateLocaleContent);
+        $alternateLocaleRoute->setDefault(
+            '_controller',
+            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction'
+        );
+        $manager->persist($alternateLocaleRoute);
 
         $manager->flush();
     }
