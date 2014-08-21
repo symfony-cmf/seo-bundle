@@ -59,9 +59,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'alternate_locale' => array(
                 'enabled'  => false,
                 'provider_id' => null,
-            ),
-            'error_handling' => array(
-                'enabled' => false,
             )
         );
 
