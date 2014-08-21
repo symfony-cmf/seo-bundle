@@ -78,6 +78,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('provider_id')->defaultNull()->end()
                     ->end()
+                ->end()
                 ->arrayNode('error_handling')
                         ->addDefaultsIfNotSet()
                         ->canBeEnabled()
