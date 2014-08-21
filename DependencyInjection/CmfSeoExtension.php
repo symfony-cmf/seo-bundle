@@ -83,10 +83,6 @@ class CmfSeoExtension extends Extension
         if ($this->isConfigEnabled($container, $config['error_handling'])) {
             $this->loadErrorHandling($config['error_handling'], $loader, $container);
         }
-
-        if ($this->isConfigEnabled($container, $config['error_handling'])) {
-            $this->loadErrorHandling($config['error_handling'], $loader, $container);
-        }
     }
 
     /**
@@ -162,19 +158,7 @@ class CmfSeoExtension extends Extension
             if (!$this->defaultAlternateLocaleProviderId) {
                 $this->defaultAlternateLocaleProviderId = 'cmf_seo.alternate_locale.provider_phpcr';
             }
-        }
-    }
 
-    /**
-     * @param $config
-     * @param XmlFileLoader $loader
-     * @param ContainerBuilder $container
-     */
-    private function loadErrorHandling($config, XmlFileLoader $loader, ContainerBuilder $container)
-    {
-        if ($container->hasParameter($this->getAlias().'.backend_type_phpcr')
-            && $container->getParameter($this->getAlias().'.backend_type_phpcr')
-        ) {
             $loader->load('matcher_phpcr.xml');
         }
     }

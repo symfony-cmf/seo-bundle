@@ -165,13 +165,14 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
     {
         $this->container->setParameter(
             'kernel.bundles',
-            array()
+            array(
+                'CmfRoutingBundle' => true,
+            )
         );
         $this->load(array(
             'persistence'   => array(
                 'phpcr' => true,
             ),
-            'error_handling' => true
         ));
 
         $this->assertContainerBuilderHasServiceDefinitionWithTag(

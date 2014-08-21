@@ -79,10 +79,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('provider_id')->defaultNull()->end()
                     ->end()
                 ->end()
-                ->arrayNode('error_handling')
-                        ->addDefaultsIfNotSet()
-                        ->canBeEnabled()
-                ->end()
             ->end()
         ;
 
