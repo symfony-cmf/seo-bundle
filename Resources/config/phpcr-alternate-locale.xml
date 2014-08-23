@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="cmf_seo.alternate_locale.provider_phpcr.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\AlternateLocaleProvider</parameter>
+    </parameters>
+
+    <services>
+        <service id="cmf_seo.alternate_locale.provider_phpcr" class="%cmf_seo.alternate_locale.provider_phpcr.class%">
+            <argument type="service" id="doctrine_phpcr" />
+            <argument type="service" id="router" />
+        </service>
+    </services>
+
+</container>

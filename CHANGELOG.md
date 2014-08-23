@@ -1,7 +1,12 @@
 Changelog
 =========
 
+
+1.1.0-RC1
+---------
+
 * **2014-08-02**: Custom exception controller for error handling
+* **2014-08-02**: Implement alternate locale support and its configuration
 * **2014-06-06**: Updated to PSR-4 autoloading
 
 1.0.0

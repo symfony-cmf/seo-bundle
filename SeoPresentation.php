@@ -12,9 +12,11 @@
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocaleCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
@@ -308,5 +310,18 @@ class SeoPresentation implements SeoPresentationInterface
         $metadata->setExtraHttp($contentSeoMetadata->getExtraHttp()?:array());
 
         return $metadata;
+    }
+
+    /**
+     * {inheritDoc}
+     */
+    public function updateAlternateLocales(AlternateLocaleCollection $collection)
+    {
+        foreach ($collection as $alternateLocale) {
+            $this->sonataPage->addLangAlternate(
+                $alternateLocale->href,
+                $alternateLocale->hrefLocale
+            );
+        }
     }
 }

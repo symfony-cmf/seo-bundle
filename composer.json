@@ -16,26 +16,27 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.3",
         "sonata-project/seo-bundle": "1.1.*",
-        "doctrine/collections": "1.*"
+        "doctrine/collections": "~1.0"
     },
     "require-dev": {
-        "symfony-cmf/testing": "dev-master",
-        "doctrine/phpcr-bundle": "1.1.*",
-        "doctrine/phpcr-odm": "1.1.*",
-        "doctrine/orm": "2.4.*",
-        "sonata-project/doctrine-phpcr-admin-bundle": "1.1.*",
-        "symfony-cmf/routing-bundle": "1.2.*",
-        "symfony-cmf/core-bundle": "1.1.*",
+        "symfony-cmf/testing": "~1.1",
+        "doctrine/phpcr-bundle": "~1.1",
+        "doctrine/phpcr-odm": "~1.1",
+        "doctrine/orm": "~2.4",
+        "sonata-project/doctrine-phpcr-admin-bundle": "~1.1",
+        "symfony-cmf/routing-bundle": "~1.2",
+        "symfony-cmf/core-bundle": "~1.1",
         "matthiasnoback/symfony-dependency-injection-test": "0.*",
         "matthiasnoback/symfony-config-test": "0.*",
-        "burgov/key-value-form-bundle": "1.0.*"
+        "burgov/key-value-form-bundle": "~1.0"
     },
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",
+        "symfony-cmf/routing-bundle": "To make use of the alternate locale provider.",
         "sonata-project/doctrine-phpcr-admin-bundle": "To provide an admin extension for the seo metadata",
         "doctrine/phpcr-bundle": "To persist the metadata in PHPCR ODM documents",
         "doctrine/doctrine-bundle": "To persist the metadata in ORM entities",
-        "doctrine/orm": "2.4.*",
+        "doctrine/orm": "To persist the metadata in ORM entities, ~2.4",
         "burgov/key-value-form-bundle": "To edit the seo metadata 'extra' fields"
     },
     "autoload": {

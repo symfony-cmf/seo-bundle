@@ -56,8 +56,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled' => 'auto',
                 'form_group' => 'form.group_seo',
             ),
-            'error_handling' => array(
-                'enabled' => false,
+            'alternate_locale' => array(
+                'enabled'  => false,
+                'provider_id' => null,
             )
         );
 

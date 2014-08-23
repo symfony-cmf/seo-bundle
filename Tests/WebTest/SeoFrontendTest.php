@@ -141,13 +141,36 @@ class SeoFrontendTest extends BaseTestCase
         );
     }
 
+    public function testAlternateLanguages()
+    {
+        $crawler = $this->client->request('GET', '/en/alternate-locale-content');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertCount(1, $crawler->filter('html:contains("Alternate locale content")'));
+
+        $linkCrawler = $crawler->filter('head > link');
+        $expectedArray = array(array('alternate', 'http://localhost/de/alternate-locale-content', 'de'));
+        $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
+
+        $crawler = $this->client->request('GET', '/de/alternate-locale-content');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertCount(1, $crawler->filter('html:contains("Alternative Sprachen")'));
+
+        $linkCrawler = $crawler->filter('head > link');
+        $expectedArray = array(array('alternate', 'http://localhost/en/alternate-locale-content', 'en'));
+        $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
+    }
+
     public function testErrorHandling()
     {
         $crawler = $this->client->request('GET', '/content/content-extr');
         $res = $this->client->getResponse();
 
         $this->assertEquals(404, $res->getStatusCode());
-        $this->assertCount(1, $crawler->filter('html:contains("Exception-Test")'));
 
+        $this->assertCount(1, $crawler->filter('html:contains("Exception-Test")'));
     }
 }
