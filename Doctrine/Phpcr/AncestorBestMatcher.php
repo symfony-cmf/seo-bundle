@@ -9,20 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
+namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use PHPCR\Util\PathHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * This BestMatcher will try to detect a parent route of a given uri.
+ * This BestMatcher tries to create a route collection of
+ * all ancestors of a given uri.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class ParentBestMatcher extends PhpcrBestMatcher
+class AncestorBestMatcher extends BaseBestMatcher
 {
     /**
      * {@inheritDoc}
@@ -38,8 +38,9 @@ class ParentBestMatcher extends PhpcrBestMatcher
             return $routes;
         }
 
-        if ($parentRoute instanceof \Symfony\Component\Routing\Route) {
-            $routes[$parentRoute->getName()] = $parentRoute;
+        $childRoutes = $manager->getChildren($parentRoute);
+        foreach ($childRoutes->toArray() as $childRoute) {
+            $routes[$childRoute->getName()] = $childRoute;
         }
 
         return $routes;

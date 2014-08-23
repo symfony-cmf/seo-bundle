@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
+namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ODM\PHPCR\DocumentManager;
+use Symfony\Cmf\Bundle\SeoBundle\BestMatcherInterface;
 
 /**
  * Abstract BestMatcher for those who needs make use of base
@@ -20,7 +21,7 @@ use Doctrine\ODM\PHPCR\DocumentManager;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-abstract class PhpcrBestMatcher implements BestMatcherInterface
+abstract class BaseBestMatcher implements BestMatcherInterface
 {
     /**
      * @var ManagerRegistry

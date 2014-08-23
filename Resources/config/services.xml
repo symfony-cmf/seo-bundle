@@ -12,7 +12,7 @@
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener</parameter>
 
-        <parameter key="cmf_seo.error_handling.matcher.presentation.class">Symfony\Cmf\Bundle\SeoBundle\ErrorHandling\BestMatchPresentation</parameter>
+        <parameter key="cmf_seo.error_handling.matcher.presentation.class">Symfony\Cmf\Bundle\SeoBundle\BestMatchPresentation</parameter>
 
     </parameters>
 

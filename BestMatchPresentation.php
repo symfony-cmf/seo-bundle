@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
+namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController;
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
