@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Symfony\Cmf\Bundle\SeoBundle\ErrorHandling;
+namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;

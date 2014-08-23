@@ -2,6 +2,7 @@ Changelog
 =========
 
 * **2014-09-22**: Added the `SeoAwareTrait` to ease creation of SeoAware classes
+* **2014-08-02**: Custom exception controller for error handling
 
 1.1.0-RC1
 ---------
