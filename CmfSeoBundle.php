@@ -76,8 +76,8 @@ class CmfSeoBundle extends Bundle
                 array(
                     realpath(__DIR__ . '/Resources/config/doctrine-model') => 'Symfony\Cmf\Bundle\SeoBundle\Model',
                 ),
-                array('cmf_routing.dynamic.persistence.orm.manager_name'),
-                'cmf_routing.backend_type_orm'
+                array('cmf_seo.dynamic.persistence.orm.manager_name'),
+                'cmf_seo.backend_type_orm'
             )
         );
     }
