@@ -39,7 +39,7 @@ interface ExtractorInterface
      * It is up to the strategy to check if certain fields
      * are already set by previous strategies and decide on a merge strategy.
      *
-     * This method is should only be called if supports returned true.
+     * This method should only be called if supports returned true.
      *
      * @param object               $content
      * @param SeoMetadataInterface $seoMetadata
