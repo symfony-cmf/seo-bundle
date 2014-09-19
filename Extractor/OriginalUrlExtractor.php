@@ -22,7 +22,6 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
  */
 class OriginalUrlExtractor implements ExtractorInterface
 {
-
     /**
      * {@inheritDoc}
      */

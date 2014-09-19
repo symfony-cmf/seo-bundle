@@ -32,7 +32,6 @@ class AlternateLocale
 
     public function __construct($href, $hrefLocale)
     {
-
         $this->href = $href;
         $this->hrefLocale = $hrefLocale;
     }
