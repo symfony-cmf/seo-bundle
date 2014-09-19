@@ -301,15 +301,16 @@ class SeoPresentation implements SeoPresentationInterface
     private function copyMetadata(SeoMetadataInterface $contentSeoMetadata)
     {
         $metadata = new SeoMetadata();
-        $metadata->setTitle($contentSeoMetadata->getTitle());
-        $metadata->setMetaKeywords($contentSeoMetadata->getMetaKeywords());
-        $metadata->setMetaDescription($contentSeoMetadata->getMetaDescription());
-        $metadata->setOriginalUrl($contentSeoMetadata->getOriginalUrl());
-        $metadata->setExtraProperties($contentSeoMetadata->getExtraProperties()?:array());
-        $metadata->setExtraNames($contentSeoMetadata->getExtraNames()?:array());
-        $metadata->setExtraHttp($contentSeoMetadata->getExtraHttp()?:array());
 
-        return $metadata;
+        return $metadata
+            ->setTitle($contentSeoMetadata->getTitle())
+            ->setMetaKeywords($contentSeoMetadata->getMetaKeywords())
+            ->setMetaDescription($contentSeoMetadata->getMetaDescription())
+            ->setOriginalUrl($contentSeoMetadata->getOriginalUrl())
+            ->setExtraProperties($contentSeoMetadata->getExtraProperties() ?: array())
+            ->setExtraNames($contentSeoMetadata->getExtraNames()?:array())
+            ->setExtraHttp($contentSeoMetadata->getExtraHttp()?:array())
+        ;
     }
 
     /**
