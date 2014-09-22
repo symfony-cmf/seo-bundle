@@ -19,13 +19,19 @@ namespace Symfony\Cmf\Bundle\SeoBundle;
  */
 trait SeoAwareTrait
 {
-    protected $seoMetadata;
+    private $seoMetadata;
 
+    /**
+     * {@inheritDoc}
+     */
     public function getSeoMetadata()
     {
         return $this->seoMetadata;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function setSeoMetadata($metadata)
     {
         $this->seoMetadata = $metadata;
