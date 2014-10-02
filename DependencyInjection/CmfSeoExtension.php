@@ -61,6 +61,8 @@ class CmfSeoExtension extends Extension
                 $config['persistence']['phpcr']['manager_name']
             );
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
+
+            $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
         }
 
         if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
@@ -77,10 +79,7 @@ class CmfSeoExtension extends Extension
         }
 
         if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
-            $this->loadAlternateLocaleProvider($config['alternate_locale'], $loader, $container);
-        }
-        if ($this->isConfigEnabled($container, $config['error_handling'])) {
-            $this->loadErrorHandling($config['error_handling'], $loader, $container);
+            $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
     }
 
@@ -137,7 +136,7 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-        * {@inheritDoc}
+     * {@inheritDoc}
      */
     public function getXsdValidationBasePath()
     {
@@ -149,7 +148,7 @@ class CmfSeoExtension extends Extension
      * @param XmlFileLoader $loader
      * @param ContainerBuilder $container
      */
-    private function loadErrorHandling($config, XmlFileLoader $loader, ContainerBuilder $container)
+    private function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
     {
         $bundles = $container->getParameter('kernel.bundles');
         if (isset($bundles['CmfRoutingBundle'])) {
@@ -171,7 +170,7 @@ class CmfSeoExtension extends Extension
      * @param array             $config
      * @param ContainerBuilder $container
      */
-    private function loadAlternateLocaleProvider($config, XmlFileLoader $loader, ContainerBuilder $container)
+    private function loadAlternateLocaleProvider($config, ContainerBuilder $container)
     {
 
         $alternateLocaleProvider = empty($config['provider_id'])
@@ -187,13 +186,6 @@ class CmfSeoExtension extends Extension
                     array($container->getDefinition($alternateLocaleProvider))
                 )
             ;
-        }
-
-        $loader->load('phpcr.xml');
-        if ($container->hasParameter($this->getAlias().'.backend_type_phpcr')
-            && $container->getParameter($this->getAlias().'.backend_type_phpcr')
-        ) {
-            $loader->load('matcher_phpcr.xml');
         }
     }
 }

@@ -103,14 +103,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'CmfRoutingBundle' => true,
             )
         );
-    }
-
-    public function testErrorHandlingPHPCR()
-    {
-        $this->container->setParameter(
-            'kernel.bundles',
-            array()
-        );
         $this->load(array(
             'persistence'   => array(
                 'phpcr' => true,
@@ -118,8 +110,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'alternate_locale' => array(
                 'enabled' => true
             ),
-
-            'error_handling' => true,
         ));
 
         $this->assertContainerBuilderHasService(
@@ -147,17 +137,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.event_listener.seo_content',
             'setAlternateLocaleProvider',
             array($this->container->getDefinition('some_alternate_locale_provider'))
-        );
-
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(
-            'cmf_seo.error_handling.matcher.ancestor',
-            'cmf_seo.best_matcher',
-            array('group' => 'ancestor')
-        );
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(
-            'cmf_seo.error_handling.matcher.parent',
-            'cmf_seo.best_matcher',
-            array('group' => 'parent')
         );
     }
 
