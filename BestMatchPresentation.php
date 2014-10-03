@@ -59,22 +59,20 @@ class BestMatchPresentation extends ExceptionController
             $bestMatches[$group] = $matcher->create($request);
         }
 
-        $template = $this->findTemplate($request, $_format, $code, $this->debug);
-
-        $response = new Response($this->twig->render(
-            $template,
-            array(
-                'status_code'    => $code,
-                'status_text'    => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
-                'exception'      => $exception,
-                'logger'         => $logger,
-                'currentContent' => $currentContent,
-                'best_matches'   => $bestMatches,
-            )
-        ));
-        $response->setStatusCode($code);
-
-        return $response;
+        return new Response(
+            $this->twig->render(
+                $this->findTemplate($request, $_format, $code, $this->debug),
+                array(
+                    'status_code'    => $code,
+                    'status_text'    => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
+                    'exception'      => $exception,
+                    'logger'         => $logger,
+                    'currentContent' => $currentContent,
+                    'best_matches'   => $bestMatches,
+                )
+            ),
+            $code
+        );
     }
 
     /**

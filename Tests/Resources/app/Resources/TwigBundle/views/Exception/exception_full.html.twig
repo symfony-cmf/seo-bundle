@@ -1,5 +1,3 @@
-{% extends "::base.html.twig" %}
-
 <h1>Exception-Test</h1>
 
 <div>
@@ -7,10 +5,10 @@
 </div>
 <div>
     <ul>
-        {% for match in group, best_matches %}
+        {% for group, matchs in best_matches %}
             <li>
                 {{ group }}
-                {% for match in best_matches %}
+                {% for match in matchs %}
                     {{ match.name }}
                 {% endfor %}
             </li>
