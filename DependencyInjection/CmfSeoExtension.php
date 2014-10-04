@@ -136,7 +136,7 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-        * {@inheritDoc}
+     * {@inheritDoc}
      */
     public function getXsdValidationBasePath()
     {
@@ -156,6 +156,8 @@ class CmfSeoExtension extends Extension
             if (!$this->defaultAlternateLocaleProviderId) {
                 $this->defaultAlternateLocaleProviderId = 'cmf_seo.alternate_locale.provider_phpcr';
             }
+
+            $loader->load('matcher_phpcr.xml');
         }
     }
 

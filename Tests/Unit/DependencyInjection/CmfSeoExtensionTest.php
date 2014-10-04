@@ -30,6 +30,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('cmf_seo.translation_domain', 'messages');
         $this->assertContainerBuilderHasParameter('cmf_seo.original_route_pattern', 'canonical');
         $this->assertContainerBuilderHasParameter('cmf_seo.content_key', 'contentDocument');
+        $this->assertContainerBuilderHasService('cmf_seo.error_handling.matcher.presentation');
     }
 
     public function testPersistencePHPCR()
@@ -136,6 +137,32 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.event_listener.seo_content',
             'setAlternateLocaleProvider',
             array($this->container->getDefinition('some_alternate_locale_provider'))
+        );
+    }
+
+    public function testErrorHandlingPHPCR()
+    {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array(
+                'CmfRoutingBundle' => true,
+            )
+        );
+        $this->load(array(
+            'persistence'   => array(
+                'phpcr' => true,
+            ),
+        ));
+
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error_handling.matcher.ancestor',
+            'cmf_seo.best_matcher',
+            array('group' => 'ancestor')
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error_handling.matcher.parent',
+            'cmf_seo.best_matcher',
+            array('group' => 'parent')
         );
     }
 }

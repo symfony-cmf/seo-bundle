@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
         <parameter key="cmf_seo.config_values.class">Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues</parameter>
@@ -11,6 +11,8 @@
         <parameter key="cmf_seo.cache.file.class">Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache</parameter>
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\SeoPresentation</parameter>
         <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener</parameter>
+
+        <parameter key="cmf_seo.error_handling.matcher.presentation.class">Symfony\Cmf\Bundle\SeoBundle\BestMatchPresentation</parameter>
 
     </parameters>
 
@@ -48,6 +50,12 @@
             <argument>%cmf_seo.content_key%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
+
+        <service id="cmf_seo.error_handling.matcher.presentation" class="%cmf_seo.error_handling.matcher.presentation.class%">
+            <argument type="service" id="twig" />
+            <argument>%kernel.debug%</argument>
+        </service>
+
     </services>
 
 </container>

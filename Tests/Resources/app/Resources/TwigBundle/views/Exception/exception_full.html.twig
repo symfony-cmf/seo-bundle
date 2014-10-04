@@ -1,0 +1,18 @@
+<h1>Exception-Test</h1>
+
+<div>
+    <strong>{{ status_code }}</strong> {{ status_text }} - {{ exception.class|abbr_class }}
+</div>
+<div>
+    <ul>
+        {% for group, matchs in best_matches %}
+            <li>
+                {{ group }}
+                {% for match in matchs %}
+                    {{ match.name }}
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+

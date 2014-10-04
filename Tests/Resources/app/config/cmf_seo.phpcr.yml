@@ -2,6 +2,11 @@ cmf_seo:
     persistence: { phpcr: true }
     alternate_locale: ~
     sonata_admin_extension: true
+    persistence:
+        phpcr:  ~
+
+twig:
+    exception_controller: cmf_seo.error_handling.matcher.presentation:showAction
 
 cmf_routing:
     dynamic:
