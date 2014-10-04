@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+      <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+            <body>
+                <trans-unit id="form.group_seo">
+                    <source>form.group_seo</source>
+                    <target>SEO</target>
+                </trans-unit>
+                <trans-unit id="form.label_title">
+                    <source>form.label_title</source>
+                    <target>Page title</target>
+                </trans-unit>
+                <trans-unit id="form.label_id">
+                    <source>form.label_id</source>
+                    <target>ID</target>
+                </trans-unit>
+                <trans-unit id="form.label_originalUrl">
+                    <source>form.label_originalUrl</source>
+                    <target>Original URL</target>
+                </trans-unit>
+                <trans-unit id="form.label_metaDescription">
+                    <source>form.label_metaDescription</source>
+                    <target>Page description</target>
+                </trans-unit>
+                <trans-unit id="form.label_metaKeywords">
+                    <source>form.label_metaKeywords</source>
+                    <target>Page keywords</target>
+                </trans-unit>
+                <trans-unit id="form.label_extraProperties">
+                    <source>form.label_extraProperties</source>
+                    <target>Meta property tags</target>
+                </trans-unit>
+                <trans-unit id="form.label_extraNames">
+                    <source>form.label_extraNames</source>
+                    <target>Meta name tags</target>
+                </trans-unit>
+                <trans-unit id="form.label_extraHttp">
+                    <source>form.label_extraHttp</source>
+                    <target>Meta http-equiv tags</target>
+                </trans-unit>
+            </body>
+      </file>
+</xliff>
