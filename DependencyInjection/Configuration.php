@@ -79,6 +79,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('provider_id')->defaultNull()->end()
                     ->end()
                 ->end()
+                ->arrayNode('error')
+                    ->children()
+                        ->scalarNode('enable_parent_provider')->defaultValue(false)->end()
+                        ->scalarNode('enable_sibling_provider')->defaultValue(false)->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

@@ -11,9 +11,15 @@ cmf_seo:
     title: "Default | %%content_title%%"
     description: "Default description. %%content_description%%"
     original_route_pattern: canonical
+    error:
+        enable_parent_provider: true
+        enable_sibling_provider: true
 
 cmf_routing:
     chain:
         routers_by_id:
             cmf_routing.dynamic_router: 20
             router.default: 100
+
+twig:
+    exception_controller: cmf_seo.error.suggestion_provider.controller:showAction

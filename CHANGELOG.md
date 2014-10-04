@@ -1,6 +1,8 @@
 Changelog
 =========
 
+* **2014-10-04**: Custom exception controller for error handling
+
 1.1.0-RC3
 ---------
 

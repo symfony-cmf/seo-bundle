@@ -18,12 +18,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterExtractorsPass;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterSuggestionProviderPass;
 
 class CmfSeoBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new RegisterExtractorsPass());
+        $container->addCompilerPass(new RegisterSuggestionProviderPass());
 
         $this->buildPhpcrCompilerPass($container);
         $this->buildOrmCompilerPass($container);

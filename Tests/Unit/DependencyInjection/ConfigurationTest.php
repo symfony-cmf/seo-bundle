@@ -60,14 +60,14 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled'  => false,
                 'provider_id' => null,
             ),
-        );
+            );
 
         $sources = array_map(function ($path) {
-                return __DIR__.'/../../Resources/Fixtures/'.$path;
+            return __DIR__.'/../../Resources/Fixtures/'.$path;
         }, array(
-                'config/config.yml',
-                'config/config.php',
-                'config/config.xml',
+            'config/config.yml',
+            'config/config.php',
+            'config/config.xml',
         ));
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);

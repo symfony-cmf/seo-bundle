@@ -126,6 +126,26 @@ class LoadContentData implements FixtureInterface
         );
         $manager->persist($alternateLocaleRoute);
 
+        # create content in a deeper structure
+        $content = new SeoAwareContent();
+        $content->setName('content-deeper');
+        $content->setTitle('Content deeper');
+        $content->setBody('Content deeper Body');
+        $content->setParentDocument($contentRoot);
+
+        $manager->persist($content);
+
+        $route = new Route();
+        $route->setPosition(
+            $manager->find(null, '/test/routes/content/content-1'),
+            'content-deeper'
+        );
+        $route->setContent($content);
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+
+        $manager->persist($route);
+
         $manager->flush();
+
     }
 }

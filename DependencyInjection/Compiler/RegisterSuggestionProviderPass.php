@@ -1,0 +1,48 @@
+<?php
+
+
+namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler;
+
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\LogicException;
+use Symfony\Component\DependencyInjection\Reference;
+
+/**
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
+ */
+class RegisterSuggestionProviderPass implements CompilerPassInterface
+{
+    /**
+     * {@inheritDoc}
+     *
+     * @throws LogicException If a tagged service is not public.
+     */
+    public function process(ContainerBuilder $container)
+    {
+        if (!$container->hasDefinition('cmf_seo.error.suggestion_provider.controller')) {
+            return;
+        }
+
+        $presentationDefinition = $container->getDefinition('cmf_seo.error.suggestion_provider.controller');
+        $taggedServices = $container->findTaggedServiceIds('cmf_seo.suggestion_provider');
+
+        foreach ($taggedServices as $id => $attributes) {
+            $definition = $container->getDefinition($id);
+            if (!$definition->isPublic()) {
+                throw new LogicException(sprintf('Matcher "%s" must be public.', $id));
+            }
+
+            $group = null;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['group'])) {
+                    $group = $attribute['group'];
+                    break;
+                }
+            }
+            $group = $group ?: 'default';
+
+            $presentationDefinition->addMethodCall('addSuggestionProvider', array(new Reference($id), $group));
+        }
+    }
+}
