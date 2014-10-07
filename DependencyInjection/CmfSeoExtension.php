@@ -107,10 +107,6 @@ class CmfSeoExtension extends Extension
                 return;
             }
 
-            foreach ($bundles as $bundle => $value) {
-
-            }
-
             if (!isset($bundles['BurgovKeyValueFormBundle'])) {
                 throw new InvalidConfigurationException(sprintf(
                     'Please run %s and %s to AppKernel to use the admin extension for SeoMetadata',
