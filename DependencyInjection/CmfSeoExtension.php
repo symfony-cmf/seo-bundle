@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -104,6 +105,19 @@ class CmfSeoExtension extends Extension
             }
             if (!$found) {
                 return;
+            }
+
+            foreach ($bundles as $bundle => $value) {
+
+            }
+
+            if (!isset($bundles['BurgovKeyValueFormBundle'])) {
+                throw new InvalidConfigurationException(sprintf(
+                    'Please run %s and %s to AppKernel to use the admin extension for SeoMetadata',
+                    'php composer require "burgov/key-value-form-bundle" 1.0.0',
+                    'BurgovKeyValueFormBundle'
+                    )
+                );
             }
         }
 
