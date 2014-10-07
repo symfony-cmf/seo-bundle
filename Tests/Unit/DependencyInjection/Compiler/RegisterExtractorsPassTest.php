@@ -43,6 +43,7 @@ class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
             'addExtractor',
             array(
                 new Reference('extractor_service'),
+                0
             )
         );
     }
