@@ -40,6 +40,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'CmfRoutingBundle' => true,
                 'SonataDoctrinePHPCRAdminBundle' => true,
                 'DoctrinePHPCRBundle' => true,
+                'BurgovKeyValueFormBundle' => true,
             )
         );
         $this->load(array(
@@ -58,6 +59,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             array(
                 'CmfRoutingBundle' => true,
                 'SonataDoctrineORMBundle' => true,
+                'BurgovKeyValueFormBundle' => true,
             )
         );
 
@@ -137,5 +139,25 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'setAlternateLocaleProvider',
             array($this->container->getDefinition('some_alternate_locale_provider'))
         );
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function testExceptionForNonExistingBurgovBundleWithAdminExtension()
+    {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array(
+                'CmfRoutingBundle' => true,
+                'SonataDoctrinePHPCRAdminBundle' => true,
+                'DoctrinePHPCRBundle' => true,
+            )
+        );
+        $this->load(array(
+            'persistence'   => array(
+                'phpcr' => true,
+            )
+        ));
     }
 }

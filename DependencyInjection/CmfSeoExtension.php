@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -104,6 +105,12 @@ class CmfSeoExtension extends Extension
             }
             if (!$found) {
                 return;
+            }
+
+            if (!isset($bundles['BurgovKeyValueFormBundle'])) {
+                throw new InvalidConfigurationException(
+                    'To use advanced menu options, you need the burgov/key-value-form-bundle in your project.'
+                );
             }
         }
 

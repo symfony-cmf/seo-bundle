@@ -2,6 +2,7 @@ Changelog
 =========
 
 * **2014-10-08**: Make execution of extractors sortable
+* **2014-10-08**: Can't use admin extension without burgov/key-value-form-bundle now
 * **2014-09-22**: Added the `SeoAwareTrait` to ease creation of SeoAware classes
 
 1.1.0-RC1
