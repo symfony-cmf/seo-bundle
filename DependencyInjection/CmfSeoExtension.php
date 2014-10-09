@@ -108,11 +108,8 @@ class CmfSeoExtension extends Extension
             }
 
             if (!isset($bundles['BurgovKeyValueFormBundle'])) {
-                throw new InvalidConfigurationException(sprintf(
-                    'Please run %s and %s to AppKernel to use the admin extension for SeoMetadata',
-                    'php composer require "burgov/key-value-form-bundle" 1.0.0',
-                    'BurgovKeyValueFormBundle'
-                    )
+                throw new InvalidConfigurationException(
+                    'To use advanced menu options, you need the burgov/key-value-form-bundle in your project.'
                 );
             }
         }
