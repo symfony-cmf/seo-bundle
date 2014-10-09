@@ -44,8 +44,17 @@ class RegisterExtractorsPass implements CompilerPassInterface
                 throw new LogicException(sprintf('Strategy "%s" must be public.', $id));
             }
 
+            $priority = 0;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['priority'])) {
+                    $priority = $attribute['priority'];
+                    break;
+                }
+            }
+
             $strategyDefinition->addMethodCall('addExtractor', array(
                 new Reference($id),
+                $priority
             ));
         }
     }

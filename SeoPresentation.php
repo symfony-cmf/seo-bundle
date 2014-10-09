@@ -65,7 +65,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $redirectResponse = false;
 
     /**
-     * @var ExtractorInterface[]
+     * @var array
      */
     private $extractors = array();
 
@@ -125,10 +125,14 @@ class SeoPresentation implements SeoPresentationInterface
      * Adds extractors.
      *
      * @param ExtractorInterface $extractor
+     * @param int                $priority
      */
-    public function addExtractor(ExtractorInterface $extractor)
+    public function addExtractor(ExtractorInterface $extractor, $priority = 0)
     {
-        $this->extractors[] = $extractor;
+        if (!isset($this->extractors[$priority])) {
+            $this->extractors[$priority] = array();
+        }
+        $this->extractors[$priority][] = $extractor;
     }
 
     /**
@@ -189,9 +193,17 @@ class SeoPresentation implements SeoPresentationInterface
      */
     private function getExtractorsForContent($content)
     {
-        return array_filter($this->extractors, function ($extractor) use ($content) {
-            return $extractor->supports($content);
-        });
+        $extractors = array();
+        ksort($this->extractors);
+        foreach ($this->extractors as $priority) {
+            $supportedExtractors = array_filter($priority, function ($extractor) use ($content) {
+                return $extractor->supports($content);
+            });
+
+            $extractors = array_merge($extractors, $supportedExtractors);
+        }
+
+        return $extractors;
     }
 
     /**

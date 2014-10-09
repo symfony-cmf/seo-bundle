@@ -205,6 +205,109 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->seoPresentation->updateSeoPage($this->content);
     }
 
+    public function testTitleExtractorsWithPriority()
+    {
+        // promises
+        $this->translator
+            ->expects($this->any())
+            ->method('trans')
+            ->with($this->equalTo('default_title'), $this->equalTo(array('%content_title%' => 'Final Title')), $this->equalTo(null))
+            ->will($this->returnValue('translation strategy test'))
+        ;
+        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorDefault
+            ->expects($this->any())
+            ->method('supports')
+            ->with($this->content)
+            ->will($this->returnValue(true))
+        ;
+        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorOne
+            ->expects($this->any())
+            ->method('supports')
+            ->with($this->content)
+            ->will($this->returnValue(true))
+        ;
+        $this->seoPresentation->addExtractor($extractorDefault);
+        $this->seoPresentation->addExtractor($extractorOne, 1);
+
+        // predictions
+        $extractorDefault
+            ->expects($this->once())
+            ->method('updateMetadata')
+            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+                $seoMetadata->setTitle('First Title');
+            }))
+        ;
+        $extractorOne
+            ->expects($this->once())
+            ->method('updateMetadata')
+            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+                $seoMetadata->setTitle('Final Title');
+            }))
+        ;
+        $this->pageService
+            ->expects($this->once())
+            ->method('addMeta')
+            ->with('name', 'title', 'translation strategy test')
+        ;
+
+        // test
+        $this->seoPresentation->updateSeoPage($this->content);
+    }
+
+    public function testDescriptionExtractorsWithPriority()
+    {
+        $this->translator
+            ->expects($this->any())
+            ->method('trans')
+            ->with($this->equalTo('default_description'), $this->equalTo(array('%content_description%' => 'Final Description')), $this->equalTo(null))
+            ->will($this->returnValue('translation strategy test'))
+        ;
+
+        // promises
+        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorDefault
+            ->expects($this->any())
+            ->method('supports')
+            ->with($this->content)
+            ->will($this->returnValue(true))
+        ;
+        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorOne
+            ->expects($this->any())
+            ->method('supports')
+            ->with($this->content)
+            ->will($this->returnValue(true))
+        ;
+        $this->seoPresentation->addExtractor($extractorDefault);
+        $this->seoPresentation->addExtractor($extractorOne, 1);
+
+        // predictions
+        $extractorDefault
+            ->expects($this->once())
+            ->method('updateMetadata')
+            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+                $seoMetadata->setMetaDescription('First Description');
+            }))
+        ;
+        $extractorOne
+            ->expects($this->once())
+            ->method('updateMetadata')
+            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+                $seoMetadata->setMetaDescription('Final Description');
+            }))
+        ;
+        $this->pageService
+            ->expects($this->once())
+            ->method('addMeta')
+            ->with('name', 'description', 'translation strategy test')
+        ;
+
+        // test
+        $this->seoPresentation->updateSeoPage($this->content);
+    }
+
     public function testRedirect()
     {
         // promises

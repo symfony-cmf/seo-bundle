@@ -24,7 +24,7 @@ class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
         $container->addCompilerPass(new RegisterExtractorsPass());
     }
 
-    public function testRegistersServicesWithExtractorTag()
+    public function testRegistersServicesWithExtractorTagAndDefaultPriority()
     {
         $nonExtractorService = new Definition();
         $this->setDefinition('some_service', $nonExtractorService);
@@ -41,9 +41,28 @@ class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.presentation',
             'addExtractor',
-            array(
-                new Reference('extractor_service'),
-            )
+            array(new Reference('extractor_service'), 0)
+        );
+    }
+
+    public function testRegistersServicesWithExtractorTagAndPriority()
+    {
+        $nonExtractorService = new Definition();
+        $this->setDefinition('some_service', $nonExtractorService);
+
+        $extractorService = new Definition();
+        $extractorService->addTag('cmf_seo.extractor', array('priority' => 1));
+        $this->setDefinition('extractor_service', $extractorService);
+
+        $presentationService = new Definition();
+        $this->setDefinition('cmf_seo.presentation', $presentationService);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.presentation',
+            'addExtractor',
+            array(new Reference('extractor_service'), 1)
         );
     }
 }
