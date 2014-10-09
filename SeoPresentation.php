@@ -194,6 +194,7 @@ class SeoPresentation implements SeoPresentationInterface
     private function getExtractorsForContent($content)
     {
         $extractors = array();
+        ksort($this->extractors);
         foreach ($this->extractors as $priority) {
             $supportedExtractors = array_filter($priority, function ($extractor) use ($content) {
                 return $extractor->supports($content);
