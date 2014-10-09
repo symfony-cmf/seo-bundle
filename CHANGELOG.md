@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.0-RC2
+1.1.0-RC3
 ---------
 
 * **2014-10-08**: Make execution of extractors sortable
