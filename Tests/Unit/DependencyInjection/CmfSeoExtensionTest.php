@@ -51,8 +51,13 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'description'   => 'Default description.',
             'persistence'   => array(
                 'phpcr' => true,
-            )
+            ),
         ));
+
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.phpcr_provider',
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider'
+        );
     }
 
     public function testPersistenceORM()
@@ -130,15 +135,28 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
     public function testAlternateLocaleWithCustomProvider()
     {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array()
+        );
         $this->container->setDefinition('some_alternate_locale_provider', new Definition());
         $this->load(array(
+            'persistence' => array(
+                'phpcr' => true,
+            ),
             'alternate_locale' => array(
                 'provider_id' => 'some_alternate_locale_provider'
             ),
+            'sitemap' => true,
         ));
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.event_listener.seo_content',
+            'setAlternateLocaleProvider',
+            array($this->container->getDefinition('some_alternate_locale_provider'))
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.sitemap.phpcr_provider',
             'setAlternateLocaleProvider',
             array($this->container->getDefinition('some_alternate_locale_provider'))
         );
@@ -163,6 +181,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             )
         ));
     }
+
     public function testErrorHandlingPHPCR()
     {
         $this->container->setParameter(
@@ -190,6 +209,39 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.error.suggestion_provider.parent',
             'cmf_seo.suggestion_provider',
             array('group' => 'parent')
+        );
+    }
+
+    public function testSitemapConfiguration()
+    {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array()
+        );
+        $this->load(array(
+            'sitemap'   => array(
+                'default_chan_frequency' => 'never',
+            ),
+            'persistence'   => array(
+                'phpcr' => true,
+            ),
+        ));
+
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.controller',
+            'Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.url_information_provider',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\ChainProvider'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.phpcr_provider',
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider'
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.sitemap.phpcr_provider',
+            'cmf_seo.sitemap.url_information_provider'
         );
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    {% for url in urls %}
+        <url>
+            <loc>{{ url.location }}</loc>
+            <lastmod>{{ url.lastModification }}</lastmod>
+            <changefreq>{{ url.changeFrequency }}</changefreq>
+            {% if url.alternateLocales is defined and url.alternateLocales|length > 0 %}
+                {% for locale in url.alternateLocales %}
+                    <xhtml:link rel="alternate" hreflang="{{ locale.hrefLocale }}" href="{{ locale.href }}"/>
+                {% endfor %}
+            {% endif %}
+        </url>
+    {% endfor %}
+</urlset>

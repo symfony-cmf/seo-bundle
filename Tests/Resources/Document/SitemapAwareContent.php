@@ -1,28 +1,23 @@
 <?php
 
-/*
- * This file is part of the Symfony CMF package.
- *
- * (c) 2011-2014 Symfony CMF
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
-use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
-use Symfony\Component\Routing\Route;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
+use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SitemapElementInterface;
+use Symfony\Cmf\Component\Routing\RouteReferrersReadInterface;
+use Symfony\Component\Routing\Route;
 
 /**
- * @PHPCRODM\Document(translator="attribute")
+ * @PHPCRODM\Document(referenceable=true, translator="attribute")
+ *
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class AlternateLocaleContent extends ContentBase implements
-    RouteReferrersInterface,
-    TranslatableInterface
+class SitemapAwareContent extends ContentBase implements
+    RouteReferrersReadInterface,
+    TranslatableInterface,
+    SitemapElementInterface
 {
     /**
      * @var string
@@ -30,13 +25,6 @@ class AlternateLocaleContent extends ContentBase implements
      * @PHPCRODM\Locale
      */
     protected $locale;
-
-    /**
-     * @var string
-     *
-     * @PHPCRODM\String(translated=true)
-     */
-    protected $title;
 
     /**
      * @var ArrayCollection|Route[]
@@ -48,9 +36,43 @@ class AlternateLocaleContent extends ContentBase implements
      */
     protected $routes;
 
+    /**
+     * @var bool
+     *
+     * @PHPCRODM\Boolean(property="visible_for_sitemap")
+     */
+    private $isVisibleForSitemap;
+
+    /**
+     * @var string
+     *
+     * @PHPCRODM\String(translated=true)
+     */
+    protected $title;
+
     public function __construct()
     {
         $this->routes = new ArrayCollection();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVisibleInSitemap()
+    {
+        return $this->isVisibleForSitemap;
+    }
+
+    /**
+     * @param boolean $isVisibleForSitemap
+     *
+     * @return SitemapAwareContent
+     */
+    public function setIsVisibleForSitemap($isVisibleForSitemap)
+    {
+        $this->isVisibleForSitemap = $isVisibleForSitemap;
+
+        return $this;
     }
 
     /**
@@ -82,6 +104,7 @@ class AlternateLocaleContent extends ContentBase implements
     {
         return $this->routes;
     }
+
 
     /**
      * @return string|boolean The locale of this model or false if

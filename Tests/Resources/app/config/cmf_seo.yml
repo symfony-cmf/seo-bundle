@@ -14,6 +14,7 @@ cmf_seo:
     error:
         enable_parent_provider: true
         enable_sibling_provider: true
+    sitemap: true
 
 cmf_routing:
     chain:
@@ -23,3 +24,7 @@ cmf_routing:
 
 twig:
     exception_controller: cmf_seo.error.suggestion_provider.controller:showAction
+
+cmf_core:
+    multilang:
+        locales: [en, de]

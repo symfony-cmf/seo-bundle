@@ -1,6 +1,8 @@
 Changelog
 =========
 
+* **2015-14-02**: implement sitemap generation
+* **2015-14-02**: [BC BREAK] Changed method visibility from private to public of SeoPresentation#getSeoMetadata()
 * **2014-10-04**: Custom exception controller for error handling
 
 1.1.0-RC3

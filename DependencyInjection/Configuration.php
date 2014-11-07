@@ -60,7 +60,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->beforeNormalization()
                         ->ifTrue( function ($v) { return is_scalar($v); })
-                        ->then( function ($v) {
+                        ->then(function ($v) {
                             return array('enabled' => $v);
                         })
                     ->end()
@@ -83,6 +83,13 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('enable_parent_provider')->defaultValue(false)->end()
                         ->scalarNode('enable_sibling_provider')->defaultValue(false)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('sitemap')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('default_chan_frequency')->defaultValue('always')->end()
                     ->end()
                 ->end()
             ->end()

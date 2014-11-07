@@ -23,6 +23,7 @@ class AppKernel extends TestKernel
             new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
             new \Burgov\Bundle\KeyValueFormBundle\BurgovKeyValueFormBundle(),
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
+            new Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
         ));
     }
 

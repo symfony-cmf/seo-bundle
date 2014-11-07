@@ -136,14 +136,9 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Gets the SeoMetadata based on the content that contains the content.
-     *
-     * @param object $content
-     *
-     * @throws Exception\InvalidArgumentException
-     * @return SeoMetadata
+     * {@inheritDoc}
      */
-    private function getSeoMetadata($content)
+    public function getSeoMetadata($content)
     {
         if ($content instanceof SeoAwareInterface) {
             $contentSeoMetadata = $content->getSeoMetadata();
