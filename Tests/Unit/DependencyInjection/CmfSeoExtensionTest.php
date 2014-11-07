@@ -30,6 +30,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('cmf_seo.translation_domain', 'messages');
         $this->assertContainerBuilderHasParameter('cmf_seo.original_route_pattern', 'canonical');
         $this->assertContainerBuilderHasParameter('cmf_seo.content_key', 'contentDocument');
+        $this->assertContainerBuilderHasService('cmf_seo.error.suggestion_provider.controller');
+        $this->assertContainerBuilderNotHasService('cmf_seo.error.suggestion_provider.parent');
+        $this->assertContainerBuilderNotHasService('cmf_seo.error.suggestion_provider.sibling');
     }
 
     public function testPersistencePHPCR()
@@ -159,5 +162,34 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'phpcr' => true,
             )
         ));
+    }
+    public function testErrorHandlingPHPCR()
+    {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array(
+                'CmfRoutingBundle' => true,
+            )
+        );
+        $this->load(array(
+            'persistence'   => array(
+                'phpcr' => true,
+            ),
+            'error' => array(
+                'enable_parent_provider' => true,
+                'enable_sibling_provider' => true,
+            )
+        ));
+
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error.suggestion_provider.sibling',
+            'cmf_seo.suggestion_provider',
+            array('group' => 'sibling')
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.error.suggestion_provider.parent',
+            'cmf_seo.suggestion_provider',
+            array('group' => 'parent')
+        );
     }
 }

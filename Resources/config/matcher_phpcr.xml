@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="cmf_seo.error.suggestion_provider.parent.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\ParentSuggestionProvider</parameter>
+        <parameter key="cmf_seo.error.suggestion_provider.sibling.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SiblingSuggestionProvider</parameter>
+    </parameters>
+
+    <services>
+        <service id="cmf_seo.error.suggestion_provider.parent" class="%cmf_seo.error.suggestion_provider.parent.class%">
+            <argument type="service" id="doctrine_phpcr" />
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepath%</argument>
+            <tag name="cmf_seo.suggestion_provider" group="parent" />
+        </service>
+        <service id="cmf_seo.error.suggestion_provider.sibling" class="%cmf_seo.error.suggestion_provider.sibling.class%">
+            <argument type="service" id="doctrine_phpcr" />
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepath%</argument>
+            <tag name="cmf_seo.suggestion_provider" group="sibling" />
+        </service>
+
+    </services>
+
+</container>

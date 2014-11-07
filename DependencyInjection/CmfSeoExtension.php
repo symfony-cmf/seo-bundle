@@ -64,6 +64,8 @@ class CmfSeoExtension extends Extension
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
 
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
+
+            $loader->load('matcher_phpcr.xml');
         }
 
         if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
@@ -82,6 +84,9 @@ class CmfSeoExtension extends Extension
         if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
             $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
+
+        $errorConfig = isset($config['error']) ? $config['error'] : array();
+        $this->loadErrorHandling($errorConfig, $container);
     }
 
     /**
@@ -143,7 +148,7 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-        * {@inheritDoc}
+     * {@inheritDoc}
      */
     public function getXsdValidationBasePath()
     {
@@ -191,6 +196,24 @@ class CmfSeoExtension extends Extension
                     array($container->getDefinition($alternateLocaleProvider))
                 )
             ;
+        }
+    }
+
+    /**
+     * Enabled suggestion providers will stay in the container only.
+     *
+     * The providers are activated only, when phpcr is chosen as persistence.
+     *
+     * @param $config
+     * @param ContainerBuilder $container
+     */
+    private function loadErrorHandling($config, ContainerBuilder $container)
+    {
+        foreach (array('parent', 'sibling') as $group) {
+            $remove = isset($config['enable_'.$group.'_provider']) && !$config['enable_'.$group.'_provider'] ? true : false;
+            if ($container->has('cmf_seo.error.suggestion_provider.'.$group) && $remove) {
+                $container->removeDefinition('cmf_seo.error.suggestion_provider.'.$group);
+            }
         }
     }
 }

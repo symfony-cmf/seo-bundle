@@ -57,9 +57,9 @@ class SeoFrontendTest extends BaseTestCase
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
-                $nameValue = $node->attr('name');
+            $nameValue = $node->attr('name');
 
-                return 'title' === $nameValue || 'description' === $nameValue ||'keywords' === $nameValue;
+            return 'title' === $nameValue || 'description' === $nameValue ||'keywords' === $nameValue;
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');
@@ -162,5 +162,17 @@ class SeoFrontendTest extends BaseTestCase
         $linkCrawler = $crawler->filter('head > link');
         $expectedArray = array(array('alternate', 'http://localhost/en/alternate-locale-content', 'en'));
         $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
+    }
+
+    public function testErrorHandling()
+    {
+        $crawler = $this->client->request('GET', '/content/content-1/content-depp');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(404, $res->getStatusCode());
+
+        $this->assertCount(1, $crawler->filter('html:contains("Exception-Test")'));
+        $this->assertCount(1, $crawler->filter('html:contains("parent - content-1")'));
+        $this->assertCount(1, $crawler->filter('html:contains("sibling - content-deeper")'));
     }
 }
