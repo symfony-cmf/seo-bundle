@@ -6,8 +6,8 @@
         https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd"
         >
 
-    <document name="Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata">d
-        <parent-document name="parentDocument"/>
+    <document name="Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata">
+        <parent-document name="parentDocument" />
         <nodename name="name" />
     </document>
 </doctrine-mapping>
