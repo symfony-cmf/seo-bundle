@@ -242,7 +242,6 @@ class SeoPresentation implements SeoPresentationInterface
                 : $seoMetadata->getTitle();
 
             $this->sonataPage->setTitle($pageTitle);
-            $this->sonataPage->addMeta('name', 'title', $pageTitle);
         }
 
         if ($seoMetadata->getMetaDescription()) {

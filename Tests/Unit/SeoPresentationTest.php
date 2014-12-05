@@ -246,11 +246,6 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
                 $seoMetadata->setTitle('Final Title');
             }))
         ;
-        $this->pageService
-            ->expects($this->once())
-            ->method('addMeta')
-            ->with('name', 'title', 'translation strategy test')
-        ;
 
         // test
         $this->seoPresentation->updateSeoPage($this->content);
