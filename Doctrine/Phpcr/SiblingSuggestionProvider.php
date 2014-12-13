@@ -16,7 +16,8 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * This provider looks for all ancestors of a requested URL.
+ * This provider checks if the parent of a requested URL exists and proposes
+ * other children of that parent.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */

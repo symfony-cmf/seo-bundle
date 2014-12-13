@@ -173,4 +173,10 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertCount(1, $crawler->filter('html:contains("parent - content-1")'));
         $this->assertCount(1, $crawler->filter('html:contains("sibling - content-deeper")'));
     }
+
+    public function testErrorHandlingInvalidPhpcrPath()
+    {
+        $this->client->request('GET', '/content/content-1/content[a]b/sub?bla=blup');
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+    }
 }
