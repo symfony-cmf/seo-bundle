@@ -12,9 +12,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
 use PHPCR\Util\PathHelper;
-use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
+use Symfony\Component\Routing\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouteCollection;
 
 /**
  * This provider looks for all ancestors of a requested URL.
@@ -40,7 +39,9 @@ class SiblingSuggestionProvider extends BaseSuggestionProvider
         $childRoutes = $manager->getChildren($parentRoute);
 
         foreach ($childRoutes->toArray() as $childRoute) {
-            $routes[$childRoute->getName()] = $childRoute;
+            if ($childRoute instanceof Route) {
+                $routes[$childRoute->getName()] = $childRoute;
+            }
         }
 
         return $routes;
