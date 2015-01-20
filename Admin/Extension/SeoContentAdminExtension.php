@@ -31,20 +31,32 @@ class SeoContentAdminExtension extends AdminExtension
     protected $formGroup;
 
     /**
+     * @var string
+     */
+    protected $formTab;
+
+    /**
      * @param string $formGroup group name to use for form mapper
      */
-    public function __construct($formGroup = 'form.group_seo')
+    public function __construct($formGroup = 'form.group_seo', $formTab = 'form.tab_seo')
     {
         $this->formGroup = $formGroup;
+        $this->formTab = $formTab;
     }
 
     public function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with($this->formGroup, array(
-                'translation_domain' => 'CmfSeoBundle',
-            ))
-                ->add('seoMetadata', 'seo_metadata', array('label' => false))
+            ->with($this->formTab, 'form.tab_seo' === $this->formTab
+                ? array('translation_domain' => 'CmfSeoBundle', 'tab' => true)
+                : array('tab' => true)
+            )
+                ->with($this->formGroup, 'form.group_seo' === $this->formGroup
+                    ? array('translation_domain' => 'CmfSeoBundle')
+                    : array()
+                )
+                    ->add('seoMetadata', 'seo_metadata', array('label' => false))
+                ->end()
             ->end()
         ;
     }
