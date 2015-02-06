@@ -18,6 +18,7 @@
         <xsd:attribute name="content-key" type="xsd:string" />
         <xsd:attribute name="metadata-listener" type="enable_auto" />
         <xsd:attribute name="sonata-admin-extension" type="enable_auto" />
+        <xsd:attribute name="enable-content-listener" type="xsd:boolean" default="true" />
     </xsd:complexType>
 
     <xsd:complexType name="persistence">

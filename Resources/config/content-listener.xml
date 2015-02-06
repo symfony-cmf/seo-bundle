@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container
+        xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener</parameter>
+    </parameters>
+
+    <services>
+        <service id="cmf_seo.event_listener.seo_content" class="%cmf_seo.event_listener.seo_content.class%">
+            <argument type="service" id="cmf_seo.presentation"/>
+            <argument>%cmf_seo.content_key%</argument>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
+        </service>
+    </services>
+
+</container>
