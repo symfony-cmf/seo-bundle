@@ -46,7 +46,7 @@ class SeoContentAdminExtension extends AdminExtension
 
     public function configureFormFields(FormMapper $formMapper)
     {
-        if ($this->hasOpenTab()) {
+        if ($formMapper->hasOpenTab()) {
             $formMapper->end();
         }
 
