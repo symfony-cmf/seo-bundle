@@ -23,7 +23,7 @@
         "doctrine/phpcr-bundle": "~1.1",
         "doctrine/phpcr-odm": "~1.1",
         "doctrine/orm": "~2.4",
-        "sonata-project/doctrine-phpcr-admin-bundle": "~1.1",
+        "sonata-project/doctrine-phpcr-admin-bundle": "~2.0",
         "symfony-cmf/routing-bundle": "~1.2",
         "symfony-cmf/core-bundle": "~1.1",
         "matthiasnoback/symfony-dependency-injection-test": "0.*",

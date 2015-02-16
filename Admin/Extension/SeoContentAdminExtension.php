@@ -46,10 +46,14 @@ class SeoContentAdminExtension extends AdminExtension
 
     public function configureFormFields(FormMapper $formMapper)
     {
+        if ($this->hasOpenTab()) {
+            $formMapper->end();
+        }
+
         $formMapper
-            ->with($this->formTab, 'form.tab_seo' === $this->formTab
-                ? array('translation_domain' => 'CmfSeoBundle', 'tab' => true)
-                : array('tab' => true)
+            ->tab($this->formTab, 'form.tab_seo' === $this->formTab
+                ? array('translation_domain' => 'CmfSeoBundle')
+                : array()
             )
                 ->with($this->formGroup, 'form.group_seo' === $this->formGroup
                     ? array('translation_domain' => 'CmfSeoBundle')
