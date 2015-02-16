@@ -9,6 +9,9 @@
     <xsd:complexType name="config">
         <xsd:sequence>
             <xsd:element name="persistence" type="persistence" minOccurs="0" />
+            <xsd:element name="alternate-locale" type="alternate_locale" minOccurs="0" />
+            <xsd:element name="error" type="error_handling" minOccurs="0" />
+            <xsd:element name="sitemap" type="sitemap" minOccurs="0" />
         </xsd:sequence>
 
         <xsd:attribute name="translation-domain" type="xsd:string" />
@@ -37,6 +40,32 @@
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="redirect" />
             <xsd:enumeration value="canonical" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="alternate_locale">
+        <xsd:attribute name="provider-id" type="xsd:string" default="null" />
+    </xsd:complexType>
+
+    <xsd:complexType name="error_handling">
+        <xsd:attribute name="enable-parent-provider" type="xsd:boolean" default="false" />
+        <xsd:attribute name="enable-sibling-provider" type="xsd:boolean"  default="false" />
+    </xsd:complexType>
+
+    <xsd:complexType name="sitemap">
+        <xsd:attribute name="enabled" type="xsd:boolean" />
+        <xsd:attribute name="default-chan-frequency" type="chan_frequency" default="always" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="chan_frequency">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="always" />
+            <xsd:enumeration value="hourly" />
+            <xsd:enumeration value="daily" />
+            <xsd:enumeration value="weekly" />
+            <xsd:enumeration value="monthly" />
+            <xsd:enumeration value="yearly" />
+            <xsd:enumeration value="never" />
         </xsd:restriction>
     </xsd:simpleType>
 </xsd:schema>
