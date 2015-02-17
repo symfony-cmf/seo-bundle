@@ -62,7 +62,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             ),
             'sitemap' => array(
                 'enabled' => false,
-                'default_chan_frequency' => 'always'
+                'default_change_frequency' => 'always'
             ),
             );
 

@@ -220,7 +220,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
         $this->load(array(
             'sitemap'   => array(
-                'default_chan_frequency' => 'never',
+                'default_change_frequency' => 'never',
             ),
             'persistence'   => array(
                 'phpcr' => true,
