@@ -14,6 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
@@ -64,8 +65,6 @@ class CmfSeoExtension extends Extension
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
 
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
-
-            $loader->load('matcher_phpcr.xml');
         }
 
         if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
@@ -87,6 +86,10 @@ class CmfSeoExtension extends Extension
 
         $errorConfig = isset($config['error']) ? $config['error'] : array();
         $this->loadErrorHandling($errorConfig, $container);
+
+        if ($this->isConfigEnabled($container, $config['sitemap'])) {
+            $this->loadSitemapHandling($config['sitemap'], $loader, $container);
+        }
     }
 
     /**
@@ -169,6 +172,9 @@ class CmfSeoExtension extends Extension
                 $this->defaultAlternateLocaleProviderId = 'cmf_seo.alternate_locale.provider_phpcr';
             }
         }
+
+        $loader->load('matcher_phpcr.xml');
+        $loader->load('phpcr-sitemap.xml');
     }
 
     /**
@@ -189,13 +195,19 @@ class CmfSeoExtension extends Extension
 
 
         if ($alternateLocaleProvider) {
-            $definition = $container->getDefinition('cmf_seo.event_listener.seo_content');
-            $definition
+            $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
+            $container
+                ->findDefinition('cmf_seo.event_listener.seo_content')
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
-                    array($container->getDefinition($alternateLocaleProvider))
-                )
-            ;
+                    array($alternateLocaleProviderDefinition)
+                );
+            $container
+                ->findDefinition('cmf_seo.sitemap.phpcr_provider')
+                ->addMethodCall(
+                    'setAlternateLocaleProvider',
+                    array($alternateLocaleProviderDefinition)
+                );
         }
     }
 
@@ -210,10 +222,21 @@ class CmfSeoExtension extends Extension
     private function loadErrorHandling($config, ContainerBuilder $container)
     {
         foreach (array('parent', 'sibling') as $group) {
-            $remove = isset($config['enable_'.$group.'_provider']) && !$config['enable_'.$group.'_provider'] ? true : false;
+            $remove = isset($config['enable_'.$group.'_provider'])
+                    && !$config['enable_'.$group.'_provider'] ? true : false;
             if ($container->has('cmf_seo.error.suggestion_provider.'.$group) && $remove) {
                 $container->removeDefinition('cmf_seo.error.suggestion_provider.'.$group);
             }
         }
+    }
+
+    private function loadSitemapHandling($config, XmlFileLoader $loader, ContainerBuilder $container)
+    {
+        $loader->load('sitemap.xml');
+
+        $container->setParameter(
+            $this->getAlias().'.sitemap.default_change_frequency',
+            $config['default_chan_frequency']
+        );
     }
 }

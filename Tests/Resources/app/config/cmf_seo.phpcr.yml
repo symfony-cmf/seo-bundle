@@ -37,3 +37,8 @@ sonata_admin:
                 label: Content
                 items:
                     - sonata.admin.seo_content
+
+cmf_core:
+    persistence:
+        phpcr:
+            basepath: /test

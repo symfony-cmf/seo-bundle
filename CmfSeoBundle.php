@@ -14,6 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle;
 use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler\RegisterUrlInformationProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -26,6 +27,7 @@ class CmfSeoBundle extends Bundle
     {
         $container->addCompilerPass(new RegisterExtractorsPass());
         $container->addCompilerPass(new RegisterSuggestionProviderPass());
+        $container->addCompilerPass(new RegisterUrlInformationProviderPass());
 
         $this->buildPhpcrCompilerPass($container);
         $this->buildOrmCompilerPass($container);
