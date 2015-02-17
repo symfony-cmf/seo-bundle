@@ -62,7 +62,11 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             ),
             'sitemap' => array(
                 'enabled' => false,
-                'default_chan_frequency' => 'always'
+                'default_chan_frequency' => 'always',
+                'templates' => array(
+                    'xml'  => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                    'html' => 'CmfSeoBundle:Sitemap:index.html.twig'
+                )
             ),
             );
 
