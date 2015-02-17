@@ -238,5 +238,10 @@ class CmfSeoExtension extends Extension
             $this->getAlias().'.sitemap.default_change_frequency',
             $config['default_chan_frequency']
         );
+
+        $container->setParameter(
+            $this->getAlias().'.sitemap.templates',
+            $config['templates']
+        );
     }
 }
