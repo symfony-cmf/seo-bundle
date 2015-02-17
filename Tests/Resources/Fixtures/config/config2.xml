@@ -6,4 +6,10 @@
     sonata-admin-extension="auto">
 
     <persistence phpcr="true" />
+
+    <alternate-locale provider-id="some-id" />
+
+    <error enable-parent-provider="true" enable-sibling-provider="true" />
+
+    <sitemap default-chan-frequency="never" enabled="true" />
 </config>
