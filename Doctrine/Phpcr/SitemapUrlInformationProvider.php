@@ -109,13 +109,14 @@ class SitemapUrlInformationProvider implements UrlInformationProviderInterface
             }
 
             try {
-                $urlInformationList[] = $this->computeUrlInformationFromSitemapDocument($document);
+                $urlInformation = $this->computeUrlInformationFromSitemapDocument($document);
+                $urlInformationList[$urlInformation->getLocation()] = $urlInformation;
             } catch (\Exception $e) {
                 $this->logger->info($e->getMessage());
             }
         }
 
-        return $urlInformationList;
+        return array_values($urlInformationList);
     }
 
     /**
