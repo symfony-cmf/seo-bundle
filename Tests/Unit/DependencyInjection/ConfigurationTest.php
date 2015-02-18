@@ -77,4 +77,30 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
     }
+
+    public function testAdvancedXmlConfigurations()
+    {
+        $expectedConfiguration = array(
+            'sitemap' => array(
+                'enabled'        => true,
+                'configurations' => array(
+                    'default' => array(
+                        'default_change_frequency' => 'never',
+                        'templates' => array(
+                            'xml'  => 'test.xml',
+                            'html' => 'test.html',
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        $sources = array_map(function ($path) {
+            return __DIR__.'/../../Resources/Fixtures/'.$path;
+        }, array(
+            'config/config_sitemap.xml',
+        ));
+
+        $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
+    }
 }

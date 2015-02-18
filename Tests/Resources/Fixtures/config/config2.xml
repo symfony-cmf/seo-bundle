@@ -11,11 +11,9 @@
     <error enable-parent-provider="true" enable-sibling-provider="true" />
 
     <sitemap enabled="true">
-        <configuration default-chan-frequency="never" enabled="true" name="default">
-            <templates>
-                <template format="xml" template="test.xml" />
-                <template format="html" template="test.html"/>
-            </templates>
+        <configuration default-change-frequency="never" name="default">
+            <template format="xml">test.xml</template>
+            <template format="html">test.html</template>
         </configuration>
     </sitemap>
 </config>
