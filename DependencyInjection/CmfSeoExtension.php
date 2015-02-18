@@ -251,14 +251,18 @@ class CmfSeoExtension extends Extension
     {
         $loader->load('sitemap.xml');
 
-        $container->setParameter(
-            $this->getAlias().'.sitemap.default_change_frequency',
-            $config['default_change_frequency']
-        );
+        $container->setParameter($this->getAlias().'.sitemap.configurations', $config['configurations']);
 
-        if ($this->isConfigEnabled($container, $persistence['phpcr'])) {
-            $loader->load('phpcr-sitemap.xml');
-            $this->phpcrProviderEnabled = true;
+        foreach ($config['configurations'] as $key => $configuration) {
+            $container->setParameter($this->getAlias().'.sitemap.'.$key.'_configuration', $configuration);
+        }
+
+        // set a base default change frequency by now todo change that when votes respect sitemap by name
+        if (isset($config['configurations']['default']['default_change_frequency'])) {
+            $container->setParameter(
+                $this->getAlias().'.sitemap.default_change_frequency',
+                $config['configurations']['default']['default_change_frequency']
+            );
         }
     }
 }

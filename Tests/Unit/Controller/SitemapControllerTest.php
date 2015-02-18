@@ -5,7 +5,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Controller;
 use Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocale;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\ChainProvider;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
@@ -40,8 +39,12 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
             $this->provider,
             $this->templating,
             array(
-                'xml'  => 'CmfSeoBundle:Sitemap:index.xml.twig',
-                'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                'test' => array(
+                    'templates' => array(
+                        'xml'  => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                    ),
+                ),
             )
         );
     }
@@ -49,7 +52,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
     public function testRequestJson()
     {
         /** @var Response $response */
-        $response = $this->controller->indexAction('json');
+        $response = $this->controller->indexAction('json', 'test');
         $expected = array(
             array(
                 'loc'               => 'http://www.test-alternate-locale.de',
@@ -80,7 +83,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         $this->templating->expects($this->once())->method('render')->will($this->returnValue($response));
 
         /** @var Response $response */
-        $response = $this->controller->indexAction('xml');
+        $response = $this->controller->indexAction('xml', 'test');
 
         $this->assertEquals(new Response('some-xml-string'), $response->getContent());
     }
@@ -91,7 +94,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         $this->templating->expects($this->once())->method('render')->will($this->returnValue($expectedResponse));
 
         /** @var Response $response */
-        $response = $this->controller->indexAction('html');
+        $response = $this->controller->indexAction('html', 'test');
 
         $this->assertEquals($expectedResponse, $response->getContent());
     }

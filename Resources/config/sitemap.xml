@@ -14,10 +14,7 @@
         <service id="cmf_seo.sitemap.controller" class="%cmf_seo.sitemap.controller.class%">
             <argument type="service" id="cmf_seo.sitemap.url_information_provider" />
             <argument type="service" id="templating" />
-            <argument type="collection">
-                <argument key="xml">CmfSeoBundle:Sitemap:index.xml.twig</argument>
-                <argument key="html">CmfSeoBundle:Sitemap:index.html.twig</argument>
-            </argument>
+            <argument>%cmf_seo.sitemap.configurations%</argument>
         </service>
         <service id="cmf_seo.sitemap.url_information_provider" class="%cmf_seo.sitemap.url_information_provider.class%" />
     </services>

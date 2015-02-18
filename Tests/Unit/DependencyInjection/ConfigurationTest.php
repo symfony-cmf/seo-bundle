@@ -39,10 +39,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testDefaultsForAllConfigFormats()
     {
         $expectedConfiguration = array(
-            'translation_domain'     => 'messages',
             'title'                  => 'default_title',
             'description'            => 'default_description',
-            'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'persistence' => array(
                 'phpcr' => array(
                     'enabled' => false,
@@ -53,6 +51,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'manager_name' => null,
                 ),
             ),
+            'translation_domain'     => 'messages',
+            'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'sonata_admin_extension' => array(
                 'enabled' => 'auto',
                 'form_group' => 'form.group_seo',
@@ -62,12 +62,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'provider_id' => null,
             ),
             'sitemap' => array(
-                'enabled' => false,
-                'default_change_frequency' => 'always'
-            ),
-            'content_listener' => array(
-                'enabled' => true,
-                'content_key' => DynamicRouter::CONTENT_KEY,
+                'enabled'        => false,
+                'configurations' => array(),
             ),
         );
 

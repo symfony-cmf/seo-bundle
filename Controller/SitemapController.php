@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
+use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,9 +35,12 @@ class SitemapController
     private $templating;
 
     /**
+     * The complete configurations for all sitemap with its
+     * definitions for their templates.
+     *
      * @var array
      */
-    private $templates;
+    private $configurations;
 
     /**
      * You should provide templates for html and xml.
@@ -45,18 +49,18 @@ class SitemapController
      *
      * @param UrlInformationProviderInterface $provider
      * @param EngineInterface                 $templating
-     * @param array                           $templates  Hash map with key being the format,
-     *                                                    value the name of the twig template
-     *                                                    to render the sitemap in that format
+     * @param array                           $configurations Hash map with key being the format,
+     *                                                        value the name of the twig template
+     *                                                        to render the sitemap in that format
      */
     public function __construct(
         UrlInformationProviderInterface $provider,
         EngineInterface $templating,
-        array $templates
+        array $configurations
     ) {
         $this->urlProvider = $provider;
         $this->templating = $templating;
-        $this->templates = $templates;
+        $this->configurations = $configurations;
     }
 
     /**
@@ -64,9 +68,15 @@ class SitemapController
      *
      * @return Response
      */
-    public function indexAction($_format)
+    public function indexAction($_format, $sitemap)
     {
-        $supportedFormats = array_merge(array('json'), array_keys($this->templates));
+        if (!isset($this->configurations[$sitemap])) {
+            throw new InvalidArgumentException(sprintf('Unknown sitemap %s', $sitemap));
+        }
+
+        $templates = $this->configurations[$sitemap]['templates'];
+
+        $supportedFormats = array_merge(array('json'), array_keys($templates));
         if (!in_array($_format, $supportedFormats)) {
             $text = sprintf(
                 'Unknown format %s, use one of %s.',
@@ -78,8 +88,8 @@ class SitemapController
         }
 
         $urls = $this->urlProvider->getUrlInformation();
-        if (isset($this->templates[$_format])) {
-            return new Response($this->templating->render($this->templates[$_format], array('urls' => $urls)));
+        if (isset($templates[$_format])) {
+            return new Response($this->templating->render($templates[$_format], array('urls' => $urls)));
         }
 
         return $this->createJsonResponse($urls);
