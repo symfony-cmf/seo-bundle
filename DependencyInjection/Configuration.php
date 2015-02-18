@@ -91,11 +91,13 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('default_chan_frequency')->defaultValue('always')->end()
                         ->arrayNode('templates')
-                        ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('xml')->defaultValue('CmfSeoBundle:Sitemap:index.xml.twig')->end()
-                                ->scalarNode('html')->defaultValue('CmfSeoBundle:Sitemap:index.html.twig')->end()
-                            ->end()
+                            ->useAttributeAsKey('format')
+                            ->treatNullLike(array())
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array(
+                                'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                                'html' => 'CmfSeoBundle:Sitemap:index.html.twig'
+                            ))
                         ->end()
                     ->end()
                 ->end()
