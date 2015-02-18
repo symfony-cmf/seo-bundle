@@ -3,7 +3,7 @@
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2014 Symfony CMF
+ * (c) 2011-2015 Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,15 +12,15 @@
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
+use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
+use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocaleCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
-use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
-use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the

@@ -3,7 +3,7 @@
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2014 Symfony CMF
+ * (c) 2011-2015 Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,9 +11,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
-use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 /**
  * @PHPCRODM\Document(referenceable=true)
