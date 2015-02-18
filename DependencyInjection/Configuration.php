@@ -90,6 +90,15 @@ class Configuration implements ConfigurationInterface
                     ->canBeEnabled()
                     ->children()
                         ->scalarNode('default_chan_frequency')->defaultValue('always')->end()
+                        ->arrayNode('templates')
+                            ->useAttributeAsKey('format')
+                            ->treatNullLike(array())
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array(
+                                'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                                'html' => 'CmfSeoBundle:Sitemap:index.html.twig'
+                            ))
+                        ->end()
                     ->end()
                 ->end()
             ->end()
