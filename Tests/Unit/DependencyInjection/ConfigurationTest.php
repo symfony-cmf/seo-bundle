@@ -81,6 +81,26 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testAdvancedXmlConfigurations()
     {
         $expectedConfiguration = array(
+            'persistence' => array(
+                'phpcr' => array(
+                    'enabled' => false,
+                    'manager_name' => null,
+                ),
+                'orm' => array(
+                    'enabled' => false,
+                    'manager_name' => null,
+                ),
+            ),
+            'translation_domain'     => 'messages',
+            'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
+            'sonata_admin_extension' => array(
+                'enabled' => 'auto',
+                'form_group' => 'form.group_seo',
+            ),
+            'alternate_locale' => array(
+                'enabled'  => false,
+                'provider_id' => null,
+            ),
             'sitemap' => array(
                 'enabled'        => true,
                 'configurations' => array(
