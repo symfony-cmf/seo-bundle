@@ -49,9 +49,7 @@ class SitemapController
      *
      * @param UrlInformationProviderInterface $provider
      * @param EngineInterface                 $templating
-     * @param array                           $configurations Hash map with key being the format,
-     *                                                        value the name of the twig template
-     *                                                        to render the sitemap in that format
+     * @param array                           $configurations List of available sitemap configurations.
      */
     public function __construct(
         UrlInformationProviderInterface $provider,
