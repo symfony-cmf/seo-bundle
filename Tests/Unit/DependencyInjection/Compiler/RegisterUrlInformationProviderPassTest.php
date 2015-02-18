@@ -13,6 +13,19 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->container->setParameter('cmf_seo.sitemap.configurations', array());
+        $nonProviderService = new Definition();
+        $this->setDefinition('some_service', $nonProviderService);
+
+        foreach ($this->tagProvider() as $service) {
+            $chain = new Definition();
+            $this->setDefinition('cmf_seo.sitemap.'.$service[1], $chain);
+        }
+    }
 
     /**
      * Register the compiler pass under test, just like you would do inside a bundle's load()
@@ -25,37 +38,75 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         $container->addCompilerPass(new RegisterUrlInformationProviderPass());
     }
 
-    public function testTags()
+    /**
+     * @dataProvider tagProvider
+     */
+    public function testTags($tagName, $serviceName)
     {
-        $nonProviderService = new Definition();
-        $this->setDefinition('some_service', $nonProviderService);
-
-        $providerService = new Definition();
-        $providerService->addTag('cmf_seo.sitemap.url_information_provider');
-        $this->setDefinition('provider_service', $providerService);
+        $taggedService = new Definition();
+        $taggedService->addTag('cmf_seo.sitemap.'.$tagName);
+        $this->setDefinition($tagName.'_service', $taggedService);
 
         $providerServiceWithPriority = new Definition();
         $providerServiceWithPriority->addTag(
-            'cmf_seo.sitemap.url_information_provider',
+            'cmf_seo.sitemap.'.$tagName,
             array('priority' => 1)
         );
-        $this->setDefinition('provider_service_priority', $providerServiceWithPriority);
+        $this->setDefinition($tagName.'_service_priority', $providerServiceWithPriority);
 
-        $chainProvider = new Definition();
-        $this->setDefinition('cmf_seo.sitemap.url_information_provider', $chainProvider);
+        $providerServiceWithSitemap = new Definition();
+        $providerServiceWithSitemap->addTag(
+            'cmf_seo.sitemap.'.$tagName,
+            array('sitemap' => 'some-sitemap')
+        );
+        $this->setDefinition($tagName.'_service_sitemap', $providerServiceWithSitemap);
+
+        $providerServiceWithMultipleSitemap = new Definition();
+        $providerServiceWithMultipleSitemap->addTag(
+            'cmf_seo.sitemap.'.$tagName,
+            array('sitemap' => 'some-sitemap,some-other')
+        );
+        $this->setDefinition($tagName.'_service_sitemap_multiple', $providerServiceWithMultipleSitemap);
 
         $this->compile();
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
-            'cmf_seo.sitemap.url_information_provider',
-            'addProvider',
-            array(new Reference('provider_service'), 0)
+            'cmf_seo.sitemap.'.$serviceName,
+            'addItem',
+            array(new Reference($tagName.'_service'), null, null)
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
-            'cmf_seo.sitemap.url_information_provider',
-            'addProvider',
-            array(new Reference('provider_service_priority'), 1)
+            'cmf_seo.sitemap.'.$serviceName,
+            'addItem',
+            array(new Reference($tagName.'_service_priority'), 1, null)
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.sitemap.'.$serviceName,
+            'addItem',
+            array(new Reference($tagName.'_service_sitemap'), null, 'some-sitemap')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.sitemap.'.$serviceName,
+            'addItem',
+            array(new Reference($tagName.'_service_sitemap_multiple'), null, 'some-sitemap')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.sitemap.'.$serviceName,
+            'addItem',
+            array(new Reference($tagName.'_service_sitemap_multiple'), null, 'some-other')
+        );
+    }
+
+    public function tagProvider()
+    {
+        return array(
+            array('loader', 'loader_chain'),
+            array('voter', 'voter_chain'),
+            array('guesser', 'guesser_chain'),
         );
     }
 }

@@ -20,5 +20,4 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class AlternateLocaleCollection extends ArrayCollection
 {
-
 }

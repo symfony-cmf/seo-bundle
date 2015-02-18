@@ -6,19 +6,15 @@
         xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="cmf_seo.sitemap.phpcr_provider.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider</parameter>
+        <parameter key="cmf_seo.sitemap.phpcr_loader.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider</parameter>
+        <parameter key="cmf_seo.sitemap.phpcr_simple_guesser.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SimpleUrlInformationGuesser</parameter>
     </parameters>
 
     <services>
-        <service id="cmf_seo.sitemap.phpcr_provider" class="%cmf_seo.sitemap.phpcr_provider.class%" public="false">
+        <service id="cmf_seo.sitemap.phpcr_loader" class="%cmf_seo.sitemap.phpcr_loader.class%" public="false">
             <argument type="service" id="doctrine_phpcr.odm.default_document_manager"/>
-            <argument type="service" id="router" />
-            <argument>%cmf_seo.sitemap.default_change_frequency%</argument>
-            <argument type="service" id="logger" />
-            <argument type="service" id="cmf_seo.presentation" />
-            <argument type="service" id="cmf_core.publish_workflow.checker" />
 
-            <tag name="cmf_seo.sitemap.url_information_provider" />
+            <tag name="cmf_seo.sitemap.loader" />
         </service>
     </services>
 </container>

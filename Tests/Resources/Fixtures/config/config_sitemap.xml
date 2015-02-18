@@ -1,0 +1,10 @@
+<container xmlns="http://symfony.com/schema/dic/services">
+    <config xmlns="http://cmf.symfony.com/schema/dic/seo">
+        <sitemap enabled="true">
+            <configuration default-change-frequency="never" name="default">
+                <template format="xml">test.xml</template>
+                <template format="html">test.html</template>
+            </configuration>
+        </sitemap>
+    </config>
+</container>

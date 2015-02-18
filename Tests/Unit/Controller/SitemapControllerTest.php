@@ -5,8 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Controller;
 use Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocale;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\ChainProvider;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProviderInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -21,7 +20,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
     protected $templating;
 
     /**
-     * @var UrlInformationProviderInterface
+     * @var UrlInformationProvider
      */
     private $provider;
 
@@ -32,16 +31,27 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->provider = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProviderInterface');
-        $this->createRoutes();
+        $this->provider = $this
+            ->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->provider
+            ->expects($this->any())
+            ->method('getUrlInformation')
+            ->will($this->returnValue($this->createUrlInformation()));
+        ;
 
         $this->templating = $this->getMock('Symfony\Component\Templating\EngineInterface');
         $this->controller = new SitemapController(
             $this->provider,
             $this->templating,
             array(
-                'xml'  => 'CmfSeoBundle:Sitemap:index.xml.twig',
-                'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                'test' => array(
+                    'templates' => array(
+                        'xml'  => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                    ),
+                ),
             )
         );
     }
@@ -49,7 +59,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
     public function testRequestJson()
     {
         /** @var Response $response */
-        $response = $this->controller->indexAction('json');
+        $response = $this->controller->indexAction('json', 'test');
         $expected = array(
             array(
                 'loc'               => 'http://www.test-alternate-locale.de',
@@ -80,7 +90,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         $this->templating->expects($this->once())->method('render')->will($this->returnValue($response));
 
         /** @var Response $response */
-        $response = $this->controller->indexAction('xml');
+        $response = $this->controller->indexAction('xml', 'test');
 
         $this->assertEquals(new Response('some-xml-string'), $response->getContent());
     }
@@ -91,26 +101,17 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         $this->templating->expects($this->once())->method('render')->will($this->returnValue($expectedResponse));
 
         /** @var Response $response */
-        $response = $this->controller->indexAction('html');
+        $response = $this->controller->indexAction('html', 'test');
 
         $this->assertEquals($expectedResponse, $response->getContent());
     }
 
-    private function createRoutes()
+    private function createUrlInformation()
     {
-        $urls = array();
+        $resultList = array();
 
-        $simpleUrl = new UrlInformation();
-        $simpleUrl
-            ->setLocation('http://www.test-domain.de')
-            ->setChangeFrequency('always')
-            ->setLabel('Test label')
-            ->setPriority(0.85)
-            ->setLastModification(new \DateTime('2014-11-06', new \DateTimeZone('Europe/Berlin')))
-        ;
-
-        $urlWithAlternateLocale = new UrlInformation();
-        $urlWithAlternateLocale
+        $urlInformation = new UrlInformation();
+        $urlInformation
             ->setLocation('http://www.test-alternate-locale.de')
             ->setChangeFrequency('never')
             ->setLabel('Test alternate locale')
@@ -118,18 +119,19 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
             ->setLastModification(new \DateTime('2014-11-07', new \DateTimeZone('Europe/Berlin')))
         ;
         $alternateLocale = new AlternateLocale('http://www.test-alternate-locale.com', 'en');
-        $urlWithAlternateLocale->addAlternateLocale($alternateLocale);
+        $urlInformation->addAlternateLocale($alternateLocale);
+        $resultList[] = $urlInformation;
 
-        $urls[] = $urlWithAlternateLocale;
-        $urls[] = $simpleUrl;
+        $urlInformation = new UrlInformation();
+        $urlInformation
+            ->setLocation('http://www.test-domain.de')
+            ->setChangeFrequency('always')
+            ->setLabel('Test label')
+            ->setPriority(0.85)
+            ->setLastModification(new \DateTime('2014-11-06', new \DateTimeZone('Europe/Berlin')))
+        ;
+        $resultList[] = $urlInformation;
 
-        $this->provider->expects($this->any())->method('getUrlInformation')->will($this->returnValue($urls));
-    }
-
-    private function getFileContent($type)
-    {
-        $basePath = __DIR__.'/../../Resources/Fixtures/sitemap/sitemap';
-
-        return file_get_contents($basePath.'.'.$type);
+        return $resultList;
     }
 }
