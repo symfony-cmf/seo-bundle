@@ -29,7 +29,7 @@ class SitemapController
     /**
      * @var DocumentsOnSitemapProviderInterface
      */
-    private $routesForSitemapProvider;
+    private $documentsForSitemapProvider;
     /**
      * @var EngineInterface
      */
@@ -64,7 +64,7 @@ class SitemapController
         EngineInterface $templating,
         array $configurations
     ) {
-        $this->routesForSitemapProvider = $provider;
+        $this->documentsForSitemapProvider = $provider;
         $this->guesser = $guesser;
         $this->templating = $templating;
         $this->configurations = $configurations;
@@ -95,7 +95,7 @@ class SitemapController
         }
 
         $urlInformations = array();
-        $documents = $this->routesForSitemapProvider->getDocumentsForSitemap($sitemap);
+        $documents = $this->documentsForSitemapProvider->getDocumentsForSitemap($sitemap);
         foreach ($documents as $document) {
             $urlInformation = new UrlInformation();
             $this->guesser->guessValues($urlInformation, $document, $sitemap);
