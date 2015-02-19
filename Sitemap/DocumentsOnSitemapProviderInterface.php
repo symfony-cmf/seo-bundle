@@ -11,17 +11,19 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
+use Symfony\Component\Routing\Route;
 
 /**
- * Providers are able to create a list of UrlInformation for the sitemap creation.
+ * Providers are able to create a list of routes for the sitemap creation.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface UrlInformationProviderInterface
+interface DocumentsOnSitemapProviderInterface
 {
     /**
-     * @return UrlInformation[]
+     * @param string $sitemap The name of the sitemap.
+     *
+     * @return Route[]
      */
-    public function getUrlInformation();
+    public function getDocumentsForSitemap($sitemap);
 }

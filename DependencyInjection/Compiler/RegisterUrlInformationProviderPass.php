@@ -32,12 +32,18 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        $this->processDocumentProviders($container);
+        $this->processUrlInformationGuesser($container);
+    }
+
+    private function processDocumentProviders(ContainerBuilder $container)
+    {
         // feature not activated means nothing to add
-        if (!$container->hasDefinition('cmf_seo.sitemap.url_information_provider')) {
+        if (!$container->hasDefinition('cmf_seo.sitemap.document_provider')) {
             return;
         }
 
-        $chainProviderDefinition = $container->getDefinition('cmf_seo.sitemap.url_information_provider');
+        $chainProviderDefinition = $container->getDefinition('cmf_seo.sitemap.document_provider');
         $taggedServices = $container->findTaggedServiceIds('cmf_seo.sitemap.url_information_provider');
 
         foreach ($taggedServices as $id => $attributes) {
@@ -50,7 +56,55 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             }
             $priority = $priority ?: 0;
 
-            $chainProviderDefinition->addMethodCall('addProvider', array(new Reference($id), $priority));
+            $sitemap = null;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['sitemap'])) {
+                    $sitemap = $attribute['sitemap'];
+                    break;
+                }
+            }
+            $sitemap = $sitemap ?: 'default';
+
+            $chainProviderDefinition->addMethodCall(
+                'addItem',
+                array(new Reference($id), $priority, $sitemap)
+            );
+        }
+    }
+
+    private function processUrlInformationGuesser(ContainerBuilder $container)
+    {
+        // feature not activated means nothing to add
+        if (!$container->hasDefinition('cmf_seo.sitemap.guesser_provider')) {
+            return;
+        }
+
+        $chainProviderDefinition = $container->getDefinition('cmf_seo.sitemap.guesser_provider');
+        $taggedServices = $container->findTaggedServiceIds('cmf_seo.sitemap.url_information_guesser');
+
+        foreach ($taggedServices as $id => $attributes) {
+            $priority = null;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['priority'])) {
+                    $priority = $attribute['priority'];
+                    break;
+                }
+            }
+            $priority = $priority ?: 0;
+
+            $sitemap = null;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['sitemap'])) {
+                    $sitemap = $attribute['sitemap'];
+                    break;
+                }
+            }
+            $sitemap = $sitemap ?: 'default';
+
+            $chainProviderDefinition->addMethodCall(
+                'addItem',
+                array(new Reference($id), $priority, $sitemap)
+            );
         }
     }
 }

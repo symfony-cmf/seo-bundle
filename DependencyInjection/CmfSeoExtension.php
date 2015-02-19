@@ -219,7 +219,7 @@ class CmfSeoExtension extends Extension
         }
         if ($this->phpcrProviderEnabled) {
             $container
-                ->findDefinition('cmf_seo.sitemap.phpcr_provider')
+                ->findDefinition('cmf_seo.sitemap.phpcr_simple_guesser')
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
                     array($alternateLocaleProviderDefinition)

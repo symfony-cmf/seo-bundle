@@ -57,7 +57,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.phpcr_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider'
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
     }
 
@@ -157,7 +157,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             array($this->container->getDefinition('some_alternate_locale_provider'))
         );
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
-            'cmf_seo.sitemap.phpcr_provider',
+            'cmf_seo.sitemap.phpcr_simple_guesser',
             'setAlternateLocaleProvider',
             array($this->container->getDefinition('some_alternate_locale_provider'))
         );
@@ -220,6 +220,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             array()
         );
         $this->load(array(
+            'persistence' => array(
+                'phpcr' => true,
+            ),
             'sitemap'   => array(
                 'configurations' => array(
                     'default' => array(
@@ -298,16 +301,28 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController'
         );
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.url_information_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\ChainProvider'
+            'cmf_seo.sitemap.document_provider',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentChainProvider'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.guesser_provider',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserChain'
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.phpcr_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider'
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.phpcr_simple_guesser',
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SimpleUrlInformationGuesser'
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.phpcr_provider',
             'cmf_seo.sitemap.url_information_provider'
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.sitemap.phpcr_simple_guesser',
+            'cmf_seo.sitemap.url_information_guesser'
         );
     }
 
