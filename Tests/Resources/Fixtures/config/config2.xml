@@ -11,5 +11,5 @@
 
     <error enable-parent-provider="true" enable-sibling-provider="true" />
 
-    <sitemap default-chan-frequency="never" enabled="true" />
+    <sitemap default-change-frequency="never" enabled="true" />
 </config>

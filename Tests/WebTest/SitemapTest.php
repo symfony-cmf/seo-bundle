@@ -3,7 +3,6 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest;
 
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Client;
 
 /**
@@ -64,16 +63,16 @@ class SitemapTest extends BaseTestCase
                           <url>
                             <loc>http://localhost/sitemap-aware</loc>
                             <lastmod/>
-                            <changefreq>always</changefreq>
+                            <changefreq>never</changefreq>
                             <xhtml:link href="http://localhost/sitemap-aware?_locale=de" hreflang="de" rel="alternate"/>
                           </url>
                           <url>
                             <loc>http://localhost/sitemap-aware-publish</loc>
                             <lastmod/>
-                            <changefreq>always</changefreq>
+                            <changefreq>never</changefreq>
                           </url>
                         </urlset>',
-            'json' => '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"always","lastmod":null,"priority":null,"alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}]},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"always","lastmod":null,"priority":null,"alternate_locales":[]}]',
+            'json' => '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","lastmod":null,"priority":null,"alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}]},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","lastmod":null,"priority":null,"alternate_locales":[]}]',
         );
 
         return $data[$format];

@@ -89,7 +89,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeEnabled()
                     ->children()
-                        ->scalarNode('default_chan_frequency')->defaultValue('always')->end()
+                        ->scalarNode('default_change_frequency')->defaultValue('always')->end()
                     ->end()
                 ->end()
             ->end()
