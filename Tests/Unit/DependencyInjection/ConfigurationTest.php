@@ -64,6 +64,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled' => false,
                 'default_change_frequency' => 'always'
             ),
+            'enable_content_listener' => true,
             );
 
         $sources = array_map(function ($path) {

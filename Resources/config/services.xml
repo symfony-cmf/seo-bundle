@@ -7,13 +7,10 @@
 
     <parameters>
         <parameter key="cmf_seo.config_values.class">Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues</parameter>
-
         <parameter key="cmf_seo.form.type.seo_metadata.class">Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType</parameter>
         <parameter key="cmf_seo.cache.file.class">Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache</parameter>
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\SeoPresentation</parameter>
-        <parameter key="cmf_seo.event_listener.seo_content.class">Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener</parameter>
         <parameter key="cmf_seo.error.suggestion_provider.controller.class">Symfony\Cmf\Bundle\SeoBundle\Controller\SuggestionProviderController</parameter>
-
     </parameters>
 
     <services>
@@ -43,12 +40,6 @@
             <argument type="service" id="translator" />
             <argument type="service" id="cmf_seo.config_values" />
             <argument type="service" id="cmf_seo.cache" />
-        </service>
-
-        <service id="cmf_seo.event_listener.seo_content" class="%cmf_seo.event_listener.seo_content.class%">
-            <argument type="service" id="cmf_seo.presentation"/>
-            <argument>%cmf_seo.content_key%</argument>
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
 
         <service id="cmf_seo.error.suggestion_provider.controller" class="%cmf_seo.error.suggestion_provider.controller.class%">

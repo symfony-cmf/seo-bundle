@@ -92,6 +92,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('default_change_frequency')->defaultValue('always')->end()
                     ->end()
                 ->end()
+                ->booleanNode('enable_content_listener')->defaultTrue()->end()
             ->end()
         ;
 
