@@ -65,7 +65,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'default_change_frequency' => 'always'
             ),
             'enable_content_listener' => true,
-            );
+        );
 
         $sources = array_map(function ($path) {
             return __DIR__.'/../../Resources/Fixtures/'.$path;
