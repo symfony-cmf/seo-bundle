@@ -79,7 +79,7 @@ class CmfSeoExtension extends Extension
             $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
         }
 
-        if ($config['enable_content_listener']) {
+        if ($this->isConfigEnabled($container, $config['content_listener'])) {
 
             $loader->load('content-listener.xml');
 
