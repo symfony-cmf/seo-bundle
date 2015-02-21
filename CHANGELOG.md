@@ -1,8 +1,10 @@
 Changelog
 =========
 
-* **2015-14-02**: implement sitemap generation
-* **2015-14-02**: [BC BREAK] Changed method visibility from private to public of SeoPresentation#getSeoMetadata()
+* **2015-02-24**: Configuration for content_key moved to content_listener section, and its now possible to disable
+  The content listener by setting cmf_seo.content_listener.enabled: false
+* **2015-02-14**: implement sitemap generation
+* **2015-02-14**: [BC BREAK] Changed method visibility from private to public of SeoPresentation#getSeoMetadata()
 * **2014-10-04**: Custom exception controller for error handling
 
 1.1.0-RC3

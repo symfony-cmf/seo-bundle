@@ -1,7 +1,6 @@
 <config xmlns="http://cmf.symfony.com/schema/dic/seo"
     translation-domain="messages"
     original-route-pattern="redirect"
-    content-key="foo"
     metadata-listener="auto"
     sonata-admin-extension="auto">
 
@@ -12,4 +11,6 @@
     <error enable-parent-provider="true" enable-sibling-provider="true" />
 
     <sitemap default-change-frequency="never" enabled="true" />
+
+    <content-listener enabled="true" content-key="foo" />
 </config>

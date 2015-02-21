@@ -12,6 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
+use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Configuration;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
@@ -64,7 +65,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled' => false,
                 'default_change_frequency' => 'always'
             ),
-            'enable_content_listener' => true,
+            'content_listener' => array(
+                'enabled' => true,
+                'content_key' => DynamicRouter::CONTENT_KEY,
+            ),
         );
 
         $sources = array_map(function ($path) {

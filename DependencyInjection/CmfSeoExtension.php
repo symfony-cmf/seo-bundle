@@ -31,6 +31,16 @@ class CmfSeoExtension extends Extension
     private $defaultAlternateLocaleProviderId;
 
     /**
+     * @var bool Whether the content listener is loaded
+     */
+    private $contentListenerEnabled = false;
+
+    /**
+     * @var bool Whether the phpcr sitemap provider is loaded
+     */
+    private $phpcrProviderEnabled = false;
+
+    /**
      * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -43,16 +53,6 @@ class CmfSeoExtension extends Extension
         $loader->load('extractors.xml');
 
         $this->loadSeoParameters($config, $container);
-
-        if (empty($config['content_key'])) {
-            if (! class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter')) {
-                throw new \RuntimeException('You need to set the content_key when not using the CmfRoutingBundle DynamicRouter');
-            }
-            $contentKey = DynamicRouter::CONTENT_KEY;
-        } else {
-            $contentKey = $config['content_key'];
-        }
-        $container->setParameter($this->getAlias() . '.content_key', $contentKey);
 
         $sonataBundles = array();
         if ($this->isConfigEnabled($container, $config['persistence']['phpcr'])) {
@@ -79,20 +79,19 @@ class CmfSeoExtension extends Extension
             $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
         }
 
-        if ($config['enable_content_listener']) {
-
-            $loader->load('content-listener.xml');
-
-            if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
-                $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
-            }
-        }
-
         $errorConfig = isset($config['error']) ? $config['error'] : array();
         $this->loadErrorHandling($errorConfig, $container);
 
         if ($this->isConfigEnabled($container, $config['sitemap'])) {
-            $this->loadSitemapHandling($config['sitemap'], $loader, $container);
+            $this->loadSitemapHandling($config['sitemap'], $loader, $container, $config['persistence']);
+        }
+
+        if ($this->isConfigEnabled($container, $config['content_listener'])) {
+            $this->loadContentListener($config['content_listener'], $loader, $container);
+        }
+
+        if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
+            $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
     }
 
@@ -178,7 +177,15 @@ class CmfSeoExtension extends Extension
         }
 
         $loader->load('matcher_phpcr.xml');
-        $loader->load('phpcr-sitemap.xml');
+    }
+
+    private function loadContentListener(array $config, XmlFileLoader $loader, ContainerBuilder $container)
+    {
+        $container->setParameter($this->getAlias() . '.content_key', $config['content_key']);
+
+        $loader->load('content-listener.xml');
+
+        $this->contentListenerEnabled = true;
     }
 
     /**
@@ -197,21 +204,27 @@ class CmfSeoExtension extends Extension
             ? $this->defaultAlternateLocaleProviderId
             : $config['provider_id'];
 
+        if (!$alternateLocaleProvider) {
+            return;
+        }
 
-        if ($alternateLocaleProvider) {
-            $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
+        $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
+        if ($this->contentListenerEnabled) {
             $container
                 ->findDefinition('cmf_seo.event_listener.seo_content')
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
                     array($alternateLocaleProviderDefinition)
                 );
+        }
+        if ($this->phpcrProviderEnabled) {
             $container
                 ->findDefinition('cmf_seo.sitemap.phpcr_provider')
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
                     array($alternateLocaleProviderDefinition)
-                );
+                )
+            ;
         }
     }
 
@@ -234,7 +247,7 @@ class CmfSeoExtension extends Extension
         }
     }
 
-    private function loadSitemapHandling($config, XmlFileLoader $loader, ContainerBuilder $container)
+    private function loadSitemapHandling($config, XmlFileLoader $loader, ContainerBuilder $container, $persistence)
     {
         $loader->load('sitemap.xml');
 
@@ -242,5 +255,10 @@ class CmfSeoExtension extends Extension
             $this->getAlias().'.sitemap.default_change_frequency',
             $config['default_change_frequency']
         );
+
+        if ($this->isConfigEnabled($container, $persistence['phpcr'])) {
+            $loader->load('phpcr-sitemap.xml');
+            $this->phpcrProviderEnabled = true;
+        }
     }
 }
