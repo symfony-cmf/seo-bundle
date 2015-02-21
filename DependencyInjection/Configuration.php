@@ -79,7 +79,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('provider_id')->defaultNull()->end()
                     ->end()
                 ->end()
-                ->booleanNode('enable_content_listener')->defaultTrue()->end()
             ->end()
         ;
 
