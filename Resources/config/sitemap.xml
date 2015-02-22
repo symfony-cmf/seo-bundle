@@ -7,18 +7,27 @@
 
     <parameters>
         <parameter key="cmf_seo.sitemap.controller.class">Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController</parameter>
+        <parameter key="cmf_seo.sitemap.url_information_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider</parameter>
+
         <parameter key="cmf_seo.sitemap.document_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentChainProvider</parameter>
         <parameter key="cmf_seo.sitemap.guesser_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserChain</parameter>
+        <parameter key="cmf_seo.sitemap.voter_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\ContentForSitemapVoterChain</parameter>
     </parameters>
 
     <services>
         <service id="cmf_seo.sitemap.controller" class="%cmf_seo.sitemap.controller.class%">
-            <argument type="service" id="cmf_seo.sitemap.document_provider" />
-            <argument type="service" id="cmf_seo.sitemap.guesser_provider" />
+            <argument type="service" id="cmf_seo.sitemap.url_information_provider" />
             <argument type="service" id="templating" />
             <argument>%cmf_seo.sitemap.configurations%</argument>
         </service>
         <service id="cmf_seo.sitemap.document_provider" class="%cmf_seo.sitemap.document_provider.class%" />
         <service id="cmf_seo.sitemap.guesser_provider" class="%cmf_seo.sitemap.guesser_provider.class%" />
+        <service id="cmf_seo.sitemap.voter_chain" class="%cmf_seo.sitemap.voter_chain.class%" />
+
+        <service id="cmf_seo.sitemap.url_information_provider" class="%cmf_seo.sitemap.url_information_provider.class%">
+            <argument type="service" id="cmf_seo.sitemap.document_provider" />
+            <argument type="service" id="cmf_seo.sitemap.guesser_provider" />
+            <argument type="service" id="cmf_seo.sitemap.voter_chain" />
+        </service>
     </services>
 </container>

@@ -13,8 +13,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
@@ -26,10 +25,6 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class SitemapController
 {
-    /**
-     * @var DocumentsOnSitemapProviderInterface
-     */
-    private $documentsForSitemapProvider;
     /**
      * @var EngineInterface
      */
@@ -44,30 +39,27 @@ class SitemapController
     private $configurations;
 
     /**
-     * @var UrlInformationGuesserInterface
+     * @var UrlInformationProvider
      */
-    private $guesser;
+    private $informationProvider;
 
     /**
      * You should provide templates for html and xml.
      *
      * Json is serialized by default, but can be customized with a template
      *
-     * @param DocumentsOnSitemapProviderInterface $provider
-     * @param UrlInformationGuesserInterface      $guesser
-     * @param EngineInterface                     $templating
-     * @param array                               $configurations List of available sitemap configurations.
+     * @param UrlInformationProvider $informationProvider
+     * @param EngineInterface $templating
+     * @param array $configurations List of available sitemap configurations.
      */
     public function __construct(
-        DocumentsOnSitemapProviderInterface $provider,
-        UrlInformationGuesserInterface $guesser,
+        UrlInformationProvider $informationProvider,
         EngineInterface $templating,
         array $configurations
     ) {
-        $this->documentsForSitemapProvider = $provider;
-        $this->guesser = $guesser;
         $this->templating = $templating;
         $this->configurations = $configurations;
+        $this->informationProvider = $informationProvider;
     }
 
     /**
@@ -94,19 +86,13 @@ class SitemapController
             return new Response($text, 406);
         }
 
-        $urlInformations = array();
-        $documents = $this->documentsForSitemapProvider->getDocumentsForSitemap($sitemap);
-        foreach ($documents as $document) {
-            $urlInformation = new UrlInformation();
-            $this->guesser->guessValues($urlInformation, $document, $sitemap);
-            $urlInformations[] = $urlInformation;
-        }
+        $urlInformation = $this->informationProvider->create($sitemap);
 
         if (isset($templates[$_format])) {
-            return new Response($this->templating->render($templates[$_format], array('urls' => $urlInformations)));
+            return new Response($this->templating->render($templates[$_format], array('urls' => $urlInformation)));
         }
 
-        return $this->createJsonResponse($urlInformations);
+        return $this->createJsonResponse($urlInformation);
     }
 
     /**

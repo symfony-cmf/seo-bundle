@@ -5,8 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Controller;
 use Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocale;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -21,7 +20,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
     protected $templating;
 
     /**
-     * @var DocumentsOnSitemapProviderInterface
+     * @var UrlInformationProvider
      */
     private $provider;
 
@@ -30,25 +29,21 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
      */
     private $controller;
 
-    /**
-     * @var UrlInformationGuesserInterface
-     */
-    private $guesser;
-
     public function setUp()
     {
-        $this->provider = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface');
-        $this->guesser = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserInterface');
+        $this->provider = $this
+            ->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->provider
             ->expects($this->any())
-            ->method('getDocumentsForSitemap')
-            ->will($this->returnValue(array('doc1', 'doc1')));
-        $this->createGuesses();
+            ->method('create')
+            ->will($this->returnValue($this->createUrlInformation()));
+        ;
 
         $this->templating = $this->getMock('Symfony\Component\Templating\EngineInterface');
         $this->controller = new SitemapController(
             $this->provider,
-            $this->guesser,
             $this->templating,
             array(
                 'test' => array(
@@ -111,52 +106,32 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResponse, $response->getContent());
     }
 
-    private function createGuesses()
+    private function createUrlInformation()
     {
-        $this->guesser
-            ->expects($this->at(0))
-            ->method('guessValues')
-            ->will($this->returnCallback(function (UrlInformation $urlInformation, $object, $sitemap = 'default') {
-                $urlInformation
-                    ->setLocation('http://www.test-alternate-locale.de')
-                    ->setChangeFrequency('never')
-                    ->setLabel('Test alternate locale')
-                    ->setPriority(0.85)
-                    ->setLastModification(new \DateTime('2014-11-07', new \DateTimeZone('Europe/Berlin')))
-                ;
-                $alternateLocale = new AlternateLocale('http://www.test-alternate-locale.com', 'en');
-                $urlInformation->addAlternateLocale($alternateLocale);
-                $urlInformation = new UrlInformation();
-                $urlInformation
-                    ->setLocation('http://www.test-alternate-locale.de')
-                    ->setChangeFrequency('never')
-                    ->setLabel('Test alternate locale')
-                    ->setPriority(0.85)
-                    ->setLastModification(new \DateTime('2014-11-07', new \DateTimeZone('Europe/Berlin')))
-                ;
-                $alternateLocale = new AlternateLocale('http://www.test-alternate-locale.com', 'en');
-                $urlInformation->addAlternateLocale($alternateLocale);
-                ;
-            }));
+        $resultList = array();
 
-        $this->guesser
-            ->expects($this->at(1))
-            ->method('guessValues')
-            ->will($this->returnCallback(function (UrlInformation $urlInformation, $object, $sitemap = 'default') {
-                $urlInformation
-                    ->setLocation('http://www.test-domain.de')
-                    ->setChangeFrequency('always')
-                    ->setLabel('Test label')
-                    ->setPriority(0.85)
-                    ->setLastModification(new \DateTime('2014-11-06', new \DateTimeZone('Europe/Berlin')))
-                ;
-            }));
-    }
+        $urlInformation = new UrlInformation();
+        $urlInformation
+            ->setLocation('http://www.test-alternate-locale.de')
+            ->setChangeFrequency('never')
+            ->setLabel('Test alternate locale')
+            ->setPriority(0.85)
+            ->setLastModification(new \DateTime('2014-11-07', new \DateTimeZone('Europe/Berlin')))
+        ;
+        $alternateLocale = new AlternateLocale('http://www.test-alternate-locale.com', 'en');
+        $urlInformation->addAlternateLocale($alternateLocale);
+        $resultList[] = $urlInformation;
 
-    private function getFileContent($type)
-    {
-        $basePath = __DIR__.'/../../Resources/Fixtures/sitemap/sitemap';
+        $urlInformation = new UrlInformation();
+        $urlInformation
+            ->setLocation('http://www.test-domain.de')
+            ->setChangeFrequency('always')
+            ->setLabel('Test label')
+            ->setPriority(0.85)
+            ->setLastModification(new \DateTime('2014-11-06', new \DateTimeZone('Europe/Berlin')))
+        ;
+        $resultList[] = $urlInformation;
 
-        return file_get_contents($basePath.'.'.$type);
+        return $resultList;
     }
 }
