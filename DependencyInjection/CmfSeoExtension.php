@@ -79,13 +79,8 @@ class CmfSeoExtension extends Extension
             $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
         }
 
-        if ($config['enable_content_listener']) {
-
-            $loader->load('content-listener.xml');
-
-            if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
-                $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
-            }
+        if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
+            $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
     }
 

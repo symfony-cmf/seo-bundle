@@ -60,7 +60,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled'  => false,
                 'provider_id' => null,
             ),
-            'enable_content_listener' => true,
         );
 
         $sources = array_map(function ($path) {

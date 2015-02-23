@@ -160,25 +160,4 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             )
         ));
     }
-
-    public function testDisableSeoContentListener()
-    {
-        $this->container->setParameter(
-            'kernel.bundles',
-            array(
-                'DoctrinePHPCRBundle' => true,
-                'CmfRoutingBundle' => true,
-            )
-        );
-        $this->load(array(
-            'persistence'   => array(
-                'phpcr' => true,
-            ),
-            'enable_content_listener' => false
-        ));
-
-        $this->assertContainerBuilderNotHasService(
-            'cmf_seo.event_listener.seo_content'
-        );
-    }
 }
