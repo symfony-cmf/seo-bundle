@@ -1,15 +1,13 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter;
-
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\SitemapItemChain;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 /**
  * A chain as a decorator for all tagged voter services.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class ContentOnSitemapChain extends SitemapItemChain implements ContentOnSitemapVoterInterface
+class Voter extends AbstractChain implements VoterInterface
 {
     /**
      * {@inheritDocs}
@@ -23,5 +21,7 @@ class ContentOnSitemapChain extends SitemapItemChain implements ContentOnSitemap
                 return false;
             }
         }
+
+        return true;
     }
 }

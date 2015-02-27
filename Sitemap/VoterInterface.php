@@ -1,13 +1,13 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 /**
  * Voters for content exposed on a sitemap should implement this interface.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-interface ContentOnSitemapVoterInterface
+interface VoterInterface
 {
     /**
      * A voter should decide whether a content object should be exposed on a sitemap.

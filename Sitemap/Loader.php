@@ -9,9 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider;
-
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\SitemapItemChain;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 /**
  * Accepts providers and merges the result of all providers into
@@ -19,7 +17,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Sitemap\SitemapItemChain;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class ContentOnSitemapChain extends SitemapItemChain implements ContentOnSitemapProviderInterface
+class Loader extends AbstractChain implements LoaderInterface
 {
      /**
      * {@inheritDoc}

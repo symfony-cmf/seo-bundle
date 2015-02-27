@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface UrlInformationGuesserInterface
+interface GuesserInterface
 {
     /**
      * Guesses url information values from a given object.

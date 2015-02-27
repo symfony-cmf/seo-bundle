@@ -14,7 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser\UrlInformationGuesserInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -22,7 +22,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SimpleUrlInformationGuesser implements UrlInformationGuesserInterface
+class SimpleUrlInformationGuesser implements GuesserInterface
 {
     /**
      * @var AlternateLocaleProviderInterface

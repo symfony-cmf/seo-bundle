@@ -5,7 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Controller;
 use Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocale;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\UrlInformationProvider;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -20,7 +20,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
     protected $templating;
 
     /**
-     * @var UrlInformationProvider
+     * @var Provider
      */
     private $provider;
 
@@ -32,7 +32,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->provider = $this
-            ->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\UrlInformationProvider')
+            ->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider')
             ->disableOriginalConstructor()
             ->getMock();
         $this->provider

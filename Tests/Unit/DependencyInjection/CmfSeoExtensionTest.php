@@ -56,7 +56,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         ));
 
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.phpcr_provider',
+            'cmf_seo.sitemap.phpcr_loader',
             'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
     }
@@ -301,15 +301,15 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController'
         );
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.document_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapChain'
+            'cmf_seo.sitemap.loader_chain',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Loader'
         );
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.guesser_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser\UrlInformationGuesserChain'
+            'cmf_seo.sitemap.guesser_chain',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser'
         );
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.phpcr_provider',
+            'cmf_seo.sitemap.phpcr_loader',
             'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
         $this->assertContainerBuilderHasService(
@@ -317,16 +317,24 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SimpleUrlInformationGuesser'
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
-            'cmf_seo.sitemap.phpcr_provider',
-            'cmf_seo.sitemap.url_information_provider'
+            'cmf_seo.sitemap.phpcr_loader',
+            'cmf_seo.sitemap.loader'
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.phpcr_simple_guesser',
-            'cmf_seo.sitemap.url_information_guesser'
+            'cmf_seo.sitemap.guesser'
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.voter_chain',
-            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter\ContentOnSitemapChain'
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter'
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.sitemap.phpcr.public_workflow_voter',
+            'cmf_seo.sitemap.voter'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.provider',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider'
         );
     }
 

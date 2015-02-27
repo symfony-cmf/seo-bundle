@@ -33,20 +33,20 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $this->processTagsForService(
-            'cmf_seo.sitemap.document_provider',
-            'cmf_seo.sitemap.url_information_provider',
+            'cmf_seo.sitemap.loader_chain',
+            'cmf_seo.sitemap.loader',
             $container
         );
 
         $this->processTagsForService(
-            'cmf_seo.sitemap.guesser_provider',
-            'cmf_seo.sitemap.url_information_guesser',
+            'cmf_seo.sitemap.guesser_chain',
+            'cmf_seo.sitemap.guesser',
             $container
         );
 
         $this->processTagsForService(
             'cmf_seo.sitemap.voter_chain',
-            'cmf_seo.sitemap.url_information_voter',
+            'cmf_seo.sitemap.voter',
             $container
         );
     }

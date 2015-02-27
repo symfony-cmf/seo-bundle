@@ -5,7 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-abstract class SitemapItemChain
+abstract class AbstractChain
 {
     /**
      * The list of guessers with sitemap name and priorities as key.

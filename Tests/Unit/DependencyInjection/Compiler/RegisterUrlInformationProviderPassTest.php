@@ -78,9 +78,9 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
     public function tagProvider()
     {
         return array(
-            array('url_information_provider', 'document_provider'),
-            array('url_information_guesser', 'guesser_provider'),
-            array('url_information_voter', 'voter_chain'),
+            array('loader', 'loader_chain'),
+            array('guesser', 'guesser_chain'),
+            array('voter', 'voter_chain'),
         );
     }
 }

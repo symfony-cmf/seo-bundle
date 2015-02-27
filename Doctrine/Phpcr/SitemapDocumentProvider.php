@@ -13,14 +13,14 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
 use Doctrine\ODM\PHPCR\DocumentManager;
 use PHPCR\Query\QueryInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapProviderInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\LoaderInterface;
 
 /**
- * Provides UrlInformation for pages in a Doctrine PHPCR ODM back-end.
+ * Provides documents for a sitemap from a phpcr backend.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SitemapDocumentProvider implements ContentOnSitemapProviderInterface
+class SitemapDocumentProvider implements LoaderInterface
 {
     /**
      * @var DocumentManager
@@ -40,24 +40,6 @@ class SitemapDocumentProvider implements ContentOnSitemapProviderInterface
      */
     public function getDocumentsForSitemap($sitemap)
     {
-        /* todo use for voter later
-        $urlInformationList = array();
-
-        foreach ($contentDocuments as $document) {
-            if (null != $this->publishWorkflowChecker &&
-                !$this->publishWorkflowChecker->isGranted(array(PublishWorkflowChecker::VIEW_ATTRIBUTE), $document)
-            ) {
-                continue;
-            }
-
-            try {
-                $urlInformationList[] = $this->computeUrlInformationFromSitemapDocument($document);
-            } catch (\Exception $e) {
-                $this->logger->info($e->getMessage());
-            }
-        }
-        */
-
         // todo rewrite query when https://github.com/symfony-cmf/CoreBundle/issues/126 is ready
         $documentsCollection = $this->manager->createQuery(
             "SELECT * FROM [nt:unstructured] WHERE (visible_for_sitemap = true)",

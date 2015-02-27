@@ -1,10 +1,8 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser\UrlInformationGuesserInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter\ContentOnSitemapVoterInterface;
 
 /**
  * Create a list of url information.
@@ -14,32 +12,32 @@ use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter\ContentOnSitemapVoterInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class UrlInformationProvider
+class Provider
 {
     /**
-     * @var ContentOnSitemapProviderInterface
+     * @var LoaderInterface
      */
     private $loader;
 
     /**
-     * @var UrlInformationGuesserInterface
+     * @var GuesserInterface
      */
     private $guesser;
 
     /**
-     * @var ContentOnSitemapVoterInterface
+     * @var VoterInterface
      */
     private $voter;
 
     /**
-     * @param ContentOnSitemapProviderInterface $loader
-     * @param UrlInformationGuesserInterface $guesser
-     * @param ContentOnSitemapVoterInterface $voter
+     * @param LoaderInterface $loader
+     * @param GuesserInterface $guesser
+     * @param VoterInterface $voter
      */
     public function __construct(
-        ContentOnSitemapProviderInterface $loader,
-        UrlInformationGuesserInterface $guesser,
-        ContentOnSitemapVoterInterface $voter
+        LoaderInterface $loader,
+        GuesserInterface $guesser,
+        VoterInterface $voter
     ) {
         $this->loader = $loader;
         $this->guesser = $guesser;
@@ -55,10 +53,13 @@ class UrlInformationProvider
     {
         $urlInformationList = array();
 
-        $documents = $this->loader->getDocumentsForSitemap($sitemap);
-        foreach ($documents as $document) {
+        $contentObjects = $this->loader->getDocumentsForSitemap($sitemap);
+        foreach ($contentObjects as $content) {
+            if (!$this->voter->exposeOnSitemap($content, $sitemap)) {
+                continue;
+            }
             $urlInformation = new UrlInformation();
-            $this->guesser->guessValues($urlInformation, $document, $sitemap);
+            $this->guesser->guessValues($urlInformation, $content, $sitemap);
             $urlInformationList [] = $urlInformation;
         }
 
