@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCase
 {
-
     /**
      * Register the compiler pass under test, just like you would do inside a bundle's load()
      * method:
@@ -81,6 +80,7 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         return array(
             array('url_information_provider', 'document_provider'),
             array('url_information_guesser', 'guesser_provider'),
+            array('url_information_voter', 'voter_chain'),
         );
     }
 }

@@ -302,11 +302,11 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.document_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentChainProvider'
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapChain'
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.guesser_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserChain'
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser\UrlInformationGuesserChain'
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.phpcr_provider',
@@ -323,6 +323,10 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.phpcr_simple_guesser',
             'cmf_seo.sitemap.url_information_guesser'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.voter_chain',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter\ContentOnSitemapChain'
         );
     }
 

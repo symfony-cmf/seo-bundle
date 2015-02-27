@@ -7,11 +7,11 @@
 
     <parameters>
         <parameter key="cmf_seo.sitemap.controller.class">Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController</parameter>
-        <parameter key="cmf_seo.sitemap.url_information_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider</parameter>
+        <parameter key="cmf_seo.sitemap.url_information_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\UrlInformationProvider</parameter>
 
-        <parameter key="cmf_seo.sitemap.document_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentChainProvider</parameter>
-        <parameter key="cmf_seo.sitemap.guesser_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserChain</parameter>
-        <parameter key="cmf_seo.sitemap.voter_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\ContentForSitemapVoterChain</parameter>
+        <parameter key="cmf_seo.sitemap.document_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapChain</parameter>
+        <parameter key="cmf_seo.sitemap.guesser_provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser\UrlInformationGuesserChain</parameter>
+        <parameter key="cmf_seo.sitemap.voter_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter\ContentOnSitemapChain</parameter>
     </parameters>
 
     <services>

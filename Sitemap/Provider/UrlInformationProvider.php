@@ -1,8 +1,10 @@
 <?php
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser\UrlInformationGuesserInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter\ContentOnSitemapVoterInterface;
 
 /**
  * Create a list of url information.
@@ -15,7 +17,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 class UrlInformationProvider
 {
     /**
-     * @var DocumentsOnSitemapProviderInterface
+     * @var ContentOnSitemapProviderInterface
      */
     private $loader;
 
@@ -25,19 +27,19 @@ class UrlInformationProvider
     private $guesser;
 
     /**
-     * @var ContentForSitemapVoterInterface
+     * @var ContentOnSitemapVoterInterface
      */
     private $voter;
 
     /**
-     * @param DocumentsOnSitemapProviderInterface $loader
+     * @param ContentOnSitemapProviderInterface $loader
      * @param UrlInformationGuesserInterface $guesser
-     * @param ContentForSitemapVoterInterface $voter
+     * @param ContentOnSitemapVoterInterface $voter
      */
     public function __construct(
-        DocumentsOnSitemapProviderInterface $loader,
+        ContentOnSitemapProviderInterface $loader,
         UrlInformationGuesserInterface $guesser,
-        ContentForSitemapVoterInterface $voter
+        ContentOnSitemapVoterInterface $voter
     ) {
         $this->loader = $loader;
         $this->guesser = $guesser;

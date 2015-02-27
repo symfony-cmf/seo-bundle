@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider;
 
 use Symfony\Component\Routing\Route;
 
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Route;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-interface DocumentsOnSitemapProviderInterface
+interface ContentOnSitemapProviderInterface
 {
     /**
      * @param string $sitemap The name of the sitemap.

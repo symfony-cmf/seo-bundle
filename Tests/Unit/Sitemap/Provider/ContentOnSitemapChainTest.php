@@ -9,29 +9,29 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap\Provider;
 
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentChainProvider;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapChain;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class DocumentChainProviderTest extends \PHPUnit_Framework_Testcase
+class ContentOnSitemapChainTest extends \PHPUnit_Framework_Testcase
 {
     /**
-     * @var DocumentChainProvider
+     * @var ContentOnSitemapChain
      */
     private $chainProvider;
 
     public function setUp()
     {
-        $this->chainProvider = new DocumentChainProvider();
+        $this->chainProvider = new ContentOnSitemapChain();
     }
 
     public function testInlineInput()
     {
-        $providerOne = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface');
-        $providerTwo = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface');
+        $providerOne = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapProviderInterface');
+        $providerTwo = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapProviderInterface');
 
         $this->chainProvider->addItem($providerOne, 0, 'test');
         $this->chainProvider->addItem($providerTwo, 0, 'test');
@@ -48,9 +48,9 @@ class DocumentChainProviderTest extends \PHPUnit_Framework_Testcase
     public function testPrioritisedInput()
     {
 
-        $providerBeforeAll = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface');
-        $providerFirst = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface');
-        $providerAfterAll = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface');
+        $providerBeforeAll = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapProviderInterface');
+        $providerFirst = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapProviderInterface');
+        $providerAfterAll = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapProviderInterface');
 
         $this->chainProvider->addItem($providerFirst, 1, 'test');
         $this->chainProvider->addItem($providerBeforeAll, 0, 'test');

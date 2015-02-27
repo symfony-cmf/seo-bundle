@@ -13,14 +13,14 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
 use Doctrine\ODM\PHPCR\DocumentManager;
 use PHPCR\Query\QueryInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DocumentsOnSitemapProviderInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider\ContentOnSitemapProviderInterface;
 
 /**
  * Provides UrlInformation for pages in a Doctrine PHPCR ODM back-end.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SitemapDocumentProvider implements DocumentsOnSitemapProviderInterface
+class SitemapDocumentProvider implements ContentOnSitemapProviderInterface
 {
     /**
      * @var DocumentManager

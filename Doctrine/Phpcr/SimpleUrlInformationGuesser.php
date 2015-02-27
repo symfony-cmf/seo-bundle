@@ -14,7 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationGuesserInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser\UrlInformationGuesserInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**

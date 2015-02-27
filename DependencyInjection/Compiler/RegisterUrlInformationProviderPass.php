@@ -32,19 +32,34 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $this->processDocumentProviders($container);
-        $this->processUrlInformationGuesser($container);
+        $this->processTagsForService(
+            'cmf_seo.sitemap.document_provider',
+            'cmf_seo.sitemap.url_information_provider',
+            $container
+        );
+
+        $this->processTagsForService(
+            'cmf_seo.sitemap.guesser_provider',
+            'cmf_seo.sitemap.url_information_guesser',
+            $container
+        );
+
+        $this->processTagsForService(
+            'cmf_seo.sitemap.voter_chain',
+            'cmf_seo.sitemap.url_information_voter',
+            $container
+        );
     }
 
-    private function processDocumentProviders(ContainerBuilder $container)
+    private function processTagsForService($service, $tag, ContainerBuilder $container)
     {
         // feature not activated means nothing to add
-        if (!$container->hasDefinition('cmf_seo.sitemap.document_provider')) {
+        if (!$container->hasDefinition($service)) {
             return;
         }
 
-        $chainProviderDefinition = $container->getDefinition('cmf_seo.sitemap.document_provider');
-        $taggedServices = $container->findTaggedServiceIds('cmf_seo.sitemap.url_information_provider');
+        $serviceDefinition = $container->getDefinition($service);
+        $taggedServices = $container->findTaggedServiceIds($tag);
 
         foreach ($taggedServices as $id => $attributes) {
             $priority = null;
@@ -65,43 +80,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             }
             $sitemap = $sitemap ?: 'default';
 
-            $chainProviderDefinition->addMethodCall(
-                'addItem',
-                array(new Reference($id), $priority, $sitemap)
-            );
-        }
-    }
-
-    private function processUrlInformationGuesser(ContainerBuilder $container)
-    {
-        // feature not activated means nothing to add
-        if (!$container->hasDefinition('cmf_seo.sitemap.guesser_provider')) {
-            return;
-        }
-
-        $chainProviderDefinition = $container->getDefinition('cmf_seo.sitemap.guesser_provider');
-        $taggedServices = $container->findTaggedServiceIds('cmf_seo.sitemap.url_information_guesser');
-
-        foreach ($taggedServices as $id => $attributes) {
-            $priority = null;
-            foreach ($attributes as $attribute) {
-                if (isset($attribute['priority'])) {
-                    $priority = $attribute['priority'];
-                    break;
-                }
-            }
-            $priority = $priority ?: 0;
-
-            $sitemap = null;
-            foreach ($attributes as $attribute) {
-                if (isset($attribute['sitemap'])) {
-                    $sitemap = $attribute['sitemap'];
-                    break;
-                }
-            }
-            $sitemap = $sitemap ?: 'default';
-
-            $chainProviderDefinition->addMethodCall(
+            $serviceDefinition->addMethodCall(
                 'addItem',
                 array(new Reference($id), $priority, $sitemap)
             );

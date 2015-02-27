@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider;
+
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\SitemapItemChain;
 
 /**
  * Accepts providers and merges the result of all providers into
@@ -17,7 +19,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class DocumentChainProvider extends SitemapItemChain implements DocumentsOnSitemapProviderInterface
+class ContentOnSitemapChain extends SitemapItemChain implements ContentOnSitemapProviderInterface
 {
      /**
      * {@inheritDoc}
