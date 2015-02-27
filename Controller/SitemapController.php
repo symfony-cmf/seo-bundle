@@ -64,10 +64,11 @@ class SitemapController
 
     /**
      * @param string $_format The format of the sitemap.
+     * @param string $sitemap The sitemap to show.
      *
      * @return Response
      */
-    public function indexAction($_format, $sitemap)
+    public function indexAction($_format, $sitemap = 'default')
     {
         if (!isset($this->configurations[$sitemap])) {
             throw new InvalidArgumentException(sprintf('Unknown sitemap %s', $sitemap));

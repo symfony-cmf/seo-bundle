@@ -12,8 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 /**
- * Accepts providers and merges the result of all providers into
- * a combined list of UrlInformation
+ * Loader chain, to decorate all loaders registered by a tag.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -22,12 +21,12 @@ class Loader extends AbstractChain implements LoaderInterface
      /**
      * {@inheritDoc}
      */
-    public function getDocumentsForSitemap($sitemap)
+    public function load($sitemap)
     {
         $documents = array();
 
         foreach ($this->getSortedItemsBySitemap($sitemap) as $provider) {
-            $documents = array_merge($documents, $provider->getDocumentsForSitemap($sitemap));
+            $documents = array_merge($documents, $provider->load($sitemap));
         }
 
         return $documents;

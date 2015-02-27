@@ -38,7 +38,7 @@ class SitemapDocumentProvider implements LoaderInterface
     /**
      * {@inheritDocs}
      */
-    public function getDocumentsForSitemap($sitemap)
+    public function load($sitemap)
     {
         // todo rewrite query when https://github.com/symfony-cmf/CoreBundle/issues/126 is ready
         $documentsCollection = $this->manager->createQuery(

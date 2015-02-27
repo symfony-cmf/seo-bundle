@@ -25,5 +25,5 @@ interface LoaderInterface
      *
      * @return Route[]
      */
-    public function getDocumentsForSitemap($sitemap);
+    public function load($sitemap);
 }

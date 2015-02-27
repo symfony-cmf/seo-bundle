@@ -53,7 +53,7 @@ class Provider
     {
         $urlInformationList = array();
 
-        $contentObjects = $this->loader->getDocumentsForSitemap($sitemap);
+        $contentObjects = $this->loader->load($sitemap);
         foreach ($contentObjects as $content) {
             if (!$this->voter->exposeOnSitemap($content, $sitemap)) {
                 continue;

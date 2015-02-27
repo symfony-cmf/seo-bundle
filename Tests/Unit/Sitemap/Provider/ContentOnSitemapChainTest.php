@@ -37,10 +37,10 @@ class ContentOnSitemapChainTest extends \PHPUnit_Framework_Testcase
         $this->chainProvider->addItem($providerOne, 0, 'test');
         $this->chainProvider->addItem($providerTwo, 0, 'test');
 
-        $providerOne->expects($this->once())->method('getDocumentsForSitemap')->will($this->returnValue(array('info-one')));
-        $providerTwo->expects($this->once())->method('getDocumentsForSitemap')->will($this->returnValue(array('info-two')));
+        $providerOne->expects($this->once())->method('load')->will($this->returnValue(array('info-one')));
+        $providerTwo->expects($this->once())->method('load')->will($this->returnValue(array('info-two')));
 
-        $actualList = $this->chainProvider->getDocumentsForSitemap('test');
+        $actualList = $this->chainProvider->load('test');
         $expectedList = array('info-one', 'info-two');
 
         $this->assertEquals($expectedList, $actualList);
@@ -59,18 +59,18 @@ class ContentOnSitemapChainTest extends \PHPUnit_Framework_Testcase
 
         $providerFirst
             ->expects($this->once())
-            ->method('getDocumentsForSitemap')
+            ->method('load')
             ->will($this->returnValue(array('info-first')));
         $providerBeforeAll
             ->expects($this->once())
-            ->method('getDocumentsForSitemap')
+            ->method('load')
             ->will($this->returnValue(array('info-before-all')));
         $providerAfterAll
             ->expects($this->once())
-            ->method('getDocumentsForSitemap')
+            ->method('load')
             ->will($this->returnValue(array('info-after-all')));
 
-        $actualList = $this->chainProvider->getDocumentsForSitemap('test');
+        $actualList = $this->chainProvider->load('test');
         $expectedList = array('info-before-all', 'info-first', 'info-after-all');
 
         $this->assertEquals($expectedList, $actualList);
