@@ -65,7 +65,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $redirectResponse = false;
 
     /**
-     * @var array
+     * @var ExtractorInterface[]
      */
     private $extractors = array();
 
@@ -122,7 +122,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Adds extractors.
+     * Add an extractor for SEO metadata.
      *
      * @param ExtractorInterface $extractor
      * @param int                $priority
@@ -136,7 +136,11 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Extract the SEO metadata from this object.
+     *
+     * @param object $content The content to extract metadata from.
+     *
+     * @return SeoMetadataInterface
      */
     public function getSeoMetadata($content)
     {
@@ -184,14 +188,14 @@ class SeoPresentation implements SeoPresentationInterface
      *
      * @param object $content
      *
-     * @return array
+     * @return ExtractorInterface[]
      */
     private function getExtractorsForContent($content)
     {
         $extractors = array();
         ksort($this->extractors);
         foreach ($this->extractors as $priority) {
-            $supportedExtractors = array_filter($priority, function ($extractor) use ($content) {
+            $supportedExtractors = array_filter($priority, function (ExtractorInterface $extractor) use ($content) {
                 return $extractor->supports($content);
             });
 

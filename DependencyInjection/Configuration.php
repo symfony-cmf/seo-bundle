@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -31,6 +32,22 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->root('cmf_seo')
             ->addDefaultsIfNotSet()
+            ->beforeNormalization()
+                ->ifTrue(function ($config) {
+                    return isset($config['content_key']) && !isset($config['content_listener']['content_key']);
+                })
+                ->then(function ($config) {
+                    $config['content_listener']['content_key'] = $config['content_key'];
+                    unset($config['content_key']);
+
+                    return $config;
+                })
+            ->end()
+            // validation needs to be on top, when no values are set a validation inside the content_listener array node will not be triggered
+            ->validate()
+                ->ifTrue(function ($v) { return $v['content_listener']['enabled'] && empty($v['content_listener']['content_key']); })
+                ->thenInvalid('Configure the content_listener.content_key or disable the content_listener when not using the CmfRoutingBundle DynamicRouter.')
+            ->end()
             ->children()
                 ->arrayNode('persistence')
                     ->addDefaultsIfNotSet()
@@ -55,7 +72,6 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->end()
                 ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
-                ->scalarNode('content_key')->end()
                 ->arrayNode('sonata_admin_extension')
                     ->addDefaultsIfNotSet()
                     ->beforeNormalization()
@@ -92,7 +108,14 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('default_change_frequency')->defaultValue('always')->end()
                     ->end()
                 ->end()
-                ->booleanNode('enable_content_listener')->defaultTrue()->end()
+                ->arrayNode('content_listener')
+                    ->canBeDisabled()
+                    ->children()
+                        ->scalarNode('content_key')
+                            ->defaultValue(class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter') ? DynamicRouter::CONTENT_KEY : '')
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

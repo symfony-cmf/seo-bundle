@@ -52,6 +52,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'persistence'   => array(
                 'phpcr' => true,
             ),
+            'sitemap' => true,
         ));
 
         $this->assertContainerBuilderHasService(
@@ -258,7 +259,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'persistence'   => array(
                 'phpcr' => true,
             ),
-            'enable_content_listener' => false
+            'content_listener' => array(
+                'enabled' => false,
+            ),
         ));
 
         $this->assertContainerBuilderNotHasService(
