@@ -156,11 +156,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'setAlternateLocaleProvider',
             array($this->container->getDefinition('some_alternate_locale_provider'))
         );
-        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
-            'cmf_seo.sitemap.phpcr_simple_guesser',
-            'setAlternateLocaleProvider',
-            array($this->container->getDefinition('some_alternate_locale_provider'))
-        );
     }
 
     /**
@@ -217,11 +212,17 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
     {
         $this->container->setParameter(
             'kernel.bundles',
-            array()
+            array(
+                'DoctrinePHPCRBundle' => true,
+                'CmfRoutingBundle' => true,
+            )
         );
         $this->load(array(
-            'persistence' => array(
+            'persistence'   => array(
                 'phpcr' => true,
+            ),
+            'alternate_locale' => array(
+                'enabled' => true
             ),
             'sitemap'   => array(
                 'configurations' => array(
@@ -242,9 +243,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                         ),
                     ),
                 ),
-            ),
-            'persistence'   => array(
-                'phpcr' => true,
             ),
         ));
 
@@ -305,24 +303,16 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Loader'
         );
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.guesser_chain',
+            'cmf_seo.sitemap.guesser',
             'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser'
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.phpcr_loader',
             'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
-        $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.phpcr_simple_guesser',
-            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SimpleUrlInformationGuesser'
-        );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.phpcr_loader',
             'cmf_seo.sitemap.loader'
-        );
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(
-            'cmf_seo.sitemap.phpcr_simple_guesser',
-            'cmf_seo.sitemap.guesser'
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.voter_chain',
@@ -335,6 +325,12 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.provider',
             'Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider'
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.sitemap.guesser',
+            'setAlternateLocaleProvider',
+            array($this->container->getDefinition('cmf_seo.alternate_locale.provider_phpcr'))
         );
     }
 

@@ -39,12 +39,6 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
         );
 
         $this->processTagsForService(
-            'cmf_seo.sitemap.guesser_chain',
-            'cmf_seo.sitemap.guesser',
-            $container
-        );
-
-        $this->processTagsForService(
             'cmf_seo.sitemap.voter_chain',
             'cmf_seo.sitemap.voter',
             $container

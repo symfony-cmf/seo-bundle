@@ -10,7 +10,7 @@
         <parameter key="cmf_seo.sitemap.provider.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider</parameter>
 
         <parameter key="cmf_seo.sitemap.loader_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Loader</parameter>
-        <parameter key="cmf_seo.sitemap.guesser_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser</parameter>
+        <parameter key="cmf_seo.sitemap.guesser.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser</parameter>
         <parameter key="cmf_seo.sitemap.voter_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter</parameter>
     </parameters>
 
@@ -21,12 +21,16 @@
             <argument>%cmf_seo.sitemap.configurations%</argument>
         </service>
         <service id="cmf_seo.sitemap.loader_chain" class="%cmf_seo.sitemap.loader_chain.class%" />
-        <service id="cmf_seo.sitemap.guesser_chain" class="%cmf_seo.sitemap.guesser_chain.class%" />
+        <service id="cmf_seo.sitemap.guesser" class="%cmf_seo.sitemap.guesser.class%" >
+            <argument type="service" id="router" />
+            <argument type="service" id="cmf_seo.presentation" />
+            <argument>%cmf_seo.sitemap.default_change_frequency%</argument>
+        </service>
         <service id="cmf_seo.sitemap.voter_chain" class="%cmf_seo.sitemap.voter_chain.class%" />
 
         <service id="cmf_seo.sitemap.provider" class="%cmf_seo.sitemap.provider.class%">
             <argument type="service" id="cmf_seo.sitemap.loader_chain" />
-            <argument type="service" id="cmf_seo.sitemap.guesser_chain" />
+            <argument type="service" id="cmf_seo.sitemap.guesser" />
             <argument type="service" id="cmf_seo.sitemap.voter_chain" />
         </service>
     </services>

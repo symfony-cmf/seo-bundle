@@ -79,7 +79,6 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
     {
         return array(
             array('loader', 'loader_chain'),
-            array('guesser', 'guesser_chain'),
             array('voter', 'voter_chain'),
         );
     }

@@ -15,6 +15,7 @@ use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -88,6 +89,10 @@ class CmfSeoExtension extends Extension
 
         if ($this->isConfigEnabled($container, $config['content_listener'])) {
             $this->loadContentListener($config['content_listener'], $loader, $container);
+        }
+
+        if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
+            $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
 
         if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
@@ -199,8 +204,7 @@ class CmfSeoExtension extends Extension
      */
     private function loadAlternateLocaleProvider($config, ContainerBuilder $container)
     {
-
-        $alternateLocaleProvider = empty($config['provider_id'])
+        $alternateLocaleProvider = null === $config['provider_id']
             ? $this->defaultAlternateLocaleProviderId
             : $config['provider_id'];
 
@@ -208,23 +212,24 @@ class CmfSeoExtension extends Extension
             return;
         }
 
-        $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
-        if ($this->contentListenerEnabled) {
-            $container
-                ->findDefinition('cmf_seo.event_listener.seo_content')
-                ->addMethodCall(
-                    'setAlternateLocaleProvider',
-                    array($alternateLocaleProviderDefinition)
-                );
-        }
-        if ($this->phpcrProviderEnabled) {
-            $container
-                ->findDefinition('cmf_seo.sitemap.phpcr_simple_guesser')
-                ->addMethodCall(
-                    'setAlternateLocaleProvider',
-                    array($alternateLocaleProviderDefinition)
-                )
-            ;
+        if ($alternateLocaleProvider) {
+            try {
+                $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
+                $container
+                    ->findDefinition('cmf_seo.event_listener.seo_content')
+                    ->addMethodCall(
+                        'setAlternateLocaleProvider',
+                        array($alternateLocaleProviderDefinition)
+                    );
+                $container
+                    ->findDefinition('cmf_seo.sitemap.guesser')
+                    ->addMethodCall(
+                        'setAlternateLocaleProvider',
+                        array($alternateLocaleProviderDefinition)
+                    );
+            } catch(InvalidArgumentException $e) {
+
+            }
         }
     }
 
