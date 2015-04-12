@@ -41,25 +41,25 @@ class SitemapController
     /**
      * @var Provider
      */
-    private $informationProvider;
+    private $sitemapProvider;
 
     /**
      * You should provide templates for html and xml.
      *
      * Json is serialized by default, but can be customized with a template
      *
-     * @param Provider $informationProvider
+     * @param Provider $sitemapProvider
      * @param EngineInterface $templating
      * @param array $configurations List of available sitemap configurations.
      */
     public function __construct(
-        Provider $informationProvider,
+        Provider $sitemapProvider,
         EngineInterface $templating,
         array $configurations
     ) {
         $this->templating = $templating;
         $this->configurations = $configurations;
-        $this->informationProvider = $informationProvider;
+        $this->sitemapProvider = $sitemapProvider;
     }
 
     /**
@@ -87,7 +87,7 @@ class SitemapController
             return new Response($text, 406);
         }
 
-        $urlInformation = $this->informationProvider->create($sitemap);
+        $urlInformation = $this->sitemapProvider->create($sitemap);
 
         if (isset($templates[$_format])) {
             return new Response($this->templating->render($templates[$_format], array('urls' => $urlInformation)));
