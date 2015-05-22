@@ -72,12 +72,16 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
                     break;
                 }
             }
-            $sitemap = $sitemap ?: 'default';
+            $sitemaps = explode(',', $sitemap);
 
-            $serviceDefinition->addMethodCall(
-                'addItem',
-                array(new Reference($id), $priority, $sitemap)
-            );
+            foreach ($sitemaps as $sitemap) {
+                $sitemap = $sitemap ?: 'default';
+
+                $serviceDefinition->addMethodCall(
+                    'addItem',
+                    array(new Reference($id), $priority, $sitemap)
+                );
+            }
         }
     }
 }

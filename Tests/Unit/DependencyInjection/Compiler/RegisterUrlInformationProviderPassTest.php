@@ -28,7 +28,7 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
     /**
      * @dataProvider tagProvider
      */
-    public function testDocumentProviderTags($tagName, $serviceName)
+    public function testTags($tagName, $serviceName)
     {
         $nonProviderService = new Definition();
         $this->setDefinition('some_service', $nonProviderService);
@@ -51,6 +51,13 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         );
         $this->setDefinition($tagName.'_service_sitemap', $providerServiceWithSitemap);
 
+        $providerServiceWithMultipleSitemap = new Definition();
+        $providerServiceWithMultipleSitemap->addTag(
+            'cmf_seo.sitemap.'.$tagName,
+            array('sitemap' => 'some-sitemap,some-other')
+        );
+        $this->setDefinition($tagName.'_service_sitemap_multiple', $providerServiceWithMultipleSitemap);
+
         $chainProvider = new Definition();
         $this->setDefinition('cmf_seo.sitemap.'.$serviceName, $chainProvider);
 
@@ -72,6 +79,18 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
             array(new Reference($tagName.'_service_sitemap'), 0, 'some-sitemap')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.sitemap.'.$serviceName,
+            'addItem',
+            array(new Reference($tagName.'_service_sitemap_multiple'), 0, 'some-sitemap')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'cmf_seo.sitemap.'.$serviceName,
+            'addItem',
+            array(new Reference($tagName.'_service_sitemap_multiple'), 0, 'some-other')
         );
     }
 
