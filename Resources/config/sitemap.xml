@@ -12,6 +12,7 @@
         <parameter key="cmf_seo.sitemap.loader_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Loader</parameter>
         <parameter key="cmf_seo.sitemap.guesser.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Guesser</parameter>
         <parameter key="cmf_seo.sitemap.voter_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\Voter</parameter>
+        <parameter key="cmf_seo.sitemap.phpcr.public_workflow_voter.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\PublishWorkflowUrlInformationVoter</parameter>
     </parameters>
 
     <services>
@@ -32,6 +33,11 @@
             <argument type="service" id="cmf_seo.sitemap.loader_chain" />
             <argument type="service" id="cmf_seo.sitemap.guesser" />
             <argument type="service" id="cmf_seo.sitemap.voter_chain" />
+        </service>
+
+        <service id="cmf_seo.sitemap.phpcr.public_workflow_voter" class="%cmf_seo.sitemap.phpcr.public_workflow_voter.class%">
+            <argument type="service" id="cmf_core.publish_workflow.checker" />
+            <tag name="cmf_seo.sitemap.voter" />
         </service>
     </services>
 </container>

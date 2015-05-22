@@ -19,7 +19,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 interface GuesserInterface
 {
     /**
-     * lets also say that this method updates $urlInformation with new values.
+     * Updates UrlInformation with new values.
      *
      * @param UrlInformation $urlInformation
      * @param object         $object

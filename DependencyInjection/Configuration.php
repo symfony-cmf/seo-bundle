@@ -122,6 +122,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('content_listener')
+                    ->canBeDisabled()
+                    ->children()
+                        ->scalarNode('content_key')
+                        ->defaultValue(class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter') ? DynamicRouter::CONTENT_KEY : '')
+                    ->end()
+                ->end()
             ->end()
         ;
 

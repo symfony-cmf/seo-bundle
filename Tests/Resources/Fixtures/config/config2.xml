@@ -16,4 +16,6 @@
             <template format="html">test.html</template>
         </configuration>
     </sitemap>
+
+    <content-listener enabled="true" content-key="foo" />
 </config>

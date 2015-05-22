@@ -12,7 +12,6 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
-use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Configuration;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
@@ -65,6 +64,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled'        => false,
                 'configurations' => array(),
             ),
+            'content_listener' => array(
+                'enabled'     => true,
+                'content_key' => 'contentDocument'
+            ),
         );
 
         $sources = array_map(function ($path) {
@@ -81,6 +84,18 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testAdvancedXmlConfigurations()
     {
         $expectedConfiguration = array(
+            'sitemap' => array(
+                'enabled'        => true,
+                'configurations' => array(
+                    'default' => array(
+                        'default_change_frequency' => 'never',
+                        'templates' => array(
+                            'xml'  => 'test.xml',
+                            'html' => 'test.html',
+                        ),
+                    ),
+                ),
+            ),
             'persistence' => array(
                 'phpcr' => array(
                     'enabled' => false,
@@ -101,17 +116,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled'  => false,
                 'provider_id' => null,
             ),
-            'sitemap' => array(
-                'enabled'        => true,
-                'configurations' => array(
-                    'default' => array(
-                        'default_change_frequency' => 'never',
-                        'templates' => array(
-                            'xml'  => 'test.xml',
-                            'html' => 'test.html',
-                        ),
-                    ),
-                ),
+            'content_listener' => array(
+                'enabled'     => true,
+                'content_key' => 'contentDocument'
             ),
         );
 

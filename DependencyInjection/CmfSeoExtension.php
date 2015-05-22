@@ -11,7 +11,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
-use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -182,6 +181,7 @@ class CmfSeoExtension extends Extension
         }
 
         $loader->load('matcher_phpcr.xml');
+        $loader->load('phpcr-sitemap.xml');
     }
 
     private function loadContentListener(array $config, XmlFileLoader $loader, ContainerBuilder $container)
