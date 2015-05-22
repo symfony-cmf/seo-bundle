@@ -14,7 +14,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -213,7 +212,7 @@ class CmfSeoExtension extends Extension
         }
 
         if ($alternateLocaleProvider) {
-            try {
+            if ($container->has('cmf_seo.event_listener.seo_content')) {
                 $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
                 $container
                     ->findDefinition('cmf_seo.event_listener.seo_content')
@@ -221,14 +220,15 @@ class CmfSeoExtension extends Extension
                         'setAlternateLocaleProvider',
                         array($alternateLocaleProviderDefinition)
                     );
+            }
+
+            if ($container->has('cmf_seo.sitemap.guesser')) {
                 $container
                     ->findDefinition('cmf_seo.sitemap.guesser')
                     ->addMethodCall(
                         'setAlternateLocaleProvider',
                         array($alternateLocaleProviderDefinition)
                     );
-            } catch(InvalidArgumentException $e) {
-
             }
         }
     }
