@@ -14,6 +14,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 
 /**
+ * Interface for Guesser, that set values on url information.
+ *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 interface GuesserInterface

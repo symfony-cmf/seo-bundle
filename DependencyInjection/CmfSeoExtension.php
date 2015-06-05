@@ -211,25 +211,23 @@ class CmfSeoExtension extends Extension
             return;
         }
 
-        if ($alternateLocaleProvider) {
-            if ($container->has('cmf_seo.event_listener.seo_content')) {
-                $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
-                $container
-                    ->findDefinition('cmf_seo.event_listener.seo_content')
-                    ->addMethodCall(
-                        'setAlternateLocaleProvider',
-                        array($alternateLocaleProviderDefinition)
-                    );
-            }
+        if ($container->has('cmf_seo.event_listener.seo_content')) {
+            $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
+            $container
+                ->findDefinition('cmf_seo.event_listener.seo_content')
+                ->addMethodCall(
+                    'setAlternateLocaleProvider',
+                    array($alternateLocaleProviderDefinition)
+                );
+        }
 
-            if ($container->has('cmf_seo.sitemap.guesser')) {
-                $container
-                    ->findDefinition('cmf_seo.sitemap.guesser')
-                    ->addMethodCall(
-                        'setAlternateLocaleProvider',
-                        array($alternateLocaleProviderDefinition)
-                    );
-            }
+        if ($container->has('cmf_seo.sitemap.guesser')) {
+            $container
+                ->findDefinition('cmf_seo.sitemap.guesser')
+                ->addMethodCall(
+                    'setAlternateLocaleProvider',
+                    array($alternateLocaleProviderDefinition)
+                );
         }
     }
 

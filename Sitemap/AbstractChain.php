@@ -3,6 +3,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 /**
+ * Abstraction for the chain of voters and loaders.
+ *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 abstract class AbstractChain
@@ -33,11 +35,15 @@ abstract class AbstractChain
     }
 
     /**
+     * Method returns a sorted lists of items added to the chain.
+     *
+     * They will be grouped by the sitemap name and sorted by the priority.
+     *
      * @param $sitemap
      *
      * @return array
      */
-    protected function getSortedItemsBySitemap($sitemap)
+    protected function getSortedItemsForSitemap($sitemap)
     {
         if (!isset($this->items[$sitemap])) {
             return array();

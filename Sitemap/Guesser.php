@@ -17,7 +17,7 @@ use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * A chain to register all url information guesser by its priority and preferred sitemap.
+ * Main guesser setting the values on url information.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */

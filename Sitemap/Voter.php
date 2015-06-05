@@ -16,7 +16,7 @@ class Voter extends AbstractChain implements VoterInterface
      */
     public function exposeOnSitemap($content, $sitemap = 'default')
     {
-        foreach ($this->getSortedItemsBySitemap($sitemap) as $voter) {
+        foreach ($this->getSortedItemsForSitemap($sitemap) as $voter) {
             if (!$voter->exposeOnSitemap($content, $sitemap)) {
                 return false;
             }

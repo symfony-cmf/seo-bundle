@@ -25,7 +25,7 @@ class Loader extends AbstractChain implements LoaderInterface
     {
         $documents = array();
 
-        foreach ($this->getSortedItemsBySitemap($sitemap) as $provider) {
+        foreach ($this->getSortedItemsForSitemap($sitemap) as $provider) {
             $documents = array_merge($documents, $provider->load($sitemap));
         }
 
