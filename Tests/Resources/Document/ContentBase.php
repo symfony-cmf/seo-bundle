@@ -44,13 +44,13 @@ class ContentBase
     protected $name;
 
     /**
-     * @PHPCRODM\String
+     * @PHPCRODM\Field(type="string")
      * @ORM\Column(type="string")
      */
     protected $title;
 
     /**
-     * @PHPCRODM\String
+     * @PHPCRODM\Field(type="string")
      * @ORM\Column(type="text")
      */
     protected $body;
