@@ -34,14 +34,14 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     /**
      * @var bool
      *
-     * @PHPCRODM\Boolean(property="visible_for_sitemap")
+     * @PHPCRODM\Field(type="boolean",property="visible_for_sitemap")
      */
     private $isVisibleForSitemap;
 
     /**
      * @var boolean whether this content is publishable
      *
-     * @PHPCRODM\Boolean
+     * @PHPCRODM\Field(type="boolean")
      */
     protected $publishable = true;
 

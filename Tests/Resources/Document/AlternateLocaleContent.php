@@ -34,7 +34,7 @@ class AlternateLocaleContent extends ContentBase implements
     /**
      * @var string
      *
-     * @PHPCRODM\String(translated=true)
+     * @PHPCRODM\Field(type="string",translated=true)
      */
     protected $title;
 

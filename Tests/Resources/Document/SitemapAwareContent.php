@@ -39,14 +39,14 @@ class SitemapAwareContent extends ContentBase implements
     /**
      * @var bool
      *
-     * @PHPCRODM\Boolean(property="visible_for_sitemap")
+     * @PHPCRODM\Field(type="boolean",property="visible_for_sitemap")
      */
     private $isVisibleForSitemap;
 
     /**
      * @var string
      *
-     * @PHPCRODM\String(translated=true)
+     * @PHPCRODM\Field(type="string",translated=true)
      */
     protected $title;
 

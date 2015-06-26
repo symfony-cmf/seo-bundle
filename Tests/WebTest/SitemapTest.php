@@ -10,9 +10,6 @@ use Symfony\Component\HttpKernel\Client;
  */
 class SitemapTest extends BaseTestCase
 {
-    /** @var  Client */
-    private $client;
-
     public function setUp()
     {
         $this->db('PHPCR')->loadFixtures(array(
