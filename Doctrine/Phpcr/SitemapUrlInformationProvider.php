@@ -157,6 +157,10 @@ class SitemapUrlInformationProvider implements UrlInformationProviderInterface
         $urlInformation->setLocation($this->router->generate($document, array(), true));
         $urlInformation->setChangeFrequency($this->defaultChanFrequency);
 
+        if (method_exists($document, 'getLastModification')) {
+            $urlInformation->setLastModification($document->getLastModification());
+        }
+
         if ($this->alternateLocaleProvider) {
             $collection = $this->alternateLocaleProvider->createForContent($document);
             $urlInformation->setAlternateLocales($collection->toArray());
