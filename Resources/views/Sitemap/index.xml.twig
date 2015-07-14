@@ -3,7 +3,9 @@
     {% for url in urls %}
         <url>
             <loc>{{ url.location }}</loc>
-            <lastmod>{{ url.lastModification }}</lastmod>
+            {% if url.lastModification %}
+                <lastmod>{{ url.lastModification }}</lastmod>
+            {% endif %}
             <changefreq>{{ url.changeFrequency }}</changefreq>
             {% if url.alternateLocales is defined and url.alternateLocales|length > 0 %}
                 {% for locale in url.alternateLocales %}

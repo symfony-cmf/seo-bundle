@@ -90,6 +90,11 @@ class UrlInformation
             'priority'          => $this->priority,
             'alternate_locales' => array()
         );
+        foreach ($result as $key => $value) {
+            if (null === $value) {
+                unset($result[$key]);
+            }
+        }
 
         foreach ($this->alternateLocales as $locale) {
             $result['alternate_locales'][] = array('href' => $locale->href, 'href_locale' => $locale->hrefLocale);
