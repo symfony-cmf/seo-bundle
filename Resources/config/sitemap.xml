@@ -39,5 +39,11 @@
             <argument type="service" id="cmf_core.publish_workflow.checker" />
             <tag name="cmf_seo.sitemap.voter" />
         </service>
+
+        <service id="cmf_core.publish_workflow.access_decision_manager" class="%cmf_core.publish_workflow.access_decision_manager.class%">
+            <argument type="collection"/>
+            <argument>unanimous</argument>
+            <argument>true</argument>
+        </service>
     </services>
 </container>
