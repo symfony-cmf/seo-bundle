@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocale;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 /**
@@ -85,8 +84,6 @@ class SitemapUrlInformationProviderTest extends BaseTestCase
                 'loc' => 'http://localhost/sitemap-aware',
                 'label' => 'test-title',
                 'changefreq' => 'always',
-                'lastmod'  => '',
-                'priority' => '',
                 'alternate_locales' => array(
                     array('href' => 'test', 'href_locale' => 'de'),
                 ),
@@ -95,8 +92,6 @@ class SitemapUrlInformationProviderTest extends BaseTestCase
                 'loc' => 'http://localhost/sitemap-aware-publish',
                 'label' => 'test-title',
                 'changefreq' => 'always',
-                'lastmod'  => '',
-                'priority' => '',
                 'alternate_locales' => array(
                     array('href' => 'test', 'href_locale' => 'de'),
                 ),
