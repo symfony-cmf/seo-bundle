@@ -12,7 +12,7 @@ abstract class AbstractChain
     /**
      * The list of guessers with sitemap name and priorities as key.
      *
-     * @var
+     * @var object[]
      */
     private $items;
 

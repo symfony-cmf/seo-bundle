@@ -12,7 +12,7 @@ class Voter extends AbstractChain implements VoterInterface
     /**
      * {@inheritDocs}
      *
-     * First comes first - The first negative voter decides.
+     * In terms of symfony security, this would be called "unanimous": every voter can veto a content.
      */
     public function exposeOnSitemap($content, $sitemap = 'default')
     {
