@@ -7,97 +7,88 @@ use Symfony\Cmf\Bundle\SeoBundle\Sitemap\AbstractChain;
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-abstract class AbstractChainTest extends \PHPUnit_Framework_Testcase
+class AbstractChainTest extends \PHPUnit_Framework_Testcase
 {
-    /**
-     * @var AbstractChain
-     */
-    protected $chain;
-    protected $interface;
-    protected $methodName;
-    protected $parameter;
+    /** @var TestChain */
+    private $chain;
 
     public function setUp()
     {
-        $this->chain = $this->getChain();
-        $this->interface = $this->getInterface();
-        $this->methodName = $this->getMethodName();
-        $this->parameter = $this->getParameter();
+        $this->chain = new TestChain();
     }
 
-    abstract protected function getChain();
-    abstract protected function getInterface();
-    abstract protected function getMethodName();
-    abstract protected function getParameter();
-
-    public function testInlineInput()
+    public function testAllChains()
     {
-        $one = $this->getMock($this->interface);
-        $two = $this->getMock($this->interface);
+        $one = new TestEntry('info-one');
+        $two = new TestEntry('info-two');
+
+        $this->chain->addItem($one, 0);
+        $this->chain->addItem($two, 0);
+
+        $expectedList = array('info-one', 'info-two');
+
+        $this->assertEquals($expectedList, $this->chain->getValues('test'));
+    }
+
+    public function testSpecificChain()
+    {
+        $one = new TestEntry('info-one');
+        $two = new TestEntry('info-two');
 
         $this->chain->addItem($one, 0, 'test');
         $this->chain->addItem($two, 0, 'test');
 
-        $one->expects($this->once())->method($this->methodName)->will($this->returnValue(array('info-one')));
-        $two->expects($this->once())->method($this->methodName)->will($this->returnValue(array('info-two')));
-
-        $actualList = array();
-        if (count($this->parameter) === 1) {
-            $actualList = $this->chain->{$this->methodName}($this->parameter[0]);
-        } elseif (count($this->parameter) === 2) {
-            $actualList = $this->chain->{$this->methodName}($this->parameter[0], $this->parameter[1]);
-        } elseif (count($this->parameter) === 3) {
-            $actualList = $this->chain->{$this->methodName}(
-                $this->parameter[0],
-                $this->parameter[1],
-                $this->parameter[2]
-            );
-        }
-
         $expectedList = array('info-one', 'info-two');
 
-        $this->assertEquals($expectedList, $actualList);
+        $this->assertEquals($expectedList, $this->chain->getValues('test'));
     }
 
     public function testPrioritisedInput()
     {
+        $first = new TestEntry('info-first');
+        $earlySpecific = new TestEntry('info-early-specific');
+        $specific = new TestEntry('info-specific');
+        $early = new TestEntry('info-early');
+        $last = new TestEntry('info-last');
 
-        $beforeAll = $this->getMock($this->interface);
-        $first = $this->getMock($this->interface);
-        $afterAll = $this->getMock($this->interface);
+        $this->chain->addItem($early, 5);
+        $this->chain->addItem($specific, 5, 'test');
+        $this->chain->addItem($last, 0);
+        $this->chain->addItem($first, 15);
+        $this->chain->addItem($earlySpecific, 10, 'test');
 
-        $this->chain->addItem($first, 1, 'test');
-        $this->chain->addItem($beforeAll, 0, 'test');
-        $this->chain->addItem($afterAll, 2, 'test');
+        $this->assertEquals(
+            array('info-first', 'info-early-specific', 'info-specific', 'info-early', 'info-last'),
+            $this->chain->getValues('test')
+        );
 
-        $first
-            ->expects($this->once())
-            ->method($this->methodName)
-            ->will($this->returnValue(array('info-first')));
-        $beforeAll
-            ->expects($this->once())
-            ->method($this->methodName)
-            ->will($this->returnValue(array('info-before-all')));
-        $afterAll
-            ->expects($this->once())
-            ->method($this->methodName)
-            ->will($this->returnValue(array('info-after-all')));
+        $this->assertEquals(
+            array('info-first', 'info-early', 'info-last'),
+            $this->chain->getValues('foobar')
+        );
+    }
+}
 
-        $actualList = array();
-        if (count($this->parameter) === 1) {
-            $actualList = $this->chain->{$this->methodName}($this->parameter[0]);
-        } elseif (count($this->parameter) === 2) {
-            $actualList = $this->chain->{$this->methodName}($this->parameter[0], $this->parameter[1]);
-        } elseif (count($this->parameter) === 3) {
-            $actualList = $this->chain->{$this->methodName}(
-                $this->parameter[0],
-                $this->parameter[1],
-                $this->parameter[2]
-            );
+class TestChain extends AbstractChain
+{
+    public function getValues($sitemap)
+    {
+        $values = array();
+        /** @var $entry TestEntry */
+        foreach ($this->getSortedEntriesForSitemap($sitemap) as $entry) {
+            $values[] = $entry->name;
         }
 
-        $expectedList = array('info-before-all', 'info-first', 'info-after-all');
+        return $values;
+    }
+}
 
-        $this->assertEquals($expectedList, $actualList);
+class TestEntry
+{
+    public $name;
+
+    public function __construct($name)
+    {
+        $this->name = $name;
     }
 }

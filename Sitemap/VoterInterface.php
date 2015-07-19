@@ -3,19 +3,19 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 /**
- * Voters for content exposed on a sitemap should implement this interface.
+ * Sitemap voters decide whether a content should appear on a specific sitemap.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
 interface VoterInterface
 {
     /**
-     * A voter should decide whether a content object should be exposed on a sitemap.
+     * Decide whether this content is visible on the specified sitemap.
      *
-     * @param object $content
-     * @param string $sitemap
+     * @param object $content The content object.
+     * @param string $sitemap Name of the sitemap.
      *
-     * @return bool
+     * @return bool True if the content should be visible on the sitemap, false otherwise.
      */
-    public function exposeOnSitemap($content, $sitemap = 'default');
+    public function exposeOnSitemap($content, $sitemap);
 }

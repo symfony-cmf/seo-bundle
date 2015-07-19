@@ -5,51 +5,48 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 
 /**
- * Create a list of url information.
+ * Provide a list of UrlInformation objects for a sitemap.
  *
- * Based on the registered content loaders the guesser will extract values for the url information.
- * The list of served content objects can be reduced by voters.
+ * The provider loads objects from the registered content loaders, filters them
+ * for publication and then uses the guesser to extract the UrlInformation.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class Provider
+class UrlInformationProvider
 {
     /**
-     * @var LoaderInterface
+     * @var LoaderChain
      */
     private $loader;
 
     /**
-     * @var GuesserInterface
+     * @var GuesserChain
      */
     private $guesser;
 
     /**
-     * @var VoterInterface
+     * @var VoterChain
      */
     private $voter;
 
-    /**
-     * @param LoaderInterface $loader
-     * @param GuesserInterface $guesser
-     * @param VoterInterface $voter
-     */
     public function __construct(
-        LoaderInterface $loader,
-        GuesserInterface $guesser,
-        VoterInterface $voter
+        LoaderChain $loader,
+        VoterChain $voter,
+        GuesserChain $guesser
     ) {
         $this->loader = $loader;
-        $this->guesser = $guesser;
         $this->voter = $voter;
+        $this->guesser = $guesser;
     }
 
     /**
-     * @param string $sitemap
+     * Get the UrlInformation for the specified sitemap.
+     *
+     * @param string $sitemap Name of the sitemap to create, "default" if not specified
      *
      * @return UrlInformation[]
      */
-    public function create($sitemap = 'default')
+    public function getUrlInformation($sitemap = 'default')
     {
         $urlInformationList = array();
 

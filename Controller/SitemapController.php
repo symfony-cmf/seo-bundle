@@ -13,9 +13,10 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\Provider;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
@@ -39,7 +40,7 @@ class SitemapController
     private $configurations;
 
     /**
-     * @var Provider
+     * @var UrlInformationProvider
      */
     private $sitemapProvider;
 
@@ -48,12 +49,12 @@ class SitemapController
      *
      * Json is serialized by default, but can be customized with a template
      *
-     * @param Provider $sitemapProvider
+     * @param UrlInformationProvider $sitemapProvider
      * @param EngineInterface $templating
      * @param array $configurations List of available sitemap configurations.
      */
     public function __construct(
-        Provider $sitemapProvider,
+        UrlInformationProvider $sitemapProvider,
         EngineInterface $templating,
         array $configurations
     ) {
@@ -71,7 +72,7 @@ class SitemapController
     public function indexAction($_format, $sitemap = 'default')
     {
         if (!isset($this->configurations[$sitemap])) {
-            throw new InvalidArgumentException(sprintf('Unknown sitemap %s', $sitemap));
+            throw new NotFoundHttpException(sprintf('Unknown sitemap %s', $sitemap));
         }
 
         $templates = $this->configurations[$sitemap]['templates'];
@@ -87,7 +88,7 @@ class SitemapController
             return new Response($text, 406);
         }
 
-        $urlInformation = $this->sitemapProvider->create($sitemap);
+        $urlInformation = $this->sitemapProvider->getUrlInformation($sitemap);
 
         if (isset($templates[$_format])) {
             return new Response($this->templating->render($templates[$_format], array('urls' => $urlInformation)));

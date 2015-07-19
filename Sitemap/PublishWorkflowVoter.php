@@ -12,13 +12,15 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 use Symfony\Cmf\Bundle\CoreBundle\PublishWorkflow\PublishWorkflowChecker;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
+ * A voter that checks whether the content is published, to integrate with the
+ * symfony cmf core publication workflow.
+ *
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class PublishWorkflowUrlInformationVoter implements VoterInterface
+class PublishWorkflowVoter implements VoterInterface
 {
     /**
      * @var SecurityContextInterface
@@ -32,7 +34,7 @@ class PublishWorkflowUrlInformationVoter implements VoterInterface
     /**
      * {@inheritDoc}
      */
-    public function exposeOnSitemap($content, $sitemap = 'default')
+    public function exposeOnSitemap($content, $sitemap)
     {
         return $this->publishWorkflowChecker->isGranted(PublishWorkflowChecker::VIEW_ATTRIBUTE, $content);
     }
