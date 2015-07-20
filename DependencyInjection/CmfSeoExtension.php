@@ -209,13 +209,15 @@ class CmfSeoExtension extends Extension
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
                     array(new Reference($alternateLocaleProvider))
-                );
+                )
+            ;
         }
 
         if ($container->has($this->getAlias().'.sitemap.guesser.alternate_locales')) {
             $container
                 ->findDefinition($this->getAlias().'.sitemap.guesser.alternate_locales')
-                ->setArguments(array(new Reference($alternateLocaleProvider)));
+                ->replaceArgument(0, new Reference($alternateLocaleProvider))
+            ;
         }
     }
 

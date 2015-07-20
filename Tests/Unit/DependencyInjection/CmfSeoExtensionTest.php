@@ -131,7 +131,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.event_listener.seo_content',
             'setAlternateLocaleProvider',
-            array($this->container->getDefinition('cmf_seo.alternate_locale.provider_phpcr'))
+            array(new Reference('cmf_seo.alternate_locale.provider_phpcr'))
         );
     }
 
@@ -155,7 +155,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.event_listener.seo_content',
             'setAlternateLocaleProvider',
-            array($this->container->getDefinition('some_alternate_locale_provider'))
+            array(new Reference(('some_alternate_locale_provider')))
         );
     }
 
@@ -330,14 +330,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
-            'cmf_seo.alternate_locale.provider_phpcr',
+            'cmf_seo.sitemap.guesser.alternate_locales',
             0,
             new Reference('cmf_seo.alternate_locale.provider_phpcr')
-        );
-        $this->assertEquals(
-            'cmf_seo.alternate_locale.provider_phpcr',
-            (string) $this->container->findDefinition('cmf_seo.sitemap.guesser.alternate_locales')
-                ->getArgument(0)
         );
     }
 

@@ -37,7 +37,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $this->provider
             ->expects($this->any())
-            ->method('create')
+            ->method('getUrlInformation')
             ->will($this->returnValue($this->createUrlInformation()));
         ;
 
