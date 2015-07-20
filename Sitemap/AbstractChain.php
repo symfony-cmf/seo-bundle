@@ -10,50 +10,72 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 abstract class AbstractChain
 {
     /**
-     * The list of guessers with sitemap name and priorities as key.
+     * The list of entries by sitemap name and priority.
      *
-     * @var object[]
+     * @var array
      */
-    private $items;
+    private $items = array();
 
     /**
-     * @param object $item
-     * @param int    $priority
-     * @param string $sitemap
+     * The list of default entries by priority.
+     *
+     * @var array
      */
-    public function addItem($item, $priority = 0, $sitemap = 'default')
+    private $defaultItems = array();
+
+    /**
+     * Add an entry to the chain.
+     *
+     * An entry can be added to a specific sitemap or to all of them. The
+     * higher the priority, the earlier the entry is in the chain. Sitemap
+     * specific entries come before general entries of the same priority.
+     *
+     * @param object $item     The entry.
+     * @param int    $priority The higher the value, the earlier the item comes in the chain.
+     * @param string $sitemap  Name of the sitemap to add the entry for. Null adds the entry to all sitemaps.
+     */
+    public function addItem($item, $priority = 0, $sitemap = null)
     {
-        if (!isset($this->items[$sitemap])) {
-            $this->items[$sitemap] = array();
+        if ($sitemap) {
+            if (!isset($this->items[$sitemap])) {
+                $this->items[$sitemap] = array();
+            }
+            $entries = &$this->items[$sitemap];
+        } else {
+            $entries = &$this->defaultItems;
         }
 
-        if (!isset($this->items[$sitemap][$priority])) {
-            $this->items[$sitemap][$priority] = array();
+        if (!isset($entries[$priority])) {
+            $entries[$priority] = array();
         }
 
-        $this->items[$sitemap][$priority][] = $item;
+        $entries[$priority][] = $item;
     }
 
     /**
-     * Method returns a sorted lists of items added to the chain.
+     * Get the sorted list of chain entries for the specified sitemap.
      *
-     * They will be grouped by the sitemap name and sorted by the priority.
+     * @param string $sitemap Name of the sitemap
      *
-     * @param $sitemap
-     *
-     * @return array
+     * @return object[] Priority sorted list of chain entries.
      */
-    protected function getSortedItemsForSitemap($sitemap)
+    protected function getSortedEntriesForSitemap($sitemap)
     {
-        if (!isset($this->items[$sitemap])) {
-            return array();
+        $priorities = array_keys($this->defaultItems);
+        if (isset($this->items[$sitemap])) {
+            $priorities = array_unique(array_merge($priorities, array_keys($this->items[$sitemap])));
         }
 
-        ksort($this->items[$sitemap]);
+        rsort($priorities);
+
         $sortedItems = array();
-        foreach ($this->items[$sitemap] as $priority => $items) {
-            foreach ($items as $item) {
-                $sortedItems[] = $item;
+        foreach ($priorities as $priority) {
+            if (isset($this->items[$sitemap][$priority])) {
+                // never happens if the sitemap has no specific entries at all
+                $sortedItems = array_merge($sortedItems, $this->items[$sitemap][$priority]);
+            }
+            if (isset($this->defaultItems[$priority])) {
+                $sortedItems = array_merge($sortedItems, $this->defaultItems[$priority]);
             }
         }
 

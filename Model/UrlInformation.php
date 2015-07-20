@@ -74,10 +74,14 @@ class UrlInformation
 
     /**
      * @param boolean $visible
+     *
+     * @return $this
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
+
+        return $this;
     }
 
     public function toArray()
@@ -112,7 +116,9 @@ class UrlInformation
     }
 
     /**
-     * @param string $changeFrequency One of the official/allowed ones.
+     * According to http://www.sitemaps.org, valid values should be always|hourly|daily|weekly|monthly|yearly|never
+     *
+     * @param string $changeFrequency One of the official/allowed change frequencies.
      *
      * @return $this
      */
@@ -120,7 +126,7 @@ class UrlInformation
     {
         if (!in_array($changeFrequency, $this->allowedChangeFrequencies)) {
             throw new InvalidArgumentException(
-                sprintf('Invalid change frequency use one of %s.', implode(', ', $this->allowedChangeFrequencies))
+                sprintf('Invalid change frequency "%s", use one of %s.', $changeFrequency, implode(', ', $this->allowedChangeFrequencies))
             );
         }
 
@@ -220,17 +226,25 @@ class UrlInformation
 
     /**
      * @param array|AlternateLocale[] $alternateLocales
+     *
+     * @return $this
      */
     public function setAlternateLocales($alternateLocales)
     {
         $this->alternateLocales = $alternateLocales;
+
+        return $this;
     }
 
     /**
      * @param AlternateLocale $alternateLocale
+     *
+     * @return $this
      */
     public function addAlternateLocale(AlternateLocale $alternateLocale)
     {
         $this->alternateLocales[] = $alternateLocale;
+
+        return $this;
     }
 }

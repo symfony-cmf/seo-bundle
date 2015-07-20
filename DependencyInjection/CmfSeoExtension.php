@@ -15,6 +15,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -33,11 +34,6 @@ class CmfSeoExtension extends Extension
      * @var bool Whether the content listener is loaded
      */
     private $contentListenerEnabled = false;
-
-    /**
-     * @var bool Whether the phpcr sitemap provider is loaded
-     */
-    private $phpcrProviderEnabled = false;
 
     /**
      * {@inheritDoc}
@@ -82,15 +78,11 @@ class CmfSeoExtension extends Extension
         $this->loadErrorHandling($errorConfig, $container);
 
         if ($this->isConfigEnabled($container, $config['sitemap'])) {
-            $this->loadSitemapHandling($config['sitemap'], $loader, $container, $config['persistence']);
+            $this->loadSitemapHandling($config['sitemap'], $loader, $container, $this->isConfigEnabled($container, $config['alternate_locale']));
         }
 
         if ($this->isConfigEnabled($container, $config['content_listener'])) {
             $this->loadContentListener($config['content_listener'], $loader, $container);
-        }
-
-        if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
-            $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
 
         if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
@@ -198,7 +190,7 @@ class CmfSeoExtension extends Extension
      *
      * When using phpcr-odm a default provider will be set, when choosing no own one.
      *
-     * @param array             $config
+     * @param array            $config
      * @param ContainerBuilder $container
      */
     private function loadAlternateLocaleProvider($config, ContainerBuilder $container)
@@ -208,26 +200,24 @@ class CmfSeoExtension extends Extension
             : $config['provider_id'];
 
         if (!$alternateLocaleProvider) {
-            return;
+            throw new InvalidConfigurationException('Alternate locale provider enabled but none defined. You need to enable PHPCR or configure alternate_locale.provider_id');
         }
 
-        if ($container->has('cmf_seo.event_listener.seo_content')) {
-            $alternateLocaleProviderDefinition = $container->findDefinition($alternateLocaleProvider);
+        if ($container->has($this->getAlias().'.event_listener.seo_content')) {
             $container
-                ->findDefinition('cmf_seo.event_listener.seo_content')
+                ->findDefinition($this->getAlias().'.event_listener.seo_content')
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
-                    array($alternateLocaleProviderDefinition)
-                );
+                    array(new Reference($alternateLocaleProvider))
+                )
+            ;
         }
 
-        if ($container->has('cmf_seo.sitemap.guesser')) {
+        if ($container->has($this->getAlias().'.sitemap.guesser.alternate_locales')) {
             $container
-                ->findDefinition('cmf_seo.sitemap.guesser')
-                ->addMethodCall(
-                    'setAlternateLocaleProvider',
-                    array($alternateLocaleProviderDefinition)
-                );
+                ->findDefinition($this->getAlias().'.sitemap.guesser.alternate_locales')
+                ->replaceArgument(0, new Reference($alternateLocaleProvider))
+            ;
         }
     }
 
@@ -250,7 +240,13 @@ class CmfSeoExtension extends Extension
         }
     }
 
-    private function loadSitemapHandling($config, XmlFileLoader $loader, ContainerBuilder $container, $persistence)
+    /**
+     * @param array            $config
+     * @param XmlFileLoader    $loader
+     * @param ContainerBuilder $container
+     * @param boolean          $alternateLocale Whether alternate locale handling is loaded.
+     */
+    private function loadSitemapHandling($config, XmlFileLoader $loader, ContainerBuilder $container, $alternateLocale)
     {
         $loader->load('sitemap.xml');
 
@@ -260,12 +256,17 @@ class CmfSeoExtension extends Extension
             $container->setParameter($this->getAlias().'.sitemap.'.$key.'_configuration', $configuration);
         }
 
-        // set a base default change frequency by now todo change that when votes respect sitemap by name
         if (isset($config['configurations']['default']['default_change_frequency'])) {
             $container->setParameter(
                 $this->getAlias().'.sitemap.default_change_frequency',
                 $config['configurations']['default']['default_change_frequency']
             );
+        } else {
+            $container->removeDefinition($this->getAlias().'.sitemap.guesser.default_change_frequency');
+        }
+
+        if (!$alternateLocale) {
+            $container->removeDefinition($this->getAlias().'.sitemap.guesser.alternate_locales');
         }
     }
 }

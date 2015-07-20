@@ -66,31 +66,31 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service'), 0, 'default')
+            array(new Reference($tagName.'_service'), null, null)
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_priority'), 1, 'default')
+            array(new Reference($tagName.'_service_priority'), 1, null)
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_sitemap'), 0, 'some-sitemap')
+            array(new Reference($tagName.'_service_sitemap'), null, 'some-sitemap')
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_sitemap_multiple'), 0, 'some-sitemap')
+            array(new Reference($tagName.'_service_sitemap_multiple'), null, 'some-sitemap')
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_sitemap_multiple'), 0, 'some-other')
+            array(new Reference($tagName.'_service_sitemap_multiple'), null, 'some-other')
         );
     }
 
@@ -99,6 +99,7 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         return array(
             array('loader', 'loader_chain'),
             array('voter', 'voter_chain'),
+            array('guesser', 'guesser_chain'),
         );
     }
 }

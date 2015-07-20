@@ -17,9 +17,11 @@ use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Compiler adds custom url information provider to the phpcr chain provider.
+ * Register the tagged services for the url information provider:
  *
- * To do so you need to tag them with "cmf_seo.sitemap.url_information_provider".
+ * - cmf_seo.sitemap.loader
+ * - cmf_seo.sitemap.voter
+ * - cmf_seo.sitemap.guesser
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -43,8 +45,19 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             'cmf_seo.sitemap.voter',
             $container
         );
+
+        $this->processTagsForService(
+            'cmf_seo.sitemap.guesser_chain',
+            'cmf_seo.sitemap.guesser',
+            $container
+        );
     }
 
+    /**
+     * @param $service
+     * @param $tag
+     * @param ContainerBuilder $container
+     */
     private function processTagsForService($service, $tag, ContainerBuilder $container)
     {
         // feature not activated means nothing to add
@@ -63,7 +76,6 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
                     break;
                 }
             }
-            $priority = $priority ?: 0;
 
             $sitemap = null;
             foreach ($attributes as $attribute) {
@@ -72,11 +84,13 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
                     break;
                 }
             }
-            $sitemaps = explode(',', $sitemap);
+            if ($sitemap) {
+                $sitemaps = explode(',', $sitemap);
+            } else {
+                $sitemaps = array(null);
+            }
 
             foreach ($sitemaps as $sitemap) {
-                $sitemap = $sitemap ?: 'default';
-
                 $serviceDefinition->addMethodCall(
                     'addItem',
                     array(new Reference($id), $priority, $sitemap)

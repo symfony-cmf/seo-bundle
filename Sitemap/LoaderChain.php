@@ -12,11 +12,11 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 /**
- * Loader chain, to decorate all loaders registered by a tag.
+ * Load documents with all registered loaders.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class Loader extends AbstractChain implements LoaderInterface
+class LoaderChain extends AbstractChain
 {
      /**
      * {@inheritDoc}
@@ -25,8 +25,9 @@ class Loader extends AbstractChain implements LoaderInterface
     {
         $documents = array();
 
-        foreach ($this->getSortedItemsForSitemap($sitemap) as $provider) {
-            $documents = array_merge($documents, $provider->load($sitemap));
+        /** @var $loader LoaderInterface */
+        foreach ($this->getSortedEntriesForSitemap($sitemap) as $loader) {
+            $documents = array_merge($documents, $loader->load($sitemap));
         }
 
         return $documents;
