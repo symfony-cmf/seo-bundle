@@ -33,7 +33,8 @@ class DefaultChangeFrequencyGuesser implements GuesserInterface
      *
      * @see UrlInformation::setChangeFrequency for information on this parameter.
      */
-    public function __construct($defaultChangeFrequency) {
+    public function __construct($defaultChangeFrequency)
+    {
         $this->defaultChangeFrequency = $defaultChangeFrequency;
     }
 

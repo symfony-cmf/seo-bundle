@@ -14,6 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -250,20 +251,40 @@ class CmfSeoExtension extends Extension
     {
         $loader->load('sitemap.xml');
 
-        $container->setParameter($this->getAlias().'.sitemap.configurations', $config['configurations']);
+        $configurations = $config['configurations'];
+        // if there are no explicit configurations, enable the default sitemap
+        if (!count($configurations)) {
+            $configurations['default'] = array();
+        }
 
         foreach ($config['configurations'] as $key => $configuration) {
-            $container->setParameter($this->getAlias().'.sitemap.'.$key.'_configuration', $configuration);
+            if (isset($configuration['default_change_frequency'])) {
+                $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(
+                    $configuration['default_change_frequency']
+                ));
+                $definition->addTag('cmf_seo.sitemap.guesser', array(
+                    'sitemap' => $key,
+                    'priority' => 1,
+                ));
+                $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$key.'.default_change_frequency', $definition);
+                unset($configurations[$key]['default_change_frequency']);
+            }
+            if (isset($config['defaults']['templates'])) {
+                // copy default configuration into this sitemap configuration to keep controller simple
+                foreach ($config['defaults']['templates'] as $format => $name) {
+                    if (!isset($configurations['templates'][$format])) {
+                        $configurations['templates'][$format] = $name;
+                    }
+                }
+            }
         }
 
-        if (isset($config['configurations']['default']['default_change_frequency'])) {
-            $container->setParameter(
-                $this->getAlias().'.sitemap.default_change_frequency',
-                $config['configurations']['default']['default_change_frequency']
-            );
-        } else {
-            $container->removeDefinition($this->getAlias().'.sitemap.guesser.default_change_frequency');
-        }
+        $container->setParameter($this->getAlias().'.sitemap.configurations', $configurations);
+
+        $container->setParameter(
+            $this->getAlias().'.sitemap.default_change_frequency',
+            $config['defaults']['default_change_frequency']
+        );
 
         if (!$alternateLocale) {
             $container->removeDefinition($this->getAlias().'.sitemap.guesser.alternate_locales');

@@ -227,6 +227,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'enabled' => true
             ),
             'sitemap' => array(
+                'defaults' => array(
+                    'default_change_frequency' => 'global-frequency',
+                ),
                 'configurations' => array(
                     'default' => array(
                         'default_change_frequency' => 'some-to-test',
@@ -248,13 +251,12 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             ),
         ));
 
-        $this->assertContainerBuilderHasParameter('cmf_seo.sitemap.default_change_frequency', 'some-to-test');
+        $this->assertContainerBuilderHasParameter('cmf_seo.sitemap.default_change_frequency', 'global-frequency');
 
         $this->assertContainerBuilderHasParameter(
             'cmf_seo.sitemap.configurations',
             array(
                 'default' => array(
-                    'default_change_frequency' => 'some-to-test',
                     'templates' => array(
                         'xml' => 'test.xml',
                         'html' => 'test.html',
@@ -262,36 +264,11 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                     ),
                 ),
                 'some_other' => array(
-                    'default_change_frequency' => 'some-other-to-test',
                     'templates' => array(
                         'xml' => 'test-other.xml',
                         'html' => 'test-other.html',
                         'json' => 'test-other.json',
                     ),
-                ),
-            )
-        );
-
-        $this->assertContainerBuilderHasParameter(
-            'cmf_seo.sitemap.default_configuration',
-            array(
-                'default_change_frequency' => 'some-to-test',
-                'templates' => array(
-                    'xml' => 'test.xml',
-                    'html' => 'test.html',
-                    'json' => 'test.json',
-                ),
-            )
-        );
-
-        $this->assertContainerBuilderHasParameter(
-            'cmf_seo.sitemap.some_other_configuration',
-            array(
-                'default_change_frequency' => 'some-other-to-test',
-                'templates' => array(
-                    'xml' => 'test-other.xml',
-                    'html' => 'test-other.html',
-                    'json' => 'test-other.json',
                 ),
             )
         );
@@ -333,6 +310,18 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.sitemap.guesser.alternate_locales',
             0,
             new Reference('cmf_seo.alternate_locale.provider_phpcr')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'cmf_seo.sitemap.guesser.default.default_change_frequency',
+            0,
+            'some-to-test'
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'cmf_seo.sitemap.guesser.some_other.default_change_frequency',
+            0,
+            'some-other-to-test'
         );
     }
 

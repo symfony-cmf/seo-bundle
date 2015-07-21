@@ -13,6 +13,20 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->container->setParameter('cmf_seo.sitemap.configurations', array());
+        $nonProviderService = new Definition();
+        $this->setDefinition('some_service', $nonProviderService);
+
+        foreach ($this->tagProvider() as $service) {
+            $chain = new Definition();
+            $this->setDefinition('cmf_seo.sitemap.'.$service[1], $chain);
+        }
+    }
+
     /**
      * Register the compiler pass under test, just like you would do inside a bundle's load()
      * method:
@@ -24,18 +38,14 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         $container->addCompilerPass(new RegisterUrlInformationProviderPass());
     }
 
-
     /**
      * @dataProvider tagProvider
      */
     public function testTags($tagName, $serviceName)
     {
-        $nonProviderService = new Definition();
-        $this->setDefinition('some_service', $nonProviderService);
-
-        $providerService = new Definition();
-        $providerService->addTag('cmf_seo.sitemap.'.$tagName);
-        $this->setDefinition($tagName.'_service', $providerService);
+        $taggedService = new Definition();
+        $taggedService->addTag('cmf_seo.sitemap.'.$tagName);
+        $this->setDefinition($tagName.'_service', $taggedService);
 
         $providerServiceWithPriority = new Definition();
         $providerServiceWithPriority->addTag(
@@ -57,9 +67,6 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
             array('sitemap' => 'some-sitemap,some-other')
         );
         $this->setDefinition($tagName.'_service_sitemap_multiple', $providerServiceWithMultipleSitemap);
-
-        $chainProvider = new Definition();
-        $this->setDefinition('cmf_seo.sitemap.'.$serviceName, $chainProvider);
 
         $this->compile();
 

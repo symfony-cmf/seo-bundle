@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
@@ -34,37 +35,43 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        if (!$container->hasParameter('cmf_seo.sitemap.configurations')) {
+            return;
+        }
+        $sitemaps = array_keys($container->getParameter('cmf_seo.sitemap.configurations'));
+
         $this->processTagsForService(
+            $container,
             'cmf_seo.sitemap.loader_chain',
             'cmf_seo.sitemap.loader',
-            $container
+            $sitemaps
         );
 
         $this->processTagsForService(
+            $container,
             'cmf_seo.sitemap.voter_chain',
             'cmf_seo.sitemap.voter',
-            $container
+            $sitemaps
         );
 
         $this->processTagsForService(
+            $container,
             'cmf_seo.sitemap.guesser_chain',
             'cmf_seo.sitemap.guesser',
-            $container
+            $sitemaps
         );
     }
 
     /**
-     * @param $service
-     * @param $tag
+     * Add tagged services with priority and sitemap parameter.
+     *
      * @param ContainerBuilder $container
+     * @param string           $service   ID of service to add tagged services to
+     * @param string           $tag       Tag name
+     * @param string[]         $sitemaps  List of valid sitemap names.
      */
-    private function processTagsForService($service, $tag, ContainerBuilder $container)
+    private function processTagsForService(ContainerBuilder $container, $service, $tag, array $sitemaps)
     {
-        // feature not activated means nothing to add
-        if (!$container->hasDefinition($service)) {
-            return;
-        }
-
         $serviceDefinition = $container->getDefinition($service);
         $taggedServices = $container->findTaggedServiceIds($tag);
 
@@ -91,6 +98,14 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             }
 
             foreach ($sitemaps as $sitemap) {
+                if ($sitemap && !in_array($sitemap, $sitemaps)) {
+                    throw new InvalidConfigurationException(sprintf(
+                        'Service %s tagged with %s specifies sitemap %s but that sitemap is not configured',
+                        $id,
+                        $tag,
+                        $sitemap
+                    ));
+                }
                 $serviceDefinition->addMethodCall(
                     'addItem',
                     array(new Reference($id), $priority, $sitemap)

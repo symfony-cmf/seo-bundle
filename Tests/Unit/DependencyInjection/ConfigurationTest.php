@@ -63,6 +63,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'sitemap' => array(
                 'enabled'        => false,
                 'configurations' => array(),
+                'defaults' => array(
+                    'default_change_frequency' => 'always',
+                    'templates' => array(),
+                ),
             ),
             'content_listener' => array(
                 'enabled'     => true,
@@ -94,6 +98,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                             'html' => 'test.html',
                         ),
                     ),
+                ),
+                'defaults' => array(
+                    'default_change_frequency' => 'always',
+                    'templates' => array(),
                 ),
             ),
             'persistence' => array(
