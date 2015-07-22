@@ -11,15 +11,18 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Compiler adds custom url information provider to the phpcr chain provider.
+ * Register the tagged services for the url information provider:
  *
- * To do so you need to tag them with "cmf_seo.sitemap.url_information_provider".
+ * - cmf_seo.sitemap.loader
+ * - cmf_seo.sitemap.voter
+ * - cmf_seo.sitemap.guesser
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -32,13 +35,45 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // feature not activated means nothing to add
-        if (!$container->hasDefinition('cmf_seo.sitemap.url_information_provider')) {
+        if (!$container->hasParameter('cmf_seo.sitemap.configurations')) {
             return;
         }
+        $sitemaps = array_keys($container->getParameter('cmf_seo.sitemap.configurations'));
 
-        $chainProviderDefinition = $container->getDefinition('cmf_seo.sitemap.url_information_provider');
-        $taggedServices = $container->findTaggedServiceIds('cmf_seo.sitemap.url_information_provider');
+        $this->processTagsForService(
+            $container,
+            'cmf_seo.sitemap.loader_chain',
+            'cmf_seo.sitemap.loader',
+            $sitemaps
+        );
+
+        $this->processTagsForService(
+            $container,
+            'cmf_seo.sitemap.voter_chain',
+            'cmf_seo.sitemap.voter',
+            $sitemaps
+        );
+
+        $this->processTagsForService(
+            $container,
+            'cmf_seo.sitemap.guesser_chain',
+            'cmf_seo.sitemap.guesser',
+            $sitemaps
+        );
+    }
+
+    /**
+     * Add tagged services with priority and sitemap parameter.
+     *
+     * @param ContainerBuilder $container
+     * @param string           $service   ID of service to add tagged services to
+     * @param string           $tag       Tag name
+     * @param string[]         $sitemaps  List of valid sitemap names.
+     */
+    private function processTagsForService(ContainerBuilder $container, $service, $tag, array $sitemaps)
+    {
+        $serviceDefinition = $container->getDefinition($service);
+        $taggedServices = $container->findTaggedServiceIds($tag);
 
         foreach ($taggedServices as $id => $attributes) {
             $priority = null;
@@ -48,9 +83,34 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
                     break;
                 }
             }
-            $priority = $priority ?: 0;
 
-            $chainProviderDefinition->addMethodCall('addProvider', array(new Reference($id), $priority));
+            $sitemap = null;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['sitemap'])) {
+                    $sitemap = $attribute['sitemap'];
+                    break;
+                }
+            }
+            if ($sitemap) {
+                $sitemaps = explode(',', $sitemap);
+            } else {
+                $sitemaps = array(null);
+            }
+
+            foreach ($sitemaps as $sitemap) {
+                if ($sitemap && !in_array($sitemap, $sitemaps)) {
+                    throw new InvalidConfigurationException(sprintf(
+                        'Service %s tagged with %s specifies sitemap %s but that sitemap is not configured',
+                        $id,
+                        $tag,
+                        $sitemap
+                    ));
+                }
+                $serviceDefinition->addMethodCall(
+                    'addItem',
+                    array(new Reference($id), $priority, $sitemap)
+                );
+            }
         }
     }
 }

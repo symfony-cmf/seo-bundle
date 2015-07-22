@@ -6,7 +6,7 @@
 
     <route id="cmf_seo_sitemap" pattern="/sitemap.{_format}">
         <default key="_controller">cmf_seo.sitemap.controller:indexAction</default>
-        <default key="_format">html</default>
+        <default key="sitemap">default</default>
     </route>
 
 </routes>

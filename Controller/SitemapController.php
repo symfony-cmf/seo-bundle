@@ -11,10 +11,12 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
+use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProviderInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
@@ -25,48 +27,57 @@ use Symfony\Component\Templating\EngineInterface;
 class SitemapController
 {
     /**
-     * @var UrlInformationProviderInterface
-     */
-    private $urlProvider;
-    /**
      * @var EngineInterface
      */
     private $templating;
 
     /**
+     * The complete configurations for all sitemap with its
+     * definitions for their templates.
+     *
      * @var array
      */
-    private $templates;
+    private $configurations;
+
+    /**
+     * @var UrlInformationProvider
+     */
+    private $sitemapProvider;
 
     /**
      * You should provide templates for html and xml.
      *
      * Json is serialized by default, but can be customized with a template
      *
-     * @param UrlInformationProviderInterface $provider
-     * @param EngineInterface                 $templating
-     * @param array                           $templates  Hash map with key being the format,
-     *                                                    value the name of the twig template
-     *                                                    to render the sitemap in that format
+     * @param UrlInformationProvider $sitemapProvider
+     * @param EngineInterface $templating
+     * @param array $configurations List of available sitemap configurations.
      */
     public function __construct(
-        UrlInformationProviderInterface $provider,
+        UrlInformationProvider $sitemapProvider,
         EngineInterface $templating,
-        array $templates
+        array $configurations
     ) {
-        $this->urlProvider = $provider;
         $this->templating = $templating;
-        $this->templates = $templates;
+        $this->configurations = $configurations;
+        $this->sitemapProvider = $sitemapProvider;
     }
 
     /**
      * @param string $_format The format of the sitemap.
+     * @param string $sitemap The sitemap to show.
      *
      * @return Response
      */
-    public function indexAction($_format)
+    public function indexAction($_format, $sitemap = 'default')
     {
-        $supportedFormats = array_merge(array('json'), array_keys($this->templates));
+        if (!isset($this->configurations[$sitemap])) {
+            throw new NotFoundHttpException(sprintf('Unknown sitemap %s', $sitemap));
+        }
+
+        $templates = $this->configurations[$sitemap]['templates'];
+
+        $supportedFormats = array_merge(array('json'), array_keys($templates));
         if (!in_array($_format, $supportedFormats)) {
             $text = sprintf(
                 'Unknown format %s, use one of %s.',
@@ -77,12 +88,13 @@ class SitemapController
             return new Response($text, 406);
         }
 
-        $urls = $this->urlProvider->getUrlInformation();
-        if (isset($this->templates[$_format])) {
-            return new Response($this->templating->render($this->templates[$_format], array('urls' => $urls)));
+        $urlInformation = $this->sitemapProvider->getUrlInformation($sitemap);
+
+        if (isset($templates[$_format])) {
+            return new Response($this->templating->render($templates[$_format], array('urls' => $urlInformation)));
         }
 
-        return $this->createJsonResponse($urls);
+        return $this->createJsonResponse($urlInformation);
     }
 
     /**

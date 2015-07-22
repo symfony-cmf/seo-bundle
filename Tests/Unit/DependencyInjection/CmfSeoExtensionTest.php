@@ -5,6 +5,7 @@ namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 class CmfSeoExtensionTest extends AbstractExtensionTestCase
 {
@@ -56,8 +57,8 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         ));
 
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.phpcr_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider'
+            'cmf_seo.sitemap.phpcr_loader',
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
     }
 
@@ -130,7 +131,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.event_listener.seo_content',
             'setAlternateLocaleProvider',
-            array($this->container->getDefinition('cmf_seo.alternate_locale.provider_phpcr'))
+            array(new Reference('cmf_seo.alternate_locale.provider_phpcr'))
         );
     }
 
@@ -154,12 +155,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.event_listener.seo_content',
             'setAlternateLocaleProvider',
-            array($this->container->getDefinition('some_alternate_locale_provider'))
-        );
-        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
-            'cmf_seo.sitemap.phpcr_provider',
-            'setAlternateLocaleProvider',
-            array($this->container->getDefinition('some_alternate_locale_provider'))
+            array(new Reference(('some_alternate_locale_provider')))
         );
     }
 
@@ -217,32 +213,115 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
     {
         $this->container->setParameter(
             'kernel.bundles',
-            array()
+            array(
+                'DoctrinePHPCRBundle' => true,
+                'CmfRoutingBundle' => true,
+            )
         );
+
         $this->load(array(
-            'sitemap'   => array(
-                'default_change_frequency' => 'never',
-            ),
-            'persistence'   => array(
+            'persistence' => array(
                 'phpcr' => true,
             ),
+            'alternate_locale' => array(
+                'enabled' => true
+            ),
+            'sitemap' => array(
+                'defaults' => array(
+                    'default_change_frequency' => 'global-frequency',
+                ),
+                'configurations' => array(
+                    'default' => array(
+                        'default_change_frequency' => 'some-to-test',
+                        'templates' => array(
+                            'xml' => 'test.xml',
+                            'html' => 'test.html',
+                            'json' => 'test.json',
+                        ),
+                    ),
+                    'some-other' => array(
+                        'default_change_frequency' => 'some-other-to-test',
+                        'templates' => array(
+                            'xml' => 'test-other.xml',
+                            'html' => 'test-other.html',
+                            'json' => 'test-other.json',
+                        ),
+                    ),
+                ),
+            ),
         ));
+
+        $this->assertContainerBuilderHasParameter('cmf_seo.sitemap.default_change_frequency', 'global-frequency');
+
+        $this->assertContainerBuilderHasParameter(
+            'cmf_seo.sitemap.configurations',
+            array(
+                'default' => array(
+                    'templates' => array(
+                        'xml' => 'test.xml',
+                        'html' => 'test.html',
+                        'json' => 'test.json',
+                    ),
+                ),
+                'some_other' => array(
+                    'templates' => array(
+                        'xml' => 'test-other.xml',
+                        'html' => 'test-other.html',
+                        'json' => 'test-other.json',
+                    ),
+                ),
+            )
+        );
 
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.controller',
             'Symfony\Cmf\Bundle\SeoBundle\Controller\SitemapController'
         );
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.url_information_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\ChainProvider'
+            'cmf_seo.sitemap.loader_chain',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\LoaderChain'
         );
         $this->assertContainerBuilderHasService(
-            'cmf_seo.sitemap.phpcr_provider',
-            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapUrlInformationProvider'
+            'cmf_seo.sitemap.guesser_chain',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserChain'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.phpcr_loader',
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
-            'cmf_seo.sitemap.phpcr_provider',
-            'cmf_seo.sitemap.url_information_provider'
+            'cmf_seo.sitemap.phpcr_loader',
+            'cmf_seo.sitemap.loader'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.voter_chain',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterChain'
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithTag(
+            'cmf_seo.sitemap.publish_workflow_voter',
+            'cmf_seo.sitemap.voter'
+        );
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.sitemap.provider',
+            'Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider'
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'cmf_seo.sitemap.guesser.alternate_locales',
+            0,
+            new Reference('cmf_seo.alternate_locale.provider_phpcr')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'cmf_seo.sitemap.guesser.default.default_change_frequency',
+            0,
+            'some-to-test'
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'cmf_seo.sitemap.guesser.some_other.default_change_frequency',
+            0,
+            'some-other-to-test'
         );
     }
 

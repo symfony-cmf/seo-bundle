@@ -10,7 +10,12 @@
 
     <error enable-parent-provider="true" enable-sibling-provider="true" />
 
-    <sitemap default-change-frequency="never" enabled="true" />
+    <sitemap enabled="true">
+        <configuration default-change-frequency="never" name="default">
+            <template format="xml">test.xml</template>
+            <template format="html">test.html</template>
+        </configuration>
+    </sitemap>
 
     <content-listener enabled="true" content-key="foo" />
 </config>

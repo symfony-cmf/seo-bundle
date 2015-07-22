@@ -1,9 +1,11 @@
 Changelog
 =========
 
+* **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased version of 
+  sitemaps, you will need to adjust your code. See https://github.com/symfony-cmf/SeoBundle/pull/225
 * **2015-02-24**: Configuration for content_key moved to content_listener section, and its now possible to disable
   The content listener by setting cmf_seo.content_listener.enabled: false
-* **2015-02-14**: implement sitemap generation
+* **2015-02-14**: Added sitemap generation
 * **2015-02-14**: [BC BREAK] Changed method visibility from private to public of SeoPresentation#getSeoMetadata()
 * **2014-10-04**: Custom exception controller for error handling
 

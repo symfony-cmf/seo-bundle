@@ -12,7 +12,6 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
-use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\Configuration;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
@@ -39,10 +38,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testDefaultsForAllConfigFormats()
     {
         $expectedConfiguration = array(
-            'translation_domain'     => 'messages',
             'title'                  => 'default_title',
             'description'            => 'default_description',
-            'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'persistence' => array(
                 'phpcr' => array(
                     'enabled' => false,
@@ -53,6 +50,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'manager_name' => null,
                 ),
             ),
+            'translation_domain'     => 'messages',
+            'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'sonata_admin_extension' => array(
                 'enabled' => 'auto',
                 'form_group' => 'form.group_seo',
@@ -62,12 +61,16 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'provider_id' => null,
             ),
             'sitemap' => array(
-                'enabled' => false,
-                'default_change_frequency' => 'always'
+                'enabled'        => false,
+                'configurations' => array(),
+                'defaults' => array(
+                    'default_change_frequency' => 'always',
+                    'templates' => array(),
+                ),
             ),
             'content_listener' => array(
-                'enabled' => true,
-                'content_key' => DynamicRouter::CONTENT_KEY,
+                'enabled'     => true,
+                'content_key' => 'contentDocument'
             ),
         );
 
@@ -77,6 +80,60 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'config/config.yml',
             'config/config.php',
             'config/config.xml',
+        ));
+
+        $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
+    }
+
+    public function testAdvancedXmlConfigurations()
+    {
+        $expectedConfiguration = array(
+            'sitemap' => array(
+                'enabled'        => true,
+                'configurations' => array(
+                    'default' => array(
+                        'default_change_frequency' => 'never',
+                        'templates' => array(
+                            'xml'  => 'test.xml',
+                            'html' => 'test.html',
+                        ),
+                    ),
+                ),
+                'defaults' => array(
+                    'default_change_frequency' => 'always',
+                    'templates' => array(),
+                ),
+            ),
+            'persistence' => array(
+                'phpcr' => array(
+                    'enabled' => false,
+                    'manager_name' => null,
+                ),
+                'orm' => array(
+                    'enabled' => false,
+                    'manager_name' => null,
+                ),
+            ),
+            'translation_domain'     => 'messages',
+            'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
+            'sonata_admin_extension' => array(
+                'enabled' => 'auto',
+                'form_group' => 'form.group_seo',
+            ),
+            'alternate_locale' => array(
+                'enabled'  => false,
+                'provider_id' => null,
+            ),
+            'content_listener' => array(
+                'enabled'     => true,
+                'content_key' => 'contentDocument'
+            ),
+        );
+
+        $sources = array_map(function ($path) {
+            return __DIR__.'/../../Resources/Fixtures/'.$path;
+        }, array(
+            'config/config_sitemap.xml',
         ));
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
