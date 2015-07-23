@@ -25,15 +25,33 @@ class SitemapTest extends BaseTestCase
     public function testSitemap($format, $expected)
     {
         $this->client->request('GET', '/sitemap.'.$format);
-        $res = $this->client->getResponse();
+        $response = $this->client->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
-        $content = $res->getContent();
+        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
+        $content = $response->getContent();
         if ('html' === $format || 'xml' === $format) {
             $this->assertXmlStringEqualsXmlString($expected, $content);
         } else {
             $this->assertEquals($expected, $content);
         }
+    }
+
+    public function testDifferentSitemap()
+    {
+        $this->client->request('GET', '/frequent.json');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
+        $this->assertContains('"always"', $response->getContent());
+    }
+
+    public function testSitemapNotFound()
+    {
+        $this->client->request('GET', '/nonexisting.json');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
+        $this->assertContains('Unknown sitemap', $response->getContent());
     }
 
     public function getFormats()

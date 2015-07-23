@@ -254,10 +254,10 @@ class CmfSeoExtension extends Extension
         $configurations = $config['configurations'];
         // if there are no explicit configurations, enable the default sitemap
         if (!count($configurations)) {
-            $configurations['default'] = array();
+            $configurations['sitemap'] = array();
         }
 
-        foreach ($config['configurations'] as $key => $configuration) {
+        foreach ($configurations as $key => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
                 $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(
                     $configuration['default_change_frequency']
@@ -267,15 +267,18 @@ class CmfSeoExtension extends Extension
                     'priority' => 1,
                 ));
                 $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$key.'.default_change_frequency', $definition);
-                unset($configurations[$key]['default_change_frequency']);
             }
+            unset($configurations[$key]['default_change_frequency']);
+
             if (isset($config['defaults']['templates'])) {
                 // copy default configuration into this sitemap configuration to keep controller simple
                 foreach ($config['defaults']['templates'] as $format => $name) {
-                    if (!isset($configurations['templates'][$format])) {
-                        $configurations['templates'][$format] = $name;
+                    if (!isset($configurations[$key]['templates'][$format])) {
+                        $configurations[$key]['templates'][$format] = $name;
                     }
                 }
+            } else {
+                $configurations[$key]['templates'] = array();
             }
         }
 
