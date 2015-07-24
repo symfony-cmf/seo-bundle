@@ -136,7 +136,7 @@ class UrlInformation
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getLastModification()
     {

@@ -15,7 +15,7 @@
         <parameter key="cmf_seo.sitemap.guesser.location.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\LocationGuesser</parameter>
         <parameter key="cmf_seo.sitemap.guesser.default_change_frequency.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\DefaultChangeFrequencyGuesser</parameter>
         <parameter key="cmf_seo.sitemap.voter_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterChain</parameter>
-        <parameter key="cmf_seo.sitemap.phpcr.publish_workflow_voter.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\PublishWorkflowVoter</parameter>
+        <parameter key="cmf_seo.sitemap.publish_workflow_voter.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\PublishWorkflowVoter</parameter>
     </parameters>
 
     <services>
@@ -29,31 +29,31 @@
 
         <service id="cmf_seo.sitemap.guesser_chain" class="%cmf_seo.sitemap.guesser_chain.class%" />
 
-        <service id="cmf_seo.sitemap.guesser.seo_metadata_title" class="%cmf_seo.sitemap.guesser.seo_metadata_title.class%" >
+        <service id="cmf_seo.sitemap.guesser.seo_metadata_title" class="%cmf_seo.sitemap.guesser.seo_metadata_title.class%" public="false">
             <argument type="service" id="cmf_seo.presentation" />
-            <tag name="cmf_seo.sitemap.guesser" />
+            <tag name="cmf_seo.sitemap.guesser" priority="-2"/>
         </service>
 
-        <service id="cmf_seo.sitemap.guesser.alternate_locales" class="%cmf_seo.sitemap.guesser.alternate_locales.class%">
+        <service id="cmf_seo.sitemap.guesser.alternate_locales" class="%cmf_seo.sitemap.guesser.alternate_locales.class%" public="false">
             <argument/>
-            <tag name="cmf_seo.sitemap.guesser" />
+            <tag name="cmf_seo.sitemap.guesser" priority="-2"/>
         </service>
 
-        <service id="cmf_seo.sitemap.guesser.location" class="%cmf_seo.sitemap.guesser.location.class%" >
+        <service id="cmf_seo.sitemap.guesser.location" class="%cmf_seo.sitemap.guesser.location.class%" public="false">
             <argument type="service" id="router" />
-            <tag name="cmf_seo.sitemap.guesser" />
+            <tag name="cmf_seo.sitemap.guesser" priority="-2"/>
         </service>
 
-        <service id="cmf_seo.sitemap.guesser.default_change_frequency" class="%cmf_seo.sitemap.guesser.default_change_frequency.class%" >
+        <service id="cmf_seo.sitemap.guesser.default_change_frequency" class="%cmf_seo.sitemap.guesser.default_change_frequency.class%" public="false">
             <argument>%cmf_seo.sitemap.default_change_frequency%</argument>
-            <tag name="cmf_seo.sitemap.guesser" />
+            <tag name="cmf_seo.sitemap.guesser" priority="-2"/>
         </service>
 
         <service id="cmf_seo.sitemap.voter_chain" class="%cmf_seo.sitemap.voter_chain.class%" />
 
-        <service id="cmf_seo.sitemap.publish_workflow_voter" class="%cmf_seo.sitemap.phpcr.publish_workflow_voter.class%">
+        <service id="cmf_seo.sitemap.publish_workflow_voter" class="%cmf_seo.sitemap.publish_workflow_voter.class%" public="false">
             <argument type="service" id="cmf_core.publish_workflow.checker" />
-            <tag name="cmf_seo.sitemap.voter"/>
+            <tag name="cmf_seo.sitemap.voter" priority="-2"/>
         </service>
 
         <service id="cmf_seo.sitemap.provider" class="%cmf_seo.sitemap.url_information_provider.class%">

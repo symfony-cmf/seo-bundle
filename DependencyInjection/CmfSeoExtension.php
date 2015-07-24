@@ -264,7 +264,7 @@ class CmfSeoExtension extends Extension
                 ));
                 $definition->addTag('cmf_seo.sitemap.guesser', array(
                     'sitemap' => $key,
-                    'priority' => 1,
+                    'priority' => -1,
                 ));
                 $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$key.'.default_change_frequency', $definition);
             }

@@ -7,14 +7,13 @@
 
     <parameters>
         <parameter key="cmf_seo.sitemap.phpcr_loader.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider</parameter>
-        <parameter key="cmf_seo.sitemap.phpcr_simple_guesser.class">Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SimpleUrlInformationGuesser</parameter>
     </parameters>
 
     <services>
         <service id="cmf_seo.sitemap.phpcr_loader" class="%cmf_seo.sitemap.phpcr_loader.class%" public="false">
             <argument type="service" id="doctrine_phpcr.odm.default_document_manager"/>
 
-            <tag name="cmf_seo.sitemap.loader" />
+            <tag name="cmf_seo.sitemap.loader" priority="-2"/>
         </service>
     </services>
 </container>
