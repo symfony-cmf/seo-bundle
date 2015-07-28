@@ -258,6 +258,11 @@ class CmfSeoExtension extends Extension
             $configurations['sitemap'] = array();
         }
 
+        // set the default templates if not set
+        if (!count($config['defaults']['templates'])) {
+            $config['defaults']['templates'] = CmfSeoBundle::$defaultSitemapTemplates;
+        }
+
         foreach ($configurations as $key => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
                 $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(
@@ -271,15 +276,11 @@ class CmfSeoExtension extends Extension
             }
             unset($configurations[$key]['default_change_frequency']);
 
-            if (isset($config['defaults']['templates'])) {
-                // copy default configuration into this sitemap configuration to keep controller simple
-                foreach ($config['defaults']['templates'] as $format => $name) {
-                    if (!isset($configurations[$key]['templates'][$format])) {
-                        $configurations[$key]['templates'][$format] = $name;
-                    }
+            // copy default configuration into this sitemap configuration to keep controller simple
+            foreach ($config['defaults']['templates'] as $format => $name) {
+                if (!isset($configurations[$key]['templates'][$format])) {
+                    $configurations[$key]['templates'][$format] = $name;
                 }
-            } else {
-                $configurations[$key]['templates'] = CmfSeoBundle::$defaultSitemapTemplates;
             }
         }
 
