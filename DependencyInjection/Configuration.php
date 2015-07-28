@@ -114,6 +114,10 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('templates')
                                     ->useAttributeAsKey('format')
                                     ->requiresAtLeastOneElement()
+                                    ->defaultValue(array(
+                                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                                    ))
                                     ->prototype('scalar')->end()
                                 ->end()
                             ->end()

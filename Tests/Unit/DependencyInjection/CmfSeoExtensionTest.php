@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -335,6 +336,43 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.sitemap.guesser.some_other.default_change_frequency',
             0,
             'some-other-to-test'
+        );
+    }
+
+    public function testDefaultTemplatesSet()
+    {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array(
+                'DoctrinePHPCRBundle' => true,
+                'CmfRoutingBundle' => true,
+            )
+        );
+        $this->load(array(
+            'persistence' => array(
+                'phpcr' => true,
+            ),
+            'alternate_locale' => array(
+                'enabled' => true
+            ),
+            'sitemap' => array(
+                'defaults' => array(
+                    'default_change_frequency' => 'global-frequency',
+                ),
+            )
+            ));
+
+
+        $this->assertContainerBuilderHasParameter(
+            'cmf_seo.sitemap.configurations',
+            array(
+                'sitemap' => array(
+                    'templates' => array(
+                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                    ),
+                ),
+            )
         );
     }
 

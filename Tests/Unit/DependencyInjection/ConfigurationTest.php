@@ -65,7 +65,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'configurations' => array(),
                 'defaults' => array(
                     'default_change_frequency' => 'always',
-                    'templates' => array(),
+                    'templates' => array(
+                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                    ),
                 ),
             ),
             'content_listener' => array(
@@ -91,7 +94,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'sitemap' => array(
                 'enabled'        => true,
                 'configurations' => array(
-                    'default' => array(
+                    'sitemap' => array(
                         'default_change_frequency' => 'never',
                         'templates' => array(
                             'xml'  => 'test.xml',
@@ -101,7 +104,10 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 ),
                 'defaults' => array(
                     'default_change_frequency' => 'always',
-                    'templates' => array(),
+                    'templates' => array(
+                        'html' => 'foo.html.twig',
+                        'xml' => 'foo.xml.twig',
+                    ),
                 ),
             ),
             'persistence' => array(
