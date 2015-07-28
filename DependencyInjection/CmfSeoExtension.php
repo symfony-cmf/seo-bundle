@@ -258,11 +258,6 @@ class CmfSeoExtension extends Extension
             $configurations['sitemap'] = array();
         }
 
-        // set the default templates if not set
-        if (!count($config['defaults']['templates'])) {
-            $config['defaults']['templates'] = CmfSeoBundle::$defaultSitemapTemplates;
-        }
-
         foreach ($configurations as $key => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
                 $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(

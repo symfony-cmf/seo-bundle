@@ -368,8 +368,8 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             array(
                 'sitemap' => array(
                     'templates' => array(
-                        'xml' => CmfSeoBundle::DEFAULT_SITEMAP_TEMPLATE_XML,
-                        'html' => CmfSeoBundle::DEFAULT_SITEMAP_TEMPLATE_HTML,
+                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
                     ),
                 ),
             )
