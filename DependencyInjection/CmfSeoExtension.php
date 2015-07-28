@@ -11,7 +11,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
-use Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -258,23 +257,23 @@ class CmfSeoExtension extends Extension
             $configurations['sitemap'] = array();
         }
 
-        foreach ($configurations as $key => $configuration) {
+        foreach ($configurations as $type => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
                 $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(
                     $configuration['default_change_frequency']
                 ));
                 $definition->addTag('cmf_seo.sitemap.guesser', array(
-                    'sitemap' => $key,
+                    'sitemap' => $type,
                     'priority' => -1,
                 ));
-                $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$key.'.default_change_frequency', $definition);
+                $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$type.'.default_change_frequency', $definition);
             }
-            unset($configurations[$key]['default_change_frequency']);
+            unset($configurations[$type]['default_change_frequency']);
 
             // copy default configuration into this sitemap configuration to keep controller simple
             foreach ($config['defaults']['templates'] as $format => $name) {
-                if (!isset($configurations[$key]['templates'][$format])) {
-                    $configurations[$key]['templates'][$format] = $name;
+                if (!isset($configurations[$type]['templates'][$format])) {
+                    $configurations[$type]['templates'][$format] = $name;
                 }
             }
         }
@@ -286,8 +285,56 @@ class CmfSeoExtension extends Extension
             $config['defaults']['default_change_frequency']
         );
 
+        // disabling/enabling loaders, guesser and voter
+        $helperValues = array(
+            'loaders' => 'cmf_seo.sitemap.loader',
+            'guessers' => 'cmf_seo.sitemap.guesser',
+            'voters' => 'cmf_seo.sitemap.guesser'
+        );
+        foreach ($helperValues as $type => $tag) {
+            if (!isset($config['defaults'][$type])) {
+                throw new InvalidConfigurationException(
+                    sprintf('The values for %s should be set.', implode(', ', array_keys($helperValues)))
+                );
+            }
+
+            $this->handleSitemapHelper($type, $tag, $config['defaults'][$type], $container);
+        }
+
         if (!$alternateLocale) {
             $container->removeDefinition($this->getAlias().'.sitemap.guesser.alternate_locales');
         }
+    }
+
+    /**
+     * Each helper type out of the guessers, loaders and voters hav its on configuration to enable/disable them
+     *
+     * @param string $type               The type of the helper.
+     * @param string $tag                The tag the services are tagged with.
+     * @param string $configurationValue One of none|all|<comma-separated-list-of-services-ids>
+     */
+    private function handleSitemapHelper($type, $tag, $configurationValue, ContainerBuilder $container)
+    {
+        // all tagged services are active by default
+        if ('none' === $configurationValue) {
+            return;
+        }
+
+        /** @var Definition[] $serviceDefinitionIds */
+        $serviceDefinitionIds = $container->findTaggedServiceIds($tag);
+
+        if ('all' === $configurationValue) {
+            foreach ($serviceDefinitionIds as $serviceDefinitionId) {
+                $container->removeDefinition($serviceDefinitionId);
+            }
+        }
+
+        $definitionsToRemove = explode(',', $configurationValue);
+        foreach ($serviceDefinitionIds as $serviceDefinitionId) {
+            if (in_array($serviceDefinitionId, $definitionsToRemove)) {
+                $container->removeDefinition($serviceDefinitionId);
+            }
+        }
+
     }
 }

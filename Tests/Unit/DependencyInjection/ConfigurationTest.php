@@ -69,6 +69,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                         'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
                         'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
                     ),
+                    'loaders' => 'none',
+                    'guessers' => 'none',
+                    'voters' => 'none',
                 ),
             ),
             'content_listener' => array(
@@ -108,6 +111,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                         'html' => 'foo.html.twig',
                         'xml' => 'foo.xml.twig',
                     ),
+                    'loaders' => 'none',
+                    'guessers' => 'none',
+                    'voters' => 'none',
                 ),
             ),
             'persistence' => array(
