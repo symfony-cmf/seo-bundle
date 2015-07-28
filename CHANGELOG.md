@@ -1,13 +1,17 @@
 Changelog
 =========
 
-* **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased version of 
-  sitemaps, you will need to adjust your code. See https://github.com/symfony-cmf/SeoBundle/pull/225
-* **2015-02-24**: Configuration for content_key moved to content_listener section, and its now possible to disable
-  The content listener by setting cmf_seo.content_listener.enabled: false
+* **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased 
+  version of sitemaps, you will need to adjust your code. See https://github.com/symfony-cmf/SeoBundle/pull/225
+  Options are available to keep all or no voters|guessers|loaders enabled or 
+  enable them one by one by their service id.
+* **2015-02-24**: Configuration for `content_key` moved to the `content_listener` 
+  section, and its now possible to disable the content listener by setting 
+  `cmf_seo.content_listener.enabled: false`
 * **2015-02-14**: Added sitemap generation
-* **2015-02-14**: [BC BREAK] Changed method visibility from private to public of SeoPresentation#getSeoMetadata()
-* **2014-10-04**: Custom exception controller for error handling
+* **2015-02-14**: [BC BREAK] Changed method visibility of 
+  `SeoPresentation#getSeoMetadata()` from private to public.
+* **2014-10-04**: Custom exception controller for error handling.
 
 1.1.0-RC3
 ---------

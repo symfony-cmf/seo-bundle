@@ -3,7 +3,6 @@
 namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
-use Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -290,10 +289,11 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.sitemap.phpcr_loader',
             'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
+
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.phpcr_loader',
             'cmf_seo.sitemap.loader',
-            array('priority' => -2)
+            array('priority' => -2, 'sitemap' => 'default,some_other')
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.voter_chain',
@@ -302,7 +302,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.publish_workflow_voter',
             'cmf_seo.sitemap.voter',
-            array('priority' => -2)
+            array('priority' => -2, 'sitemap' => 'default,some_other')
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.provider',
@@ -319,7 +319,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             $this->assertContainerBuilderHasServiceDefinitionWithTag(
                 $guesser,
                 'cmf_seo.sitemap.guesser',
-                array('priority' => -2)
+                array('priority' => -2, 'sitemap' => 'default,some_other')
             );
         }
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
@@ -362,7 +362,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             )
             ));
 
-
         $this->assertContainerBuilderHasParameter(
             'cmf_seo.sitemap.configurations',
             array(
@@ -374,6 +373,41 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 ),
             )
         );
+    }
+
+    public function testDisablingSitemapHelpers()
+    {
+        $this->container->setParameter(
+            'kernel.bundles',
+            array(
+                'DoctrinePHPCRBundle' => true,
+                'CmfRoutingBundle' => true,
+            )
+        );
+        $this->load(array(
+            'persistence' => array(
+                'phpcr' => true,
+            ),
+            'alternate_locale' => array(
+                'enabled' => true
+            ),
+            'sitemap' => array(
+                'defaults' => array(
+                    'default_change_frequency' => 'global-frequency',
+                    'loaders' => '_all',
+                    'guessers' => 'cmf_seo.sitemap.guesser.default_change_frequency',
+                    'voters' => '_none',
+                ),
+            )
+        ));
+
+        $this->assertContainerBuilderHasService('cmf_seo.sitemap.phpcr_loader');
+        $this->assertContainerBuilderHasService('cmf_seo.sitemap.guesser.default_change_frequency');
+        $this->assertContainerBuilderNotHasService('cmf_seo.sitemap.guesser.location');
+        $this->assertContainerBuilderNotHasService('cmf_seo.sitemap.guesser.location');
+        $this->assertContainerBuilderNotHasService('cmf_seo.sitemap.guesser.alternate_locales');
+        $this->assertContainerBuilderNotHasService('cmf_seo.sitemap.guesser.seo_metadata_title');
+        $this->assertContainerBuilderNotHasService('cmf_seo.sitemap.publish_workflow_voter');
     }
 
     public function testDisableSeoContentListener()

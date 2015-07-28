@@ -70,8 +70,12 @@
     <xsd:complexType name="sitemap_configuration">
         <xsd:sequence>
             <xsd:element name="template" type="sitemap_template" minOccurs="1" maxOccurs="unbounded" />
+            <xsd:element name="loader" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="voter" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="guesser" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
         <xsd:attribute name="default-change-frequency" type="change_frequency" default="always" />
+
     </xsd:complexType>
 
     <xsd:complexType name="named_sitemap_configuration">

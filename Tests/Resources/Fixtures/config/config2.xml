@@ -14,6 +14,9 @@
         <configuration default-change-frequency="never" name="default">
             <template format="xml">test.xml</template>
             <template format="html">test.html</template>
+            <loader>_none</loader>
+            <voter>_none</voter>
+            <guesser>_none</guesser>
         </configuration>
     </sitemap>
 
