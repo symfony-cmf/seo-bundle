@@ -289,7 +289,7 @@ class CmfSeoExtension extends Extension
         $helperValues = array(
             'loaders' => 'cmf_seo.sitemap.loader',
             'guessers' => 'cmf_seo.sitemap.guesser',
-            'voters' => 'cmf_seo.sitemap.guesser'
+            'voters' => 'cmf_seo.sitemap.voter'
         );
         foreach ($helperValues as $type => $tag) {
             if (!isset($config['defaults'][$type])) {
@@ -298,7 +298,7 @@ class CmfSeoExtension extends Extension
                 );
             }
 
-            $this->handleSitemapHelper($type, $tag, $config['defaults'][$type], $container);
+            $this->handleSitemapHelper($tag, $config['defaults'][$type], $container);
         }
 
         if (!$alternateLocale) {
@@ -309,11 +309,10 @@ class CmfSeoExtension extends Extension
     /**
      * Each helper type out of the guessers, loaders and voters hav its on configuration to enable/disable them
      *
-     * @param string $type               The type of the helper.
      * @param string $tag                The tag the services are tagged with.
      * @param string $configurationValue One of none|all|<comma-separated-list-of-services-ids>
      */
-    private function handleSitemapHelper($type, $tag, $configurationValue, ContainerBuilder $container)
+    private function handleSitemapHelper($tag, $configurationValue, ContainerBuilder $container)
     {
         // all tagged services are active by default
         if ('none' === $configurationValue) {
@@ -323,18 +322,13 @@ class CmfSeoExtension extends Extension
         /** @var Definition[] $serviceDefinitionIds */
         $serviceDefinitionIds = $container->findTaggedServiceIds($tag);
 
-        if ('all' === $configurationValue) {
-            foreach ($serviceDefinitionIds as $serviceDefinitionId) {
-                $container->removeDefinition($serviceDefinitionId);
-            }
+        if ('all' !== $configurationValue) {
+            $definitionsToRemoveIds = array_flip(explode(',', $configurationValue));
+            $serviceDefinitionIds = array_diff_key($serviceDefinitionIds, $definitionsToRemoveIds);
         }
 
-        $definitionsToRemove = explode(',', $configurationValue);
-        foreach ($serviceDefinitionIds as $serviceDefinitionId) {
-            if (in_array($serviceDefinitionId, $definitionsToRemove)) {
-                $container->removeDefinition($serviceDefinitionId);
-            }
+        foreach ($serviceDefinitionIds as $serviceDefinitionId => $attributes) {
+            $container->removeDefinition($serviceDefinitionId);
         }
-
     }
 }
