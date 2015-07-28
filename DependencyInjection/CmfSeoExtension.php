@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -278,7 +279,7 @@ class CmfSeoExtension extends Extension
                     }
                 }
             } else {
-                $configurations[$key]['templates'] = array();
+                $configurations[$key]['templates'] = CmfSeoBundle::$defaultSitemapTemplates;
             }
         }
 

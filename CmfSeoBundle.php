@@ -21,6 +21,17 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class CmfSeoBundle extends Bundle
 {
+    const DEFAULT_SITEMAP_TEMPLATE_HTML = 'CmfSeoBundle:Sitemap:index.html.twig';
+    const DEFAULT_SITEMAP_TEMPLATE_XML = 'CmfSeoBundle:Sitemap:index.xml.twig';
+
+    /**
+     * @var [] Map of available default templates for sitemap.
+     */
+    public static $defaultSitemapTemplates = [
+        'html' => self::DEFAULT_SITEMAP_TEMPLATE_HTML,
+        'xml'  => self::DEFAULT_SITEMAP_TEMPLATE_XML,
+    ];
+
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new RegisterExtractorsPass());
