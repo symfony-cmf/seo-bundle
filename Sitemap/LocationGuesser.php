@@ -26,11 +26,6 @@ use Symfony\Component\Routing\RouterInterface;
 class LocationGuesser implements GuesserInterface
 {
     /**
-     * @var AlternateLocaleProviderInterface
-     */
-    protected $alternateLocaleProvider;
-
-    /**
      * @var UrlGeneratorInterface
      */
     private $urlGenerator;
@@ -38,14 +33,6 @@ class LocationGuesser implements GuesserInterface
     public function __construct(UrlGeneratorInterface $router)
     {
         $this->urlGenerator = $router;
-    }
-
-    /**
-     * @param AlternateLocaleProviderInterface $alternateLocaleProvider
-     */
-    public function setAlternateLocaleProvider(AlternateLocaleProviderInterface $alternateLocaleProvider)
-    {
-        $this->alternateLocaleProvider = $alternateLocaleProvider;
     }
 
     /**

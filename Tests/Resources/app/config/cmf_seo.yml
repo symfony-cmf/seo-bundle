@@ -15,12 +15,15 @@ cmf_seo:
         enable_parent_provider: true
         enable_sibling_provider: true
     sitemap:
+        defaults:
+            default_change_frequency: never
+            templates:
+                xml: 'CmfSeoBundle:Sitemap:index.xml.twig'
+                html: 'CmfSeoBundle:Sitemap:index.html.twig'
         configurations:
-            default:
-                default_change_frequency: never
-                templates:
-                    xml: 'CmfSeoBundle:Sitemap:index.xml.twig'
-                    html: 'CmfSeoBundle:Sitemap:index.html.twig'
+            sitemap: ~
+            frequent:
+                default_change_frequency: always
 
 cmf_routing:
     chain:

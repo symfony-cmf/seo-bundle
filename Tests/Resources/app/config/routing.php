@@ -9,8 +9,5 @@ $collection->addCollection(
 $collection->addCollection(
     $loader->import(__DIR__.'/../../../../Resources/config/routing/sitemap.xml')
 );
-// $collection->addCollection(
-//     $loader->import(__DIR__.'/routing/my_test_routing.yml')
-// );
 
 return $collection;

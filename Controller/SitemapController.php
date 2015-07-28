@@ -69,10 +69,10 @@ class SitemapController
      *
      * @return Response
      */
-    public function indexAction($_format, $sitemap = 'default')
+    public function indexAction($_format, $sitemap)
     {
         if (!isset($this->configurations[$sitemap])) {
-            throw new NotFoundHttpException(sprintf('Unknown sitemap %s', $sitemap));
+            throw new NotFoundHttpException(sprintf('Unknown sitemap "%s"', $sitemap));
         }
 
         $templates = $this->configurations[$sitemap]['templates'];

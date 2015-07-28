@@ -291,7 +291,8 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.phpcr_loader',
-            'cmf_seo.sitemap.loader'
+            'cmf_seo.sitemap.loader',
+            array('priority' => -2)
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.voter_chain',
@@ -299,25 +300,37 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.publish_workflow_voter',
-            'cmf_seo.sitemap.voter'
+            'cmf_seo.sitemap.voter',
+            array('priority' => -2)
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.provider',
             'Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider'
         );
 
+        $guessers = array(
+            'cmf_seo.sitemap.guesser.seo_metadata_title',
+            'cmf_seo.sitemap.guesser.alternate_locales',
+            'cmf_seo.sitemap.guesser.location',
+            'cmf_seo.sitemap.guesser.default_change_frequency',
+        );
+        foreach ($guessers as $guesser) {
+            $this->assertContainerBuilderHasServiceDefinitionWithTag(
+                $guesser,
+                'cmf_seo.sitemap.guesser',
+                array('priority' => -2)
+            );
+        }
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'cmf_seo.sitemap.guesser.alternate_locales',
             0,
             new Reference('cmf_seo.alternate_locale.provider_phpcr')
         );
-
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'cmf_seo.sitemap.guesser.default.default_change_frequency',
             0,
             'some-to-test'
         );
-
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'cmf_seo.sitemap.guesser.some_other.default_change_frequency',
             0,
