@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -270,15 +271,11 @@ class CmfSeoExtension extends Extension
             }
             unset($configurations[$key]['default_change_frequency']);
 
-            if (isset($config['defaults']['templates'])) {
-                // copy default configuration into this sitemap configuration to keep controller simple
-                foreach ($config['defaults']['templates'] as $format => $name) {
-                    if (!isset($configurations[$key]['templates'][$format])) {
-                        $configurations[$key]['templates'][$format] = $name;
-                    }
+            // copy default configuration into this sitemap configuration to keep controller simple
+            foreach ($config['defaults']['templates'] as $format => $name) {
+                if (!isset($configurations[$key]['templates'][$format])) {
+                    $configurations[$key]['templates'][$format] = $name;
                 }
-            } else {
-                $configurations[$key]['templates'] = array();
             }
         }
 

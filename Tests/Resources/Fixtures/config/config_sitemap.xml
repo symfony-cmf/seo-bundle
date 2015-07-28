@@ -1,7 +1,11 @@
 <container xmlns="http://symfony.com/schema/dic/services">
     <config xmlns="http://cmf.symfony.com/schema/dic/seo">
         <sitemap enabled="true">
-            <configuration default-change-frequency="never" name="default">
+            <defaults>
+                <template format="html">foo.html.twig</template>
+                <template format="xml">foo.xml.twig</template>
+            </defaults>
+            <configuration default-change-frequency="never" name="sitemap">
                 <template format="xml">test.xml</template>
                 <template format="html">test.html</template>
             </configuration>
