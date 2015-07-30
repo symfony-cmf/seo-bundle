@@ -3,11 +3,11 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 use Symfony\Cmf\Bundle\CoreBundle\PublishWorkflow\PublishableInterface;
 use Symfony\Cmf\Bundle\CoreBundle\PublishWorkflow\PublishTimePeriodInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
-use Symfony\Cmf\Bundle\SeoBundle\SitemapElementInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SitemapAwareInterface;
 use Symfony\Cmf\Component\Routing\RouteReferrersReadInterface;
 
 /**
@@ -19,7 +19,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     PublishableInterface,
     PublishTimePeriodInterface,
     RouteReferrersReadInterface,
-    SitemapElementInterface
+    SitemapAwareInterface
 {
     /**
      * @var ArrayCollection|Route[]
@@ -61,9 +61,10 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * @return boolean
+     * @param  string $sitemap
+     * @return bool
      */
-    public function isVisibleInSitemap()
+    public function isVisibleInSitemap($sitemap)
     {
         return $this->isVisibleForSitemap;
     }

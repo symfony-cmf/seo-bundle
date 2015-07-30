@@ -5,7 +5,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
-use Symfony\Cmf\Bundle\SeoBundle\SitemapElementInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SitemapAwareInterface;
 use Symfony\Cmf\Component\Routing\RouteReferrersReadInterface;
 use Symfony\Component\Routing\Route;
 
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Route;
 class SitemapAwareContent extends ContentBase implements
     RouteReferrersReadInterface,
     TranslatableInterface,
-    SitemapElementInterface
+    SitemapAwareInterface
 {
     /**
      * @var string
@@ -56,9 +56,10 @@ class SitemapAwareContent extends ContentBase implements
     }
 
     /**
+     * @param string $sitemap
      * @return boolean
      */
-    public function isVisibleInSitemap()
+    public function isVisibleInSitemap($sitemap)
     {
         return $this->isVisibleForSitemap;
     }

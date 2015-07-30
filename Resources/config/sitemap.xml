@@ -16,6 +16,7 @@
         <parameter key="cmf_seo.sitemap.guesser.default_change_frequency.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\DefaultChangeFrequencyGuesser</parameter>
         <parameter key="cmf_seo.sitemap.voter_chain.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterChain</parameter>
         <parameter key="cmf_seo.sitemap.publish_workflow_voter.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\PublishWorkflowVoter</parameter>
+        <parameter key="cmf_seo.sitemap.voter.sitemap_aware_document.class">Symfony\Cmf\Bundle\SeoBundle\Sitemap\SitemapAwareDocumentVoter</parameter>
     </parameters>
 
     <services>
@@ -53,6 +54,10 @@
 
         <service id="cmf_seo.sitemap.publish_workflow_voter" class="%cmf_seo.sitemap.publish_workflow_voter.class%" public="false">
             <argument type="service" id="cmf_core.publish_workflow.checker" />
+            <tag name="cmf_seo.sitemap.voter" priority="-2"/>
+        </service>
+
+        <service id="cmf_seo.sitemap.voter.sitemap_aware_document" class="%cmf_seo.sitemap.voter.sitemap_aware_document.class%">
             <tag name="cmf_seo.sitemap.voter" priority="-2"/>
         </service>
 
