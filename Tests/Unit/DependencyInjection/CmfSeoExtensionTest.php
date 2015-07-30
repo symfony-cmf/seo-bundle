@@ -393,9 +393,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'sitemap' => array(
                 'defaults' => array(
                     'default_change_frequency' => 'global-frequency',
-                    'loaders' => 'none',
+                    'loaders' => 'all',
                     'guessers' => 'cmf_seo.sitemap.guesser.default_change_frequency',
-                    'voters' => 'all',
+                    'voters' => 'none',
                 ),
             )
         ));

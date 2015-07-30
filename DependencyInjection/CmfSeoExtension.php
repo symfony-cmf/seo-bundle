@@ -315,14 +315,14 @@ class CmfSeoExtension extends Extension
     private function handleSitemapHelper($tag, $configurationValue, ContainerBuilder $container)
     {
         // all tagged services are active by default
-        if ('none' === $configurationValue) {
+        if ('all' === $configurationValue) {
             return;
         }
 
         /** @var Definition[] $serviceDefinitionIds */
         $serviceDefinitionIds = $container->findTaggedServiceIds($tag);
 
-        if ('all' !== $configurationValue) {
+        if ('none' !== $configurationValue) {
             $definitionsToRemoveIds = array_flip(explode(',', $configurationValue));
             $serviceDefinitionIds = array_diff_key($serviceDefinitionIds, $definitionsToRemoveIds);
         }
