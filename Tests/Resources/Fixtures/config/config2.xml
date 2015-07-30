@@ -11,7 +11,7 @@
     <error enable-parent-provider="true" enable-sibling-provider="true" />
 
     <sitemap enabled="true">
-        <configuration default-change-frequency="never" name="default">
+        <configuration default-change-frequency="never" name="default" guessers="none" voters="none" loaders="none">
             <template format="xml">test.xml</template>
             <template format="html">test.html</template>
         </configuration>
