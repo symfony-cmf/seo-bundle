@@ -1,6 +1,7 @@
 Changelog
 =========
 
+* **2015-07-30**: implement options to enable/disable guessers, loaders and voters 
 * **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased version of 
   sitemaps, you will need to adjust your code. See https://github.com/symfony-cmf/SeoBundle/pull/225
 * **2015-02-24**: Configuration for content_key moved to content_listener section, and its now possible to disable
