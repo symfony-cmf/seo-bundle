@@ -13,11 +13,12 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * Validates and merges the configuration.
+ * Validates and merges the configuration for the seo bundle.
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -30,7 +31,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
 
-        $treeBuilder->root('cmf_seo')
+        $nodeBuilder = $treeBuilder->root('cmf_seo')
             ->addDefaultsIfNotSet()
             ->beforeNormalization()
                 ->ifTrue(function ($config) {
@@ -49,105 +50,179 @@ class Configuration implements ConfigurationInterface
                 ->thenInvalid('Configure the content_listener.content_key or disable the content_listener when not using the CmfRoutingBundle DynamicRouter.')
             ->end()
             ->children()
-                ->arrayNode('persistence')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('phpcr')
-                            ->addDefaultsIfNotSet()
-                            ->canBeEnabled()
-                            ->children()
-                                ->scalarNode('manager_name')->defaultNull()->end()
-                            ->end()
-                        ->end() // phpcr
-                        ->arrayNode('orm')
-                            ->addDefaultsIfNotSet()
-                            ->canBeEnabled()
-                            ->children()
-                                ->scalarNode('manager_name')->defaultNull()->end()
-                            ->end()
-                        ->end() // orm
-                    ->end()
-                ->end() // persistence
                 ->scalarNode('translation_domain')->defaultValue('messages')->end()
                 ->scalarNode('title')->end()
                 ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
-                ->arrayNode('sonata_admin_extension')
-                    ->addDefaultsIfNotSet()
-                    ->beforeNormalization()
-                        ->ifTrue( function ($v) { return is_scalar($v); })
-                        ->then(function ($v) {
-                            return array('enabled' => $v);
-                        })
-                    ->end()
-                    ->children()
-                        ->enumNode('enabled')
-                            ->values(array(true, false, 'auto'))
-                            ->defaultValue('auto')
-                        ->end()
-                        ->scalarNode('form_group')->defaultValue('form.group_seo')->end()
-                    ->end()
-                ->end()
-                ->arrayNode('alternate_locale')
-                    ->addDefaultsIfNotSet()
-                    ->canBeEnabled()
-                    ->children()
-                        ->scalarNode('provider_id')->defaultNull()->end()
-                    ->end()
-                ->end()
-                ->arrayNode('error')
-                    ->children()
-                        ->scalarNode('enable_parent_provider')->defaultValue(false)->end()
-                        ->scalarNode('enable_sibling_provider')->defaultValue(false)->end()
-                    ->end()
-                ->end()
-                ->arrayNode('sitemap')
-                    ->fixXmlConfig('configuration')
-                    ->addDefaultsIfNotSet()
-                    ->canBeEnabled()
-                    ->children()
-                        ->arrayNode('defaults')
-                            ->fixXmlConfig('template')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('default_change_frequency')->defaultValue('always')->end()
-                                ->arrayNode('templates')
-                                    ->useAttributeAsKey('format')
-                                    ->requiresAtLeastOneElement()
-                                    ->defaultValue(array(
-                                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
-                                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
-                                    ))
-                                    ->prototype('scalar')->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('configurations')
-                            ->useAttributeAsKey('name')
-                            ->prototype('array')
-                                ->fixXmlConfig('template')
-                                ->children()
-                                    ->scalarNode('default_change_frequency')->defaultNull()->end()
-                                    ->arrayNode('templates')
-                                        ->useAttributeAsKey('format')
-                                        ->requiresAtLeastOneElement()
-                                        ->prototype('scalar')->end()
-                                    ->end()
-                                ->end()
-                            ->end()
+       ;
+
+        $this->addPersistenceSection($nodeBuilder);
+        $this->addSonataAdminSection($nodeBuilder);
+        $this->addAlternateLocaleSection($nodeBuilder);
+        $this->addErrorHandlerSection($nodeBuilder);
+        $this->addSitemapSection($nodeBuilder);
+        $this->addContentListenerSection($nodeBuilder);
+
+        return $treeBuilder;
+    }
+
+    /**
+     * Attach the persistence node to the tree.
+     *
+     * @param NodeBuilder $treeBuilder
+     */
+    private function addPersistenceSection(NodeBuilder $treeBuilder)
+    {
+        $treeBuilder
+            ->arrayNode('persistence')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('phpcr')
+                        ->addDefaultsIfNotSet()
+                        ->canBeEnabled()
+                        ->children()
+                            ->scalarNode('manager_name')->defaultNull()->end()
                         ->end()
                     ->end()
-                ->end()
-                ->arrayNode('content_listener')
-                    ->canBeDisabled()
-                    ->children()
-                        ->scalarNode('content_key')
-                        ->defaultValue(class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter') ? DynamicRouter::CONTENT_KEY : '')
+
+                    ->arrayNode('orm')
+                        ->addDefaultsIfNotSet()
+                        ->canBeEnabled()
+                        ->children()
+                            ->scalarNode('manager_name')->defaultNull()->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
         ;
+    }
 
-        return $treeBuilder;
+    /**
+     * Attach the sonata admin node to the tree.
+     *
+     * @param NodeBuilder $treeBuilder
+     */
+    private function addSonataAdminSection(NodeBuilder $treeBuilder)
+    {
+        $treeBuilder
+            ->arrayNode('sonata_admin_extension')
+                ->addDefaultsIfNotSet()
+                ->beforeNormalization()
+                    ->ifTrue( function ($v) { return is_scalar($v); })
+                    ->then(function ($v) {
+                        return array('enabled' => $v);
+                    })
+                ->end()
+                ->children()
+                    ->enumNode('enabled')
+                        ->values(array(true, false, 'auto'))
+                        ->defaultValue('auto')
+                    ->end()
+                    ->scalarNode('form_group')->defaultValue('form.group_seo')->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * Attach the alternate locale node to the tree.
+     *
+     * @param NodeBuilder $nodeBuilder
+     */
+    private function addAlternateLocaleSection(NodeBuilder $nodeBuilder)
+    {
+        $nodeBuilder
+            ->arrayNode('alternate_locale')
+                ->addDefaultsIfNotSet()
+                ->canBeEnabled()
+                ->children()
+                    ->scalarNode('provider_id')->defaultNull()->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * Attach the error node to the tree.
+     *
+     * @param NodeBuilder $nodeBuilder
+     */
+    private function addErrorHandlerSection(NodeBuilder $nodeBuilder)
+    {
+        $nodeBuilder
+            ->arrayNode('error')
+                ->children()
+                    ->scalarNode('enable_parent_provider')->defaultValue(false)->end()
+                    ->scalarNode('enable_sibling_provider')->defaultValue(false)->end()
+                ->end()
+            ->end()
+        ;
+
+    }
+
+    /**
+     * Attach the sitemap node to the tree.
+     *
+     * @param NodeBuilder $nodeBuilder
+     */
+    private function addSitemapSection(NodeBuilder $nodeBuilder)
+    {
+        $nodeBuilder
+            ->arrayNode('sitemap')
+                ->fixXmlConfig('configuration')
+                ->addDefaultsIfNotSet()
+                ->canBeEnabled()
+                ->children()
+                    ->arrayNode('defaults')
+                        ->fixXmlConfig('template')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('default_change_frequency')->defaultValue('always')->end()
+                            ->arrayNode('templates')
+                                ->useAttributeAsKey('format')
+                                ->requiresAtLeastOneElement()
+                                ->defaultValue(array(
+                                    'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                                    'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                                ))
+                                ->prototype('scalar')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('configurations')
+                        ->useAttributeAsKey('name')
+                        ->prototype('array')
+                            ->fixXmlConfig('template')
+                            ->children()
+                                ->scalarNode('default_change_frequency')->defaultNull()->end()
+                                ->arrayNode('templates')
+                                    ->useAttributeAsKey('format')
+                                    ->requiresAtLeastOneElement()
+                                    ->prototype('scalar')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * Attach the content listener node to the tree.
+     *
+     * @param NodeBuilder $nodeBuilder
+     */
+    private function addContentListenerSection(NodeBuilder $nodeBuilder)
+    {
+        $nodeBuilder
+            ->arrayNode('content_listener')
+                ->canBeDisabled()
+                ->children()
+                    ->scalarNode('content_key')
+                    ->defaultValue(class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter') ? DynamicRouter::CONTENT_KEY : '')
+                ->end()
+            ->end()
+        ;
     }
 }
