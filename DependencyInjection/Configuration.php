@@ -13,6 +13,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -33,6 +34,30 @@ class Configuration implements ConfigurationInterface
 
         $nodeBuilder = $treeBuilder->root('cmf_seo')
             ->addDefaultsIfNotSet()
+            ->beforeNormalization()
+                ->ifTrue(function ($config) {
+                    return isset($config['sitemap'])
+                        && (!isset($config['sitemap']['configurations'])
+                            || 0 == count($config['sitemap']['configurations'])
+                        )
+                        && !isset($config['sitemap']['configuration']) // xml configuration
+                    ;
+                })
+                ->then(function ($config) {
+                    if (true === $config['sitemap']) {
+                        $config['sitemap'] = array(
+                            'enabled' => true,
+                            'configurations' => array(
+                                'sitemap' => array()
+                            ),
+                        );
+                    } elseif (is_array($config['sitemap'])) {
+                        $config['sitemap']['configurations'] = array('sitemap' => array());
+                    }
+
+                    return $config;
+                })
+            ->end()
             ->beforeNormalization()
                 ->ifTrue(function ($config) {
                     return isset($config['content_key']) && !isset($config['content_listener']['content_key']);
@@ -187,12 +212,18 @@ class Configuration implements ConfigurationInterface
                                 ))
                                 ->prototype('scalar')->end()
                             ->end()
+                            ->append($this->getSitemapHelperNode('loaders', array('_all')))
+                            ->append($this->getSitemapHelperNode('guessers', array('_all')))
+                            ->append($this->getSitemapHelperNode('voters', array('_all')))
                         ->end()
                     ->end()
                     ->arrayNode('configurations')
                         ->useAttributeAsKey('name')
                         ->prototype('array')
                             ->fixXmlConfig('template')
+                            ->fixXmlConfig('loader')
+                            ->fixXmlConfig('guesser')
+                            ->fixXmlConfig('voter')
                             ->children()
                                 ->scalarNode('default_change_frequency')->defaultNull()->end()
                                 ->arrayNode('templates')
@@ -200,15 +231,35 @@ class Configuration implements ConfigurationInterface
                                     ->requiresAtLeastOneElement()
                                     ->prototype('scalar')->end()
                                 ->end()
-                                ->scalarNode('loaders')->defaultValue('all')->end()
-                                ->scalarNode('guessers')->defaultValue('all')->end()
-                                ->scalarNode('voters')->defaultValue('all')->end()
+                                ->append($this->getSitemapHelperNode('loaders', array()))
+                                ->append($this->getSitemapHelperNode('guessers', array()))
+                                ->append($this->getSitemapHelperNode('voters', array()))
                             ->end()
                         ->end()
                     ->end()
                 ->end()
             ->end()
         ;
+    }
+
+    private function getSitemapHelperNode($type, $default)
+    {
+        $node = new ArrayNodeDefinition($type);
+        $node
+            ->beforeNormalization()
+                ->ifTrue(function ($config) {
+                    return is_string($config);
+                })
+                ->then(function ($config) {
+                    return array($config);
+                })
+            ->end()
+            ->defaultValue($default)
+            ->prototype('scalar')->end()
+            ->end()
+        ;
+
+        return $node;
     }
 
     /**

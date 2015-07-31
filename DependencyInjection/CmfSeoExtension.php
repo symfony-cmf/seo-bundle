@@ -36,6 +36,12 @@ class CmfSeoExtension extends Extension
      */
     private $contentListenerEnabled = false;
 
+    private $sitemapHelperMap = array(
+        'loaders' => 'cmf_seo.sitemap.loader',
+        'guessers' => 'cmf_seo.sitemap.guesser',
+        'voters' => 'cmf_seo.sitemap.voter'
+    );
+
     /**
      * {@inheritDoc}
      */
@@ -252,29 +258,51 @@ class CmfSeoExtension extends Extension
         $loader->load('sitemap.xml');
 
         $configurations = $config['configurations'];
-        // if there are no explicit configurations, enable the default sitemap
-        if (!count($configurations)) {
-            $configurations['sitemap'] = array();
+
+        $helperStatus = array();
+        foreach ($this->sitemapHelperMap as $helper => $tag) {
+            $helperStatus[$helper] = array();
+            $serviceDefinitionIds = $container->findTaggedServiceIds($tag);
+            foreach ($serviceDefinitionIds as $id => $attributes) {
+                if (0 === strncmp($this->getAlias(), $id, strlen($this->getAlias()))) {
+                    // avoid interfering with services that are not part of this bundle
+                    $helperStatus[$helper][$id] = array();
+                }
+            }
         }
 
-        foreach ($configurations as $key => $configuration) {
+        foreach ($configurations as $sitemapName => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
                 $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(
                     $configuration['default_change_frequency']
                 ));
                 $definition->addTag('cmf_seo.sitemap.guesser', array(
-                    'sitemap' => $key,
+                    'sitemap' => $sitemapName,
                     'priority' => -1,
                 ));
-                $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$key.'.default_change_frequency', $definition);
+                $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$sitemapName.'.default_change_frequency', $definition);
             }
-            unset($configurations[$key]['default_change_frequency']);
+            unset($configurations[$sitemapName]['default_change_frequency']);
 
             // copy default configuration into this sitemap configuration to keep controller simple
             foreach ($config['defaults']['templates'] as $format => $name) {
-                if (!isset($configurations[$key]['templates'][$format])) {
-                    $configurations[$key]['templates'][$format] = $name;
+                if (!isset($configurations[$sitemapName]['templates'][$format])) {
+                    $configurations[$sitemapName]['templates'][$format] = $name;
                 }
+            }
+            foreach ($helperStatus as $helper => $map) {
+                $status = count($configuration[$helper]) ? $configuration[$helper] : $config['defaults'][$helper];
+
+                foreach ($status as $s) {
+                    if ('_all' === $s) {
+                        foreach ($helperStatus[$helper] as $id => $sitemaps) {
+                            $helperStatus[$helper][$id][] = $sitemapName;
+                        }
+                    } elseif ('_none' !== $s) {
+                        $helperStatus[$helper][$s][] = $sitemapName;
+                    }
+                }
+                unset($configurations[$sitemapName][$helper]);
             }
         }
 
@@ -285,21 +313,7 @@ class CmfSeoExtension extends Extension
             $config['defaults']['default_change_frequency']
         );
 
-        // disabling/enabling loaders, guesser and voter
-        $helperValues = array(
-            'loaders' => 'cmf_seo.sitemap.loader',
-            'guessers' => 'cmf_seo.sitemap.guesser',
-            'voters' => 'cmf_seo.sitemap.voter'
-        );
-        foreach ($helperValues as $type => $tag) {
-            if (!isset($config['defaults'][$type])) {
-                throw new InvalidConfigurationException(
-                    sprintf('The values for %s should be set.', implode(', ', array_keys($helperValues)))
-                );
-            }
-
-            $this->handleSitemapHelper($tag, $config['defaults'][$type], $container);
-        }
+        $this->handleSitemapHelper($helperStatus, $container);
 
         if (!$alternateLocale) {
             $container->removeDefinition($this->getAlias().'.sitemap.guesser.alternate_locales');
@@ -309,26 +323,24 @@ class CmfSeoExtension extends Extension
     /**
      * Each helper type out of the guessers, loaders and voters hav its on configuration to enable/disable them
      *
-     * @param string $tag                The tag the services are tagged with.
-     * @param string $configurationValue One of none|all|<comma-separated-list-of-services-ids>
+     * @param array $helperStatus Map of type => id => list of sitemaps
+     * @param ContainerBuilder $container
      */
-    private function handleSitemapHelper($tag, $configurationValue, ContainerBuilder $container)
+    private function handleSitemapHelper($helperStatus, ContainerBuilder $container)
     {
-        // all tagged services are active by default
-        if ('all' === $configurationValue) {
-            return;
-        }
-
-        /** @var Definition[] $serviceDefinitionIds */
-        $serviceDefinitionIds = $container->findTaggedServiceIds($tag);
-
-        if ('none' !== $configurationValue) {
-            $definitionsToRemoveIds = array_flip(explode(',', $configurationValue));
-            $serviceDefinitionIds = array_diff_key($serviceDefinitionIds, $definitionsToRemoveIds);
-        }
-
-        foreach ($serviceDefinitionIds as $serviceDefinitionId => $attributes) {
-            $container->removeDefinition($serviceDefinitionId);
+        foreach ($helperStatus as $type => $status) {
+            foreach ($status as $id => $sitemaps) {
+                if (count($sitemaps)) {
+                    $definition = $container->getDefinition($id);
+                    $tags = $definition->getTag($this->sitemapHelperMap[$type]);
+                    $tag = reset($tags);
+                    $tag['sitemap'] = implode(',', $sitemaps);
+                    $definition->clearTag($this->sitemapHelperMap[$type]);
+                    $definition->addTag($this->sitemapHelperMap[$type], $tag);
+                } else {
+                    $container->removeDefinition($id);
+                }
+            }
         }
     }
 }

@@ -289,10 +289,11 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.sitemap.phpcr_loader',
             'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
+
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.phpcr_loader',
             'cmf_seo.sitemap.loader',
-            array('priority' => -2)
+            array('priority' => -2, 'sitemap' => 'default,some_other')
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.voter_chain',
@@ -301,7 +302,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'cmf_seo.sitemap.publish_workflow_voter',
             'cmf_seo.sitemap.voter',
-            array('priority' => -2)
+            array('priority' => -2, 'sitemap' => 'default,some_other')
         );
         $this->assertContainerBuilderHasService(
             'cmf_seo.sitemap.provider',
@@ -318,7 +319,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             $this->assertContainerBuilderHasServiceDefinitionWithTag(
                 $guesser,
                 'cmf_seo.sitemap.guesser',
-                array('priority' => -2)
+                array('priority' => -2, 'sitemap' => 'default,some_other')
             );
         }
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
@@ -393,9 +394,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'sitemap' => array(
                 'defaults' => array(
                     'default_change_frequency' => 'global-frequency',
-                    'loaders' => 'all',
+                    'loaders' => '_all',
                     'guessers' => 'cmf_seo.sitemap.guesser.default_change_frequency',
-                    'voters' => 'none',
+                    'voters' => '_none',
                 ),
             )
         ));
