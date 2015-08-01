@@ -69,6 +69,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                         'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
                         'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
                     ),
+                    'loaders' => array('_all'),
+                    'guessers' => array('_all'),
+                    'voters' => array('_all'),
                 ),
             ),
             'content_listener' => array(
@@ -100,6 +103,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                             'xml'  => 'test.xml',
                             'html' => 'test.html',
                         ),
+                        'loaders' => array(),
+                        'guessers' => array(),
+                        'voters' => array(),
                     ),
                 ),
                 'defaults' => array(
@@ -108,6 +114,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                         'html' => 'foo.html.twig',
                         'xml' => 'foo.xml.twig',
                     ),
+                    'loaders' => array('_all'),
+                    'guessers' => array('_all'),
+                    'voters' => array('_all'),
                 ),
             ),
             'persistence' => array(
@@ -145,3 +154,4 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
     }
 }
+
