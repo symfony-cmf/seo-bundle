@@ -60,6 +60,10 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.sitemap.phpcr_loader',
             'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SitemapDocumentProvider'
         );
+        $this->assertContainerBuilderHasParameter(
+            'cmf_seo.form.data_class.seo_metadata',
+            'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'
+        );
     }
 
     public function testPersistenceORM()
@@ -80,6 +84,12 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'orm'   => true,
             ),
         ));
+
+
+        $this->assertContainerBuilderHasParameter(
+            'cmf_seo.form.data_class.seo_metadata',
+            'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'
+        );
     }
 
     public function testAdminExtension()

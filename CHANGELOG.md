@@ -1,6 +1,7 @@
 Changelog
 =========
 
+* **2015-08-12**: Added configuration for the default data class of the `seo_metadata` form type.
 * **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased 
   version of sitemaps, you will need to adjust your code. See https://github.com/symfony-cmf/SeoBundle/pull/225
   Options are available to keep all or no voters|guessers|loaders enabled or 

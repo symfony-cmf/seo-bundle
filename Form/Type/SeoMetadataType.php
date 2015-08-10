@@ -29,6 +29,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class SeoMetadataType extends AbstractType
 {
     /**
+     * @var
+     */
+    private $dataClass;
+
+    /**
+     * @param string $dataClass The FQCN of the data class to use for this form.
+     */
+    public function __construct($dataClass)
+    {
+        $this->dataClass = $dataClass;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -70,7 +83,7 @@ class SeoMetadataType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata',
+            'data_class' => $this->dataClass,
             'translation_domain' => 'CmfSeoBundle',
             'required' => false,
         ));

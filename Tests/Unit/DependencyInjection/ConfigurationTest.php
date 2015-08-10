@@ -78,6 +78,11 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled'     => true,
                 'content_key' => 'contentDocument'
             ),
+            'form' => array(
+                'data_class' => array(
+                    'seo_metadata' => null,
+                ),
+            ),
         );
 
         $sources = array_map(function ($path) {
@@ -142,6 +147,11 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'content_listener' => array(
                 'enabled'     => true,
                 'content_key' => 'contentDocument'
+            ),
+            'form' => array(
+                'data_class' => array(
+                    'seo_metadata' => null,
+                ),
             ),
         );
 
