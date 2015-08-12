@@ -13,6 +13,7 @@
             <xsd:element name="error" type="error_handling" minOccurs="0" />
             <xsd:element name="sitemap" type="sitemap" minOccurs="0" />
             <xsd:element name="content-listener" type="content_listener" minOccurs="0" />
+            <xsd:element name="form" type="form" minOccurs="0" />
         </xsd:sequence>
 
         <xsd:attribute name="translation-domain" type="xsd:string" />
@@ -104,5 +105,18 @@
                 <xsd:attribute name="format" type="xsd:string" />
             </xsd:extension>
         </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="form">
+        <xsd:sequence>
+            <xsd:element name="data_class" type="form_data_class" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute name="enabled" type="xsd:boolean" default="true" />
+    </xsd:complexType>
+
+    <xsd:complexType name="form_data_class">
+        <xsd:sequence>
+            <xsd:element name="seo_metadata" type="xsd:string" />
+        </xsd:sequence>
     </xsd:complexType>
 </xsd:schema>

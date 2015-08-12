@@ -22,6 +22,7 @@
         </service>
 
         <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">
+            <argument>%cmf_seo.form.data_class.seo_metadata%</argument>
             <tag name="form.type" alias="seo_metadata" />
         </service>
 

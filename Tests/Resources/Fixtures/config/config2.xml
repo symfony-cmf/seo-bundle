@@ -21,4 +21,10 @@
     </sitemap>
 
     <content-listener enabled="true" content-key="foo" />
+
+    <form enabled="true">
+        <data_class>
+            <seo_metadata>/My/Class</seo_metadata>
+        </data_class>
+    </form>
 </config>

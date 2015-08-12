@@ -95,6 +95,12 @@ class CmfSeoExtension extends Extension
         if ($this->isConfigEnabled($container, $config['alternate_locale'])) {
             $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
+
+        $this->loadFormConfiguration(
+            $config['form'],
+            $container,
+            $this->isConfigEnabled($container, $config['persistence']['phpcr']) ? 'phpcr' : 'default'
+        );
     }
 
     /**
@@ -342,5 +348,26 @@ class CmfSeoExtension extends Extension
                 }
             }
         }
+    }
+
+    /**
+     * Configuration block to configure form.
+     *
+     * The data_class option form type for the SeoMetadata depends on the chose storage.
+     *
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param string           $storage   Information about the configured storage.
+     */
+    private function loadFormConfiguration($config, ContainerBuilder $container, $storage)
+    {
+        $seoMetadataClass = 'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata';
+        if (null !== $config['data_class']['seo_metadata']) {
+            $seoMetadataClass = $config['data_class']['seo_metadata'];
+        } elseif ('phpcr' === $storage) {
+            $seoMetadataClass = 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata';
+        }
+
+        $container->setParameter($this->getAlias() . '.form.data_class.seo_metadata', $seoMetadataClass);
     }
 }

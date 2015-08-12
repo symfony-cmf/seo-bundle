@@ -79,7 +79,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->end()
                 ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
-       ;
+        ;
 
         $this->addPersistenceSection($nodeBuilder);
         $this->addSonataAdminSection($nodeBuilder);
@@ -87,6 +87,9 @@ class Configuration implements ConfigurationInterface
         $this->addErrorHandlerSection($nodeBuilder);
         $this->addSitemapSection($nodeBuilder);
         $this->addContentListenerSection($nodeBuilder);
+        $this->addFormSection($nodeBuilder);
+
+        $nodeBuilder->end();
 
         return $treeBuilder;
     }
@@ -278,5 +281,27 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+    }
+
+    /**
+     * Attach the form node to the tree.
+     *
+     * @param NodeBuilder $nodeBuilder
+     */
+    private function addFormSection($nodeBuilder)
+    {
+        $nodeBuilder
+           ->arrayNode('form')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('data_class')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('seo_metadata')->defaultNull()->end()
+                        ->end()
+                    ->end()
+                ->end()
+           ->end()
+           ;
     }
 }
