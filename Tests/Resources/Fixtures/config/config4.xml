@@ -1,0 +1,12 @@
+<config xmlns="http://cmf.symfony.com/schema/dic/seo">
+    <sitemap enabled="true">
+        <defaults>
+            <template format="html">foo.html.twig</template>
+            <template format="xml">foo.xml.twig</template>
+        </defaults>
+        <configuration default-change-frequency="never" name="sitemap">
+            <template format="xml">test.xml</template>
+            <template format="html">test.html</template>
+        </configuration>
+    </sitemap>
+</config>

@@ -46,7 +46,17 @@
         <service id="cmf_seo.error.suggestion_provider.controller" class="%cmf_seo.error.suggestion_provider.controller.class%">
             <argument type="service" id="twig" />
             <argument>%kernel.debug%</argument>
+            <argument type="service" id="cmf_seo.error.exclusion_matcher" />
+            <argument>%cmf_seo.error.templates%</argument>
         </service>
+
+        <service id="cmf_seo.error.request_matcher"
+                 class="Symfony\Component\HttpFoundation\RequestMatcher"
+                 public="false"
+                 abstract="true"
+        />
+
+        <service id="cmf_seo.error.exclusion_matcher" class="Symfony\Cmf\Bundle\SeoBundle\Matcher\ExclusionMatcher" />
     </services>
 
 </container>

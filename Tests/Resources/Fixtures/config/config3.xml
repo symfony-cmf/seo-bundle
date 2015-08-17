@@ -1,0 +1,6 @@
+<config xmlns="http://cmf.symfony.com/schema/dic/seo">
+    <error enable-parent-provider="true" enable-sibling-provider="true">
+        <exclusion-rule path="some/path" ips="IP" methods="GET" host="test.de" />
+        <exclusion-rule path="some-other/path" ips="IPs" methods="POST" host="test-dev.de" />
+    </error>
+</config>

@@ -5,6 +5,7 @@ namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
 class CmfSeoExtensionTest extends AbstractExtensionTestCase
@@ -197,13 +198,30 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'CmfRoutingBundle' => true,
             )
         );
+
+        $exclusionRules = array(
+            array(
+                'path'    => 'some/path',
+                'host'    => 'test.de',
+                'methods' => 'GET',
+                'ips'     => 'IP',
+            ),
+            array(
+                'path'    => 'some-other/path',
+                'host'    => 'test-dev.de',
+                'methods' => 'POST',
+                'ips'     => 'IPs',
+            ),
+        );
+
         $this->load(array(
             'persistence'   => array(
                 'phpcr' => true,
             ),
             'error' => array(
-                'enable_parent_provider' => true,
+                'enable_parent_provider'  => true,
                 'enable_sibling_provider' => true,
+                'exclusion_rules'         => $exclusionRules,
             )
         ));
 
@@ -217,7 +235,46 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.suggestion_provider',
             array('group' => 'parent')
         );
+
+        $this->assertContainerBuilderHasParameter(
+            'cmf_seo.error.templates',
+            array('html' => 'CmfSeoBundle:Exception:exception.html.twig')
+        );
+
+        $this->assertContainerBuilderHasService(
+            'cmf_seo.error.exclusion_matcher',
+            'Symfony\Cmf\Bundle\SeoBundle\Matcher\ExclusionMatcher'
+        );
+        $attributes = array();
+        foreach ($exclusionRules as $key => $rule) {
+            $attributes[$key] = array();
+            foreach ($rule as $matcher) {
+                $attributes[$key][] = $matcher;
+            }
+            $attributes[$key][] = array();
+        }
+        $this->assertMatcherCreated($attributes);
     }
+
+    /**
+     * @param array $arguments
+     */
+    private function assertMatcherCreated(array $arguments)
+    {
+        $count = 0;
+        foreach ($this->container->getDefinitions() as $id => $definition) {
+            if ($definition instanceof DefinitionDecorator &&
+                $definition->getParent() === 'cmf_seo.error.request_matcher'
+            ) {
+                $count++;
+                $this->assertNotNull($definition);
+                $this->assertEquals($arguments[$count - 1], $definition->getArguments());
+            }
+        }
+
+        $this->assertEquals(2, $count);
+    }
+
 
     public function testSitemapConfiguration()
     {
