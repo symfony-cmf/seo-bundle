@@ -14,6 +14,10 @@ cmf_seo:
     error:
         enable_parent_provider: true
         enable_sibling_provider: true
+        templates:
+            html: ":tests:exception.html.twig"
+        exclusion_rules:
+            - { path: 'excluded' }
     sitemap:
         defaults:
             default_change_frequency: never

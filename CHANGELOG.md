@@ -1,6 +1,8 @@
 Changelog
 =========
 
+* **2015-08-20**: Added templates configuration and `exclusion_rules` (based on the request matcher) to
+  the error handling configuration
 * **2015-08-12**: Added configuration for the default data class of the `seo_metadata` form type.
 * **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased 
   version of sitemaps, you will need to adjust your code. See https://github.com/symfony-cmf/SeoBundle/pull/225

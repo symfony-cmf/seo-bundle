@@ -15,6 +15,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -251,6 +252,41 @@ class CmfSeoExtension extends Extension
                 $container->removeDefinition('cmf_seo.error.suggestion_provider.'.$group);
             }
         }
+
+        $templates = isset($config['templates']) ? $config['templates'] : array();
+        $exclusionRules = isset($config['exclusion_rules']) ? $config['exclusion_rules'] : array();
+        $container->setParameter($this->getAlias().'.error.templates', $templates);
+
+        $exclusionMatcherDefinition = $container->getDefinition($this->getAlias().'.error.exclusion_matcher');
+        foreach ($exclusionRules as $rule) {
+            $rule['host'] = !isset($rule['host']) ? null : $rule['host'];
+            $rule['methods'] = !isset($rule['methods']) ? null : $rule['methods'];
+            $rule['ips'] = !isset($rule['ips']) ? null : $rule['ips'];
+            $requestMatcher = $this->createRequestMatcher(
+                $container,
+                $rule['path'],
+                $rule['host'],
+                $rule['methods'],
+                $rule['ips']
+            );
+            $exclusionMatcherDefinition->addMethodCall('addRequestMatcher', array($requestMatcher));
+        }
+    }
+
+    private function createRequestMatcher(ContainerBuilder $container, $path = null, $host = null, $methods = null, $ips = null, array $attributes = array())
+    {
+        $arguments = array($path, $host, $methods, $ips, $attributes);
+        $serialized = serialize($arguments);
+        $id = $this->getAlias().'.error.request_matcher.'.md5($serialized).sha1($serialized);
+
+        if (!$container->hasDefinition($id)) {
+            $container
+                ->setDefinition($id, new DefinitionDecorator($this->getAlias().'.error.request_matcher'))
+                ->setArguments($arguments)
+            ;
+        }
+
+        return new Reference($id);
     }
 
     /**

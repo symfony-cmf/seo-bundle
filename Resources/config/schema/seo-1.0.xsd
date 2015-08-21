@@ -56,6 +56,9 @@
     </xsd:complexType>
 
     <xsd:complexType name="error_handling">
+        <xsd:sequence>
+            <xsd:element name="exclusion-rule" type="exclusion_rule" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
         <xsd:attribute name="enable-parent-provider" type="xsd:boolean" default="false" />
         <xsd:attribute name="enable-sibling-provider" type="xsd:boolean"  default="false" />
     </xsd:complexType>
@@ -118,5 +121,12 @@
         <xsd:sequence>
             <xsd:element name="seo_metadata" type="xsd:string" />
         </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="exclusion_rule">
+        <xsd:attribute name="path" type="xsd:string" />
+        <xsd:attribute name="ips" type="xsd:string" />
+        <xsd:attribute name="host" type="xsd:string" />
+        <xsd:attribute name="methods" type="xsd:string" />
     </xsd:complexType>
 </xsd:schema>

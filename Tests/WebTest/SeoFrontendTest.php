@@ -14,7 +14,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\HttpKernel\Client;
 
 /**
  * This test will cover all current frontend stuff.
@@ -166,7 +165,7 @@ class SeoFrontendTest extends BaseTestCase
 
         $this->assertEquals(404, $res->getStatusCode());
 
-        $this->assertCount(1, $crawler->filter('html:contains("Exception-Test")'));
+        $this->assertCount(1, $crawler->filter('html:contains("Exception-Test")')); // the configured template was chosen
         $this->assertCount(1, $crawler->filter('html:contains("parent - content-1")'));
         $this->assertCount(1, $crawler->filter('html:contains("sibling - content-deeper")'));
     }
@@ -175,5 +174,16 @@ class SeoFrontendTest extends BaseTestCase
     {
         $this->client->request('GET', '/content/content-1/content[a]b/sub?bla=blup');
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testErrorHandlingForExcludedPath()
+    {
+        $crawler = $this->client->request('GET', '/content/content-1/content-excluded');
+        $res = $this->client->getResponse();
+
+        $this->assertEquals(404, $res->getStatusCode());
+
+        $this->assertCount(0, $crawler->filter('html:contains("Exception-Test")')); // the default template was chosen
+        $this->assertCount(1, $crawler->filter('html:contains("No route found for")'));
     }
 }
