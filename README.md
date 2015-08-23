@@ -37,5 +37,5 @@ Unit and/or functional tests exist for this bundle. See the
 [Testing documentation](http://symfony.com/doc/master/cmf/components/testing.html)
 for a guide to running the tests.
 
-Thanks to
+Thanks to 
 [everyone who has contributed](https://github.com/symfony-cmf/SeoBundle/contributors) already.
