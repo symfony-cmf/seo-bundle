@@ -36,7 +36,7 @@ matrix:
 before_install:
   - composer self-update
   - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
-  - composer require phpunit/phpunit --no-update
+  - composer require phpunit/phpunit:"${phpunit --version | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+'}" --no-update
   - composer require symfony/symfony:${SYMFONY_VERSION} --no-update
   
 install: composer update $COMPOSER_FLAGS --prefer-dist
