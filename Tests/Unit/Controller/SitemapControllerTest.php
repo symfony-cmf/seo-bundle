@@ -86,13 +86,15 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testRequestXml()
     {
-        $response = new Response('some-xml-string');
-        $this->templating->expects($this->once())->method('render')->will($this->returnValue($response));
+        $this->templating->expects($this->once())
+            ->method('render')
+            ->with($this->equalTo('CmfSeoBundle:Sitemap:index.xml.twig'), $this->anything())
+            ->will($this->returnValue('some-xml-string'));
 
         /** @var Response $response */
         $response = $this->controller->indexAction('xml', 'test');
 
-        $this->assertEquals(new Response('some-xml-string'), $response->getContent());
+        $this->assertEquals('some-xml-string', $response->getContent());
     }
 
     public function testRequestHtml()
