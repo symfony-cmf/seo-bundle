@@ -26,7 +26,7 @@
         "sonata-project/doctrine-phpcr-admin-bundle": "~1.1",
         "symfony-cmf/routing-bundle": "~1.2",
         "symfony-cmf/core-bundle": "~1.1",
-        "matthiasnoback/symfony-dependency-injection-test": "0.*",
+        "matthiasnoback/symfony-dependency-injection-test": "^0.3",
         "matthiasnoback/symfony-config-test": "0.*",
         "burgov/key-value-form-bundle": "~1.0"
     },
