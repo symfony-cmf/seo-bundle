@@ -21,29 +21,25 @@ use Symfony\Component\HttpKernel\Client;
  */
 class SeoContentAdminExtensionTest extends BaseTestCase
 {
-    /** @var  Client */
-    private $client;
-
     public function setUp()
     {
         $this->db('PHPCR')->loadFixtures(array(
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
         ));
-        $this->client = $this->createClient();
     }
 
     public function testAdminDashboard()
     {
-        $this->client->request('GET', '/admin/dashboard');
-        $res = $this->client->getResponse();
+        $this->getClient()->request('GET', '/admin/dashboard');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
     }
 
     public function testAdminExtensionExists()
     {
-        $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/list');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/admin/cmf/seo/seoawarecontent/list');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("content-1")'));
@@ -51,8 +47,8 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
     public function testItemEditView()
     {
-        $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-1/edit');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-1/edit');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
 
@@ -65,8 +61,8 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
     public function testExtraPropertyEditView()
     {
-        $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-extra/edit');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-extra/edit');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Key")'));
