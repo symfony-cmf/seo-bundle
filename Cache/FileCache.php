@@ -24,7 +24,9 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
 {
     private $dir;
 
-    public function __construct($baseDir, $dir)
+    private $umask;
+
+    public function __construct($baseDir, $dir, $umask = 0002)
     {
         if (!is_dir($baseDir)) {
             throw new \InvalidArgumentException(sprintf('The directory "%s" does not exist.', $dir));
@@ -33,12 +35,14 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
             throw new \InvalidArgumentException(sprintf('The directory "%s" is not writable.', $dir));
         }
 
+        $this->dir = rtrim($dir, '\\/');
+
+        $this->umask = $umask;
+
         $dir = $baseDir.DIRECTORY_SEPARATOR.$dir;
         if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
+            mkdir($dir, 0777 & ~$this->umask, true);
         }
-
-        $this->dir = rtrim($dir, '\\/');
     }
 
     /**
@@ -66,7 +70,7 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
 
         $tmpFile = tempnam($this->dir, 'metadata-cache');
         file_put_contents($tmpFile, '<?php return unserialize('.var_export(serialize($extractors), true).');');
-        chmod($tmpFile, 0666 & ~umask());
+        chmod($tmpFile, 0666 & ~$this->umask);
 
         $this->renameFile($tmpFile, $path);
     }
@@ -111,7 +115,7 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
     public function warmUp($cacheDir)
     {
         if (!is_dir($this->dir)) {
-            mkdir($this->dir, 0777, true);
+            mkdir($this->dir, 0775, true);
         }
     }
 

@@ -11,6 +11,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
+use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
+
 /**
  * This trait plugs into your model to implement SeoAwareInterface
  * with brevity.
@@ -19,6 +21,9 @@ namespace Symfony\Cmf\Bundle\SeoBundle;
  */
 trait SeoAwareTrait
 {
+    /**
+     * @PHPCRODM\Child
+     */
     private $seoMetadata;
 
     /**
