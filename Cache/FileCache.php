@@ -35,14 +35,13 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
             throw new \InvalidArgumentException(sprintf('The directory "%s" is not writable.', $baseDir));
         }
 
-        $dir = $baseDir.DIRECTORY_SEPARATOR.$dir;
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777 & ~$this->umask, true);
-        }
-
-        $this->dir = rtrim($dir, '\\/');
+        $this->dir = $baseDir.DIRECTORY_SEPARATOR.rtrim($dir, '\\/');
 
         $this->umask = $umask;
+
+        if (!is_dir($this->dir)) {
+            mkdir($this->dir, 0777 & ~$this->umask, true);
+        }
     }
 
     /**
