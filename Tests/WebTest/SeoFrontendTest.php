@@ -33,7 +33,6 @@ class SeoFrontendTest extends BaseTestCase
         $this->db('PHPCR')->loadFixtures(array(
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
         ));
-        $this->client = $this->createClient();
     }
 
     /**
@@ -41,8 +40,8 @@ class SeoFrontendTest extends BaseTestCase
      */
     public function testDefaultUsage()
     {
-        $crawler = $this->client->request('GET', '/content/content-1');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/content/content-1');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content 1")'));
@@ -74,8 +73,8 @@ class SeoFrontendTest extends BaseTestCase
 
     public function testExtractors()
     {
-        $crawler = $this->client->request('GET', '/content/strategy-content');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/content/strategy-content');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("content of strategy test.")'));
@@ -110,8 +109,8 @@ class SeoFrontendTest extends BaseTestCase
      */
     public function testExtraProperties($expectedType, $expectedKey, $expectedValue)
     {
-        $crawler = $this->client->request('GET', '/content/content-extra');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/content/content-extra');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content extra")'));
@@ -137,8 +136,8 @@ class SeoFrontendTest extends BaseTestCase
 
     public function testAlternateLanguages()
     {
-        $crawler = $this->client->request('GET', '/en/alternate-locale-content');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/en/alternate-locale-content');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Alternate locale content")'));
@@ -147,8 +146,8 @@ class SeoFrontendTest extends BaseTestCase
         $expectedArray = array(array('alternate', 'http://localhost/de/alternate-locale-content', 'de'));
         $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
 
-        $crawler = $this->client->request('GET', '/de/alternate-locale-content');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/de/alternate-locale-content');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Alternative Sprachen")'));
