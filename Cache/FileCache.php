@@ -29,20 +29,20 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
     public function __construct($baseDir, $dir, $umask = 0002)
     {
         if (!is_dir($baseDir)) {
-            throw new \InvalidArgumentException(sprintf('The directory "%s" does not exist.', $dir));
+            throw new \InvalidArgumentException(sprintf('The directory "%s" does not exist.', $baseDir));
         }
         if (!is_writable($baseDir)) {
-            throw new \InvalidArgumentException(sprintf('The directory "%s" is not writable.', $dir));
+            throw new \InvalidArgumentException(sprintf('The directory "%s" is not writable.', $baseDir));
         }
-
-        $this->dir = rtrim($dir, '\\/');
-
-        $this->umask = $umask;
 
         $dir = $baseDir.DIRECTORY_SEPARATOR.$dir;
         if (!is_dir($dir)) {
             mkdir($dir, 0777 & ~$this->umask, true);
         }
+
+        $this->dir = rtrim($dir, '\\/');
+
+        $this->umask = $umask;
     }
 
     /**
