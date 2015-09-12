@@ -41,6 +41,7 @@
             <argument type="service" id="translator" />
             <argument type="service" id="cmf_seo.config_values" />
             <argument type="service" id="cmf_seo.cache" />
+            <argument>%locale%</argument>
         </service>
 
         <service id="cmf_seo.error.suggestion_provider.controller" class="%cmf_seo.error.suggestion_provider.controller.class%">

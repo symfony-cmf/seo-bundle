@@ -85,6 +85,11 @@ class SeoPresentation implements SeoPresentationInterface
     private $cache;
 
     /**
+     * @var
+     */
+    private $locale;
+
+    /**
      * The constructor will set the injected SeoPage - the service of
      * sonata which is responsible for storing the seo data.
      *
@@ -92,17 +97,20 @@ class SeoPresentation implements SeoPresentationInterface
      * @param TranslatorInterface $translator
      * @param ConfigValues        $configValues
      * @param CacheInterface      $cache
+     * @param string              $locale
      */
     public function __construct(
         SeoPage $sonataPage,
         TranslatorInterface $translator,
         ConfigValues $configValues,
-        CacheInterface $cache = null
+        CacheInterface $cache = null,
+        $locale = null
     ) {
         $this->sonataPage = $sonataPage;
         $this->translator = $translator;
         $this->configValues = $configValues;
         $this->cache = $cache;
+        $this->locale = $locale;
     }
 
     /**
@@ -279,6 +287,10 @@ class SeoPresentation implements SeoPresentationInterface
                     );
                     break;
             }
+        }
+
+        if ($this->locale) {
+            $this->sonataPage->addMeta('http-equiv', 'language', $this->locale);
         }
     }
 

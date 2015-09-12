@@ -347,7 +347,8 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             $this->pageService,
             $this->translator,
             $this->configValues,
-            $cache
+            $cache,
+            null
         );
 
         // predictions
@@ -388,7 +389,8 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             $this->pageService,
             $this->translator,
             $this->configValues,
-            $cache
+            $cache,
+            null
         );
 
         // predictions
@@ -418,5 +420,27 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         ;
 
         $this->seoPresentation->updateSeoPage($content);
+    }
+
+    public function testLocaleMetaTag()
+    {
+        $seoPresentation = new SeoPresentation(
+            $this->pageService,
+            $this->translator,
+            $this->configValues,
+            null,
+            'en'
+        );
+
+        // predictions
+        $this->pageService
+            ->expects($this->once())
+            ->method('addMeta')
+            ->with('http-equiv', 'language', 'en')
+        ;
+
+        // test
+        $seoPresentation->updateSeoPage(new \stdClass());
+
     }
 }
