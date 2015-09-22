@@ -11,6 +11,7 @@
         <parameter key="cmf_seo.cache.file.class">Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache</parameter>
         <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\SeoPresentation</parameter>
         <parameter key="cmf_seo.error.suggestion_provider.controller.class">Symfony\Cmf\Bundle\SeoBundle\Controller\SuggestionProviderController</parameter>
+        <parameter key="cmf_seo.twig.extension.class">Symfony\Cmf\Bundle\SeoBundle\Twig\Extension\CmfSeoExtension</parameter>
     </parameters>
 
     <services>
@@ -58,6 +59,11 @@
         />
 
         <service id="cmf_seo.error.exclusion_matcher" class="Symfony\Cmf\Bundle\SeoBundle\Matcher\ExclusionMatcher" />
+
+        <service id="cmf_seo.twig.extension" class="%cmf_seo.twig.extension.class%" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="cmf_seo.presentation" />
+        </service>
     </services>
 
 </container>
