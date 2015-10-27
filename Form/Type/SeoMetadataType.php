@@ -46,22 +46,27 @@ class SeoMetadataType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $isSf28 = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
+        $textType = $isSf28 ? 'Symfony\Component\Form\Extension\Core\Type\TextType' : 'text';
+        $textareaType = $isSf28 ? 'Symfony\Component\Form\Extension\Core\Type\TextareaType' : 'textarea';
+        $burgovKeyValueType = $isSf28 ? 'Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType' : 'burgov_key_value';
+
         $builder
-            ->add('title', 'text', array('label' => 'form.label_title'))
-            ->add('originalUrl', 'text', array('label'=> 'form.label_originalUrl'))
-            ->add('metaDescription', 'textarea', array('label' => 'form.label_metaDescription'))
-            ->add('metaKeywords', 'textarea', array('label' => 'form.label_metaKeywords'))
-            ->add('extraProperties', 'burgov_key_value', array(
+            ->add('title', $textType, array('label' => 'form.label_title'))
+            ->add('originalUrl', $textType, array('label'=> 'form.label_originalUrl'))
+            ->add('metaDescription', $textareaType, array('label' => 'form.label_metaDescription'))
+            ->add('metaKeywords', $textareaType, array('label' => 'form.label_metaKeywords'))
+            ->add('extraProperties', $burgovKeyValueType, array(
                 'label' => 'form.label_extraProperties',
                 'value_type' => 'text',
                 'use_container_object' => true,
             ))
-            ->add('extraNames', 'burgov_key_value', array(
+            ->add('extraNames', $burgovKeyValueType, array(
                 'label' => 'form.label_extraNames',
                 'value_type' => 'text',
                 'use_container_object' => true,
             ))
-            ->add('extraHttp', 'burgov_key_value', array(
+            ->add('extraHttp', $burgovKeyValueType, array(
                 'label' => 'form.label_extraHttp',
                 'value_type' => 'text',
                 'use_container_object' => true,
@@ -93,6 +98,14 @@ class SeoMetadataType extends AbstractType
      * {@inheritDoc}
      */
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBlockPrefix()
     {
         return 'seo_metadata';
     }
