@@ -45,20 +45,20 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadExtractorsFromCache($class)
     {
         $path = $this->dir.'/'.strtr($class, '\\', '-').'.cache.php';
         if (!file_exists($path)) {
-            return null;
+            return;
         }
 
         return include $path;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function putExtractorsInCache($class, array $extractors)
     {
@@ -101,7 +101,7 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isOptional()
     {
@@ -109,7 +109,7 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function warmUp($cacheDir)
     {
@@ -119,7 +119,7 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clear($cacheDir)
     {

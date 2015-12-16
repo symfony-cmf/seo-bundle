@@ -11,7 +11,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
-use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,8 +49,8 @@ class SitemapController
      * Json is serialized by default, but can be customized with a template
      *
      * @param UrlInformationProvider $sitemapProvider
-     * @param EngineInterface $templating
-     * @param array $configurations List of available sitemap configurations.
+     * @param EngineInterface        $templating
+     * @param array                  $configurations  List of available sitemap configurations.
      */
     public function __construct(
         UrlInformationProvider $sitemapProvider,

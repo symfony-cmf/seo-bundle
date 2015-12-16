@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Register the tagged services for the url information provider:
+ * Register the tagged services for the url information provider:.
  *
  * - cmf_seo.sitemap.loader
  * - cmf_seo.sitemap.voter
@@ -29,7 +29,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class RegisterUrlInformationProviderPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws LogicException If a tagged service is not public.
      */

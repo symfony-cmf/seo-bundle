@@ -54,7 +54,7 @@ class SeoFrontendTest extends BaseTestCase
         $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
             $nameValue = $node->attr('name');
 
-            return 'description' === $nameValue ||'keywords' === $nameValue;
+            return 'description' === $nameValue || 'keywords' === $nameValue;
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');
@@ -87,7 +87,7 @@ class SeoFrontendTest extends BaseTestCase
         $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
             $nameValue = $node->attr('name');
 
-            return 'description' === $nameValue ||'keywords' === $nameValue;
+            return 'description' === $nameValue || 'keywords' === $nameValue;
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');

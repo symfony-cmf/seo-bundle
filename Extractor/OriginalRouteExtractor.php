@@ -35,7 +35,7 @@ class OriginalRouteExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($content)
     {
@@ -43,7 +43,7 @@ class OriginalRouteExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param OriginalRouteReadInterface $content
      */

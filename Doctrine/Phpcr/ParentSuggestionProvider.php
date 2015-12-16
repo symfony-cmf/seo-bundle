@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Route;
 class ParentSuggestionProvider extends BaseSuggestionProvider
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create(Request $request)
     {

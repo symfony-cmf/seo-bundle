@@ -34,7 +34,7 @@ interface SeoPresentationInterface
      * the canonical URL and this content provided a canonical URL different
      * from the current URL. Returns false in all other cases.
      *
-     * @return boolean|RedirectResponse
+     * @return bool|RedirectResponse
      */
     public function getRedirectResponse();
 

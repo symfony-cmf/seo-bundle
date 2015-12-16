@@ -23,7 +23,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 class OriginalUrlExtractor implements ExtractorInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($content)
     {
@@ -31,7 +31,7 @@ class OriginalUrlExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {

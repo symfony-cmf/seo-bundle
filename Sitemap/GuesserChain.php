@@ -11,10 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
-use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Guess values with prioritized guessers.
@@ -24,7 +21,7 @@ use Symfony\Component\Routing\RouterInterface;
 class GuesserChain extends AbstractChain
 {
     /**
-     * {@inheritDocs}
+     * {@inheritdoc}.
      */
     public function guessValues(UrlInformation $urlInformation, $object, $sitemap)
     {

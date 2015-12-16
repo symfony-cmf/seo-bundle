@@ -40,7 +40,7 @@ interface SeoMetadataInterface
     public function setMetaKeywords($metaKeywords);
 
     /**
-     * Gets the Keywords for the meta tag
+     * Gets the Keywords for the meta tag.
      *
      * @return string
      */

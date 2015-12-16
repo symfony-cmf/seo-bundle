@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class RegisterExtractorsPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws LogicException If a tagged service is not public.
      */
@@ -54,7 +54,7 @@ class RegisterExtractorsPass implements CompilerPassInterface
 
             $strategyDefinition->addMethodCall('addExtractor', array(
                 new Reference($id),
-                $priority
+                $priority,
             ));
         }
     }

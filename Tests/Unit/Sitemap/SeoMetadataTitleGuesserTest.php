@@ -23,7 +23,7 @@ class SeoMetadataTitleGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createGuesser()
     {
@@ -41,7 +41,7 @@ class SeoMetadataTitleGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createData()
     {
@@ -49,7 +49,7 @@ class SeoMetadataTitleGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getFields()
     {

@@ -234,14 +234,14 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $extractorDefault
             ->expects($this->once())
             ->method('updateMetadata')
-            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
                 $seoMetadata->setTitle('First Title');
             }))
         ;
         $extractorOne
             ->expects($this->once())
             ->method('updateMetadata')
-            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
                 $seoMetadata->setTitle('Final Title');
             }))
         ;
@@ -281,14 +281,14 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $extractorDefault
             ->expects($this->once())
             ->method('updateMetadata')
-            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
                 $seoMetadata->setMetaDescription('First Description');
             }))
         ;
         $extractorOne
             ->expects($this->once())
             ->method('updateMetadata')
-            ->will($this->returnCallback(function($content, SeoMetadataInterface $seoMetadata) {
+            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
                 $seoMetadata->setMetaDescription('Final Description');
             }))
         ;
@@ -441,6 +441,5 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 
         // test
         $seoPresentation->updateSeoPage(new \stdClass());
-
     }
 }

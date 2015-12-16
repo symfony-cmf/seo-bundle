@@ -29,7 +29,7 @@ interface ExtractorInterface
      *
      * @param object $content
      *
-     * @return boolean
+     * @return bool
      */
     public function supports($content);
 

@@ -38,8 +38,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function testDefaultsForAllConfigFormats()
     {
         $expectedConfiguration = array(
-            'title'                  => 'default_title',
-            'description'            => 'default_description',
+            'title' => 'default_title',
+            'description' => 'default_description',
             'persistence' => array(
                 'phpcr' => array(
                     'enabled' => false,
@@ -50,18 +50,18 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'manager_name' => null,
                 ),
             ),
-            'translation_domain'     => 'messages',
+            'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'sonata_admin_extension' => array(
                 'enabled' => 'auto',
                 'form_group' => 'form.group_seo',
             ),
             'alternate_locale' => array(
-                'enabled'  => false,
+                'enabled' => false,
                 'provider_id' => null,
             ),
             'sitemap' => array(
-                'enabled'        => false,
+                'enabled' => false,
                 'configurations' => array(),
                 'defaults' => array(
                     'default_change_frequency' => 'always',
@@ -75,8 +75,8 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 ),
             ),
             'content_listener' => array(
-                'enabled'     => true,
-                'content_key' => 'contentDocument'
+                'enabled' => true,
+                'content_key' => 'contentDocument',
             ),
             'form' => array(
                 'data_class' => array(
@@ -100,12 +100,12 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     {
         $expectedConfiguration = array(
             'sitemap' => array(
-                'enabled'        => true,
+                'enabled' => true,
                 'configurations' => array(
                     'sitemap' => array(
                         'default_change_frequency' => 'never',
                         'templates' => array(
-                            'xml'  => 'test.xml',
+                            'xml' => 'test.xml',
                             'html' => 'test.html',
                         ),
                         'loaders' => array(),
@@ -134,19 +134,19 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'manager_name' => null,
                 ),
             ),
-            'translation_domain'     => 'messages',
+            'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'sonata_admin_extension' => array(
                 'enabled' => 'auto',
                 'form_group' => 'form.group_seo',
             ),
             'alternate_locale' => array(
-                'enabled'  => false,
+                'enabled' => false,
                 'provider_id' => null,
             ),
             'content_listener' => array(
-                'enabled'     => true,
-                'content_key' => 'contentDocument'
+                'enabled' => true,
+                'content_key' => 'contentDocument',
             ),
             'form' => array(
                 'data_class' => array(
@@ -168,63 +168,63 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     {
         $expectedConfiguration = array(
             'error' => array(
-                'enable_parent_provider'  => true,
+                'enable_parent_provider' => true,
                 'enable_sibling_provider' => true,
                 'exclusion_rules' => array(
                     array(
-                        'path'    => 'some/path',
-                        'ips'     => 'IP',
+                        'path' => 'some/path',
+                        'ips' => 'IP',
                         'methods' => 'GET',
-                        'host'    => 'test.de',
+                        'host' => 'test.de',
                     ),
                     array(
-                        'path'    => 'some-other/path',
-                        'ips'     => 'IPs',
+                        'path' => 'some-other/path',
+                        'ips' => 'IPs',
                         'methods' => 'POST',
-                        'host'    => 'test-dev.de',
+                        'host' => 'test-dev.de',
                     ),
                 ),
-                'templates'               => array(
+                'templates' => array(
                     'html' => 'CmfSeoBundle:Exception:exception.html.twig',
                 ),
             ),
-            'translation_domain'     => 'messages',
+            'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
             'persistence' => array(
-                'phpcr'   => array(
-                    'enabled'      => false,
+                'phpcr' => array(
+                    'enabled' => false,
                     'manager_name' => null,
                 ),
                 'orm' => array(
-                    'enabled'      => false,
+                    'enabled' => false,
                     'manager_name' => null,
                 ),
             ),
             'sonata_admin_extension' => array(
-                'enabled'    => 'auto',
+                'enabled' => 'auto',
                 'form_group' => 'form.group_seo',
             ),
-            'alternate_locale'       => array(
-                'enabled'     => false,
+            'alternate_locale' => array(
+                'enabled' => false,
                 'provider_id' => null,
             ),
             'sitemap' => array(
-                'enabled'        => false,
+                'enabled' => false,
                 'configurations' => array(),
-                'defaults'       => array(
+                'defaults' => array(
                     'default_change_frequency' => 'always',
-                    'templates'                => array(
+                    'templates' => array(
                         'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
-                        'xml'  => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
                     ),
-                    'loaders'                  => array('_all'),
-                    'guessers'                 => array('_all'),
-                    'voters'                   => array('_all'),
+                    'loaders' => array('_all'),
+                    'guessers' => array('_all'),
+                    'voters' => array('_all'),
                 ),
             ),
             'content_listener' => array(
-                'enabled'     => true,
-                'content_key' => 'contentDocument'
+                'enabled' => true,
+                'content_key' => 'contentDocument',
             ),
             'form' => array(
                 'data_class' => array(

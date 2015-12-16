@@ -26,7 +26,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -48,7 +48,7 @@ class Configuration implements ConfigurationInterface
                         $config['sitemap'] = array(
                             'enabled' => true,
                             'configurations' => array(
-                                'sitemap' => array()
+                                'sitemap' => array(),
                             ),
                         );
                     } elseif (is_array($config['sitemap'])) {
@@ -136,7 +136,7 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('sonata_admin_extension')
                 ->addDefaultsIfNotSet()
                 ->beforeNormalization()
-                    ->ifTrue( function ($v) { return is_scalar($v); })
+                    ->ifTrue(function ($v) { return is_scalar($v); })
                     ->then(function ($v) {
                         return array('enabled' => $v);
                     })
@@ -205,7 +205,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-
     }
 
     /**

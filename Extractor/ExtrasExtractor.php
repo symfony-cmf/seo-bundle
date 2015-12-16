@@ -23,7 +23,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 class ExtrasExtractor implements ExtractorInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($content)
     {
@@ -31,16 +31,16 @@ class ExtrasExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param ExtrasReadInterface $content
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
         $allowedTypesMethodMapping = array(
-            'property'   => 'addExtraProperty',
-            'name'       => 'addExtraName',
-            'http-equiv' => 'addExtraHttp'
+            'property' => 'addExtraProperty',
+            'name' => 'addExtraName',
+            'http-equiv' => 'addExtraHttp',
         );
 
         $contentExtras = $content->getSeoExtras();

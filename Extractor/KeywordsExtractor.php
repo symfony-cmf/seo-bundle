@@ -22,7 +22,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 class KeywordsExtractor implements ExtractorInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($object)
     {
@@ -30,7 +30,7 @@ class KeywordsExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param KeywordsReadInterface $content
      */

@@ -21,7 +21,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 class TitleReadExtractor implements ExtractorInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($content)
     {
@@ -29,7 +29,7 @@ class TitleReadExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {

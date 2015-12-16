@@ -11,10 +11,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
-use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Guesser that sets the location by building the URL of the object.
@@ -36,7 +34,7 @@ class LocationGuesser implements GuesserInterface
     }
 
     /**
-     * {@inheritDocs}
+     * {@inheritdoc}.
      */
     public function guessValues(UrlInformation $urlInformation, $object, $sitemap)
     {

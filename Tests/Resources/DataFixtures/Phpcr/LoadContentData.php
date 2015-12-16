@@ -146,6 +146,5 @@ class LoadContentData implements FixtureInterface
         $manager->persist($route);
 
         $manager->flush();
-
     }
 }

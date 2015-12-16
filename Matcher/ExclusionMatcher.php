@@ -35,7 +35,7 @@ class ExclusionMatcher implements RequestMatcherInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function matches(Request $request)
     {

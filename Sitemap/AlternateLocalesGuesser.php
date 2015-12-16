@@ -13,7 +13,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Guesser to set alternate locales from an AlternateLocaleProviderInterface.
@@ -33,7 +32,7 @@ class AlternateLocalesGuesser implements GuesserInterface
     }
 
     /**
-     * {@inheritDocs}
+     * {@inheritdoc}.
      */
     public function guessValues(UrlInformation $urlInformation, $object, $sitemap)
     {

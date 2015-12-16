@@ -47,7 +47,6 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
         $document->expects($this->any())
             ->method($this->extractMethod)
             ->will($this->returnValue('extracted'));
-        ;
 
         $this->seoMetadata->expects($this->once())
             ->method($this->metadataMethod)

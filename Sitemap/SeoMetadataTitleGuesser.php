@@ -13,7 +13,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Guess the title with the help of SEO metadata.
@@ -34,7 +33,7 @@ class SeoMetadataTitleGuesser implements GuesserInterface
     }
 
     /**
-     * {@inheritDocs}
+     * {@inheritdoc}.
      */
     public function guessValues(UrlInformation $urlInformation, $object, $sitemap)
     {

@@ -48,7 +48,7 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
     }
 
     /**
-     * @param string                $class
+     * @param string $class
      *
      * @return null|DocumentManager
      */

@@ -59,7 +59,7 @@ class SuggestionProviderController extends ExceptionController
      * @param RequestMatcherInterface $requestMatcher The exclusion matcher to decider whether a route should be handled
      *                                                by this error handling. It uses the defined exclusion_rules in the
      *                                                error configuration.
-     * @param array                   $templates  Containing the configured templates to use in custom error cases.
+     * @param array                   $templates      Containing the configured templates to use in custom error cases.
      */
     public function __construct(
         \Twig_Environment $twig,
@@ -78,6 +78,7 @@ class SuggestionProviderController extends ExceptionController
      * @param FlattenException     $exception
      * @param DebugLoggerInterface $logger
      * @param string               $_format
+     *
      * @return Response
      */
     public function showAction(
@@ -110,13 +111,13 @@ class SuggestionProviderController extends ExceptionController
             $this->twig->render(
                 $templateForSuggestion,
                 array(
-                    'status_code'    => $code,
-                    'status_text'    => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
-                    'message'        => $exception->getMessage(),
-                    'exception'      => $exception,
-                    'logger'         => $logger,
+                    'status_code' => $code,
+                    'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
+                    'message' => $exception->getMessage(),
+                    'exception' => $exception,
+                    'logger' => $logger,
                     'currentContent' => $currentContent,
-                    'best_matches'   => $groupedSuggestions,
+                    'best_matches' => $groupedSuggestions,
                 )
             ),
             $code
@@ -142,7 +143,7 @@ class SuggestionProviderController extends ExceptionController
     private function getTemplateForSuggestions($format = 'html')
     {
         if (!isset($this->templates[$format])) {
-            return null;
+            return;
         }
 
         return $this->templates[$format];

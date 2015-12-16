@@ -48,7 +48,6 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getUrlInformation')
             ->will($this->returnValue($this->createUrlInformation()));
-        ;
 
         $this->templating = $this->getMock('Symfony\Component\Templating\EngineInterface');
         $this->controller = new SitemapController(
@@ -57,7 +56,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
             array(
                 'test' => array(
                     'templates' => array(
-                        'xml'  => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
                         'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
                     ),
                 ),
@@ -71,21 +70,21 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         $response = $this->controller->indexAction('json', 'test');
         $expected = array(
             array(
-                'loc'               => 'http://www.test-alternate-locale.de',
-                'label'             => 'Test alternate locale',
-                'changefreq'        => 'never',
-                'lastmod'           => '2014-11-07T00:00:00+01:00',
-                'priority'          => 0.85,
+                'loc' => 'http://www.test-alternate-locale.de',
+                'label' => 'Test alternate locale',
+                'changefreq' => 'never',
+                'lastmod' => '2014-11-07T00:00:00+01:00',
+                'priority' => 0.85,
                 'alternate_locales' => array(
-                    array('href' => 'http://www.test-alternate-locale.com', 'href_locale' => 'en')
+                    array('href' => 'http://www.test-alternate-locale.com', 'href_locale' => 'en'),
                 ),
             ),
             array(
-                'loc'               => 'http://www.test-domain.de',
-                'label'             => 'Test label',
-                'changefreq'        => 'always',
-                'lastmod'           => '2014-11-06T00:00:00+01:00',
-                'priority'          => 0.85,
+                'loc' => 'http://www.test-domain.de',
+                'label' => 'Test label',
+                'changefreq' => 'always',
+                'lastmod' => '2014-11-06T00:00:00+01:00',
+                'priority' => 0.85,
                 'alternate_locales' => array(),
             ),
         );

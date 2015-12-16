@@ -27,7 +27,7 @@ trait SeoAwareTrait
     private $seoMetadata;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSeoMetadata()
     {
@@ -35,7 +35,7 @@ trait SeoAwareTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setSeoMetadata($metadata)
     {

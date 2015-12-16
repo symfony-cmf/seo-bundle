@@ -18,8 +18,8 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
  */
 class LoaderChain extends AbstractChain
 {
-     /**
-     * {@inheritDoc}
+    /**
+     * {@inheritdoc}
      */
     public function load($sitemap)
     {
