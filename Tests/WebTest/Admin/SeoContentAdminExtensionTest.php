@@ -70,7 +70,6 @@ class SeoContentAdminExtensionTest extends BaseTestCase
 
     public function testItemCreate()
     {
-
         $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/create');
         $res = $this->client->getResponse();
 

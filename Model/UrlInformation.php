@@ -10,6 +10,7 @@
  */
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Model;
+
 use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
 
 /**
@@ -50,7 +51,7 @@ class UrlInformation
     private $allowedChangeFrequencies = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never');
 
     /**
-     * @var string $label As a string to display the route i.e. in html views.
+     * @var string As a string to display the route i.e. in html views.
      */
     private $label;
 
@@ -65,7 +66,7 @@ class UrlInformation
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isVisible()
     {
@@ -73,7 +74,7 @@ class UrlInformation
     }
 
     /**
-     * @param boolean $visible
+     * @param bool $visible
      *
      * @return $this
      */
@@ -87,12 +88,12 @@ class UrlInformation
     public function toArray()
     {
         $result = array(
-            'loc'               => $this->location,
-            'label'             => $this->label,
-            'changefreq'        => $this->changeFrequency,
-            'lastmod'           => $this->lastModification,
-            'priority'          => $this->priority,
-            'alternate_locales' => array()
+            'loc' => $this->location,
+            'label' => $this->label,
+            'changefreq' => $this->changeFrequency,
+            'lastmod' => $this->lastModification,
+            'priority' => $this->priority,
+            'alternate_locales' => array(),
         );
         foreach ($result as $key => $value) {
             if (null === $value) {
@@ -116,7 +117,7 @@ class UrlInformation
     }
 
     /**
-     * According to http://www.sitemaps.org, valid values should be always|hourly|daily|weekly|monthly|yearly|never
+     * According to http://www.sitemaps.org, valid values should be always|hourly|daily|weekly|monthly|yearly|never.
      *
      * @param string $changeFrequency One of the official/allowed change frequencies.
      *

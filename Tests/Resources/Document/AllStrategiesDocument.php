@@ -24,7 +24,6 @@ class AllStrategiesDocument implements
     TitleReadInterface,
     OriginalUrlReadInterface
 {
-
     protected $seoMetadata;
 
     public function __construct()

@@ -59,7 +59,7 @@ class ConfigValues
      */
     public function setDescription($description)
     {
-        $this->description= $description;
+        $this->description = $description;
     }
 
     /**
@@ -77,7 +77,7 @@ class ConfigValues
      */
     public function setOriginalUrlBehaviour($behaviour)
     {
-        if (! in_array($behaviour, SeoPresentation::$originalUrlBehaviours)) {
+        if (!in_array($behaviour, SeoPresentation::$originalUrlBehaviours)) {
             throw new ExtractorStrategyException(
                 sprintf('Behaviour "%s" not supported by SeoPresentation.', $behaviour)
             );
@@ -98,7 +98,7 @@ class ConfigValues
      */
     public function setTitle($title)
     {
-        $this->title= $title;
+        $this->title = $title;
     }
 
     /**

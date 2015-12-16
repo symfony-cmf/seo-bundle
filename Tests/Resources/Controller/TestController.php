@@ -19,7 +19,7 @@ class TestController extends Controller
     {
         $params = array(
             'cmfMainContent' => array(
-                'title'     => $contentDocument->getTitle(),
+                'title' => $contentDocument->getTitle(),
                 'body' => $contentDocument->getBody(),
             ),
         );

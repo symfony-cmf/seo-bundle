@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class CmfSeoExtensionTest extends AbstractExtensionTestCase
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getContainerExtensions()
     {
@@ -32,8 +32,8 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
     public function testDefaults()
     {
         $this->load(array(
-            'title'         => 'Default title',
-            'description'   => 'Default description.',
+            'title' => 'Default title',
+            'description' => 'Default description.',
         ));
 
         $this->assertContainerBuilderHasParameter('cmf_seo.title', 'Default title');
@@ -58,9 +58,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             )
         );
         $this->load(array(
-            'title'         => 'Default title',
-            'description'   => 'Default description.',
-            'persistence'   => array(
+            'title' => 'Default title',
+            'description' => 'Default description.',
+            'persistence' => array(
                 'phpcr' => true,
             ),
             'sitemap' => true,
@@ -88,13 +88,12 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
 
         $this->load(array(
-            'title'         => 'Default title',
-            'description'   => 'Default description.',
-            'persistence'   => array(
-                'orm'   => true,
+            'title' => 'Default title',
+            'description' => 'Default description.',
+            'persistence' => array(
+                'orm' => true,
             ),
         ));
-
 
         $this->assertContainerBuilderHasParameter(
             'cmf_seo.form.data_class.seo_metadata',
@@ -114,10 +113,10 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         );
 
         $this->load(array(
-            'title'                  => 'Default title',
-            'description'            => 'Default description.',
+            'title' => 'Default title',
+            'description' => 'Default description.',
             'sonata_admin_extension' => true,
-            'persistence'            => array(
+            'persistence' => array(
                 'phpcr' => true,
             ),
         ));
@@ -135,11 +134,11 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             )
         );
         $this->load(array(
-            'persistence'   => array(
+            'persistence' => array(
                 'phpcr' => true,
             ),
             'alternate_locale' => array(
-                'enabled' => true
+                'enabled' => true,
             ),
         ));
 
@@ -167,7 +166,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'phpcr' => true,
             ),
             'alternate_locale' => array(
-                'provider_id' => 'some_alternate_locale_provider'
+                'provider_id' => 'some_alternate_locale_provider',
             ),
             'sitemap' => true,
         ));
@@ -193,9 +192,9 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             )
         );
         $this->load(array(
-            'persistence'   => array(
+            'persistence' => array(
                 'phpcr' => true,
-            )
+            ),
         ));
     }
 
@@ -210,28 +209,28 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
         $exclusionRules = array(
             array(
-                'path'    => 'some/path',
-                'host'    => 'test.de',
+                'path' => 'some/path',
+                'host' => 'test.de',
                 'methods' => 'GET',
-                'ips'     => 'IP',
+                'ips' => 'IP',
             ),
             array(
-                'path'    => 'some-other/path',
-                'host'    => 'test-dev.de',
+                'path' => 'some-other/path',
+                'host' => 'test-dev.de',
                 'methods' => 'POST',
-                'ips'     => 'IPs',
+                'ips' => 'IPs',
             ),
         );
 
         $this->load(array(
-            'persistence'   => array(
+            'persistence' => array(
                 'phpcr' => true,
             ),
             'error' => array(
-                'enable_parent_provider'  => true,
+                'enable_parent_provider' => true,
                 'enable_sibling_provider' => true,
-                'exclusion_rules'         => $exclusionRules,
-            )
+                'exclusion_rules' => $exclusionRules,
+            ),
         ));
 
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
@@ -275,7 +274,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             if ($definition instanceof DefinitionDecorator &&
                 $definition->getParent() === 'cmf_seo.error.request_matcher'
             ) {
-                $count++;
+                ++$count;
                 $this->assertNotNull($definition);
                 $this->assertEquals($arguments[$count - 1], $definition->getArguments());
             }
@@ -283,7 +282,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
         $this->assertEquals(2, $count);
     }
-
 
     public function testSitemapConfiguration()
     {
@@ -300,7 +298,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'phpcr' => true,
             ),
             'alternate_locale' => array(
-                'enabled' => true
+                'enabled' => true,
             ),
             'sitemap' => array(
                 'defaults' => array(
@@ -429,13 +427,13 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'phpcr' => true,
             ),
             'alternate_locale' => array(
-                'enabled' => true
+                'enabled' => true,
             ),
             'sitemap' => array(
                 'defaults' => array(
                     'default_change_frequency' => 'global-frequency',
                 ),
-            )
+            ),
             ));
 
         $this->assertContainerBuilderHasParameter(
@@ -465,7 +463,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                 'phpcr' => true,
             ),
             'alternate_locale' => array(
-                'enabled' => true
+                'enabled' => true,
             ),
             'sitemap' => array(
                 'defaults' => array(
@@ -474,7 +472,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
                     'guessers' => 'cmf_seo.sitemap.guesser.default_change_frequency',
                     'voters' => '_none',
                 ),
-            )
+            ),
         ));
 
         $this->assertContainerBuilderHasService('cmf_seo.sitemap.phpcr_loader');
@@ -496,7 +494,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             )
         );
         $this->load(array(
-            'persistence'   => array(
+            'persistence' => array(
                 'phpcr' => true,
             ),
             'content_listener' => array(

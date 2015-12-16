@@ -22,10 +22,9 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class RegisterSuggestionProviderPassTest extends AbstractCompilerPassTestCase
 {
-
     /**
      * Register the compiler pass under test, just like you would do inside a bundle's load()
-     * method:
+     * method:.
      *
      *   $container->addCompilerPass(new MyCompilerPass());
      */

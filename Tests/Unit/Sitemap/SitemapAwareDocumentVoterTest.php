@@ -40,7 +40,6 @@ class SitemapAwareDocumentVoterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->voter->exposeOnSitemap($this->sitemapAwareDocument, 'some-sitemap'));
     }
 
-
     public function testSitemapAwareDocumentShouldReturnFalseWhenDocumentIsNotExposed()
     {
         $this->sitemapAwareDocument

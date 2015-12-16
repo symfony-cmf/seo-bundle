@@ -42,7 +42,7 @@ class SeoMetadataType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -53,7 +53,7 @@ class SeoMetadataType extends AbstractType
 
         $builder
             ->add('title', $textType, array('label' => 'form.label_title'))
-            ->add('originalUrl', $textType, array('label'=> 'form.label_originalUrl'))
+            ->add('originalUrl', $textType, array('label' => 'form.label_originalUrl'))
             ->add('metaDescription', $textareaType, array('label' => 'form.label_metaDescription'))
             ->add('metaKeywords', $textareaType, array('label' => 'form.label_metaKeywords'))
             ->add('extraProperties', $burgovKeyValueType, array(
@@ -75,7 +75,7 @@ class SeoMetadataType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -83,7 +83,7 @@ class SeoMetadataType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -95,7 +95,7 @@ class SeoMetadataType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -103,7 +103,7 @@ class SeoMetadataType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBlockPrefix()
     {

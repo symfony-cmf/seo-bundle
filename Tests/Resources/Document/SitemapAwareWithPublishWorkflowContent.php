@@ -48,7 +48,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     private $isVisibleForSitemap;
 
     /**
-     * @var boolean whether this content is publishable
+     * @var bool whether this content is publishable
      *
      * @PHPCRODM\Field(type="boolean")
      */
@@ -70,7 +70,8 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * @param  string $sitemap
+     * @param string $sitemap
+     *
      * @return bool
      */
     public function isVisibleInSitemap($sitemap)
@@ -79,7 +80,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * @param boolean $isVisibleForSitemap
+     * @param bool $isVisibleForSitemap
      *
      * @return SitemapAwareContent
      */
@@ -91,7 +92,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setPublishable($publishable)
     {
@@ -99,7 +100,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isPublishable()
     {
@@ -107,7 +108,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPublishStartDate()
     {
@@ -115,7 +116,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setPublishStartDate(\DateTime $publishStartDate = null)
     {
@@ -125,7 +126,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPublishEndDate()
     {
@@ -133,7 +134,7 @@ class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setPublishEndDate(\DateTime $publishEndDate = null)
     {

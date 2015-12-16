@@ -22,7 +22,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 class TitleExtractor implements ExtractorInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($content)
     {
@@ -30,7 +30,7 @@ class TitleExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param TitleReadInterface $content
      */

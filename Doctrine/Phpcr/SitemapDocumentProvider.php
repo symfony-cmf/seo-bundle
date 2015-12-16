@@ -36,13 +36,13 @@ class SitemapDocumentProvider implements LoaderInterface
     }
 
     /**
-     * {@inheritDocs}
+     * {@inheritdoc}.
      */
     public function load($sitemap)
     {
         // todo rewrite query when https://github.com/symfony-cmf/CoreBundle/issues/126 is ready
         $documentsCollection = $this->manager->createQuery(
-            "SELECT * FROM [nt:unstructured] WHERE (visible_for_sitemap = true)",
+            'SELECT * FROM [nt:unstructured] WHERE (visible_for_sitemap = true)',
             QueryInterface::JCR_SQL2
         )->execute();
 
@@ -51,6 +51,7 @@ class SitemapDocumentProvider implements LoaderInterface
         foreach ($documentsCollection as $document) {
             $documents[] = $document;
         };
+
         return $documents;
     }
 }

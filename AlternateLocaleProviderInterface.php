@@ -23,7 +23,7 @@ interface AlternateLocaleProviderInterface
     /**
      * Creates a collection of AlternateLocales for one content object.
      *
-     * @param object                        $content
+     * @param object $content
      *
      * @return AlternateLocaleCollection
      */
@@ -32,7 +32,7 @@ interface AlternateLocaleProviderInterface
     /**
      * Creates a collection of AlternateLocales for many content object.
      *
-     * @param array|object[]                $contents
+     * @param array|object[] $contents
      *
      * @return AlternateLocaleCollection[]
      */

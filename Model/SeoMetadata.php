@@ -44,7 +44,7 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * If this string is set, it will be inserted as a meta tag for the page description.
      *
-     * @var  string
+     * @var string
      */
     private $metaDescription;
 
@@ -118,7 +118,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setMetaDescription($metaDescription)
     {
@@ -128,7 +128,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getMetaDescription()
     {
@@ -136,7 +136,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setMetaKeywords($metaKeywords)
     {
@@ -146,7 +146,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getMetaKeywords()
     {
@@ -154,7 +154,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setOriginalUrl($originalUrl)
     {
@@ -164,7 +164,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOriginalUrl()
     {
@@ -172,7 +172,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setTitle($title)
     {
@@ -182,7 +182,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -190,7 +190,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setExtraProperties($extraProperties)
     {
@@ -200,7 +200,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getExtraProperties()
     {
@@ -208,7 +208,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function addExtraProperty($key, $value)
     {
@@ -216,7 +216,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function removeExtraProperty($key)
     {
@@ -226,7 +226,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setExtraNames($extraNames)
     {
@@ -236,7 +236,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getExtraNames()
     {
@@ -244,7 +244,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function addExtraName($key, $value)
     {
@@ -252,7 +252,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function removeExtraName($key)
     {
@@ -262,7 +262,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setExtraHttp($extraHttp)
     {
@@ -272,7 +272,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getExtraHttp()
     {
@@ -280,7 +280,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function addExtraHttp($key, $value)
     {
@@ -288,7 +288,7 @@ class SeoMetadata implements SeoMetadataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function removeExtraHttp($key)
     {

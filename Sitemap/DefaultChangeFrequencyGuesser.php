@@ -11,10 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
-use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Set a default change frequency if none has been set.
@@ -39,7 +36,7 @@ class DefaultChangeFrequencyGuesser implements GuesserInterface
     }
 
     /**
-     * {@inheritDocs}
+     * {@inheritdoc}.
      */
     public function guessValues(UrlInformation $urlInformation, $object, $sitemap)
     {

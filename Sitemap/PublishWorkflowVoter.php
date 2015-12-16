@@ -31,8 +31,9 @@ class PublishWorkflowVoter implements VoterInterface
     {
         $this->publishWorkflowChecker = $publishWorkflowChecker;
     }
+
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function exposeOnSitemap($content, $sitemap)
     {

@@ -11,11 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
-use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\AbstractChain;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DefaultChangeFrequencyGuesser;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\LocationGuesser;
 
 class DefaultChangeFrequencyGuesserTest extends GuesserTestCase
 {
@@ -26,7 +22,7 @@ class DefaultChangeFrequencyGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createGuesser()
     {
@@ -34,7 +30,7 @@ class DefaultChangeFrequencyGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createData()
     {
@@ -42,7 +38,7 @@ class DefaultChangeFrequencyGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getFields()
     {

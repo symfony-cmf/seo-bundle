@@ -49,7 +49,7 @@ class SeoAwareContentAdmin extends Admin
     {
         $datagridMapper
             ->add('title', 'doctrine_phpcr_string')
-            ->add('name',  'doctrine_phpcr_nodename')
+            ->add('name', 'doctrine_phpcr_nodename')
         ;
     }
 }

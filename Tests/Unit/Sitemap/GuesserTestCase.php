@@ -74,8 +74,6 @@ abstract class GuesserTestCase extends \PHPUnit_Framework_Testcase
     abstract protected function createGuesser();
 
     /**
-     *
-     *
      * @return object
      */
     abstract protected function createData();

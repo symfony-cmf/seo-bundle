@@ -18,13 +18,12 @@ use Symfony\Cmf\Bundle\SeoBundle\Sitemap\AlternateLocalesGuesser;
 class AlternateLocalesGuesserTest extends GuesserTestCase
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createGuesser()
     {
         $collection = new AlternateLocaleCollection();
         $collection->add(new AlternateLocale('http://symfony.com/fr', 'fr'));
-
 
         $localeProvider = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface');
         $localeProvider
@@ -38,7 +37,7 @@ class AlternateLocalesGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createData()
     {
@@ -46,7 +45,7 @@ class AlternateLocalesGuesserTest extends GuesserTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getFields()
     {

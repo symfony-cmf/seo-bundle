@@ -37,7 +37,7 @@ class SeoAwareContent extends ContentBase implements SeoAwareInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setSeoMetadata($seoMetadata)
     {

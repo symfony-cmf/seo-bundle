@@ -20,9 +20,7 @@ use Symfony\Component\Routing\Route;
 /**
  * @PHPCRODM\Document(translator="attribute")
  */
-class AlternateLocaleContent extends ContentBase implements
-    RouteReferrersInterface,
-    TranslatableInterface
+class AlternateLocaleContent extends ContentBase implements RouteReferrersInterface, TranslatableInterface
 {
     /**
      * @var string
@@ -84,8 +82,8 @@ class AlternateLocaleContent extends ContentBase implements
     }
 
     /**
-     * @return string|boolean The locale of this model or false if
-     *                        translations are disabled in this project.
+     * @return string|bool The locale of this model or false if
+     *                     translations are disabled in this project.
      */
     public function getLocale()
     {
@@ -93,8 +91,8 @@ class AlternateLocaleContent extends ContentBase implements
     }
 
     /**
-     * @param string|boolean $locale The local for this model, or false if
-     *                               translations are disabled in this project.
+     * @param string|bool $locale The local for this model, or false if
+     *                            translations are disabled in this project.
      */
     public function setLocale($locale)
     {

@@ -50,8 +50,8 @@ class SeoPresentation implements SeoPresentationInterface
     const ORIGINAL_URL_REDIRECT = 'redirect';
 
     public static $originalUrlBehaviours = array(
-        SeoPresentation::ORIGINAL_URL_CANONICAL,
-        SeoPresentation::ORIGINAL_URL_REDIRECT,
+        self::ORIGINAL_URL_CANONICAL,
+        self::ORIGINAL_URL_REDIRECT,
     );
 
     /**
@@ -60,7 +60,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $sonataPage;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $redirectResponse = false;
 
@@ -122,7 +122,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRedirectResponse()
     {
@@ -214,7 +214,7 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateSeoPage($content)
     {
@@ -309,7 +309,7 @@ class SeoPresentation implements SeoPresentationInterface
            ? $metas['name']['keywords'][0]
            : '';
 
-        return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '') . $contentKeywords;
+        return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$contentKeywords;
     }
 
     /**
@@ -329,13 +329,13 @@ class SeoPresentation implements SeoPresentationInterface
             ->setMetaDescription($contentSeoMetadata->getMetaDescription())
             ->setOriginalUrl($contentSeoMetadata->getOriginalUrl())
             ->setExtraProperties($contentSeoMetadata->getExtraProperties() ?: array())
-            ->setExtraNames($contentSeoMetadata->getExtraNames()?:array())
-            ->setExtraHttp($contentSeoMetadata->getExtraHttp()?:array())
+            ->setExtraNames($contentSeoMetadata->getExtraNames() ?: array())
+            ->setExtraHttp($contentSeoMetadata->getExtraHttp() ?: array())
         ;
     }
 
     /**
-     * {inheritDoc}
+     * {inheritDoc}.
      */
     public function updateAlternateLocales(AlternateLocaleCollection $collection)
     {

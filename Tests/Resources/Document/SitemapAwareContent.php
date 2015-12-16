@@ -66,7 +66,8 @@ class SitemapAwareContent extends ContentBase implements
 
     /**
      * @param string $sitemap
-     * @return boolean
+     *
+     * @return bool
      */
     public function isVisibleInSitemap($sitemap)
     {
@@ -74,7 +75,7 @@ class SitemapAwareContent extends ContentBase implements
     }
 
     /**
-     * @param boolean $isVisibleForSitemap
+     * @param bool $isVisibleForSitemap
      *
      * @return SitemapAwareContent
      */
@@ -115,10 +116,9 @@ class SitemapAwareContent extends ContentBase implements
         return $this->routes;
     }
 
-
     /**
-     * @return string|boolean The locale of this model or false if
-     *                        translations are disabled in this project.
+     * @return string|bool The locale of this model or false if
+     *                     translations are disabled in this project.
      */
     public function getLocale()
     {
@@ -126,8 +126,8 @@ class SitemapAwareContent extends ContentBase implements
     }
 
     /**
-     * @param string|boolean $locale The local for this model, or false if
-     *                               translations are disabled in this project.
+     * @param string|bool $locale The local for this model, or false if
+     *                            translations are disabled in this project.
      */
     public function setLocale($locale)
     {

@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Route;
 class SiblingSuggestionProvider extends BaseSuggestionProvider
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function create(Request $request)
     {

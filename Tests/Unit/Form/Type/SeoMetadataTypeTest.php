@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Symfony CMF package.
+ *
+ * (c) 2011-2015 Symfony CMF
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueRowType;
 use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
@@ -21,8 +30,8 @@ class SeoMetadataTypeTest extends TypeTestCase
         return array_merge(
             parent::getExtensions(),
             array(new PreloadedExtension(array(
-                $keyValue->getName()    => $keyValue,
-                $keyValueRow->getName() => $keyValueRow
+                $keyValue->getName() => $keyValue,
+                $keyValueRow->getName() => $keyValueRow,
             ), array()))
         );
     }

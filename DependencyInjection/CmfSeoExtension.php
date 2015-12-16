@@ -40,11 +40,11 @@ class CmfSeoExtension extends Extension
     private $sitemapHelperMap = array(
         'loaders' => 'cmf_seo.sitemap.loader',
         'guessers' => 'cmf_seo.sitemap.guesser',
-        'voters' => 'cmf_seo.sitemap.voter'
+        'voters' => 'cmf_seo.sitemap.voter',
     );
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -59,9 +59,9 @@ class CmfSeoExtension extends Extension
 
         $sonataBundles = array();
         if ($this->isConfigEnabled($container, $config['persistence']['phpcr'])) {
-            $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
+            $container->setParameter($this->getAlias().'.backend_type_phpcr', true);
             $container->setParameter(
-                $this->getAlias() . '.persistence.phpcr.manager_name',
+                $this->getAlias().'.persistence.phpcr.manager_name',
                 $config['persistence']['phpcr']['manager_name']
             );
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
@@ -70,9 +70,9 @@ class CmfSeoExtension extends Extension
         }
 
         if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
-            $container->setParameter($this->getAlias() . '.backend_type_orm', true);
+            $container->setParameter($this->getAlias().'.backend_type_orm', true);
             $container->setParameter(
-                $this->getAlias() . '.persistence.orm.manager_name',
+                $this->getAlias().'.persistence.orm.manager_name',
                 $config['persistence']['orm']['manager_name']
             );
             $sonataBundles[] = 'SonataDoctrineORMBundle';
@@ -134,12 +134,12 @@ class CmfSeoExtension extends Extension
             }
         }
 
-        $container->setParameter($this->getAlias() . '.sonata_admin_extension.form_group', $config['form_group']);
+        $container->setParameter($this->getAlias().'.sonata_admin_extension.form_group', $config['form_group']);
         $loader->load('admin.xml');
     }
 
     /**
-     * Puts the seo parameters into the container
+     * Puts the seo parameters into the container.
      *
      * @param array            $config
      * @param ContainerBuilder $container
@@ -155,7 +155,7 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getNamespace()
     {
@@ -163,7 +163,7 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getXsdValidationBasePath()
     {
@@ -172,7 +172,7 @@ class CmfSeoExtension extends Extension
 
     /**
      * @param $config
-     * @param XmlFileLoader $loader
+     * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
      */
     private function loadPhpcr($config, XmlFileLoader $loader, ContainerBuilder $container)
@@ -191,7 +191,7 @@ class CmfSeoExtension extends Extension
 
     private function loadContentListener(array $config, XmlFileLoader $loader, ContainerBuilder $container)
     {
-        $container->setParameter($this->getAlias() . '.content_key', $config['content_key']);
+        $container->setParameter($this->getAlias().'.content_key', $config['content_key']);
 
         $loader->load('content-listener.xml');
 
@@ -293,7 +293,7 @@ class CmfSeoExtension extends Extension
      * @param array            $config
      * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
-     * @param boolean          $alternateLocale Whether alternate locale handling is loaded.
+     * @param bool             $alternateLocale Whether alternate locale handling is loaded.
      */
     private function loadSitemapHandling($config, XmlFileLoader $loader, ContainerBuilder $container, $alternateLocale)
     {
@@ -316,7 +316,7 @@ class CmfSeoExtension extends Extension
         foreach ($configurations as $sitemapName => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
                 $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(
-                    $configuration['default_change_frequency']
+                    $configuration['default_change_frequency'],
                 ));
                 $definition->addTag('cmf_seo.sitemap.guesser', array(
                     'sitemap' => $sitemapName,
@@ -363,9 +363,9 @@ class CmfSeoExtension extends Extension
     }
 
     /**
-     * Each helper type out of the guessers, loaders and voters hav its on configuration to enable/disable them
+     * Each helper type out of the guessers, loaders and voters hav its on configuration to enable/disable them.
      *
-     * @param array $helperStatus Map of type => id => list of sitemaps
+     * @param array            $helperStatus Map of type => id => list of sitemaps
      * @param ContainerBuilder $container
      */
     private function handleSitemapHelper($helperStatus, ContainerBuilder $container)
@@ -404,6 +404,6 @@ class CmfSeoExtension extends Extension
             $seoMetadataClass = 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata';
         }
 
-        $container->setParameter($this->getAlias() . '.form.data_class.seo_metadata', $seoMetadataClass);
+        $container->setParameter($this->getAlias().'.form.data_class.seo_metadata', $seoMetadataClass);
     }
 }

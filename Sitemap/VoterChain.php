@@ -24,7 +24,7 @@ class VoterChain extends AbstractChain
      * @param object $content The content to expose
      * @param string $sitemap Name of the sitemap
      *
-     * @return boolean Whether to expose this content.
+     * @return bool Whether to expose this content.
      */
     public function exposeOnSitemap($content, $sitemap)
     {

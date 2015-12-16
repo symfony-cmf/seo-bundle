@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class RegisterSuggestionProviderPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws LogicException If a tagged service is not public.
      */
