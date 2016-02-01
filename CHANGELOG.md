@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.2.0
+-----
+
 * **2015-09-30**: Add `cmf_seo_update_metadata` twig function for updating seo metadata from templates using
 * **2015-09-08**: Add meta tag for language information
 * **2015-08-20**: Added templates configuration and `exclusion_rules` (based on the request matcher) to
