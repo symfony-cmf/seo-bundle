@@ -126,7 +126,7 @@ class LoadContentData implements FixtureInterface
         );
         $manager->persist($alternateLocaleRoute);
 
-        # create content in a deeper structure
+        // create content in a deeper structure
         $content = new SeoAwareContent();
         $content->setName('content-deeper');
         $content->setTitle('Content deeper');
