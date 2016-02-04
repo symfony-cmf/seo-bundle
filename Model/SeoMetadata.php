@@ -320,6 +320,8 @@ class SeoMetadata implements SeoMetadataInterface
             return iterator_to_array($data);
         }
 
-        throw new InvalidArgumentException(sprintf('Expected array, Traversable or KeyValueContainer, got "%s"', is_object($data) ? getclass($data) : get_type($data)));
+        throw new InvalidArgumentException(
+            sprintf('Expected array, Traversable or KeyValueContainer, got "%s"',
+                is_object($data) ? get_class($data) : gettype($data)));
     }
 }
