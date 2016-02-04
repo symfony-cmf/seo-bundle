@@ -11,8 +11,6 @@
             "homepage": "https://github.com/symfony-cmf/SeoBundle/contributors"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^5.3.9|^7.0",
         "symfony/framework-bundle": "^2.3",
@@ -20,14 +18,14 @@
         "doctrine/collections": "^1.0"
     },
     "require-dev": {
-        "symfony-cmf/testing": "^1.3",
+        "symfony-cmf/testing": "^1.3@RC",
         "doctrine/phpcr-odm": "^1.3",
         "doctrine/orm": "^2.4",
         "sonata-project/doctrine-phpcr-admin-bundle": "^1.1",
         "symfony-cmf/routing-bundle": "^1.2",
         "symfony-cmf/core-bundle": "^1.1",
         "matthiasnoback/symfony-dependency-injection-test": "^0.7",
-        "matthiasnoback/symfony-config-test": "0.*",
+        "matthiasnoback/symfony-config-test": "~0.1",
         "burgov/key-value-form-bundle": "^1.0"
     },
     "suggest": {
