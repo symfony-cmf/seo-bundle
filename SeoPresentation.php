@@ -172,7 +172,7 @@ class SeoPresentation implements SeoPresentationInterface
             $seoMetadata = new SeoMetadata();
         }
 
-        $cachingAvailable = (boolean) $this->cache;
+        $cachingAvailable = (bool) $this->cache;
         if ($cachingAvailable) {
             $extractors = $this->cache->loadExtractorsFromCache(get_class($content));
 
