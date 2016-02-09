@@ -79,7 +79,7 @@ class AlternateLocaleProvider implements AlternateLocaleProviderInterface
 
             $alternateLocaleCollection->add(
                 new AlternateLocale(
-                    $this->urlGenerator->generate($content, array('_locale' => $locale), true),
+                    $this->urlGenerator->generate($content, array('_locale' => $locale), UrlGeneratorInterface::ABSOLUTE_URL),
                     $locale
                 )
             );

@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\LocationGuesser;
 
 class LocationGuesserTest extends GuesserTestCase
@@ -30,7 +31,7 @@ class LocationGuesserTest extends GuesserTestCase
         $urlGenerator
             ->expects($this->any())
             ->method('generate')
-            ->with($this, array(), true)
+            ->with($this, array(), UrlGeneratorInterface::ABSOLUTE_URL)
             ->will($this->returnValue('http://symfony.com'))
         ;
 

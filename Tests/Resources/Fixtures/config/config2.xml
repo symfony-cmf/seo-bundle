@@ -22,7 +22,7 @@
 
     <content-listener enabled="true" content-key="foo" />
 
-    <form enabled="true">
+    <form>
         <data_class>
             <seo_metadata>/My/Class</seo_metadata>
         </data_class>
