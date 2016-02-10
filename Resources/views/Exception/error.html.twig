@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="{{ _charset }}" />
+        <title>An Error Occurred: {{ status_text }}</title>
+    </head>
+    <body>
+        <h1>Oops! An Error Occurred</h1>
+        <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+
+        <p>
+            Something is broken. Please let us know what you were doing when this error occurred.
+            We will fix it as soon as possible. Sorry for any inconvenience caused.
+        </p>
+
+        {% if best_matches not is empty %}
+            <h3>Suggested pages</h3>
+
+            {% for group, matches in best_matches %}
+            <h4>{{ group|capitalize }}</h4>
+            <ul>
+                {% for match in matches %}
+                <li><a href="{{ path(match.name) }}">{{ match.name }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+        {% endif %}
+    </body>
+</html>
