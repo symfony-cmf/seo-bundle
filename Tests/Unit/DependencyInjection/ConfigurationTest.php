@@ -185,7 +185,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     ),
                 ),
                 'templates' => array(
-                    'html' => 'CmfSeoBundle:Exception:exception.html.twig',
+                    'html' => 'CmfSeoBundle:Exception:error.html.twig',
                 ),
             ),
             'translation_domain' => 'messages',

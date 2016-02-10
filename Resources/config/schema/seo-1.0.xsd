@@ -27,6 +27,11 @@
     </xsd:complexType>
 
     <xsd:complexType name="persistence">
+        <xsd:all minOccurs="0">
+            <xsd:element name="phpcr" type="persistence_layer" />
+            <xsd:element name="orm" type="persistence_layer" />
+        </xsd:all>
+
         <xsd:attribute name="phpcr" type="xsd:boolean" />
         <xsd:attribute name="orm" type="xsd:boolean" />
     </xsd:complexType>
@@ -127,5 +132,9 @@
         <xsd:attribute name="ips" type="xsd:string" />
         <xsd:attribute name="host" type="xsd:string" />
         <xsd:attribute name="methods" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="persistence_layer">
+        <xsd:attribute name="manager-name" type="xsd:string"/>
     </xsd:complexType>
 </xsd:schema>

@@ -246,7 +246,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'cmf_seo.error.templates',
-            array('html' => 'CmfSeoBundle:Exception:exception.html.twig')
+            array('html' => 'CmfSeoBundle:Exception:error.html.twig')
         );
 
         $this->assertContainerBuilderHasService(
