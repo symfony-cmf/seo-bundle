@@ -50,6 +50,7 @@ class SeoMetadataTypeTest extends TypeTestCase
 
         $type = new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata');
         $form = $this->factory->create($type);
+        $this->assertTrue($form->getConfig()->getByReference());
 
         $object = new SeoMetadata();
         $object->setTitle($formData['title']);
@@ -77,8 +78,9 @@ class SeoMetadataTypeTest extends TypeTestCase
             'extraHttp' => array(),
         );
 
-        $type = new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata');
+        $type = new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata', true);
         $form = $this->factory->create($type);
+        $this->assertFalse($form->getConfig()->getByReference());
 
         $object = new SeoMetadataModel();
         $object->setTitle($formData['title']);

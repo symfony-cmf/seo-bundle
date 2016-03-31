@@ -29,16 +29,23 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class SeoMetadataType extends AbstractType
 {
     /**
-     * @var
+     * @var string
      */
     private $dataClass;
 
     /**
-     * @param string $dataClass The FQCN of the data class to use for this form.
+     * @var bool
      */
-    public function __construct($dataClass)
+    private $isOrm;
+
+    /**
+     * @param string $dataClass The FQCN of the data class to use for this form.
+     * @param bool   $isOrm     Flag to know whether the form should be usable for doctrine ORM
+     */
+    public function __construct($dataClass, $isOrm = false)
     {
         $this->dataClass = $dataClass;
+        $this->isOrm = $isOrm;
     }
 
     /**
@@ -87,11 +94,16 @@ class SeoMetadataType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $defaults = array(
             'data_class' => $this->dataClass,
             'translation_domain' => 'CmfSeoBundle',
             'required' => false,
-        ));
+        );
+        if ($this->isOrm) {
+            $defaults['by_reference'] = false;
+        }
+
+        $resolver->setDefaults($defaults);
     }
 
     /**
