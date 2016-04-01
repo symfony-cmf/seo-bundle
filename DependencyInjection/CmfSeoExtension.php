@@ -78,6 +78,11 @@ class CmfSeoExtension extends Extension
             $sonataBundles[] = 'SonataDoctrineORMBundle';
         }
 
+        $container->setParameter($this->getAlias().'.form_mode_orm',
+            $this->isConfigEnabled($container, $config['persistence']['orm'])
+            && !$this->isConfigEnabled($container, $config['persistence']['phpcr'])
+        );
+
         if (count($sonataBundles) && $config['sonata_admin_extension']['enabled']) {
             $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
         }

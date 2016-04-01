@@ -18,7 +18,7 @@
         "doctrine/collections": "^1.0"
     },
     "require-dev": {
-        "symfony-cmf/testing": "^1.3@RC",
+        "symfony-cmf/testing": "^1.3",
         "doctrine/phpcr-odm": "^1.3",
         "doctrine/orm": "^2.4",
         "sonata-project/doctrine-phpcr-admin-bundle": "^1.1",
