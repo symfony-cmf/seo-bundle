@@ -43,7 +43,6 @@
             <argument type="service" id="translator" />
             <argument type="service" id="cmf_seo.config_values" />
             <argument type="service" id="cmf_seo.cache" />
-            <argument>%locale%</argument>
         </service>
 
         <service id="cmf_seo.error.suggestion_provider.controller" class="%cmf_seo.error.suggestion_provider.controller.class%">
@@ -64,6 +63,10 @@
         <service id="cmf_seo.twig.extension" class="%cmf_seo.twig.extension.class%" public="false">
             <tag name="twig.extension" />
             <argument type="service" id="cmf_seo.presentation" />
+        </service>
+
+        <service id="cmf_seo.language_listener" class="Symfony\Cmf\Bundle\SeoBundle\EventListener\LanguageListener">
+            <tag name="kernel.event_subscriber" />
         </service>
     </services>
 
