@@ -50,7 +50,7 @@ class SitemapDocumentProvider implements LoaderInterface
         // the chain provider does not like collections as we array_merge in there
         foreach ($documentsCollection as $document) {
             $documents[] = $document;
-        };
+        }
 
         return $documents;
     }

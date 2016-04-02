@@ -59,9 +59,9 @@ class CmfSeoExtension extends Extension
 
         $sonataBundles = array();
         if ($this->isConfigEnabled($container, $config['persistence']['phpcr'])) {
-            $container->setParameter($this->getAlias().'.backend_type_phpcr', true);
+            $container->setParameter('cmf_seo.backend_type_phpcr', true);
             $container->setParameter(
-                $this->getAlias().'.persistence.phpcr.manager_name',
+                'cmf_seo.persistence.phpcr.manager_name',
                 $config['persistence']['phpcr']['manager_name']
             );
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
@@ -70,15 +70,15 @@ class CmfSeoExtension extends Extension
         }
 
         if ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
-            $container->setParameter($this->getAlias().'.backend_type_orm', true);
+            $container->setParameter('cmf_seo.backend_type_orm', true);
             $container->setParameter(
-                $this->getAlias().'.persistence.orm.manager_name',
+                'cmf_seo.persistence.orm.manager_name',
                 $config['persistence']['orm']['manager_name']
             );
             $sonataBundles[] = 'SonataDoctrineORMBundle';
         }
 
-        $container->setParameter($this->getAlias().'.form_mode_orm',
+        $container->setParameter('cmf_seo.form_mode_orm',
             $this->isConfigEnabled($container, $config['persistence']['orm'])
             && !$this->isConfigEnabled($container, $config['persistence']['phpcr'])
         );
@@ -139,7 +139,7 @@ class CmfSeoExtension extends Extension
             }
         }
 
-        $container->setParameter($this->getAlias().'.sonata_admin_extension.form_group', $config['form_group']);
+        $container->setParameter('cmf_seo.sonata_admin_extension.form_group', $config['form_group']);
         $loader->load('admin.xml');
     }
 
@@ -155,7 +155,7 @@ class CmfSeoExtension extends Extension
 
         foreach ($params as $param) {
             $value = isset($config[$param]) ? $config[$param] : null;
-            $container->setParameter($this->getAlias().'.'.$param, $value);
+            $container->setParameter('cmf_seo.'.$param, $value);
         }
     }
 
@@ -196,7 +196,7 @@ class CmfSeoExtension extends Extension
 
     private function loadContentListener(array $config, XmlFileLoader $loader, ContainerBuilder $container)
     {
-        $container->setParameter($this->getAlias().'.content_key', $config['content_key']);
+        $container->setParameter('cmf_seo.content_key', $config['content_key']);
 
         $loader->load('content-listener.xml');
 
@@ -222,9 +222,9 @@ class CmfSeoExtension extends Extension
             throw new InvalidConfigurationException('Alternate locale provider enabled but none defined. You need to enable PHPCR or configure alternate_locale.provider_id');
         }
 
-        if ($container->has($this->getAlias().'.event_listener.seo_content')) {
+        if ($container->has('cmf_seo.event_listener.seo_content')) {
             $container
-                ->findDefinition($this->getAlias().'.event_listener.seo_content')
+                ->findDefinition('cmf_seo.event_listener.seo_content')
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
                     array(new Reference($alternateLocaleProvider))
@@ -232,9 +232,9 @@ class CmfSeoExtension extends Extension
             ;
         }
 
-        if ($container->has($this->getAlias().'.sitemap.guesser.alternate_locales')) {
+        if ($container->has('cmf_seo.sitemap.guesser.alternate_locales')) {
             $container
-                ->findDefinition($this->getAlias().'.sitemap.guesser.alternate_locales')
+                ->findDefinition('cmf_seo.sitemap.guesser.alternate_locales')
                 ->replaceArgument(0, new Reference($alternateLocaleProvider))
             ;
         }
@@ -260,9 +260,9 @@ class CmfSeoExtension extends Extension
 
         $templates = isset($config['templates']) ? $config['templates'] : array();
         $exclusionRules = isset($config['exclusion_rules']) ? $config['exclusion_rules'] : array();
-        $container->setParameter($this->getAlias().'.error.templates', $templates);
+        $container->setParameter('cmf_seo.error.templates', $templates);
 
-        $exclusionMatcherDefinition = $container->getDefinition($this->getAlias().'.error.exclusion_matcher');
+        $exclusionMatcherDefinition = $container->getDefinition('cmf_seo.error.exclusion_matcher');
         foreach ($exclusionRules as $rule) {
             $rule['host'] = !isset($rule['host']) ? null : $rule['host'];
             $rule['methods'] = !isset($rule['methods']) ? null : $rule['methods'];
@@ -282,11 +282,11 @@ class CmfSeoExtension extends Extension
     {
         $arguments = array($path, $host, $methods, $ips, $attributes);
         $serialized = serialize($arguments);
-        $id = $this->getAlias().'.error.request_matcher.'.md5($serialized).sha1($serialized);
+        $id = 'cmf_seo.error.request_matcher.'.md5($serialized).sha1($serialized);
 
         if (!$container->hasDefinition($id)) {
             $container
-                ->setDefinition($id, new DefinitionDecorator($this->getAlias().'.error.request_matcher'))
+                ->setDefinition($id, new DefinitionDecorator('cmf_seo.error.request_matcher'))
                 ->setArguments($arguments)
             ;
         }
@@ -311,7 +311,7 @@ class CmfSeoExtension extends Extension
             $helperStatus[$helper] = array();
             $serviceDefinitionIds = $container->findTaggedServiceIds($tag);
             foreach ($serviceDefinitionIds as $id => $attributes) {
-                if (0 === strncmp($this->getAlias(), $id, strlen($this->getAlias()))) {
+                if (0 === strpos($id, 'cmf_seo')) {
                     // avoid interfering with services that are not part of this bundle
                     $helperStatus[$helper][$id] = array();
                 }
@@ -327,7 +327,7 @@ class CmfSeoExtension extends Extension
                     'sitemap' => $sitemapName,
                     'priority' => -1,
                 ));
-                $container->setDefinition($this->getAlias().'.sitemap.guesser.'.$sitemapName.'.default_change_frequency', $definition);
+                $container->setDefinition('cmf_seo.sitemap.guesser.'.$sitemapName.'.default_change_frequency', $definition);
             }
             unset($configurations[$sitemapName]['default_change_frequency']);
 
@@ -353,17 +353,17 @@ class CmfSeoExtension extends Extension
             }
         }
 
-        $container->setParameter($this->getAlias().'.sitemap.configurations', $configurations);
+        $container->setParameter('cmf_seo.sitemap.configurations', $configurations);
 
         $container->setParameter(
-            $this->getAlias().'.sitemap.default_change_frequency',
+            'cmf_seo.sitemap.default_change_frequency',
             $config['defaults']['default_change_frequency']
         );
 
         $this->handleSitemapHelper($helperStatus, $container);
 
         if (!$alternateLocale) {
-            $container->removeDefinition($this->getAlias().'.sitemap.guesser.alternate_locales');
+            $container->removeDefinition('cmf_seo.sitemap.guesser.alternate_locales');
         }
     }
 
@@ -409,6 +409,6 @@ class CmfSeoExtension extends Extension
             $seoMetadataClass = 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata';
         }
 
-        $container->setParameter($this->getAlias().'.form.data_class.seo_metadata', $seoMetadataClass);
+        $container->setParameter('cmf_seo.form.data_class.seo_metadata', $seoMetadataClass);
     }
 }

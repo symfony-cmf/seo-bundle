@@ -4,6 +4,7 @@ Changelog
 1.2.0
 -----
 
+* **2016-04-04**: Moved content-language from http-equiv to a real header.
 * **2016-03-31**: [Form] Form type for seo metadata set by_reference to false by default when ORM is active.
 * **2015-09-30**: Add `cmf_seo_update_metadata` twig function for updating seo metadata from templates using
 * **2015-09-08**: Add meta tag for language information
