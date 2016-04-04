@@ -186,20 +186,12 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertCount(1, $crawler->filter('html:contains("No route found for")'));
     }
 
-    public function testLanguageMetaTag()
+    public function testContentLanguageHeader()
     {
         $crawler = $this->getClient()->request('GET', '/en/alternate-locale-content');
         $res = $this->getClient()->getResponse();
 
         $this->assertEquals(200, $res->getStatusCode());
-
-        //test the meta tag entry
-        $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
-            return 'language' === $node->attr('http-equiv');
-        });
-
-        $actualMeta = $metaCrawler->extract('content', 'content');
-        $actualMeta = reset($actualMeta);
-        $this->assertEquals('en', $actualMeta);
+        $this->assertEquals('en', $res->headers->get('Content-Language'));
     }
 }
