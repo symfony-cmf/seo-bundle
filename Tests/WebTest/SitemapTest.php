@@ -70,10 +70,10 @@ class SitemapTest extends BaseTestCase
                 'html',
                 '<ul class="cmf-sitemap">
                     <li>
-                        <a href="http://localhost/sitemap-aware" title="Sitemap Aware Content">Sitemap Aware Content</a>
+                        <span class="indent-0"></span><a href="http://localhost/sitemap-aware" title="Sitemap Aware Content">Sitemap Aware Content</a>
                     </li>
                     <li>
-                        <a href="http://localhost/sitemap-aware-publish" title="Sitemap Aware Content publish">Sitemap Aware Content publish</a>
+                        <span class="indent-0"></span><a href="http://localhost/sitemap-aware-publish" title="Sitemap Aware Content publish">Sitemap Aware Content publish</a>
                     </li>
                 </ul>',
             ),
@@ -94,7 +94,7 @@ class SitemapTest extends BaseTestCase
             ),
             array(
                 'json',
-                '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}]},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","alternate_locales":[]}]',
+                '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","alternate_locales":[],"depth":0}]',
             ),
         );
     }

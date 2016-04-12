@@ -1,0 +1,58 @@
+<?php
+
+namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
+
+use Doctrine\Bundle\PHPCRBundle\ManagerRegistry;
+use Doctrine\ODM\PHPCR\DocumentManager;
+use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
+
+/**
+ * This guesser will add the depth of a document persisted on a phpcr node.
+ *
+ * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
+ */
+class DepthGuesser implements GuesserInterface
+{
+    /**
+     * @var ManagerRegistry
+     */
+    private $managerRegistry;
+
+    /**
+     * @var int The depth of the content base path as the depth offset.
+     */
+    private $offset;
+
+    /**
+     * DepthGuesser constructor.
+     *
+     * @param ManagerRegistry $managerRegistry
+     */
+    public function __construct(ManagerRegistry $managerRegistry, $contentBasePath)
+    {
+        $this->managerRegistry = $managerRegistry;
+        $exploded = explode('/', $contentBasePath);
+        $this->offset = count($exploded);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function guessValues(UrlInformation $urlInformation, $object, $sitemap)
+    {
+        if (null !== $urlInformation->getDepth()) {
+            return;
+        }
+
+        $manager = $this->managerRegistry->getManagerForClass(get_class($object));
+        if (!$manager instanceof DocumentManager) {
+            return;
+        }
+
+        $node = $manager->getNodeForDocument($object);
+        if (null === $node) {
+            return;
+        }
+        $urlInformation->setDepth($node->getDepth() - $this->offset);
+    }
+}
