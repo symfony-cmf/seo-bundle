@@ -69,11 +69,11 @@ class SitemapTest extends BaseTestCase
             array(
                 'html',
                 '<ul class="cmf-sitemap">
-                    <li>
-                        <span class="indent-0"></span><a href="http://localhost/sitemap-aware" title="Sitemap Aware Content">Sitemap Aware Content</a>
+                    <li class="indent-0">
+                        <a href="http://localhost/sitemap-aware" title="Sitemap Aware Content">Sitemap Aware Content</a>
                     </li>
-                    <li>
-                        <span class="indent-0"></span><a href="http://localhost/sitemap-aware-publish" title="Sitemap Aware Content publish">Sitemap Aware Content publish</a>
+                    <li class="indent-0">
+                        <a href="http://localhost/sitemap-aware-publish" title="Sitemap Aware Content publish">Sitemap Aware Content publish</a>
                     </li>
                 </ul>',
             ),

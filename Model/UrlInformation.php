@@ -61,7 +61,7 @@ class UrlInformation
     private $alternateLocales;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $depth;
 
@@ -264,7 +264,7 @@ class UrlInformation
     }
 
     /**
-     * @param int $depth
+     * @param int|null $depth
      */
     public function setDepth($depth)
     {

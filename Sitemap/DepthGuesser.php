@@ -40,8 +40,7 @@ class DepthGuesser implements GuesserInterface
     public function __construct(ManagerRegistry $managerRegistry, $contentBasePath)
     {
         $this->managerRegistry = $managerRegistry;
-        $exploded = explode('/', $contentBasePath);
-        $this->offset = count($exploded);
+        $this->offset = substr_count($contentBasePath, '/') + 1;
     }
 
     /**
