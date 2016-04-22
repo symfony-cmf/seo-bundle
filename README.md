@@ -1,6 +1,6 @@
 # Symfony CMF Seo Bundle
 
-[![Build Status](https://secure.travis-ci.org/symfony-cmf/SeoBundle.png?branch=master)](http://travis-ci.org/symfony-cmf/SeoBundle)
+[![Build Status](https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=master)](https://travis-ci.org/symfony-cmf/seo-bundle)
 [![StyleCI](https://styleci.io/repos/16372913/shield)](https://styleci.io/repos/16372913)
 [![Latest Stable Version](https://poser.pugx.org/symfony-cmf/seo-bundle/version.png)](https://packagist.org/packages/symfony-cmf/seo-bundle)
 [![Total Downloads](https://poser.pugx.org/symfony-cmf/seo-bundle/d/total.png)](https://packagist.org/packages/symfony-cmf/seo-bundle)
