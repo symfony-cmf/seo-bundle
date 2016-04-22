@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.0 (unreleased)
+------------------
+
+* **2016-04-12**: Build and register DepthGuesser for PHPCR to use depths information for structure sitemap 
+
 1.2.0
 -----
 
