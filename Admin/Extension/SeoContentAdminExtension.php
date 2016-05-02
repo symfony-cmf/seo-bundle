@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Admin\AdminExtension;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType;
 use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 /**
@@ -46,7 +47,7 @@ class SeoContentAdminExtension extends AdminExtension
             ->with($this->formGroup, array(
                 'translation_domain' => 'CmfSeoBundle',
             ))
-                ->add('seoMetadata', $isSf28 ? 'Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType' : 'seo_metadata', array('label' => false))
+                ->add('seoMetadata', SeoMetadataType::class, array('label' => false))
             ->end()
         ;
     }

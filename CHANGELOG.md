@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.0.0 (unreleased)
+------------------
+
+ * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support
+ * **2016-05-02**: [BC BREAK] Dropped Symfony <2.8 support
+
 1.2.0
 -----
 

@@ -12,7 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Sitemap;
 
 use Symfony\Cmf\Bundle\CoreBundle\PublishWorkflow\PublishWorkflowChecker;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * A voter that checks whether the content is published, to integrate with the
@@ -23,11 +23,11 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class PublishWorkflowVoter implements VoterInterface
 {
     /**
-     * @var SecurityContextInterface
+     * @var AuthorizationCheckerInterface
      */
     private $publishWorkflowChecker;
 
-    public function __construct(SecurityContextInterface $publishWorkflowChecker)
+    public function __construct(AuthorizationCheckerInterface $publishWorkflowChecker)
     {
         $this->publishWorkflowChecker = $publishWorkflowChecker;
     }

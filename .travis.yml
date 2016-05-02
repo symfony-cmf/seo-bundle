@@ -1,8 +1,6 @@
 language: php
 
 php:
-  - 5.3
-  - 5.4
   - 5.5
   - 5.6
   - 7.0
@@ -15,19 +13,16 @@ cache:
     - $HOME/.composer/cache/files
 
 env:
-  global:
-    - SYMFONY_DEPRECATIONS_HELPER=286
+  - SYMFONY_VERSION=2.8.*
 
 matrix:
   include:
     - php: 5.6
-      env: DEPS=dev SYMFONY_VERSION=2.8.*
-    - php: 5.3
-      env: SYMFONY_VERSION="~2.3.4" COMPOSER_FLAGS="--prefer-lowest"
+      env: DEPS=dev SYMFONY_VERSION=3.1.*
+    - php: 5.5
+      env: COMPOSER_FLAGS="--prefer-lowest"
     - php: 5.6
-      env: SYMFONY_VERSION=2.3.*
-    - php: 5.6
-      env: SYMFONY_VERSION=2.7.*
+      env: DEPS=dev COMPOSER_FLAGS="--prefer-stable" SYMFONY_VERSION=3.0.*
   fast_finish: true
 
 before_install:
@@ -37,7 +32,7 @@ before_install:
   - composer require phpunit/phpunit:"$(phpunit --version | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+')" --no-update
   - if [ "$DEPS" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION} --no-update; fi
-  
+
 install: travis_wait composer update --prefer-dist $COMPOSER_FLAGS
 
 before_script: vendor/symfony-cmf/testing/bin/travis/phpcr_odm_doctrine_dbal.sh
