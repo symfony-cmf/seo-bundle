@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest\Admin;
 
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 /**
@@ -23,7 +24,7 @@ class SeoContentAdminExtensionTest extends BaseTestCase
     public function setUp()
     {
         $this->db('PHPCR')->loadFixtures(array(
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
+            LoadContentData::class,
         ));
     }
 
