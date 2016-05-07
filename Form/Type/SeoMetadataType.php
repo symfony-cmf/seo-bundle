@@ -63,17 +63,17 @@ class SeoMetadataType extends AbstractType
             ->add('metaKeywords', TextareaType::class, array('label' => 'form.label_metaKeywords'))
             ->add('extraProperties', KeyValueType::class, array(
                 'label' => 'form.label_extraProperties',
-                'value_type' => 'text',
+                'value_type' => TextType::class,
                 'use_container_object' => true,
             ))
             ->add('extraNames', KeyValueType::class, array(
                 'label' => 'form.label_extraNames',
-                'value_type' => 'text',
+                'value_type' => TextType::class,
                 'use_container_object' => true,
             ))
             ->add('extraHttp', KeyValueType::class, array(
                 'label' => 'form.label_extraHttp',
-                'value_type' => 'text',
+                'value_type' => TextType::class,
                 'use_container_object' => true,
             ))
         ;
