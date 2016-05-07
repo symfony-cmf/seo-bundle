@@ -41,8 +41,6 @@ class SeoContentAdminExtension extends AdminExtension
 
     public function configureFormFields(FormMapper $formMapper)
     {
-        $isSf28 = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
-
         $formMapper
             ->with($this->formGroup, array(
                 'translation_domain' => 'CmfSeoBundle',

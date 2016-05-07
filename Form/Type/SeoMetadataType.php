@@ -17,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * A form type for editing the SEO metadata.
@@ -82,34 +81,17 @@ class SeoMetadataType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $defaults = array(
+        $resolver->setDefaults(array(
             'data_class' => $this->dataClass,
             'translation_domain' => 'CmfSeoBundle',
             'required' => false,
-        );
+        ));
+
         if ($this->isOrm) {
-            $defaults['by_reference'] = false;
+            $resolver->setDefault('by_reference', false);
         }
-
-        $resolver->setDefaults($defaults);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**
