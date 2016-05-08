@@ -31,26 +31,23 @@ class SeoContentAdminExtensionTest extends BaseTestCase
     public function testAdminDashboard()
     {
         $this->getClient()->request('GET', '/admin/dashboard');
-        $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertResponseSuccess($this->getClient()->getResponse());
     }
 
     public function testAdminExtensionExists()
     {
         $crawler = $this->getClient()->request('GET', '/admin/cmf/seo/seoawarecontent/list');
-        $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertResponseSuccess($this->getClient()->getResponse());
         $this->assertCount(1, $crawler->filter('html:contains("content-1")'));
     }
 
     public function testItemEditView()
     {
         $crawler = $this->getClient()->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-1/edit');
-        $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertResponseSuccess($this->getClient()->getResponse());
 
         $this->assertCount(1, $crawler->filter('html:contains("SEO")'));
         $this->assertCount(1, $crawler->filter('html:contains("Page title")'));
@@ -62,9 +59,8 @@ class SeoContentAdminExtensionTest extends BaseTestCase
     public function testExtraPropertyEditView()
     {
         $crawler = $this->getClient()->request('GET', '/admin/cmf/seo/seoawarecontent/test/content/content-extra/edit');
-        $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertResponseSuccess($this->getClient()->getResponse());
         $this->assertCount(1, $crawler->filter('html:contains("Key")'));
         $this->assertCount(1, $crawler->filter('html:contains("Value")'));
     }
@@ -72,9 +68,8 @@ class SeoContentAdminExtensionTest extends BaseTestCase
     public function testItemCreate()
     {
         $crawler = $this->client->request('GET', '/admin/cmf/seo/seoawarecontent/create');
-        $res = $this->client->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertResponseSuccess($this->getClient()->getResponse());
 
         $this->assertCount(1, $crawler->filter('html:contains("SEO")'));
         $this->assertCount(1, $crawler->filter('html:contains("Page title")'));

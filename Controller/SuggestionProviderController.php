@@ -16,7 +16,7 @@ use Symfony\Cmf\Bundle\SeoBundle\SuggestionProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\FlattenException;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 /**
@@ -73,28 +73,19 @@ class SuggestionProviderController extends ExceptionController
         parent::__construct($twig, $debug);
     }
 
-    /**
-     * @param Request              $request
-     * @param FlattenException     $exception
-     * @param DebugLoggerInterface $logger
-     * @param string               $_format
-     *
-     * @return Response
-     */
-    public function showAction(
+    public function listAction(
         Request $request,
         FlattenException $exception,
-        DebugLoggerInterface $logger = null,
-        $_format = 'html'
+        DebugLoggerInterface $logger = null
     ) {
         $code = $exception->getStatusCode();
         if (404 !== $code || $this->exclusionRequestMatcher->matches($request)) {
-            return parent::showAction($request, $exception, $logger, $_format);
+            return $this->showAction($request, $exception, $logger, $request->getRequestFormat());
         }
 
-        $templateForSuggestion = $this->getTemplateForSuggestions($_format);
+        $templateForSuggestion = $this->getTemplateForSuggestions($request->getRequestFormat());
         if (null === $templateForSuggestion) {
-            return parent::showAction($request, $exception, $logger, $_format);
+            return $this->showAction($request, $exception, $logger, $request->getRequestFormat());
         }
 
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));

@@ -9,7 +9,7 @@ cmf_routing:
         enabled: true
         persistence:
             phpcr:
-                route_basepath: /test/routes
+                route_basepaths: [/test/routes]
                 enabled: true
 
 services:
@@ -23,7 +23,7 @@ services:
             - SonataAdminBundle:CRUD
          calls:
             - [ setTranslationDomain, [CmfSeoBundle]]
-            - [ setRouteBuilder, [@sonata.admin.route.path_info_slashes]]
+            - [ setRouteBuilder, ['@sonata.admin.route.path_info_slashes']]
             - [ setRootPath, [/test/content]]
 
 sonata_admin:

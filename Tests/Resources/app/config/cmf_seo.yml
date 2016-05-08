@@ -1,5 +1,6 @@
 framework:
     translator: { enabled: true, fallback: en }
+    serializer: true
 
 sonata_seo:
     page:
@@ -36,7 +37,7 @@ cmf_routing:
             router.default: 100
 
 twig:
-    exception_controller: cmf_seo.error.suggestion_provider.controller:showAction
+    exception_controller: cmf_seo.error.suggestion_provider.controller:listAction
 
 cmf_core:
     multilang:
