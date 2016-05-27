@@ -12,13 +12,10 @@
 namespace Symfony\Cmf\Bundle\SeoBundle;
 
 use Sonata\SeoBundle\Seo\SeoPage;
-use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
-use Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException;
-use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocaleCollection;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -65,11 +62,6 @@ class SeoPresentation implements SeoPresentationInterface
     private $redirectResponse = false;
 
     /**
-     * @var ExtractorInterface[]
-     */
-    private $extractors = array();
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
@@ -80,9 +72,14 @@ class SeoPresentation implements SeoPresentationInterface
     private $configValues;
 
     /**
-     * @var null|CacheInterface
+     * @var LoaderInterface
      */
-    private $cache;
+    private $loader;
+
+    /**
+     * @var SeoMetadataInterface[]
+     */
+    private $seoMetadatas = [];
 
     /**
      * The constructor will set the injected SeoPage - the service of
@@ -91,18 +88,18 @@ class SeoPresentation implements SeoPresentationInterface
      * @param SeoPage             $sonataPage
      * @param TranslatorInterface $translator
      * @param ConfigValues        $configValues
-     * @param CacheInterface      $cache
+     * @param LoaderInterface     $loader
      */
     public function __construct(
         SeoPage $sonataPage,
         TranslatorInterface $translator,
         ConfigValues $configValues,
-        CacheInterface $cache = null
+        LoaderInterface $loader
     ) {
         $this->sonataPage = $sonataPage;
         $this->translator = $translator;
         $this->configValues = $configValues;
-        $this->cache = $cache;
+        $this->loader = $loader;
     }
 
     /**
@@ -122,20 +119,6 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
-     * Add an extractor for SEO metadata.
-     *
-     * @param ExtractorInterface $extractor
-     * @param int                $priority
-     */
-    public function addExtractor(ExtractorInterface $extractor, $priority = 0)
-    {
-        if (!isset($this->extractors[$priority])) {
-            $this->extractors[$priority] = array();
-        }
-        $this->extractors[$priority][] = $extractor;
-    }
-
-    /**
      * Extract the SEO metadata from this object.
      *
      * @param object $content The content to extract metadata from.
@@ -144,65 +127,12 @@ class SeoPresentation implements SeoPresentationInterface
      */
     public function getSeoMetadata($content)
     {
-        if ($content instanceof SeoAwareInterface) {
-            $contentSeoMetadata = $content->getSeoMetadata();
-
-            if ($contentSeoMetadata instanceof SeoMetadataInterface) {
-                $seoMetadata = $this->copyMetadata($contentSeoMetadata);
-            } elseif (null === $contentSeoMetadata) {
-                $seoMetadata = new SeoMetadata();
-                $content->setSeoMetadata($seoMetadata); // make sure it has metadata the next time
-            } else {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        'getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given',
-                        is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata)
-                    )
-                );
-            }
-        } else {
-            $seoMetadata = new SeoMetadata();
+        $hash = spl_object_hash($content);
+        if (isset($this->seoMetadatas[$hash])) {
+            return $this->seoMetadatas[$hash];
         }
 
-        $cachingAvailable = (bool) $this->cache;
-        if ($cachingAvailable) {
-            $extractors = $this->cache->loadExtractorsFromCache(get_class($content));
-
-            if (null === $extractors || !$extractors->isFresh()) {
-                $extractors = $this->getExtractorsForContent($content);
-                $this->cache->putExtractorsInCache(get_class($content), $extractors);
-            }
-        } else {
-            $extractors = $this->getExtractorsForContent($content);
-        }
-
-        foreach ($extractors as $extractor) {
-            $extractor->updateMetadata($content, $seoMetadata);
-        }
-
-        return $seoMetadata;
-    }
-
-    /**
-     * Returns the extractors for content.
-     *
-     * @param object $content
-     *
-     * @return ExtractorInterface[]
-     */
-    private function getExtractorsForContent($content)
-    {
-        $extractors = array();
-        ksort($this->extractors);
-        foreach ($this->extractors as $priority) {
-            $supportedExtractors = array_filter($priority, function (ExtractorInterface $extractor) use ($content) {
-                return $extractor->supports($content);
-            });
-
-            $extractors = array_merge($extractors, $supportedExtractors);
-        }
-
-        return $extractors;
+        return $this->seoMetadatas[$hash] = $this->loader->load($content);
     }
 
     /**
@@ -298,28 +228,6 @@ class SeoPresentation implements SeoPresentationInterface
            : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$contentKeywords;
-    }
-
-    /**
-     * Copy the metadata object to sanitize it and remove doctrine traces.
-     *
-     * @param SeoMetadataInterface $contentSeoMetadata
-     *
-     * @return SeoMetadata
-     */
-    private function copyMetadata(SeoMetadataInterface $contentSeoMetadata)
-    {
-        $metadata = new SeoMetadata();
-
-        return $metadata
-            ->setTitle($contentSeoMetadata->getTitle())
-            ->setMetaKeywords($contentSeoMetadata->getMetaKeywords())
-            ->setMetaDescription($contentSeoMetadata->getMetaDescription())
-            ->setOriginalUrl($contentSeoMetadata->getOriginalUrl())
-            ->setExtraProperties($contentSeoMetadata->getExtraProperties() ?: array())
-            ->setExtraNames($contentSeoMetadata->getExtraNames() ?: array())
-            ->setExtraHttp($contentSeoMetadata->getExtraHttp() ?: array())
-        ;
     }
 
     /**
