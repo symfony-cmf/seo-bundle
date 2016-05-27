@@ -9,15 +9,22 @@
         <service id="cmf_seo.loader_resolver" class="Symfony\Component\Config\Loader\LoaderResolver" public="false">
             <argument type="collection">
                 <argument type="service" id="cmf_seo.loader.extractor"/>
+                <argument type="service" id="cmf_seo.loader.annotation"/>
             </argument>
         </service>
 
-        <service id="cmf_seo.loader" class="Symfony\Component\Config\Loader\DelegatingLoader" public="false">
+        <service id="cmf_seo.loader" class="Symfony\Component\Config\Loader\DelegatingLoader">
             <argument type="service" id="cmf_seo.loader_resolver"/>
         </service>
 
         <service id="cmf_seo.loader.extractor" class="Symfony\Cmf\Bundle\SeoBundle\Loader\ExtractorLoader" public="false">
             <argument type="service" id="cmf_seo.cache"/>
+        </service>
+
+        <service id="cmf_seo.annotation_reader" class="Doctrine\Common\Annotations\AnnotationReader" public="false"/>
+
+        <service id="cmf_seo.loader.annotation" class="Symfony\Cmf\Bundle\SeoBundle\Loader\AnnotationLoader" public="false">
+            <argument type="service" id="cmf_seo.annotation_reader"/>
         </service>
     </services>
 </container>

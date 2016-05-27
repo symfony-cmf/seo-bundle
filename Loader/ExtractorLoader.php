@@ -3,6 +3,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Loader;
 
 use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Component\Config\Loader\Loader;
 
@@ -48,7 +49,7 @@ class ExtractorLoader extends Loader
      */
     public function supports($resource, $type = null)
     {
-        return is_object($resource) && ((!$type && $this->containsExtractors($resource)) || 'extractors' === $type);
+        return is_object($resource) && $this->containsExtractors($resource);
     }
 
     /**
@@ -74,14 +75,14 @@ class ExtractorLoader extends Loader
      *
      * @param object $content
      *
-     * @return ExtractorInterface[]
+     * @return ExtractorCollection
      */
     private function getExtractorsForContent($content)
     {
         $cachingAvailable = (bool) $this->cache;
 
         if (!$cachingAvailable) {
-            return $this->findExtractorsForContent($content);
+            return new ExtractorCollection($this->findExtractorsForContent($content));
         }
 
         $extractors = $this->cache->loadExtractorsFromCache(get_class($content));
@@ -89,6 +90,7 @@ class ExtractorLoader extends Loader
         if (null === $extractors || !$extractors->isFresh()) {
             $extractors = $this->findExtractorsForContent($content);
             $this->cache->putExtractorsInCache(get_class($content), $extractors);
+            $extractors = new ExtractorCollection($extractors);
         }
 
         return $extractors;
@@ -125,22 +127,6 @@ class ExtractorLoader extends Loader
      */
     private function containsExtractors($content)
     {
-        $cacheAvailable = (bool) $this->cache;
-        if ($cacheAvailable) {
-            $extractors = $this->cache->loadExtractorsFromCache(get_class($content));
-
-            if (null !== $extractors) {
-                return count($extractors) > 0;
-            }
-        }
-
-        ksort($this->extractors);
-        foreach (array_map('array_merge', $this->extractors) as $extractor) {
-            if ($extractor->supports($content)) {
-                return true;
-            }
-        }
-
-        return false;
+        return 0 !== count(iterator_to_array($this->getExtractorsForContent($content)));
     }
 }
