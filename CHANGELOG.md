@@ -2,11 +2,15 @@ Changelog
 =========
 
  * **2016-06-18**: [BC BREAK] Removed all `*.class` parameters.
- * **2016-05-27**: [BC BREAK] Removed `SeoPresentation::addExtractor()`, use `ExtractorLoader::addExtractor()` instead.
- * **2016-05-27**: [BC BREAK] Changed the fourth argument of the constructorof `SeoPresentation` from `CacheInterface`
-                   to `LoaderInterface`.
+ * **2016-05-31**: [BC BREAK] Removed `CacheInterface` and `FileCache`, use
+   PSR-6 cache instead.
+ * **2016-05-27**: [BC BREAK] Removed `SeoPresentation::addExtractor()`, use
+   `ExtractorLoader::addExtractor()` instead.
+ * **2016-05-27**: [BC BREAK] Changed the fourth argument of the constructor of
+   `SeoPresentation` from `CacheInterface` to `LoaderInterface`.
  * **2016-05-27**: Added loaders.
- * **2016-05-08**: [BC BREAK] Removed `showAtion` in favor of `listAction` in the `SuggestionProviderController`
+ * **2016-05-08**: [BC BREAK] Removed `showAtion` in favor of `listAction` in
+   the `SuggestionProviderController`
  * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support
  * **2016-05-02**: [BC BREAK] Dropped Symfony <2.8 support
 

@@ -2,8 +2,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Loader;
 
-use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
-use Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Component\Config\Loader\Loader;
 
@@ -13,7 +13,7 @@ use Symfony\Component\Config\Loader\Loader;
 class ExtractorLoader extends Loader
 {
     /**
-     * @var null|CacheInterface
+     * @var null|CacheItemPoolInterface
      */
     private $cache;
 
@@ -23,9 +23,9 @@ class ExtractorLoader extends Loader
     private $extractors = array();
 
     /**
-     * @param CacheInterface       $cache
+     * @param CacheItemPoolInterface $cache
      */
-    public function __construct(CacheInterface $cache = null)
+    public function __construct(CacheItemPoolInterface $cache = null)
     {
         $this->cache = $cache;
     }
@@ -75,25 +75,28 @@ class ExtractorLoader extends Loader
      *
      * @param object $content
      *
-     * @return ExtractorCollection
+     * @return CachedCollection
      */
     private function getExtractorsForContent($content)
     {
         $cachingAvailable = (bool) $this->cache;
 
         if (!$cachingAvailable) {
-            return new ExtractorCollection($this->findExtractorsForContent($content));
+            return $this->findExtractorsForContent($content);
         }
 
-        $extractors = $this->cache->loadExtractorsFromCache(get_class($content));
+        $extractorsItem = $this->cache->getItem(
+            CachedCollection::generateCacheItemKey('extractors', get_class($content))
+        );
 
-        if (null === $extractors || !$extractors->isFresh()) {
-            $extractors = $this->findExtractorsForContent($content);
-            $this->cache->putExtractorsInCache(get_class($content), $extractors);
-            $extractors = new ExtractorCollection($extractors);
+        // regenerate cache if needed
+        if (!$extractorsItem->isHit() || !$extractorsItem->get()->isFresh()) {
+            $extractorsItem->set($this->findExtractorsForContent($content));
+
+            $this->cache->save($extractorsItem);
         }
 
-        return $extractors;
+        return $extractorsItem->get();
     }
 
     /**
@@ -101,7 +104,7 @@ class ExtractorLoader extends Loader
      *
      * @param object $content
      *
-     * @return ExtractorInterface[]
+     * @return CachedCollection
      */
     private function findExtractorsForContent($content)
     {
@@ -115,7 +118,7 @@ class ExtractorLoader extends Loader
             $extractors = array_merge($extractors, $supportedExtractors);
         }
 
-        return $extractors;
+        return CachedCollection::createFromObject($content, $extractors);
     }
 
     /**

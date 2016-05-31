@@ -3,11 +3,9 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Loader;
 
 use Doctrine\Common\Annotations\Reader;
-use Symfony\Cmf\Bundle\SeoBundle\Loader\Annotation\MetaDescription;
-use Symfony\Cmf\Bundle\SeoBundle\Loader\Annotation\MetaKeywords;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Loader\Annotation\SeoMetadataAnnotation;
-use Symfony\Cmf\Bundle\SeoBundle\Loader\Annotation\Title;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\Config\Loader\Loader;
 
 /**
@@ -20,9 +18,15 @@ class AnnotationLoader extends Loader
      */
     private $reader;
 
-    public function __construct(Reader $reader)
+    /**
+     * @var null|CacheItemPoolInterface
+     */
+    private $cache;
+
+    public function __construct(Reader $reader, CacheItemPoolInterface $cache = null)
     {
         $this->reader = $reader;
+        $this->cache = $cache;
     }
 
     public function supports($resource, $type = null)
@@ -34,9 +38,7 @@ class AnnotationLoader extends Loader
     {
         $seoMetadata = SeoMetadataFactory::initializeSeoMetadata($content);
 
-        $data = $this->getAnnotationsFromContent($content);
-
-        // todo cache $data
+        $data = $this->getAnnotationForContent($content);
 
         $classReflection = new \ReflectionClass($content);
         foreach ($data['properties'] as $propertyName => $annotations) {
@@ -59,7 +61,26 @@ class AnnotationLoader extends Loader
         return $seoMetadata;
     }
 
-    private function getAnnotationsFromContent($content)
+    private function getAnnotationForContent($content)
+    {
+        $cachingAvailable = (bool) $this->cache;
+
+        if (!$cachingAvailable) {
+            return $this->readAnnotations($content);
+        }
+
+        $annotationsItem = $this->cache->getItem(CachedCollection::generateCacheItemKey('annotations', get_class($content)));
+
+        if (!$annotationsItem->isHit() || !$annotationsItem->get()->isFresh()) {
+            $annotationsItem->set(CachedCollection::createFromObject($content, $this->readAnnotations($content)));
+
+            $this->cache->save($annotationsItem);
+        }
+
+        return $annotationsItem->get()->getData();
+    }
+
+    private function readAnnotations($content)
     {
         $classReflection = new \ReflectionClass($content);
 
@@ -125,6 +146,6 @@ class AnnotationLoader extends Loader
 
     private function isAnnotated($content)
     {
-        return 0 !== count(call_user_func_array('array_merge', $this->getAnnotationsFromContent($content)));
+        return 0 !== count(call_user_func_array('array_merge', $this->readAnnotationsFromContent($content)));
     }
 }

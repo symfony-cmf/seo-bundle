@@ -19,6 +19,7 @@
         "doctrine/annotations": "^1.2"
     },
     "require-dev": {
+        "symfony/cache": "^3.1",
         "symfony-cmf/testing": "^2.0",
         "doctrine/phpcr-odm": "^2.0",
         "doctrine/orm": "^2.4",

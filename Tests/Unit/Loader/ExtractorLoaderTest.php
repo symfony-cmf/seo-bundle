@@ -129,7 +129,7 @@ class ExtractorLoaderTest extends \PHPUnit_Framework_TestCase
     public function testCaching()
     {
         // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection')
+        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
             ->disableOriginalConstructor()
             ->getMock();
         $extractors
@@ -142,18 +142,24 @@ class ExtractorLoaderTest extends \PHPUnit_Framework_TestCase
             ->method('getIterator')
             ->will($this->returnValue(new \ArrayIterator()))
         ;
-        $cache = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface');
+        $cacheItemNoHit = $this->getMock('Psr\Cache\CacheItemInterface');
+        $cacheItemNoHit->expects($this->any())->method('isHit')->will($this->returnValue(false));
+        $cacheItemNoHit->expects($this->any())->method('get')->will($this->returnValue($extractors));
+        $cacheItemHit = $this->getMock('Psr\Cache\CacheItemInterface');
+        $cacheItemHit->expects($this->any())->method('isHit')->will($this->returnValue(true));
+        $cacheItemHit->expects($this->any())->method('get')->will($this->returnValue($extractors));
+        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
         $cache
             ->expects($this->any())
-            ->method('loadExtractorsFromCache')
-            ->will($this->onConsecutiveCalls(null, $extractors))
+            ->method('getItem')
+            ->will($this->onConsecutiveCalls($cacheItemNoHit, $cacheItemHit))
         ;
         $loader = new ExtractorLoader($cache);
 
         // predictions
         $cache
             ->expects($this->once())
-            ->method('putExtractorsInCache')
+            ->method('save')
         ;
 
         $loader->load($this->content);
@@ -163,7 +169,7 @@ class ExtractorLoaderTest extends \PHPUnit_Framework_TestCase
     public function testCacheRefresh()
     {
         // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection')
+        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
             ->disableOriginalConstructor()
             ->getMock();
         $extractors
@@ -176,18 +182,21 @@ class ExtractorLoaderTest extends \PHPUnit_Framework_TestCase
             ->method('getIterator')
             ->will($this->returnValue(new \ArrayIterator()))
         ;
-        $cache = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface');
+        $cacheItem = $this->getMock('Psr\Cache\CacheItemInterface');
+        $cacheItem->expects($this->any())->method('isHit')->will($this->returnValue(true));
+        $cacheItem->expects($this->any())->method('get')->will($this->returnValue($extractors));
+        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
         $cache
             ->expects($this->any())
-            ->method('loadExtractorsFromCache')
-            ->will($this->returnValue($extractors))
+            ->method('getItem')
+            ->will($this->returnValue($cacheItem))
         ;
         $loader = new ExtractorLoader($cache);
 
         // predictions
         $cache
             ->expects($this->once())
-            ->method('putExtractorsInCache')
+            ->method('save')
         ;
 
         $loader->load($this->content);
