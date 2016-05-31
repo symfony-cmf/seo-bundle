@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueRowType;
 use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
+use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueRowType;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata as SeoMetadataModel;
@@ -24,14 +24,13 @@ class SeoMetadataTypeTest extends TypeTestCase
 {
     protected function getExtensions()
     {
-        $keyValue = new KeyValueType();
-        $keyValueRow = new KeyValueRowType();
-
         return array_merge(
             parent::getExtensions(),
             array(new PreloadedExtension(array(
-                $keyValue->getName() => $keyValue,
-                $keyValueRow->getName() => $keyValueRow,
+                new KeyValueType(),
+                new KeyValueRowType(),
+                new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'),
+                new SeoMetadataTypeTest_OrmType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'),
             ), array()))
         );
     }
@@ -48,8 +47,7 @@ class SeoMetadataTypeTest extends TypeTestCase
             'extraHttp' => array(),
         );
 
-        $type = new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata');
-        $form = $this->factory->create($type);
+        $form = $this->factory->create(SeoMetadataType::class);
         $this->assertTrue($form->getConfig()->getByReference());
 
         $object = new SeoMetadata();
@@ -78,8 +76,7 @@ class SeoMetadataTypeTest extends TypeTestCase
             'extraHttp' => array(),
         );
 
-        $type = new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata', true);
-        $form = $this->factory->create($type);
+        $form = $this->factory->create(SeoMetadataTypeTest_OrmType::class);
         $this->assertFalse($form->getConfig()->getByReference());
 
         $object = new SeoMetadataModel();
@@ -94,5 +91,13 @@ class SeoMetadataTypeTest extends TypeTestCase
 
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($object, $form->getData());
+    }
+}
+
+class SeoMetadataTypeTest_OrmType extends SeoMetadataType
+{
+    public function __construct($dataClass)
+    {
+        parent::__construct($dataClass, true);
     }
 }
