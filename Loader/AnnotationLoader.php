@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Symfony CMF package.
+ *
+ * (c) 2011-2016 Symfony CMF
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Symfony\Cmf\Bundle\SeoBundle\Loader;
 
 use Doctrine\Common\Annotations\Reader;
@@ -86,7 +95,7 @@ class AnnotationLoader extends Loader
 
         return [
             'properties' => $this->readProperties($classReflection->getProperties()),
-            'methods'    => $this->readMethods($classReflection->getMethods()),
+            'methods' => $this->readMethods($classReflection->getMethods()),
         ];
     }
 

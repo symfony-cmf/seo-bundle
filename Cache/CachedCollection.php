@@ -35,8 +35,8 @@ class CachedCollection implements \IteratorAggregate, \Serializable
 
     /**
      * @param array       $data
-     * @param null|string $resource   The path to the file of the content object, this is
-     *                                used to determine if the cache needs to be updated
+     * @param null|string $resource The path to the file of the content object, this is
+     *                              used to determine if the cache needs to be updated
      */
     public function __construct(array $data, $resource = null)
     {

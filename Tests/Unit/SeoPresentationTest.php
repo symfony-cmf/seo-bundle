@@ -12,7 +12,6 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -36,7 +35,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->pageService = $this->getMock('Sonata\SeoBundle\Seo\SeoPage');
         $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
         $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata');
-        $this->content = new \stdClass;
+        $this->content = new \stdClass();
 
         $this->loader = $this->getMock(LoaderInterface::class);
         $this->loader
@@ -80,7 +79,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         ;
 
         // test
-        $this->seoPresentation->updateSeoPage(new \stdClass);
+        $this->seoPresentation->updateSeoPage(new \stdClass());
     }
 
     public function testContentTitle()
