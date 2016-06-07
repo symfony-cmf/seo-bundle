@@ -21,5 +21,13 @@
 
             <tag name="cmf_seo.sitemap.guesser" position="-2"/>
         </service>
+
+        <service
+                id="cmf_seo.sitemap.phpcr.last_modified_guesser"
+                class="Symfony\Cmf\Bundle\SeoBundle\Sitemap\LastModifiedGuesser">
+            <argument type="service" id="doctrine_phpcr" />
+
+            <tag name="cmf_seo.sitemap.guesser" position="-2"/>
+        </service>
     </services>
 </container>

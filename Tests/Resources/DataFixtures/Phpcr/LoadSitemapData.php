@@ -16,6 +16,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SitemapAwareContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SitemapAwareWithLastModifiedDateContent;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SitemapAwareWithPublishWorkflowContent;
 
 class LoadSitemapData implements FixtureInterface
@@ -77,6 +78,21 @@ class LoadSitemapData implements FixtureInterface
         $route = new Route();
         $route->setPosition($routeRoot, 'sitemap-aware-publish');
         $route->setContent($publishedContent);
+        $manager->persist($route);
+
+        $lastModifiedContent = new SitemapAwareWithLastModifiedDateContent();
+        $lastModifiedContent
+            ->setIsVisibleForSitemap(true)
+            ->setLastModified(new \DateTime('2016-07-06', new \DateTimeZone('Europe/Berlin')))
+            ->setTitle('Sitemap Aware Content last mod date')
+            ->setName('sitemap-aware-last-mod-date')
+            ->setParentDocument($contentRoot)
+            ->setBody('Content for that is sitemap aware, that has last modified date.');
+        $manager->persist($lastModifiedContent);
+
+        $route = new Route();
+        $route->setPosition($routeRoot, 'sitemap-aware-last-mod-date');
+        $route->setContent($lastModifiedContent);
         $manager->persist($route);
 
         $manager->flush();
