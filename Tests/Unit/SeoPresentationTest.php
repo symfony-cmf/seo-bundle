@@ -414,7 +414,9 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $content
             ->expects($this->once())
             ->method('setSeoMetadata')
-            ->with($this->callback(function ($c) { return $c instanceof SeoMetadataInterface; }))
+            ->with($this->callback(function ($c) {
+                return $c instanceof SeoMetadataInterface;
+            }))
         ;
 
         $this->seoPresentation->updateSeoPage($content);
