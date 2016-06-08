@@ -23,7 +23,7 @@
         </service>
 
         <service
-                id="cmf_seo.sitemap.phpcr.last_mod_date_guesser"
+                id="cmf_seo.sitemap.phpcr.last_modified_guesser"
                 class="Symfony\Cmf\Bundle\SeoBundle\Sitemap\LastModifiedGuesser">
             <argument type="service" id="doctrine_phpcr" />
 

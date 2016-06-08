@@ -53,7 +53,7 @@ class LastModifiedGuesser implements GuesserInterface
         if (null !== $urlInformation->getLastModification()) {
             return null;
         }
-        
+
         $className = ClassUtils::getRealClass(get_class($object));
         $manager = $this->managerRegistry->getManagerForClass($className);
         if (!$manager instanceof DocumentManager) {
@@ -68,17 +68,23 @@ class LastModifiedGuesser implements GuesserInterface
             return null;
         }
 
-        $fields = array_filter($metadata->getFieldNames(), function ($fieldName) use ($metadata) {
-            $field = $metadata->getField($fieldName);
-
-            return 'jcr:lastModified' == $field['property'];
-        });
-
-        if (1 !== count($fields)) {
+        $fieldName = $this->getFieldName($metadata);
+        if (null === $fieldName) {
             return null;
         }
-        $fieldName = array_shift($fields);
-
+        
         $urlInformation->setLastModification($metadata->getFieldValue($object, $fieldName));
+    }
+
+    private function getFieldName(ClassMetadata $metadata)
+    {
+        foreach ($metadata->getFieldNames() as $fieldName) {
+            $field = $metadata->getField($fieldName);
+            if ('jcr:lastModified' == $field['property']) {
+                return $fieldName;
+            }
+        }
+
+        return null;
     }
 }
