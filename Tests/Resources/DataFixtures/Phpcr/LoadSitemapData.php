@@ -83,7 +83,7 @@ class LoadSitemapData implements FixtureInterface
         $lastModifiedContent = new SitemapAwareWithLastModifiedDateContent();
         $lastModifiedContent
             ->setIsVisibleForSitemap(true)
-            ->setLastModified(new \DateTime('2016-07-06'))
+            ->setLastModified(new \DateTime('2016-07-06', new \DateTimeZone('Europe/Berlin')))
             ->setTitle('Sitemap Aware Content last mod date')
             ->setName('sitemap-aware-last-mod-date')
             ->setParentDocument($contentRoot)

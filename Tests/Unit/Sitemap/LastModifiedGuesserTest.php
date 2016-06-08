@@ -81,7 +81,7 @@ class LastModifiedGuesserTest extends GuesserTestCase
             ->expects($this->any())
             ->method('getFieldValue')
             ->with($this->equalTo($this), $this->equalTo('lastModified'))
-            ->will($this->returnValue(new \DateTime('2016-07-06'), new \DateTimeZone('Europe/Berlin')));
+            ->will($this->returnValue(new \DateTime('2016-07-06', new \DateTimeZone('Europe/Berlin'))));
 
         return new LastModifiedGuesser($this->registry);
     }
@@ -107,7 +107,7 @@ class LastModifiedGuesserTest extends GuesserTestCase
     public function testGuessNoOverwrite()
     {
         $urlInformation = new UrlInformation();
-        $urlInformation->setLastModification(new \DateTime('2016-06-06'));
+        $urlInformation->setLastModification(new \DateTime('2016-06-06', new \DateTimeZone('Europe/Berlin')));
 
         $this->guesser->guessValues($urlInformation, $this->data, 'default');
         $this->assertEquals('2016-06-06T00:00:00+02:00', $urlInformation->getLastModification());
