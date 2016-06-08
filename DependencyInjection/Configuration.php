@@ -71,7 +71,9 @@ class Configuration implements ConfigurationInterface
             ->end()
             // validation needs to be on top, when no values are set a validation inside the content_listener array node will not be triggered
             ->validate()
-                ->ifTrue(function ($v) { return $v['content_listener']['enabled'] && empty($v['content_listener']['content_key']); })
+                ->ifTrue(function ($v) {
+                    return $v['content_listener']['enabled'] && empty($v['content_listener']['content_key']);
+                })
                 ->thenInvalid('Configure the content_listener.content_key or disable the content_listener when not using the CmfRoutingBundle DynamicRouter.')
             ->end()
             ->children()
@@ -136,7 +138,9 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('sonata_admin_extension')
                 ->addDefaultsIfNotSet()
                 ->beforeNormalization()
-                    ->ifTrue(function ($v) { return is_scalar($v); })
+                    ->ifTrue(function ($v) {
+                        return is_scalar($v);
+                    })
                     ->then(function ($v) {
                         return array('enabled' => $v);
                     })

@@ -22,9 +22,7 @@ use Symfony\Component\Routing\Route;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class SitemapAwareWithLastModifiedDateContent extends ContentBase implements
-    RouteReferrersReadInterface,
-    SitemapAwareInterface
+class SitemapAwareWithLastModifiedDateContent extends ContentBase implements RouteReferrersReadInterface, SitemapAwareInterface
 {
     /**
      * @var ArrayCollection|Route[]
