@@ -81,7 +81,7 @@ class LastModifiedGuesserTest extends GuesserTestCase
             ->expects($this->any())
             ->method('getFieldValue')
             ->with($this->equalTo($this), $this->equalTo('lastModified'))
-            ->will($this->returnValue(new \DateTime('2016-07-06')));
+            ->will($this->returnValue(new \DateTime('2016-07-06'), new \DateTimeZone('Europe/Berlin')));
 
         return new LastModifiedGuesser($this->registry);
     }
