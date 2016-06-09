@@ -4,6 +4,7 @@ Changelog
 1.3.0 (unreleased)
 ------------------
 
+* **2016-06-09**: Build and register LastModificationGuesser for PHPCR to use a last modification date on a sitemap. 
 * **2016-04-12**: Build and register DepthGuesser for PHPCR to use depths information for structure sitemap 
 
 1.2.0

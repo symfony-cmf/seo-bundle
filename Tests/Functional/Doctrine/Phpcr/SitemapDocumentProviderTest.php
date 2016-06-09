@@ -48,6 +48,7 @@ class SitemapDocumentProviderTest extends BaseTestCase
         $this->assertEquals(
             array(
                 '/test/content/sitemap-aware',
+                '/test/content/sitemap-aware-last-mod-date',
                 '/test/content/sitemap-aware-non-publish',
                 '/test/content/sitemap-aware-publish',
             ),

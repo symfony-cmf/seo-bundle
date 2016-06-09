@@ -22,12 +22,12 @@ abstract class GuesserTestCase extends \PHPUnit_Framework_Testcase
     /**
      * @var GuesserInterface
      */
-    private $guesser;
+    protected $guesser;
 
     /**
      * @var object
      */
-    private $data;
+    protected $data;
 
     public function setUp()
     {
