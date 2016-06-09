@@ -52,9 +52,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'kernel.bundles',
             array(
                 'CmfRoutingBundle' => true,
-                'SonataDoctrinePHPCRAdminBundle' => true,
                 'DoctrinePHPCRBundle' => true,
-                'BurgovKeyValueFormBundle' => true,
             )
         );
         $this->load(array(
@@ -99,29 +97,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'cmf_seo.form.data_class.seo_metadata',
             'Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'
         );
-    }
-
-    public function testAdminExtension()
-    {
-        $this->container->setParameter(
-            'kernel.bundles',
-            array(
-                'CmfRoutingBundle' => true,
-                'SonataDoctrineORMBundle' => true,
-                'DoctrinePHPCRBundle' => true,
-            )
-        );
-
-        $this->load(array(
-            'title' => 'Default title',
-            'description' => 'Default description.',
-            'sonata_admin_extension' => true,
-            'persistence' => array(
-                'phpcr' => true,
-            ),
-        ));
-
-        $this->assertContainerBuilderHasService('cmf_seo.admin_extension', 'Symfony\Cmf\Bundle\SeoBundle\Admin\Extension\SeoContentAdminExtension');
     }
 
     public function testAlternateLocaleWithPhpcr()
@@ -176,26 +151,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             'setAlternateLocaleProvider',
             array(new Reference(('some_alternate_locale_provider')))
         );
-    }
-
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     */
-    public function testExceptionForNonExistingBurgovBundleWithAdminExtension()
-    {
-        $this->container->setParameter(
-            'kernel.bundles',
-            array(
-                'CmfRoutingBundle' => true,
-                'SonataDoctrinePHPCRAdminBundle' => true,
-                'DoctrinePHPCRBundle' => true,
-            )
-        );
-        $this->load(array(
-            'persistence' => array(
-                'phpcr' => true,
-            ),
-        ));
     }
 
     public function testErrorHandlingPHPCR()
