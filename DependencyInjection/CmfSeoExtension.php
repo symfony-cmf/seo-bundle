@@ -83,11 +83,7 @@ class CmfSeoExtension extends Extension
             $this->isConfigEnabled($container, $config['persistence']['orm'])
             && !$this->isConfigEnabled($container, $config['persistence']['phpcr'])
         );
-
-        if (count($sonataBundles) && $config['sonata_admin_extension']['enabled']) {
-            $this->loadSonataAdmin($config['sonata_admin_extension'], $loader, $container, $sonataBundles);
-        }
-
+        
         $errorConfig = isset($config['error']) ? $config['error'] : array();
         $this->loadErrorHandling($errorConfig, $container);
 
@@ -108,40 +104,6 @@ class CmfSeoExtension extends Extension
             $container,
             $this->isConfigEnabled($container, $config['persistence']['phpcr']) ? 'phpcr' : 'default'
         );
-    }
-
-    /**
-     * Loads the sonata admin extension if at least one supported backend is loaded.
-     *
-     * @param string|bool      $config    Either 'auto' or true.
-     * @param XmlFileLoader    $loader
-     * @param ContainerBuilder $container
-     * @param array            $sonata    List of sonata bundles that are enabled.
-     */
-    public function loadSonataAdmin($config, XmlFileLoader $loader, ContainerBuilder $container, array $sonata)
-    {
-        if ('auto' === $config['enabled']) {
-            $bundles = $container->getParameter('kernel.bundles');
-            $found = false;
-            foreach ($sonata as $bundle) {
-                if (isset($bundles[$bundle])) {
-                    $found = true;
-                    break;
-                }
-            }
-            if (!$found) {
-                return;
-            }
-
-            if (!isset($bundles['BurgovKeyValueFormBundle'])) {
-                throw new InvalidConfigurationException(
-                    'To use advanced menu options, you need the burgov/key-value-form-bundle in your project.'
-                );
-            }
-        }
-
-        $container->setParameter('cmf_seo.sonata_admin_extension.form_group', $config['form_group']);
-        $loader->load('admin.xml');
     }
 
     /**
