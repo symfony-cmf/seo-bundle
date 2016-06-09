@@ -44,20 +44,19 @@ class LastModifiedGuesser implements GuesserInterface
      * Updates UrlInformation with new values if they are not already set.
      *
      * @param UrlInformation $urlInformation The value object to update.
-     * @param object $object The sitemap element to get values from.
-     * @param string $sitemap Name of the sitemap being built.
-     * @return null
+     * @param object         $object         The sitemap element to get values from.
+     * @param string         $sitemap        Name of the sitemap being built.
      */
     public function guessValues(UrlInformation $urlInformation, $object, $sitemap)
     {
         if (null !== $urlInformation->getLastModification()) {
-            return null;
+            return;
         }
 
         $className = ClassUtils::getRealClass(get_class($object));
         $manager = $this->managerRegistry->getManagerForClass($className);
         if (!$manager instanceof DocumentManager) {
-            return null;
+            return;
         }
 
         /** @var ClassMetadata $metadata */
@@ -65,14 +64,14 @@ class LastModifiedGuesser implements GuesserInterface
         $mixins = $metadata->getMixins();
 
         if (!in_array('mix:lastModified', $mixins)) {
-            return null;
+            return;
         }
 
         $fieldName = $this->getFieldName($metadata);
         if (null === $fieldName) {
-            return null;
+            return;
         }
-        
+
         $urlInformation->setLastModification($metadata->getFieldValue($object, $fieldName));
     }
 
@@ -85,6 +84,6 @@ class LastModifiedGuesser implements GuesserInterface
             }
         }
 
-        return null;
+        return;
     }
 }

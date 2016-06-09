@@ -102,7 +102,7 @@ class SitemapTest extends BaseTestCase
             ),
             array(
                 'json',
-                '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-last-mod-date","label":"Sitemap Aware Content last mod date","changefreq":"never","lastmod":"2016-07-06T00:00:00+02:00","alternate_locales":[],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","alternate_locales":[],"depth":0}]'
+                '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-last-mod-date","label":"Sitemap Aware Content last mod date","changefreq":"never","lastmod":"2016-07-06T00:00:00+02:00","alternate_locales":[],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","alternate_locales":[],"depth":0}]',
             ),
         );
     }
