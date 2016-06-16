@@ -15,5 +15,19 @@
 
             <tag name="cmf_seo.sitemap.loader" priority="-2"/>
         </service>
+        <service id="cmf_seo.sitemap.phpcr.depth_guesser" class="Symfony\Cmf\Bundle\SeoBundle\Sitemap\DepthGuesser">
+            <argument type="service" id="doctrine_phpcr"/>
+            <argument>%cmf_routing.dynamic.persistence.phpcr.content_basepath%</argument>
+
+            <tag name="cmf_seo.sitemap.guesser" position="-2"/>
+        </service>
+
+        <service
+                id="cmf_seo.sitemap.phpcr.last_modified_guesser"
+                class="Symfony\Cmf\Bundle\SeoBundle\Sitemap\LastModifiedGuesser">
+            <argument type="service" id="doctrine_phpcr" />
+
+            <tag name="cmf_seo.sitemap.guesser" position="-2"/>
+        </service>
     </services>
 </container>

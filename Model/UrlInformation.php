@@ -60,6 +60,11 @@ class UrlInformation
      */
     private $alternateLocales;
 
+    /**
+     * @var int|null
+     */
+    private $depth;
+
     public function __construct()
     {
         $this->alternateLocales = array();
@@ -94,6 +99,7 @@ class UrlInformation
             'lastmod' => $this->lastModification,
             'priority' => $this->priority,
             'alternate_locales' => array(),
+            'depth' => $this->depth,
         );
         foreach ($result as $key => $value) {
             if (null === $value) {
@@ -247,5 +253,21 @@ class UrlInformation
         $this->alternateLocales[] = $alternateLocale;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDepth()
+    {
+        return $this->depth;
+    }
+
+    /**
+     * @param int|null $depth
+     */
+    public function setDepth($depth)
+    {
+        $this->depth = $depth;
     }
 }

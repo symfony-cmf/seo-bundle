@@ -69,10 +69,13 @@ class SitemapTest extends BaseTestCase
             array(
                 'html',
                 '<ul class="cmf-sitemap">
-                    <li>
+                    <li class="indent-0">
                         <a href="http://localhost/sitemap-aware" title="Sitemap Aware Content">Sitemap Aware Content</a>
                     </li>
-                    <li>
+                    <li class="indent-0">
+                        <a href="http://localhost/sitemap-aware-last-mod-date" title="Sitemap Aware Content last mod date">Sitemap Aware Content last mod date</a>
+                    </li>
+                    <li class="indent-0">
                         <a href="http://localhost/sitemap-aware-publish" title="Sitemap Aware Content publish">Sitemap Aware Content publish</a>
                     </li>
                 </ul>',
@@ -87,6 +90,11 @@ class SitemapTest extends BaseTestCase
                          <xhtml:link href="http://localhost/sitemap-aware?_locale=de" hreflang="de" rel="alternate"/>
                      </url>
                      <url>
+                         <loc>http://localhost/sitemap-aware-last-mod-date</loc>
+                         <lastmod>2016-07-06T00:00:00+02:00</lastmod>
+                         <changefreq>never</changefreq>
+                     </url>
+                     <url>
                          <loc>http://localhost/sitemap-aware-publish</loc>
                          <changefreq>never</changefreq>
                      </url>
@@ -94,7 +102,7 @@ class SitemapTest extends BaseTestCase
             ),
             array(
                 'json',
-                '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}]},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","alternate_locales":[]}]',
+                '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-last-mod-date","label":"Sitemap Aware Content last mod date","changefreq":"never","lastmod":"2016-07-06T00:00:00+02:00","alternate_locales":[],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","alternate_locales":[],"depth":0}]',
             ),
         );
     }

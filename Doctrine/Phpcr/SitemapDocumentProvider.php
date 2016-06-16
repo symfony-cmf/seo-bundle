@@ -42,7 +42,7 @@ class SitemapDocumentProvider implements LoaderInterface
     {
         // todo rewrite query when https://github.com/symfony-cmf/CoreBundle/issues/126 is ready
         $documentsCollection = $this->manager->createQuery(
-            'SELECT * FROM [nt:unstructured] WHERE (visible_for_sitemap = true)',
+            'SELECT * FROM [nt:unstructured] WHERE (visible_for_sitemap = true) ORDER BY [jcr:path]',
             QueryInterface::JCR_SQL2
         )->execute();
 
