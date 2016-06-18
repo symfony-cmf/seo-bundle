@@ -5,30 +5,21 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="cmf_seo.config_values.class">Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues</parameter>
-        <parameter key="cmf_seo.form.type.seo_metadata.class">Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType</parameter>
-        <parameter key="cmf_seo.cache.file.class">Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache</parameter>
-        <parameter key="cmf_seo.presentation.class">Symfony\Cmf\Bundle\SeoBundle\SeoPresentation</parameter>
-        <parameter key="cmf_seo.error.suggestion_provider.controller.class">Symfony\Cmf\Bundle\SeoBundle\Controller\SuggestionProviderController</parameter>
-        <parameter key="cmf_seo.twig.extension.class">Symfony\Cmf\Bundle\SeoBundle\Twig\Extension\CmfSeoExtension</parameter>
-    </parameters>
-
     <services>
-        <service id="cmf_seo.config_values" class="%cmf_seo.config_values.class%">
+        <service id="cmf_seo.config_values" class="Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues">
             <call method="setTitle"><argument>%cmf_seo.title%</argument></call>
             <call method="setDescription"><argument>%cmf_seo.description%</argument></call>
             <call method="setTranslationDomain"><argument>%cmf_seo.translation_domain%</argument></call>
             <call method="setOriginalUrlBehaviour"><argument>%cmf_seo.original_route_pattern%</argument></call>
         </service>
 
-        <service id="cmf_seo.form.type.seo_metadata" class="%cmf_seo.form.type.seo_metadata.class%">
+        <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <argument>%cmf_seo.form.data_class.seo_metadata%</argument>
             <argument>%cmf_seo.form_mode_orm%</argument>
             <tag name="form.type" alias="seo_metadata" />
         </service>
 
-        <service id="cmf_seo.cache.file" class="%cmf_seo.cache.file.class%">
+        <service id="cmf_seo.cache.file" class="Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache">
             <argument>%kernel.cache_dir%</argument>
             <argument>cmf_seo</argument>
 
@@ -38,14 +29,14 @@
 
         <service id="cmf_seo.cache" alias="cmf_seo.cache.file" />
 
-        <service id="cmf_seo.presentation" class="%cmf_seo.presentation.class%">
+        <service id="cmf_seo.presentation" class="Symfony\Cmf\Bundle\SeoBundle\SeoPresentation">
             <argument type="service" id="sonata.seo.page" />
             <argument type="service" id="translator" />
             <argument type="service" id="cmf_seo.config_values" />
             <argument type="service" id="cmf_seo.cache" />
         </service>
 
-        <service id="cmf_seo.error.suggestion_provider.controller" class="%cmf_seo.error.suggestion_provider.controller.class%">
+        <service id="cmf_seo.error.suggestion_provider.controller" class="Symfony\Cmf\Bundle\SeoBundle\Controller\SuggestionProviderController">
             <argument type="service" id="twig" />
             <argument>%kernel.debug%</argument>
             <argument type="service" id="cmf_seo.error.exclusion_matcher" />
@@ -60,7 +51,7 @@
 
         <service id="cmf_seo.error.exclusion_matcher" class="Symfony\Cmf\Bundle\SeoBundle\Matcher\ExclusionMatcher" />
 
-        <service id="cmf_seo.twig.extension" class="%cmf_seo.twig.extension.class%" public="false">
+        <service id="cmf_seo.twig.extension" class="Symfony\Cmf\Bundle\SeoBundle\Twig\Extension\CmfSeoExtension" public="false">
             <tag name="twig.extension" />
             <argument type="service" id="cmf_seo.presentation" />
         </service>

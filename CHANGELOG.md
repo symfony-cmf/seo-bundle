@@ -1,12 +1,10 @@
 Changelog
 =========
 
-2.0 (unreleased)
-----------------
-
- * **2016-05-08**: [BC BREAK] Removed `showAtion` in favor of `listAction` in the `SuggestionProviderController`
- * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support
- * **2016-05-02**: [BC BREAK] Dropped Symfony <2.8 support
+ * **2016-06-18**: [BC BREAK] Removed all `*.class` parameters.
+ * **2016-05-08**: [BC BREAK] Removed `showAtion` in favor of `listAction` in the `SuggestionProviderController`.
+ * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support.
+ * **2016-05-02**: [BC BREAK] Dropped Symfony <2.8 support.
 
 1.3.0
 -----

@@ -19,6 +19,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DefaultChangeFrequencyGuesser;
 
 /**
  * Loads and manages the bundle configuration.
@@ -320,7 +321,7 @@ class CmfSeoExtension extends Extension
 
         foreach ($configurations as $sitemapName => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
-                $definition = new Definition('%cmf_seo.sitemap.guesser.default_change_frequency.class%', array(
+                $definition = new Definition(DefaultChangeFrequencyGuesser::class, array(
                     $configuration['default_change_frequency'],
                 ));
                 $definition->addTag('cmf_seo.sitemap.guesser', array(

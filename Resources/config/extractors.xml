@@ -4,37 +4,28 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="cmf_seo.extractor_strategy.title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.read_title.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.description.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.keywords.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_url.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor</parameter>
-        <parameter key="cmf_seo.extractor_strategy.original_route.class">Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalRouteExtractor</parameter>
-    </parameters>
-
     <services>
-        <service id="cmf_seo.extractor_strategy.title" class="%cmf_seo.extractor_strategy.title.class%">
+        <service id="cmf_seo.extractor_strategy.title" class="Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor">
             <tag name="cmf_seo.extractor"/>
         </service>
 
-        <service id="cmf_seo.extractor_strategy.read_title" class="%cmf_seo.extractor_strategy.read_title.class%">
+        <service id="cmf_seo.extractor_strategy.read_title" class="Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadExtractor">
             <tag name="cmf_seo.extractor"/>
         </service>
 
-        <service id="cmf_seo.extractor_strategy.description" class="%cmf_seo.extractor_strategy.description.class%">
+        <service id="cmf_seo.extractor_strategy.description" class="Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor">
             <tag name="cmf_seo.extractor"/>
         </service>
 
-        <service id="cmf_seo.extractor_strategy.keywords" class="%cmf_seo.extractor_strategy.keywords.class%">
+        <service id="cmf_seo.extractor_strategy.keywords" class="Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsExtractor">
             <tag name="cmf_seo.extractor"/>
         </service>
 
-        <service id="cmf_seo.extractor_strategy.original_url" class="%cmf_seo.extractor_strategy.original_url.class%">
+        <service id="cmf_seo.extractor_strategy.original_url" class="Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor">
             <tag name="cmf_seo.extractor"/>
         </service>
 
-        <service id="cmf_seo.extractor_strategy.original_route" class="%cmf_seo.extractor_strategy.original_route.class%">
+        <service id="cmf_seo.extractor_strategy.original_route" class="Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalRouteExtractor">
             <argument type="service" id="router" />
             <tag name="cmf_seo.extractor"/>
         </service>
