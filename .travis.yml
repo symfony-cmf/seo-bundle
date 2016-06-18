@@ -14,22 +14,18 @@ cache:
 
 env:
   matrix:
-    - SYMFONY_VERSION=3.1.* 
+    - SYMFONY_VERSION=2.8.*
   global:
     - SYMFONY_DEPRECATIONS_HELPER=weak
 
 matrix:
   include:
     - php: 7.0
-      env: DEPS=dev SYMFONY_VERSION=3.2.*
+      env: DEPS=dev SYMFONY_VERSION=3.1.*
     - php: 5.5
       env: COMPOSER_FLAGS="--prefer-lowest"
     - php: 7.0
-      env: SYMFONY_VERSION=2.8.*
-    - php: 7.0
       env: DEPS=dev COMPOSER_FLAGS="--prefer-stable" SYMFONY_VERSION=3.0.*
-    - php: 7.0
-      env: DEPS=dev COMPOSER_FLAGS="--prefer-stable" SYMFONY_VERSION=3.1.*
   fast_finish: true
 
 before_install:

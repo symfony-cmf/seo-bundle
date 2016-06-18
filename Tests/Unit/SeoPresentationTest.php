@@ -197,24 +197,4 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $redirect);
         $this->assertEquals('/redirect/target', $redirect->getTargetUrl());
     }
-
-    public function testSeoAwareWithoutCurrentMetadata()
-    {
-        $content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
-        $content
-            ->expects($this->any())
-            ->method('getSeoMetadata')
-            ->will($this->returnValue(null))
-        ;
-
-        $content
-            ->expects($this->once())
-            ->method('setSeoMetadata')
-            ->with($this->callback(function ($c) {
-                return $c instanceof SeoMetadataInterface;
-            }))
-        ;
-
-        $this->seoPresentation->updateSeoPage($content);
-    }
 }

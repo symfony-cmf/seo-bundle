@@ -100,4 +100,80 @@ abstract class BaseAnnotationLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->loader->load($content);
     }
+
+    public function testCaching()
+    {
+        // promises
+        $annotations = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $annotations
+            ->expects($this->any())
+            ->method('isFresh')
+            ->will($this->returnValue(true))
+        ;
+        $annotations
+            ->expects($this->any())
+            ->method('getData')
+            ->will($this->returnValue(['properties' => [], 'methods' => []]))
+        ;
+        $cacheItemNoHit = $this->getMock('Psr\Cache\CacheItemInterface');
+        $cacheItemNoHit->expects($this->any())->method('isHit')->will($this->returnValue(false));
+        $cacheItemNoHit->expects($this->any())->method('get')->will($this->returnValue($annotations));
+        $cacheItemHit = $this->getMock('Psr\Cache\CacheItemInterface');
+        $cacheItemHit->expects($this->any())->method('isHit')->will($this->returnValue(true));
+        $cacheItemHit->expects($this->any())->method('get')->will($this->returnValue($annotations));
+        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
+        $cache
+            ->expects($this->any())
+            ->method('getItem')
+            ->will($this->onConsecutiveCalls($cacheItemNoHit, $cacheItemHit))
+        ;
+        $loader = new AnnotationLoader(new AnnotationReader(), $cache);
+
+        // predictions
+        $cache
+            ->expects($this->once())
+            ->method('save')
+        ;
+
+        $loader->load($this->getContent());
+        $loader->load($this->getContent());
+    }
+
+    public function testCacheRefresh()
+    {
+        // promises
+        $annotations = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $annotations
+            ->expects($this->any())
+            ->method('isFresh')
+            ->will($this->returnValue(false))
+        ;
+        $annotations
+            ->expects($this->any())
+            ->method('getData')
+            ->will($this->returnValue(['properties' => [], 'methods' => []]))
+        ;
+        $cacheItem = $this->getMock('Psr\Cache\CacheItemInterface');
+        $cacheItem->expects($this->any())->method('isHit')->will($this->returnValue(true));
+        $cacheItem->expects($this->any())->method('get')->will($this->returnValue($annotations));
+        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
+        $cache
+            ->expects($this->any())
+            ->method('getItem')
+            ->will($this->returnValue($cacheItem))
+        ;
+        $loader = new AnnotationLoader(new AnnotationReader(), $cache);
+
+        // predictions
+        $cache
+            ->expects($this->once())
+            ->method('save')
+        ;
+
+        $loader->load($this->getContent());
+    }
 }
