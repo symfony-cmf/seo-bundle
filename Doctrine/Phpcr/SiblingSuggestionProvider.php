@@ -29,10 +29,9 @@ class SiblingSuggestionProvider extends BaseSuggestionProvider
     public function create(Request $request)
     {
         $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
-        $parentPath = PathHelper::getParentPath($this->routeBasePath.$request->getPathInfo());
-        $parentRoute = $manager->find(null, $parentPath);
+        $parentRoute = $this->findParentRoute($request->getPathInfo());
 
-        if (!$parentRoute) {
+        if (null === $parentRoute) {
             return array();
         }
 

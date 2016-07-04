@@ -29,22 +29,22 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
     protected $managerRegistry;
 
     /**
-     * By concatenating the routeBasePath and the url
+     * By concatenating the routeBasePaths and the url
      * we will get the absolute path a route document
      * should be persisted with.
      *
-     * @var string
+     * @var array
      */
-    protected $routeBasePath;
+    protected $routeBasePaths;
 
     /**
      * @param ManagerRegistry $managerRegistry
-     * @param $routeBasePath
+     * @param array           $routeBasePath
      */
-    public function __construct(ManagerRegistry $managerRegistry, $routeBasePath)
+    public function __construct(ManagerRegistry $managerRegistry, array $routeBasePaths)
     {
         $this->managerRegistry = $managerRegistry;
-        $this->routeBasePath = $routeBasePath;
+        $this->routeBasePaths = $routeBasePaths;
     }
 
     /**
@@ -55,5 +55,25 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
     public function getManagerForClass($class)
     {
         return $this->managerRegistry->getManagerForClass($class);
+    }
+
+    /**
+     * Finds the parent route document by concatenating the basepaths with the 
+     * requested path.
+     *
+     * @return null|\Traversable
+     */
+    protected function findParentRoute($requestedPath)
+    {
+        foreach ($this->routeBasePaths as $basepath) {
+            $parentPath = PathHelper::getParentPath($basepath.$requestedPath);
+
+            $parentRoute = $manager->find(null, $parentPath);
+            if (null !== $parentRoute) {
+                break;
+            }
+        }
+
+        return $parentRoute;
     }
 }

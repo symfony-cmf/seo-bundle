@@ -12,12 +12,13 @@
     <services>
         <service id="cmf_seo.error.suggestion_provider.parent" class="%cmf_seo.error.suggestion_provider.parent.class%">
             <argument type="service" id="doctrine_phpcr" />
-            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepath%</argument>
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
             <tag name="cmf_seo.suggestion_provider" group="parent" />
         </service>
+
         <service id="cmf_seo.error.suggestion_provider.sibling" class="%cmf_seo.error.suggestion_provider.sibling.class%">
             <argument type="service" id="doctrine_phpcr" />
-            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepath%</argument>
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
             <tag name="cmf_seo.suggestion_provider" group="sibling" />
         </service>
 
