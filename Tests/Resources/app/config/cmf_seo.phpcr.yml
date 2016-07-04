@@ -9,7 +9,7 @@ cmf_routing:
         enabled: true
         persistence:
             phpcr:
-                route_basepath: /test/routes
+                route_basepaths: [/test/routes]
                 enabled: true
 
 services:
