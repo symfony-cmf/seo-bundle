@@ -11,7 +11,6 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
-use PHPCR\Util\PathHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
 
@@ -28,12 +27,10 @@ class ParentSuggestionProvider extends BaseSuggestionProvider
     public function create(Request $request)
     {
         $routes = array();
-        $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
-        $parentPath = PathHelper::getParentPath($this->routeBasePath.$request->getPathInfo());
+        $parentRoute = $this->findParentRoute($request->getPathInfo());
 
-        $parentRoute = $manager->find(null, $parentPath);
-        if (!$parentRoute) {
-            return $routes;
+        if (null === $parentRoute) {
+            return array();
         }
 
         if ($parentRoute instanceof Route) {
