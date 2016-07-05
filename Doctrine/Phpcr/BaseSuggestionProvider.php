@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
+use PHPCR\Util\PathHelper;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Symfony\Cmf\Bundle\SeoBundle\SuggestionProviderInterface;
@@ -29,22 +30,22 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
     protected $managerRegistry;
 
     /**
-     * By concatenating the routeBasePath and the url
+     * By concatenating the routeBasePaths and the url
      * we will get the absolute path a route document
      * should be persisted with.
      *
-     * @var string
+     * @var array
      */
-    protected $routeBasePath;
+    protected $routeBasePaths;
 
     /**
      * @param ManagerRegistry $managerRegistry
-     * @param $routeBasePath
+     * @param array           $routeBasePath
      */
-    public function __construct(ManagerRegistry $managerRegistry, $routeBasePath)
+    public function __construct(ManagerRegistry $managerRegistry, $routeBasePaths)
     {
         $this->managerRegistry = $managerRegistry;
-        $this->routeBasePath = $routeBasePath;
+        $this->routeBasePaths = (array) $routeBasePaths;
     }
 
     /**
@@ -55,5 +56,28 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
     public function getManagerForClass($class)
     {
         return $this->managerRegistry->getManagerForClass($class);
+    }
+
+    /**
+     * Finds the parent route document by concatenating the basepaths with the
+     * requested path.
+     *
+     * @return null|object
+     */
+    protected function findParentRoute($requestedPath)
+    {
+        $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
+        $parentPaths = array();
+
+        foreach ($this->routeBasePaths as $basepath) {
+            $parentPaths[] = PathHelper::getParentPath($basepath.$requestedPath);
+        }
+
+        $parentRoutes = $manager->findMany(null, $parentPaths);
+        if (0 === count($parentRoutes)) {
+            return;
+        }
+
+        return $parentRoutes->first();
     }
 }

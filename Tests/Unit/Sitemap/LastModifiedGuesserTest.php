@@ -74,7 +74,7 @@ class LastModifiedGuesserTest extends GuesserTestCase
             ->will($this->returnValue(array('lastModified')));
         $this->metadata
             ->expects($this->any())
-            ->method('getField')
+            ->method('getFieldMapping')
             ->with($this->equalTo('lastModified'))
             ->will($this->returnValue(array('property' => 'jcr:lastModified')));
         $this->metadata
