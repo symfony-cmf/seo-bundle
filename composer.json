@@ -18,19 +18,21 @@
         "doctrine/collections": "^1.0"
     },
     "require-dev": {
-        "symfony-cmf/testing": "^1.3|^2.0",
+        "symfony-cmf/testing": "^2.0",
         "doctrine/phpcr-odm": "^2.0",
         "doctrine/orm": "^2.4",
         "sonata-project/doctrine-phpcr-admin-bundle": "^1.2.3|^2.0",
         "sonata-project/admin-bundle": "^2.3.7|^3.0",
         "sonata-project/block-bundle": "^2.2.8|^3.0",
         "sonata-project/core-bundle": "^2.2.5|^3.0",
-        "symfony-cmf/routing-bundle": "^1.2|^2.0",
+        "symfony-cmf/routing-bundle": "^1.4|^2.0",
         "symfony-cmf/core-bundle": "^1.1|^2.0",
         "matthiasnoback/symfony-dependency-injection-test": "^0.7.4",
         "matthiasnoback/symfony-config-test": "^1.3.1",
         "burgov/key-value-form-bundle": "^1.0"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",
         "symfony-cmf/routing-bundle": "To make use of the alternate locale provider.",
