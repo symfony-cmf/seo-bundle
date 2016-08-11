@@ -1,7 +1,0 @@
-Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors:
-    properties:
-        title: { type: title }
-        description: { type: description }
-
-    methods:
-        get
