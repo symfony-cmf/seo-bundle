@@ -83,7 +83,7 @@ class CmfSeoExtension extends Extension
             $this->isConfigEnabled($container, $config['persistence']['orm'])
             && !$this->isConfigEnabled($container, $config['persistence']['phpcr'])
         );
-        
+
         $errorConfig = isset($config['error']) ? $config['error'] : array();
         $this->loadErrorHandling($errorConfig, $container);
 
