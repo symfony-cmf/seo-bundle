@@ -13,6 +13,10 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Loader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Cmf\Bundle\SeoBundle\Loader\AnnotationLoader;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection;
+use Prophecy\Argument;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * @author Wouter de Jong <wouter@wouterj.nl>
@@ -104,38 +108,25 @@ abstract class BaseAnnotationLoaderTest extends \PHPUnit_Framework_TestCase
     public function testCaching()
     {
         // promises
-        $annotations = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $annotations
-            ->expects($this->any())
-            ->method('isFresh')
-            ->will($this->returnValue(true))
-        ;
-        $annotations
-            ->expects($this->any())
-            ->method('getData')
-            ->will($this->returnValue(['properties' => [], 'methods' => []]))
-        ;
-        $cacheItemNoHit = $this->getMock('Psr\Cache\CacheItemInterface');
-        $cacheItemNoHit->expects($this->any())->method('isHit')->will($this->returnValue(false));
-        $cacheItemNoHit->expects($this->any())->method('get')->will($this->returnValue($annotations));
-        $cacheItemHit = $this->getMock('Psr\Cache\CacheItemInterface');
-        $cacheItemHit->expects($this->any())->method('isHit')->will($this->returnValue(true));
-        $cacheItemHit->expects($this->any())->method('get')->will($this->returnValue($annotations));
-        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
-        $cache
-            ->expects($this->any())
-            ->method('getItem')
-            ->will($this->onConsecutiveCalls($cacheItemNoHit, $cacheItemHit))
-        ;
-        $loader = new AnnotationLoader(new AnnotationReader(), $cache);
+        $annotations = $this->prophesize(CachedCollection::class);
+        $annotations->isFresh()->willReturn(true);
+        $annotations->getData()->willReturn(['properties' => [], 'methods' => []]);
+
+        $cacheItemProphet = $this->prophesize(CacheItemInterface::class);
+        $cacheItemProphet->isHit()->willReturn(false);
+        $cacheItemProphet->set(Argument::type(CachedCollection::class))->will(function () {
+            $this->isHit()->willReturn(true);
+        });
+        $cacheItemProphet->get()->willReturn($annotations->reveal());
+        $cacheItem = $cacheItemProphet->reveal();
+
+        $cache = $this->prophesize(CacheItemPoolInterface::class);
+        $cache->getItem('cmf_seo.annotations.'.str_replace('\\', '.', get_class($this->getContent())))->willReturn($cacheItem);
+
+        $loader = new AnnotationLoader(new AnnotationReader(), $cache->reveal());
 
         // predictions
-        $cache
-            ->expects($this->once())
-            ->method('save')
-        ;
+        $cache->save($cacheItem)->shouldBeCalledTimes(1);
 
         $loader->load($this->getContent());
         $loader->load($this->getContent());
@@ -144,35 +135,23 @@ abstract class BaseAnnotationLoaderTest extends \PHPUnit_Framework_TestCase
     public function testCacheRefresh()
     {
         // promises
-        $annotations = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $annotations
-            ->expects($this->any())
-            ->method('isFresh')
-            ->will($this->returnValue(false))
-        ;
-        $annotations
-            ->expects($this->any())
-            ->method('getData')
-            ->will($this->returnValue(['properties' => [], 'methods' => []]))
-        ;
-        $cacheItem = $this->getMock('Psr\Cache\CacheItemInterface');
-        $cacheItem->expects($this->any())->method('isHit')->will($this->returnValue(true));
-        $cacheItem->expects($this->any())->method('get')->will($this->returnValue($annotations));
-        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
-        $cache
-            ->expects($this->any())
-            ->method('getItem')
-            ->will($this->returnValue($cacheItem))
-        ;
-        $loader = new AnnotationLoader(new AnnotationReader(), $cache);
+        $annotations = $this->prophesize(CachedCollection::class);
+        $annotations->isFresh()->willReturn(false);
+        $annotations->getData()->willReturn(['properties' => [], 'methods' => []]);
+
+        $cacheItemProphet = $this->prophesize(CacheItemInterface::class);
+        $cacheItemProphet->isHit()->willReturn(true);
+        $cacheItemProphet->get()->willReturn($annotations->reveal());
+        $cacheItem = $cacheItemProphet->reveal();
+
+        $cache = $this->prophesize(CacheItemPoolInterface::class);
+        $cache->getItem('cmf_seo.annotations.'.str_replace('\\', '.', get_class($this->getContent())))->willReturn($cacheItem);
+
+        $loader = new AnnotationLoader(new AnnotationReader(), $cache->reveal());
 
         // predictions
-        $cache
-            ->expects($this->once())
-            ->method('save')
-        ;
+        $cacheItemProphet->set(Argument::type(CachedCollection::class))->shouldBeCalled();
+        $cache->save($cacheItem)->shouldBeCalled();
 
         $loader->load($this->getContent());
     }

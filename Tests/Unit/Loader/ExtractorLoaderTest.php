@@ -11,8 +11,13 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Loader;
 
+use Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Loader\ExtractorLoader;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+use Prophecy\Argument;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * @author Wouter de Jong <wouter@wouterj.nl>
@@ -34,142 +39,65 @@ class ExtractorLoaderTest extends \PHPUnit_Framework_TestCase
     public function testExtractors()
     {
         // promises
-        $extractor = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractor
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $this->loader->addExtractor($extractor);
+        $extractor = $this->prophesize(ExtractorInterface::class);
+        $extractor->supports($this->content)->willReturn(true);
+
+        $this->loader->addExtractor($extractor->reveal());
 
         // predictions
-        $extractor
-            ->expects($this->once())
-            ->method('updateMetadata')
-        ;
+        $extractor->updateMetadata($this->content, Argument::type(SeoMetadataInterface::class))->shouldBeCalled();
 
         // test
         $this->loader->load($this->content);
     }
 
-    public function testTitleExtractorsWithPriority()
+    public function testExtractorsWithPriority()
     {
         // promises
-        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorDefault
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorOne
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $this->loader->addExtractor($extractorDefault);
-        $this->loader->addExtractor($extractorOne, 1);
+        $extractorDefault = $this->prophesize(ExtractorInterface::class);
+        $extractorDefault->supports($this->content)->willReturn(true);
+
+        $extractorOne = $this->prophesize(ExtractorInterface::class);
+        $extractorOne->supports($this->content)->willReturn(true);
+
+        $this->loader->addExtractor($extractorDefault->reveal());
+        $this->loader->addExtractor($extractorOne->reveal(), 1);
 
         // predictions
-        $extractorDefault
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setTitle('First Title');
-            }))
-        ;
-        $extractorOne
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setTitle('Final Title');
-            }))
-        ;
+        $extractorDefault->updateMetadata(Argument::cetera())->will(function ($arguments) {
+            $arguments[1]->setTitle('First Title');
+        });
+        $extractorOne->updateMetadata(Argument::cetera())->will(function ($arguments) {
+            $arguments[1]->setTitle('Final Title');
+        });
 
         // test
         $seoMetadata = $this->loader->load($this->content);
         $this->assertEquals('Final Title', $seoMetadata->getTitle());
     }
 
-    public function testDescriptionExtractorsWithPriority()
-    {
-        // promises
-        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorDefault
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorOne
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $this->loader->addExtractor($extractorDefault);
-        $this->loader->addExtractor($extractorOne, 1);
-
-        // predictions
-        $extractorDefault
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setMetaDescription('First Description');
-            }))
-        ;
-        $extractorOne
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setMetaDescription('Final Description');
-            }))
-        ;
-
-        // test
-        $seoMetadata = $this->loader->load($this->content);
-        $this->assertEquals('Final Description', $seoMetadata->getMetaDescription());
-    }
-
     public function testCaching()
     {
         // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $extractors
-            ->expects($this->any())
-            ->method('isFresh')
-            ->will($this->returnValue(true))
-        ;
-        $extractors
-            ->expects($this->any())
-            ->method('getIterator')
-            ->will($this->returnValue(new \ArrayIterator()))
-        ;
-        $cacheItemNoHit = $this->getMock('Psr\Cache\CacheItemInterface');
-        $cacheItemNoHit->expects($this->any())->method('isHit')->will($this->returnValue(false));
-        $cacheItemNoHit->expects($this->any())->method('get')->will($this->returnValue($extractors));
-        $cacheItemHit = $this->getMock('Psr\Cache\CacheItemInterface');
-        $cacheItemHit->expects($this->any())->method('isHit')->will($this->returnValue(true));
-        $cacheItemHit->expects($this->any())->method('get')->will($this->returnValue($extractors));
-        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
-        $cache
-            ->expects($this->any())
-            ->method('getItem')
-            ->will($this->onConsecutiveCalls($cacheItemNoHit, $cacheItemHit))
-        ;
-        $loader = new ExtractorLoader($cache);
+        $extractors = $this->prophesize(CachedCollection::class);
+        $extractors->isFresh()->willReturn(true);
+        $extractors->getIterator()->willReturn(new \ArrayIterator());
+
+        $cacheItemProphet = $this->prophesize(CacheItemInterface::class);
+        $cacheItemProphet->isHit()->willReturn(false);
+        $cacheItemProphet->set(Argument::type(CachedCollection::class))->will(function () {
+            $this->isHit()->willReturn(true);
+        });
+        $cacheItemProphet->get()->willReturn($extractors->reveal());
+        $cacheItem = $cacheItemProphet->reveal();
+
+        $cache = $this->prophesize(CacheItemPoolInterface::class);
+        $cache->getItem('cmf_seo.extractors.stdClass')->willReturn($cacheItem);
+
+        $loader = new ExtractorLoader($cache->reveal());
 
         // predictions
-        $cache
-            ->expects($this->once())
-            ->method('save')
-        ;
+        $cache->save($cacheItem)->shouldBeCalledTimes(1);
 
         $loader->load($this->content);
         $loader->load($this->content);
@@ -178,35 +106,23 @@ class ExtractorLoaderTest extends \PHPUnit_Framework_TestCase
     public function testCacheRefresh()
     {
         // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\CachedCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $extractors
-            ->expects($this->any())
-            ->method('isFresh')
-            ->will($this->returnValue(false))
-        ;
-        $extractors
-            ->expects($this->any())
-            ->method('getIterator')
-            ->will($this->returnValue(new \ArrayIterator()))
-        ;
-        $cacheItem = $this->getMock('Psr\Cache\CacheItemInterface');
-        $cacheItem->expects($this->any())->method('isHit')->will($this->returnValue(true));
-        $cacheItem->expects($this->any())->method('get')->will($this->returnValue($extractors));
-        $cache = $this->getMock('Psr\Cache\CacheItemPoolInterface');
-        $cache
-            ->expects($this->any())
-            ->method('getItem')
-            ->will($this->returnValue($cacheItem))
-        ;
-        $loader = new ExtractorLoader($cache);
+        $extractors = $this->prophesize(CachedCollection::class);
+        $extractors->isFresh()->willReturn(false);
+        $extractors->getIterator()->willReturn(new \ArrayIterator());
+
+        $cacheItemProphet = $this->prophesize(CacheItemInterface::class);
+        $cacheItemProphet->isHit()->willReturn(true);
+        $cacheItemProphet->get()->willReturn($extractors->reveal());
+        $cacheItem = $cacheItemProphet->reveal();
+
+        $cache = $this->prophesize(CacheItemPoolInterface::class);
+        $cache->getItem('cmf_seo.extractors.stdClass')->willReturn($cacheItem);
+
+        $loader = new ExtractorLoader($cache->reveal());
 
         // predictions
-        $cache
-            ->expects($this->once())
-            ->method('save')
-        ;
+        $cacheItemProphet->set(Argument::type(CachedCollection::class))->shouldBeCalled();
+        $cache->save($cacheItem)->shouldBeCalled();
 
         $loader->load($this->content);
     }
