@@ -9,8 +9,8 @@ Changelog
  * **2016-05-27**: [BC BREAK] Changed the fourth argument of the constructor of
    `SeoPresentation` from `CacheInterface` to `LoaderInterface`.
  * **2016-05-27**: Added loaders.
- * **2016-05-08**: [BC BREAK] Removed `showAtion` in favor of `listAction` in
-   the `SuggestionProviderController`
+ * **2016-05-08**: [BC BREAK] Removed `showAction()` in favor of `listAction()`
+   in the `SuggestionProviderController`
  * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support
  * **2016-05-02**: [BC BREAK] Dropped Symfony <2.8 support
 
