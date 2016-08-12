@@ -31,11 +31,11 @@ class RegisterExtractorsPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('cmf_seo.presentation')) {
+        if (!$container->hasDefinition('cmf_seo.loader.extractor')) {
             return;
         }
 
-        $strategyDefinition = $container->getDefinition('cmf_seo.presentation');
+        $strategyDefinition = $container->getDefinition('cmf_seo.loader.extractor');
         $taggedServices = $container->findTaggedServiceIds('cmf_seo.extractor');
 
         foreach ($taggedServices as $id => $attributes) {

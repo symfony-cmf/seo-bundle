@@ -12,8 +12,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
-use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
+use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -28,11 +28,21 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     private $translator;
     private $content;
     private $configValues;
+    private $loader;
 
     public function setUp()
     {
         $this->pageService = $this->getMock('Sonata\SeoBundle\Seo\SeoPage');
         $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata');
+        $this->content = new \stdClass();
+
+        $this->loader = $this->getMock(LoaderInterface::class);
+        $this->loader
+            ->expects($this->any())
+            ->method('load')
+            ->will($this->returnValue($this->seoMetadata));
+
         $this->configValues = new ConfigValues();
         $this->configValues->setDescription('default_description');
         $this->configValues->setTitle('default_title');
@@ -41,17 +51,9 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->seoPresentation = new SeoPresentation(
             $this->pageService,
             $this->translator,
-            $this->configValues
+            $this->configValues,
+            $this->loader
         );
-
-        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata');
-
-        $this->content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
-        $this->content
-            ->expects($this->any())
-            ->method('getSeoMetadata')
-            ->will($this->returnValue($this->seoMetadata))
-        ;
     }
 
     public function testDefaultTitle()
@@ -77,7 +79,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         ;
 
         // test
-        $this->seoPresentation->updateSeoPage($this->content);
+        $this->seoPresentation->updateSeoPage(new \stdClass());
     }
 
     public function testContentTitle()
@@ -177,131 +179,6 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->seoPresentation->updateSeoPage($this->content);
     }
 
-    public function testExtractors()
-    {
-        // promises
-        $this->translator
-            ->expects($this->any())
-            ->method('trans')
-            ->will($this->returnValue('translation strategy test'))
-        ;
-        $extractor = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractor
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $this->seoPresentation->addExtractor($extractor);
-
-        // predictions
-        $extractor
-            ->expects($this->once())
-            ->method('updateMetadata')
-        ;
-
-        // test
-        $this->seoPresentation->updateSeoPage($this->content);
-    }
-
-    public function testTitleExtractorsWithPriority()
-    {
-        // promises
-        $this->translator
-            ->expects($this->any())
-            ->method('trans')
-            ->with($this->equalTo('default_title'), $this->equalTo(array('%content_title%' => 'Final Title')), $this->equalTo(null))
-            ->will($this->returnValue('translation strategy test'))
-        ;
-        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorDefault
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorOne
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $this->seoPresentation->addExtractor($extractorDefault);
-        $this->seoPresentation->addExtractor($extractorOne, 1);
-
-        // predictions
-        $extractorDefault
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setTitle('First Title');
-            }))
-        ;
-        $extractorOne
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setTitle('Final Title');
-            }))
-        ;
-
-        // test
-        $this->seoPresentation->updateSeoPage($this->content);
-    }
-
-    public function testDescriptionExtractorsWithPriority()
-    {
-        $this->translator
-            ->expects($this->any())
-            ->method('trans')
-            ->with($this->equalTo('default_description'), $this->equalTo(array('%content_description%' => 'Final Description')), $this->equalTo(null))
-            ->will($this->returnValue('translation strategy test'))
-        ;
-
-        // promises
-        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorDefault
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
-        $extractorOne
-            ->expects($this->any())
-            ->method('supports')
-            ->with($this->content)
-            ->will($this->returnValue(true))
-        ;
-        $this->seoPresentation->addExtractor($extractorDefault);
-        $this->seoPresentation->addExtractor($extractorOne, 1);
-
-        // predictions
-        $extractorDefault
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setMetaDescription('First Description');
-            }))
-        ;
-        $extractorOne
-            ->expects($this->once())
-            ->method('updateMetadata')
-            ->will($this->returnCallback(function ($content, SeoMetadataInterface $seoMetadata) {
-                $seoMetadata->setMetaDescription('Final Description');
-            }))
-        ;
-        $this->pageService
-            ->expects($this->once())
-            ->method('addMeta')
-            ->with('name', 'description', 'translation strategy test')
-        ;
-
-        // test
-        $this->seoPresentation->updateSeoPage($this->content);
-    }
-
     public function testRedirect()
     {
         // promises
@@ -319,106 +196,5 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $redirect = $this->seoPresentation->getRedirectResponse();
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $redirect);
         $this->assertEquals('/redirect/target', $redirect->getTargetUrl());
-    }
-
-    public function testCaching()
-    {
-        // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $extractors
-            ->expects($this->any())
-            ->method('isFresh')
-            ->will($this->returnValue(true))
-        ;
-        $extractors
-            ->expects($this->any())
-            ->method('getIterator')
-            ->will($this->returnValue(new \ArrayIterator()))
-        ;
-        $cache = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface');
-        $cache
-            ->expects($this->any())
-            ->method('loadExtractorsFromCache')
-            ->will($this->onConsecutiveCalls(null, $extractors))
-        ;
-        $seoPresentation = new SeoPresentation(
-            $this->pageService,
-            $this->translator,
-            $this->configValues,
-            $cache
-        );
-
-        // predictions
-        $cache
-            ->expects($this->once())
-            ->method('putExtractorsInCache')
-        ;
-
-        $seoPresentation->updateSeoPage($this->content);
-        $seoPresentation->updateSeoPage($this->content);
-
-        return array($seoPresentation, $cache, $extractors);
-    }
-
-    public function testCacheRefresh()
-    {
-        // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $extractors
-            ->expects($this->any())
-            ->method('isFresh')
-            ->will($this->returnValue(false))
-        ;
-        $extractors
-            ->expects($this->any())
-            ->method('getIterator')
-            ->will($this->returnValue(new \ArrayIterator()))
-        ;
-        $cache = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface');
-        $cache
-            ->expects($this->any())
-            ->method('loadExtractorsFromCache')
-            ->will($this->returnValue($extractors))
-        ;
-        $seoPresentation = new SeoPresentation(
-            $this->pageService,
-            $this->translator,
-            $this->configValues,
-            $cache
-        );
-
-        // predictions
-        $cache
-            ->expects($this->once())
-            ->method('putExtractorsInCache')
-        ;
-
-        $seoPresentation->updateSeoPage($this->content);
-
-        return array($seoPresentation, $cache, $extractors);
-    }
-
-    public function testSeoAwareWithoutCurrentMetadata()
-    {
-        $content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
-        $content
-            ->expects($this->any())
-            ->method('getSeoMetadata')
-            ->will($this->returnValue(null))
-        ;
-
-        $content
-            ->expects($this->once())
-            ->method('setSeoMetadata')
-            ->with($this->callback(function ($c) {
-                return $c instanceof SeoMetadataInterface;
-            }))
-        ;
-
-        $this->seoPresentation->updateSeoPage($content);
     }
 }

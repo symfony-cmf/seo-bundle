@@ -15,9 +15,11 @@
         "php": "^5.5.9|^7.0",
         "symfony/framework-bundle": "^2.8|^3.0",
         "sonata-project/seo-bundle": "^1.1.3|^2.0",
-        "doctrine/collections": "^1.0"
+        "doctrine/collections": "^1.0",
+        "doctrine/annotations": "^1.2"
     },
     "require-dev": {
+        "symfony/cache": "^3.1",
         "symfony-cmf/testing": "^2.0",
         "doctrine/phpcr-odm": "^2.0",
         "doctrine/orm": "^2.4",

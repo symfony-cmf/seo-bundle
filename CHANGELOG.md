@@ -2,9 +2,17 @@ Changelog
 =========
 
  * **2016-06-18**: [BC BREAK] Removed all `*.class` parameters.
- * **2016-05-08**: [BC BREAK] Removed `showAtion` in favor of `listAction` in the `SuggestionProviderController`.
- * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support.
- * **2016-05-02**: [BC BREAK] Dropped Symfony <2.8 support.
+ * **2016-05-31**: [BC BREAK] Removed `CacheInterface` and `FileCache`, use
+   PSR-6 cache instead.
+ * **2016-05-27**: [BC BREAK] Removed `SeoPresentation::addExtractor()`, use
+   `ExtractorLoader::addExtractor()` instead.
+ * **2016-05-27**: [BC BREAK] Changed the fourth argument of the constructor of
+   `SeoPresentation` from `CacheInterface` to `LoaderInterface`.
+ * **2016-05-27**: Added loaders.
+ * **2016-05-08**: [BC BREAK] Removed `showAction()` in favor of `listAction()`
+   in the `SuggestionProviderController`
+ * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support
+ * **2016-05-02**: [BC BREAK] Dropped Symfony <2.8 support
 
 1.3.0
 -----
@@ -22,15 +30,15 @@ Changelog
 * **2015-08-20**: Added templates configuration and `exclusion_rules` (based on the request matcher) to
   the error handling configuration
 * **2015-08-12**: Added configuration for the default data class of the `seo_metadata` form type.
-* **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased 
+* **2015-07-20**: Cleaned up the sitemap generation. If you used the unreleased
   version of sitemaps, you will need to adjust your code. See https://github.com/symfony-cmf/SeoBundle/pull/225
-  Options are available to keep all or no voters|guessers|loaders enabled or 
+  Options are available to keep all or no voters|guessers|loaders enabled or
   enable them one by one by their service id.
-* **2015-02-24**: Configuration for `content_key` moved to the `content_listener` 
-  section, and its now possible to disable the content listener by setting 
+* **2015-02-24**: Configuration for `content_key` moved to the `content_listener`
+  section, and its now possible to disable the content listener by setting
   `cmf_seo.content_listener.enabled: false`
 * **2015-02-14**: Added sitemap generation
-* **2015-02-14**: [BC BREAK] Changed method visibility of 
+* **2015-02-14**: [BC BREAK] Changed method visibility of
   `SeoPresentation#getSeoMetadata()` from private to public.
 * **2014-10-04**: Custom exception controller for error handling.
 

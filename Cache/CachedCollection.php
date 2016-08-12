@@ -12,16 +12,16 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Cache;
 
 /**
- * Contains the extractors for one particular content object.
+ * Contains the cached data for one particular content object.
  *
  * @author Wouter J <wouter@wouterj.nl>
  */
-class ExtractorCollection implements \IteratorAggregate, \Serializable
+class CachedCollection implements \IteratorAggregate, \Serializable
 {
     /**
      * @var array
      */
-    private $extractors;
+    private $data;
 
     /**
      * @var null|string
@@ -34,15 +34,40 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
     private $createdAt;
 
     /**
-     * @param array       $extractors
-     * @param null|string $resource   The path to the file of the content object, this is
-     *                                used to determine if the cache needs to be updated
+     * @param array       $data
+     * @param null|string $resource The path to the file of the content object, this is
+     *                              used to determine if the cache needs to be updated
      */
-    public function __construct(array $extractors, $resource = null)
+    public function __construct(array $data, $resource = null)
     {
-        $this->extractors = $extractors;
+        $this->data = $data;
         $this->resource = $resource;
         $this->createdAt = time();
+    }
+
+    /**
+     * Creates a CachedCollection based on the object and data to cache.
+     *
+     * @param object|string $objectOrClass Object instance or FQCN
+     * @param array         $data
+     *
+     * @return static
+     */
+    public static function createFromObject($objectOrClass, array $data)
+    {
+        $class = is_object($objectOrClass) ? get_class($objectOrClass) : $objectOrClass;
+
+        static $fileLocations = [];
+        if (!isset($fileLocations[$class])) {
+            $fileLocations[$class] = (new \ReflectionClass($objectOrClass))->getFileName();
+        }
+
+        return new static($data, $fileLocations[$class]);
+    }
+
+    public static function generateCacheItemKey($type, $class)
+    {
+        return sprintf('cmf_seo.%s.%s', $type, str_replace('\\', '.', $class));
     }
 
     /**
@@ -50,7 +75,12 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->extractors);
+        return new \ArrayIterator($this->data);
+    }
+
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
@@ -83,7 +113,7 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
     public function serialize()
     {
         return serialize(array(
-            $this->extractors,
+            $this->data,
             $this->resource,
             $this->createdAt,
         ));
@@ -95,7 +125,7 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
     public function unserialize($data)
     {
         list(
-            $this->extractors,
+            $this->data,
             $this->resource,
             $this->createdAt
         ) = unserialize($data);

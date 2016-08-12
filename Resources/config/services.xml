@@ -27,13 +27,17 @@
             <tag name="kernel.cache_clearer" />
         </service>
 
-        <service id="cmf_seo.cache" alias="cmf_seo.cache.file" />
+        <service id="cmf_seo.cache.file" class="Symfony\Component\Cache\Adapter\FilesystemAdapter" public="false">
+            <argument>cmf_seo</argument>
+        </service>
+
+        <service id="cache.cmf_seo" alias="cmf_seo.cache.file" public="false"/>
 
         <service id="cmf_seo.presentation" class="Symfony\Cmf\Bundle\SeoBundle\SeoPresentation">
             <argument type="service" id="sonata.seo.page" />
             <argument type="service" id="translator" />
             <argument type="service" id="cmf_seo.config_values" />
-            <argument type="service" id="cmf_seo.cache" />
+            <argument type="service" id="cmf_seo.loader" />
         </service>
 
         <service id="cmf_seo.error.suggestion_provider.controller" class="Symfony\Cmf\Bundle\SeoBundle\Controller\SuggestionProviderController">
