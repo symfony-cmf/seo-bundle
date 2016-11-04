@@ -29,6 +29,10 @@
         <service id="cmf_seo.extractor_strategy.keywords" class="%cmf_seo.extractor_strategy.keywords.class%">
             <tag name="cmf_seo.extractor"/>
         </service>
+        
+        <service id="cmf_seo.extractor_strategy.extras" class="Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasExtractor">
+            <tag name="cmf_seo.extractor"/>
+        </service>
 
         <service id="cmf_seo.extractor_strategy.original_url" class="%cmf_seo.extractor_strategy.original_url.class%">
             <tag name="cmf_seo.extractor"/>
