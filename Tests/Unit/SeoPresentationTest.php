@@ -210,7 +210,11 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->translator
             ->expects($this->any())
             ->method('trans')
-            ->with($this->equalTo('default_title'), $this->equalTo(array('%content_title%' => 'Final Title')), $this->equalTo(null))
+            ->with(
+                $this->equalTo('default_title'),
+                $this->equalTo(array('%content_title%' => 'Final Title')),
+                $this->equalTo(null)
+            )
             ->will($this->returnValue('translation strategy test'))
         ;
         $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
@@ -255,7 +259,11 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->translator
             ->expects($this->any())
             ->method('trans')
-            ->with($this->equalTo('default_description'), $this->equalTo(array('%content_description%' => 'Final Description')), $this->equalTo(null))
+            ->with(
+                $this->equalTo('default_description'),
+                $this->equalTo(array('%content_description%' => 'Final Description')),
+                $this->equalTo(null)
+            )
             ->will($this->returnValue('translation strategy test'))
         ;
 
