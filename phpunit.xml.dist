@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     colors="true"
-    bootstrap="Tests/bootstrap.php"
+    bootstrap="./tests/bootstrap.php"
     >
 
     <testsuites>
         <testsuite name="Symfony SeoBundle Test Suite">
-            <directory>./Tests/Unit</directory>
+            <directory>./tests/Unit</directory>
         </testsuite>
 
         <testsuite name="phpcr">
-            <directory>./Tests/WebTest</directory>
-            <directory>./Tests/Functional/Doctrine/Phpcr</directory>
+            <directory>./tests/WebTest</directory>
+            <directory>./tests/Functional/Doctrine/Phpcr</directory>
         </testsuite>
 
         <testsuite name="orm">
-            <directory>./Tests/Functional/Doctrine/Orm</directory>
+            <directory>./tests/Functional/Doctrine/Orm</directory>
         </testsuite>
     </testsuites>
 
@@ -24,14 +24,14 @@
             <directory>.</directory>
             <exclude>
                 <directory>Resources/</directory>
-                <directory>Tests/</directory>
+                <directory>tests</directory>
                 <directory>vendor/</directory>
             </exclude>
         </whitelist>
     </filter>
 
     <php>
-        <server name="KERNEL_DIR" value="Tests/Resources/app" />
+        <server name="KERNEL_DIR" value="tests/Resources/app" />
     </php>
 
     <listeners>

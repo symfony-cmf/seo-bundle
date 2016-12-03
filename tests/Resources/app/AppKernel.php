@@ -27,7 +27,6 @@ class AppKernel extends TestKernel
         $this->addBundles(array(
             new \Sonata\SeoBundle\SonataSeoBundle(),
             new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
-            new \Burgov\Bundle\KeyValueFormBundle\BurgovKeyValueFormBundle(),
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
         ));
