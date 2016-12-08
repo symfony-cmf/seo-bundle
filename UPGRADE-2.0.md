@@ -1,6 +1,36 @@
 UPGRADE FROM 1.x to 2.0
 =======================
 
+### SonataAdmin Support
+
+ * The Admin extension to edit seo metadata was moved into `symfony-cmf/sonata-admin-integration-bundle`.
+   With the move, the admin extension service names also changed. If you are using the cmf_seo.admin_extension service,
+   you need to adjust your configuration.
+   
+   Before:
+   
+   ```yaml
+        # app/config/config.yml
+     
+        sonata_admin:
+            extensions:
+                cmf_seo.admin_extension:
+                   implements:
+                       - Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface
+   ```
+
+    After:
+       
+   ```yaml
+        # app/config/config.yml
+                
+        sonata_admin:
+            extensions:
+                cmf_sonata_admin_integration.seo.admin_extension:
+                    implements:
+                       - Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface
+   ```
+
 ### SuggestionProviderController
 
  * The `showAction` has been renamed to `listAction` and the fourth argument is removed.
