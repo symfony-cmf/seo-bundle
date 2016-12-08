@@ -84,7 +84,6 @@ class Configuration implements ConfigurationInterface
         ;
 
         $this->addPersistenceSection($nodeBuilder);
-        $this->addSonataAdminSection($nodeBuilder);
         $this->addAlternateLocaleSection($nodeBuilder);
         $this->addErrorHandlerSection($nodeBuilder);
         $this->addSitemapSection($nodeBuilder);
@@ -122,35 +121,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('manager_name')->defaultNull()->end()
                         ->end()
                     ->end()
-                ->end()
-            ->end()
-        ;
-    }
-
-    /**
-     * Attach the sonata admin node to the tree.
-     *
-     * @param NodeBuilder $treeBuilder
-     */
-    private function addSonataAdminSection(NodeBuilder $treeBuilder)
-    {
-        $treeBuilder
-            ->arrayNode('sonata_admin_extension')
-                ->addDefaultsIfNotSet()
-                ->beforeNormalization()
-                    ->ifTrue(function ($v) {
-                        return is_scalar($v);
-                    })
-                    ->then(function ($v) {
-                        return array('enabled' => $v);
-                    })
-                ->end()
-                ->children()
-                    ->enumNode('enabled')
-                        ->values(array(true, false, 'auto'))
-                        ->defaultValue('auto')
-                    ->end()
-                    ->scalarNode('form_group')->defaultValue('form.group_seo')->end()
                 ->end()
             ->end()
         ;

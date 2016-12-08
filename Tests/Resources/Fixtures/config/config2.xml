@@ -1,8 +1,7 @@
 <config xmlns="http://cmf.symfony.com/schema/dic/seo"
     translation-domain="messages"
     original-route-pattern="redirect"
-    metadata-listener="auto"
-    sonata-admin-extension="auto">
+    metadata-listener="auto">
 
     <persistence phpcr="true" />
 
