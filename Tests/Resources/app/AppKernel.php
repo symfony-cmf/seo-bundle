@@ -19,9 +19,7 @@ class AppKernel extends TestKernel
         $this->requireBundleSet('default');
 
         if ('phpcr' === $this->environment) {
-            $this->requireBundleSets(array(
-                'phpcr_odm'
-            ));
+            $this->requireBundleSets(array('phpcr_odm'));
         } elseif ('orm' === $this->environment) {
             $this->requireBundleSet('doctrine_orm');
         }
