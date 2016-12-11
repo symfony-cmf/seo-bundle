@@ -52,10 +52,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             ),
             'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
-            'sonata_admin_extension' => array(
-                'enabled' => 'auto',
-                'form_group' => 'form.group_seo',
-            ),
             'alternate_locale' => array(
                 'enabled' => false,
                 'provider_id' => null,
@@ -136,10 +132,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             ),
             'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
-            'sonata_admin_extension' => array(
-                'enabled' => 'auto',
-                'form_group' => 'form.group_seo',
-            ),
             'alternate_locale' => array(
                 'enabled' => false,
                 'provider_id' => null,
@@ -199,10 +191,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                     'enabled' => false,
                     'manager_name' => null,
                 ),
-            ),
-            'sonata_admin_extension' => array(
-                'enabled' => 'auto',
-                'form_group' => 'form.group_seo',
             ),
             'alternate_locale' => array(
                 'enabled' => false,
