@@ -1,4 +1,4 @@
-Tests/Resources/app/cache
-Tests/Resources/app/logs
+tests/Resources/app/cache
+tests/Resources/app/logs
 composer.lock
 vendor

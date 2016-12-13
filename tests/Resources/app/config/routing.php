@@ -13,6 +13,6 @@ use Symfony\Component\Routing\RouteCollection;
 
 $collection = new RouteCollection();
 
-$collection->addCollection($loader->import(__DIR__.'/../../../../Resources/config/routing/sitemap.xml'));
+$collection->addCollection($loader->import(__DIR__.'/../../../../src/Resources/config/routing/sitemap.xml'));
 
 return $collection;

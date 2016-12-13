@@ -25,10 +25,11 @@
         "sonata-project/admin-bundle": "^2.3.7|^3.0",
         "sonata-project/block-bundle": "^2.2.8|^3.0",
         "sonata-project/core-bundle": "^2.2.5|^3.0",
-        "symfony-cmf/routing-bundle": "^1.4|^2.0",
         "symfony-cmf/core-bundle": "^2.0",
+        "symfony-cmf/routing-bundle": "^1.4.0|^2.0",
         "matthiasnoback/symfony-dependency-injection-test": "^0.7.4",
         "matthiasnoback/symfony-config-test": "^1.3.1",
+        "symfony/phpunit-bridge": "^3.2",
         "burgov/key-value-form-bundle": "^1.0"
     },
     "minimum-stability": "dev",
@@ -39,11 +40,16 @@
         "doctrine/phpcr-bundle": "To persist the metadata in PHPCR ODM documents",
         "doctrine/doctrine-bundle": "To persist the metadata in ORM entities",
         "doctrine/orm": "To persist the metadata in ORM entities, ~2.4",
-        "burgov/key-value-form-bundle": "To edit the seo metadata 'extra' fields"
+        "symfony-cmf/sonata-admin-integration-bundle": "To provide an admin interface for the PHPCR ODM documents."
     },
     "autoload": {
         "psr-4": {
-            "Symfony\\Cmf\\Bundle\\SeoBundle\\": ""
+            "Symfony\\Cmf\\Bundle\\SeoBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Symfony\\Cmf\\Bundle\\SeoBundle\\Tests\\": "tests/"
         }
     },
     "extra": {
