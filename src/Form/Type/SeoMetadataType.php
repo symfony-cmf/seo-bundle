@@ -21,11 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A form type for editing the SEO metadata.
  *
- * When using SonataAdmin for the backend and having content that implements
- * the SeoAwareInterface. The Sonata Admin will get this form type automatically.
- *
- * You can explicitly use this type using the "seo_metadata" type.
- *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
 class SeoMetadataType extends AbstractType
@@ -36,18 +31,20 @@ class SeoMetadataType extends AbstractType
     private $dataClass;
 
     /**
-     * @var bool
+     * @var array
      */
-    private $isOrm;
+    private $options;
 
     /**
      * @param string $dataClass the FQCN of the data class to use for this form
-     * @param bool   $isOrm     Flag to know whether the form should be usable for doctrine ORM
+     * @param array  $options   List of options to tweak the form
+     *                          - string  "storage"  Storage system that is used to use the correct form settings
+     *                          - boolean "advanced" Whether to enable advanced form editing options
      */
-    public function __construct($dataClass, $isOrm = false)
+    public function __construct($dataClass, array $options)
     {
         $this->dataClass = $dataClass;
-        $this->isOrm = $isOrm;
+        $this->options = $options;
     }
 
     /**
@@ -60,22 +57,26 @@ class SeoMetadataType extends AbstractType
             ->add('originalUrl', TextType::class, array('label' => 'form.label_originalUrl'))
             ->add('metaDescription', TextareaType::class, array('label' => 'form.label_metaDescription'))
             ->add('metaKeywords', TextareaType::class, array('label' => 'form.label_metaKeywords'))
-            ->add('extraProperties', KeyValueType::class, array(
-                'label' => 'form.label_extraProperties',
-                'value_type' => TextType::class,
-                'use_container_object' => true,
-            ))
-            ->add('extraNames', KeyValueType::class, array(
-                'label' => 'form.label_extraNames',
-                'value_type' => TextType::class,
-                'use_container_object' => true,
-            ))
-            ->add('extraHttp', KeyValueType::class, array(
-                'label' => 'form.label_extraHttp',
-                'value_type' => TextType::class,
-                'use_container_object' => true,
-            ))
         ;
+        if ($this->options['generic_metadata']) {
+            $builder
+                ->add('extraProperties', KeyValueType::class, array(
+                    'label' => 'form.label_extraProperties',
+                    'value_type' => TextType::class,
+                    'use_container_object' => true,
+                ))
+                ->add('extraNames', KeyValueType::class, array(
+                    'label' => 'form.label_extraNames',
+                    'value_type' => TextType::class,
+                    'use_container_object' => true,
+                ))
+                ->add('extraHttp', KeyValueType::class, array(
+                    'label' => 'form.label_extraHttp',
+                    'value_type' => TextType::class,
+                    'use_container_object' => true,
+                ))
+            ;
+        }
     }
 
     /**
@@ -89,7 +90,7 @@ class SeoMetadataType extends AbstractType
             'required' => false,
         ));
 
-        if ($this->isOrm) {
+        if ('orm' === $this->options['storage']) {
             $resolver->setDefault('by_reference', false);
         }
     }

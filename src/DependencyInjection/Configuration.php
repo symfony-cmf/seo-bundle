@@ -284,7 +284,7 @@ class Configuration implements ConfigurationInterface
     private function addFormSection($nodeBuilder)
     {
         $nodeBuilder
-           ->arrayNode('form')
+            ->arrayNode('form')
                 ->addDefaultsIfNotSet()
                 ->children()
                     ->arrayNode('data_class')
@@ -293,8 +293,18 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('seo_metadata')->defaultNull()->end()
                         ->end()
                     ->end()
+                    ->arrayNode('options')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->enumNode('generic_metadata')
+                                ->info('Whether to show fields to edit generic SEO information. Needs burgov/key-value-form-bundle.')
+                                ->values([true, false, 'auto'])
+                                ->defaultValue('auto')
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
-           ->end()
-           ;
+            ->end()
+       ;
     }
 }
