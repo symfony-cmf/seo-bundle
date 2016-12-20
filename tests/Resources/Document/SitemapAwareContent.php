@@ -23,10 +23,7 @@ use Symfony\Component\Routing\Route;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SitemapAwareContent extends ContentBase implements
-    RouteReferrersReadInterface,
-    TranslatableInterface,
-    SitemapAwareInterface
+class SitemapAwareContent extends ContentBase implements RouteReferrersReadInterface, TranslatableInterface, SitemapAwareInterface
 {
     /**
      * @var string
@@ -117,8 +114,8 @@ class SitemapAwareContent extends ContentBase implements
     }
 
     /**
-     * @return string|bool The locale of this model or false if
-     *                     translations are disabled in this project.
+     * @return string|bool the locale of this model or false if
+     *                     translations are disabled in this project
      */
     public function getLocale()
     {
@@ -126,8 +123,8 @@ class SitemapAwareContent extends ContentBase implements
     }
 
     /**
-     * @param string|bool $locale The local for this model, or false if
-     *                            translations are disabled in this project.
+     * @param string|bool $locale the local for this model, or false if
+     *                            translations are disabled in this project
      */
     public function setLocale($locale)
     {

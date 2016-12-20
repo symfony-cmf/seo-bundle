@@ -29,7 +29,7 @@ class DepthGuesser implements GuesserInterface
     private $managerRegistry;
 
     /**
-     * @var int The depth of the content base path as the depth offset.
+     * @var int the depth of the content base path as the depth offset
      */
     private $offset;
 

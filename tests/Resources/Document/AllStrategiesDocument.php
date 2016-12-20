@@ -18,11 +18,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
-class AllStrategiesDocument implements
-    SeoAwareInterface,
-    DescriptionReadInterface,
-    TitleReadInterface,
-    OriginalUrlReadInterface
+class AllStrategiesDocument implements SeoAwareInterface, DescriptionReadInterface, TitleReadInterface, OriginalUrlReadInterface
 {
     protected $seoMetadata;
 
@@ -44,7 +40,7 @@ class AllStrategiesDocument implements
     /**
      * Provide the original url of this page to be used in SEO context.
      *
-     * @return Route the original route.
+     * @return Route the original route
      */
     public function getSeoOriginalUrl()
     {

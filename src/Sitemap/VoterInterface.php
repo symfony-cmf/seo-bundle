@@ -21,10 +21,10 @@ interface VoterInterface
     /**
      * Decide whether this content is visible on the specified sitemap.
      *
-     * @param object $content The content object.
-     * @param string $sitemap Name of the sitemap.
+     * @param object $content the content object
+     * @param string $sitemap name of the sitemap
      *
-     * @return bool True if the content should be visible on the sitemap, false otherwise.
+     * @return bool true if the content should be visible on the sitemap, false otherwise
      */
     public function exposeOnSitemap($content, $sitemap);
 }

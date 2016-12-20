@@ -71,9 +71,9 @@ class ConfigValues
     }
 
     /**
-     * @param string $behaviour One of the constants from SeoPresentation.
+     * @param string $behaviour one of the constants from SeoPresentation
      *
-     * @throws ExtractorStrategyException if $behaviour is not supported.
+     * @throws ExtractorStrategyException if $behaviour is not supported
      */
     public function setOriginalUrlBehaviour($behaviour)
     {

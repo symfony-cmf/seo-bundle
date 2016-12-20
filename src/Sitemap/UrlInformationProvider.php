@@ -66,7 +66,7 @@ class UrlInformationProvider
             }
             $urlInformation = new UrlInformation();
             $this->guesser->guessValues($urlInformation, $content, $sitemap);
-            $urlInformationList [] = $urlInformation;
+            $urlInformationList[] = $urlInformation;
         }
 
         return $urlInformationList;

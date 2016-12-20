@@ -27,7 +27,7 @@ class RegisterExtractorsPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      *
-     * @throws LogicException If a tagged service is not public.
+     * @throws LogicException if a tagged service is not public
      */
     public function process(ContainerBuilder $container)
     {

@@ -41,7 +41,7 @@ class SeoMetadataType extends AbstractType
     private $isOrm;
 
     /**
-     * @param string $dataClass The FQCN of the data class to use for this form.
+     * @param string $dataClass the FQCN of the data class to use for this form
      * @param bool   $isOrm     Flag to know whether the form should be usable for doctrine ORM
      */
     public function __construct($dataClass, $isOrm = false)

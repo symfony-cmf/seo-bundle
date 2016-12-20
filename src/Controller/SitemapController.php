@@ -50,7 +50,7 @@ class SitemapController
      *
      * @param UrlInformationProvider $sitemapProvider
      * @param EngineInterface        $templating
-     * @param array                  $configurations  List of available sitemap configurations.
+     * @param array                  $configurations  list of available sitemap configurations
      */
     public function __construct(
         UrlInformationProvider $sitemapProvider,
@@ -63,8 +63,8 @@ class SitemapController
     }
 
     /**
-     * @param string $_format The format of the sitemap.
-     * @param string $sitemap The sitemap to show.
+     * @param string $_format the format of the sitemap
+     * @param string $sitemap the sitemap to show
      *
      * @return Response
      */

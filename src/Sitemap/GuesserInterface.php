@@ -26,9 +26,9 @@ interface GuesserInterface
     /**
      * Updates UrlInformation with new values if they are not already set.
      *
-     * @param UrlInformation $urlInformation The value object to update.
-     * @param object         $object         The sitemap element to get values from.
-     * @param string         $sitemap        Name of the sitemap being built.
+     * @param UrlInformation $urlInformation the value object to update
+     * @param object         $object         the sitemap element to get values from
+     * @param string         $sitemap        name of the sitemap being built
      */
     public function guessValues(UrlInformation $urlInformation, $object, $sitemap);
 }

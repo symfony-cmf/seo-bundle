@@ -82,8 +82,8 @@ class AlternateLocaleContent extends ContentBase implements RouteReferrersInterf
     }
 
     /**
-     * @return string|bool The locale of this model or false if
-     *                     translations are disabled in this project.
+     * @return string|bool the locale of this model or false if
+     *                     translations are disabled in this project
      */
     public function getLocale()
     {
@@ -91,8 +91,8 @@ class AlternateLocaleContent extends ContentBase implements RouteReferrersInterf
     }
 
     /**
-     * @param string|bool $locale The local for this model, or false if
-     *                            translations are disabled in this project.
+     * @param string|bool $locale the local for this model, or false if
+     *                            translations are disabled in this project
      */
     public function setLocale($locale)
     {

@@ -31,7 +31,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      *
-     * @throws LogicException If a tagged service is not public.
+     * @throws LogicException if a tagged service is not public
      */
     public function process(ContainerBuilder $container)
     {
@@ -68,7 +68,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
      * @param ContainerBuilder $container
      * @param string           $service   ID of service to add tagged services to
      * @param string           $tag       Tag name
-     * @param string[]         $sitemaps  List of valid sitemap names.
+     * @param string[]         $sitemaps  list of valid sitemap names
      */
     private function processTagsForService(ContainerBuilder $container, $service, $tag, array $sitemaps)
     {
