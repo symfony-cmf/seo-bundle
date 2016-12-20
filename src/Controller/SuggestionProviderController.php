@@ -59,7 +59,7 @@ class SuggestionProviderController extends ExceptionController
      * @param RequestMatcherInterface $requestMatcher The exclusion matcher to decider whether a route should be handled
      *                                                by this error handling. It uses the defined exclusion_rules in the
      *                                                error configuration.
-     * @param array                   $templates      Containing the configured templates to use in custom error cases.
+     * @param array                   $templates      containing the configured templates to use in custom error cases
      */
     public function __construct(
         \Twig_Environment $twig,

@@ -26,7 +26,7 @@ interface OriginalUrlReadInterface
      * The method returns the absolute URL as a string to redirect to or set to
      * the canonical link.
      *
-     * @return string An absolute URL.
+     * @return string an absolute URL
      */
     public function getSeoOriginalUrl();
 }

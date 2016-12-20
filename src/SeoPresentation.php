@@ -138,7 +138,7 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * Extract the SEO metadata from this object.
      *
-     * @param object $content The content to extract metadata from.
+     * @param object $content the content to extract metadata from
      *
      * @return SeoMetadataInterface
      */

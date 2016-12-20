@@ -24,11 +24,7 @@ use Symfony\Cmf\Component\Routing\RouteReferrersReadInterface;
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class SitemapAwareWithPublishWorkflowContent extends ContentBase implements
-    PublishableInterface,
-    PublishTimePeriodInterface,
-    RouteReferrersReadInterface,
-    SitemapAwareInterface
+class SitemapAwareWithPublishWorkflowContent extends ContentBase implements PublishableInterface, PublishTimePeriodInterface, RouteReferrersReadInterface, SitemapAwareInterface
 {
     /**
      * @var ArrayCollection|Route[]

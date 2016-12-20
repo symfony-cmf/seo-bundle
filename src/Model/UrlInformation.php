@@ -36,7 +36,7 @@ class UrlInformation
     private $lastModification;
 
     /**
-     * @var string One of the official/allowed.
+     * @var string one of the official/allowed
      */
     private $changeFrequency;
 
@@ -125,7 +125,7 @@ class UrlInformation
     /**
      * According to http://www.sitemaps.org, valid values should be always|hourly|daily|weekly|monthly|yearly|never.
      *
-     * @param string $changeFrequency One of the official/allowed change frequencies.
+     * @param string $changeFrequency one of the official/allowed change frequencies
      *
      * @return $this
      */

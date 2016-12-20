@@ -21,7 +21,7 @@ class AlternateLocale
     const REL = 'alternate';
 
     /**
-     * @var string The absolute url for that locale.
+     * @var string the absolute url for that locale
      */
     public $href;
 

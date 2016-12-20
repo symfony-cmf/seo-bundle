@@ -39,8 +39,8 @@ abstract class AbstractChain
      * higher the priority, the earlier the entry is in the chain. Sitemap
      * specific entries come before general entries of the same priority.
      *
-     * @param object $item     The entry.
-     * @param int    $priority The higher the value, the earlier the item comes in the chain.
+     * @param object $item     the entry
+     * @param int    $priority the higher the value, the earlier the item comes in the chain
      * @param string $sitemap  Name of the sitemap to add the entry for. Null adds the entry to all sitemaps.
      */
     public function addItem($item, $priority = 0, $sitemap = null)
@@ -66,7 +66,7 @@ abstract class AbstractChain
      *
      * @param string $sitemap Name of the sitemap
      *
-     * @return object[] Priority sorted list of chain entries.
+     * @return object[] priority sorted list of chain entries
      */
     protected function getSortedEntriesForSitemap($sitemap)
     {

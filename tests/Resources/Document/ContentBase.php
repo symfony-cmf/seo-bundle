@@ -76,7 +76,7 @@ class ContentBase
     /**
      * Sets the parent document.
      *
-     * @param object $parent The parent document.
+     * @param object $parent the parent document
      */
     public function setParentDocument($parent)
     {

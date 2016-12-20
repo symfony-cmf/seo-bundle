@@ -20,11 +20,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface;
 /**
  * @PHPCRODM\Document(referenceable=true)
  */
-class ContentWithExtractors extends ContentBase implements
-    TitleReadInterface,
-    DescriptionReadInterface,
-    OriginalUrlReadInterface,
-    KeywordsReadInterface
+class ContentWithExtractors extends ContentBase implements TitleReadInterface, DescriptionReadInterface, OriginalUrlReadInterface, KeywordsReadInterface
 {
     /**
      * Provide a title of this page to be used in SEO context.

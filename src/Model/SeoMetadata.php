@@ -300,11 +300,11 @@ class SeoMetadata implements SeoMetadataInterface
     /**
      * Extract an array out of $data or throw an exception if not possible.
      *
-     * @param array|KeyValueContainer|\Traversable $data Something that can be converted to an array.
+     * @param array|KeyValueContainer|\Traversable $data something that can be converted to an array
      *
      * @return array Native array representation of $data
      *
-     * @throws InvalidArgumentException If $data can not be converted to an array.
+     * @throws InvalidArgumentException if $data can not be converted to an array
      */
     private function toArray($data)
     {

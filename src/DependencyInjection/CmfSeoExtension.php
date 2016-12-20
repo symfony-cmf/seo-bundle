@@ -261,7 +261,7 @@ class CmfSeoExtension extends Extension
      * @param array            $config
      * @param XmlFileLoader    $loader
      * @param ContainerBuilder $container
-     * @param bool             $alternateLocale Whether alternate locale handling is loaded.
+     * @param bool             $alternateLocale whether alternate locale handling is loaded
      */
     private function loadSitemapHandling($config, XmlFileLoader $loader, ContainerBuilder $container, $alternateLocale)
     {
@@ -361,7 +361,7 @@ class CmfSeoExtension extends Extension
      *
      * @param array            $config
      * @param ContainerBuilder $container
-     * @param string           $storage   Information about the configured storage.
+     * @param string           $storage   information about the configured storage
      */
     private function loadFormConfiguration($config, ContainerBuilder $container, $storage)
     {

@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Route;
 interface LoaderInterface
 {
     /**
-     * @param string $sitemap The name of the sitemap.
+     * @param string $sitemap the name of the sitemap
      *
      * @return Route[]
      */

@@ -25,7 +25,7 @@ interface SeoPresentationInterface
     /**
      * Updates the Sonata SeoPage service with the data retrieved from the $content.
      *
-     * @param object $content The content to load data from.
+     * @param object $content the content to load data from
      */
     public function updateSeoPage($content);
 

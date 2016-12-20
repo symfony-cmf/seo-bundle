@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 class ExclusionMatcher implements RequestMatcherInterface
 {
     /**
-     * @var RequestMatcherInterface[] A list of rule matchers.
+     * @var RequestMatcherInterface[] a list of rule matchers
      */
     private $matchersMap = array();
 
