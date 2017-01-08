@@ -31,6 +31,11 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
 
     public function testDefaults()
     {
+        $this->container->setParameter(
+            'kernel.bundles',
+            []
+        );
+
         $this->load(array(
             'title' => 'Default title',
             'description' => 'Default description.',

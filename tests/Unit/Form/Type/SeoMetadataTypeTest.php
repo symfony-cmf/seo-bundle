@@ -98,6 +98,6 @@ class SeoMetadataTypeTest_OrmType extends SeoMetadataType
 {
     public function __construct($dataClass)
     {
-        parent::__construct($dataClass, true);
+        parent::__construct($dataClass, ['storage' => 'orm']);
     }
 }

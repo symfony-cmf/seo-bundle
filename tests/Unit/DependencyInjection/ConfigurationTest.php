@@ -78,6 +78,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'data_class' => array(
                     'seo_metadata' => null,
                 ),
+                'options' => [
+                    'generic_metadata' => 'auto',
+                ],
             ),
         );
 
@@ -144,6 +147,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'data_class' => array(
                     'seo_metadata' => null,
                 ),
+                'options' => [
+                    'generic_metadata' => 'auto',
+                ],
             ),
         );
 
@@ -218,6 +224,9 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'data_class' => array(
                     'seo_metadata' => null,
                 ),
+                'options' => [
+                    'generic_metadata' => 'auto',
+                ],
             ),
         );
 

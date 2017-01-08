@@ -40,6 +40,7 @@
         "doctrine/phpcr-bundle": "To persist the metadata in PHPCR ODM documents",
         "doctrine/doctrine-bundle": "To persist the metadata in ORM entities",
         "doctrine/orm": "To persist the metadata in ORM entities, ~2.4",
+        "burgov/key-value-form-bundle": "To have advanced editing options in the SEO form type, ^1.0",
         "symfony-cmf/sonata-admin-integration-bundle": "To provide an admin interface for the PHPCR ODM documents."
     },
     "autoload": {

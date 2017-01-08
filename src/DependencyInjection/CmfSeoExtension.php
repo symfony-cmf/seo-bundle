@@ -79,11 +79,6 @@ class CmfSeoExtension extends Extension
             $sonataBundles[] = 'SonataDoctrineORMBundle';
         }
 
-        $container->setParameter('cmf_seo.form_mode_orm',
-            $this->isConfigEnabled($container, $config['persistence']['orm'])
-            && !$this->isConfigEnabled($container, $config['persistence']['phpcr'])
-        );
-
         $errorConfig = isset($config['error']) ? $config['error'] : array();
         $this->loadErrorHandling($errorConfig, $container);
 
@@ -99,10 +94,17 @@ class CmfSeoExtension extends Extension
             $this->loadAlternateLocaleProvider($config['alternate_locale'], $container);
         }
 
+        $storage = 'default';
+        if ($this->isConfigEnabled($container, $config['persistence']['phpcr'])) {
+            $storage = 'phpcr';
+        } elseif ($this->isConfigEnabled($container, $config['persistence']['orm'])) {
+            $storage = 'orm';
+        }
+
         $this->loadFormConfiguration(
             $config['form'],
             $container,
-            $this->isConfigEnabled($container, $config['persistence']['phpcr']) ? 'phpcr' : 'default'
+            $storage
         );
     }
 
@@ -371,7 +373,20 @@ class CmfSeoExtension extends Extension
         } elseif ('phpcr' === $storage) {
             $seoMetadataClass = 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata';
         }
-
         $container->setParameter('cmf_seo.form.data_class.seo_metadata', $seoMetadataClass);
+
+        $genericMetadata = false;
+        if ($config['options']['generic_metadata']) {
+            $bundles = $container->getParameter('kernel.bundles');
+            if (true === $config['options']['generic_metadata'] && !array_key_exists('BurgovKeyValueFormBundle', $bundles)) {
+                throw new InvalidConfigurationException('To edit generic fields for the HTML header, you need the burgov/key-value-form-bundle in your project.');
+            }
+            $genericMetadata = array_key_exists('BurgovKeyValueFormBundle', $bundles);
+        }
+
+        $container->setParameter('cmf_seo.form.options', [
+            'generic_metadata' => $genericMetadata,
+            'storage' => $storage,
+        ]);
     }
 }

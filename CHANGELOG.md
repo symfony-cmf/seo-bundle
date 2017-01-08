@@ -1,6 +1,7 @@
 Changelog
 =========
 
+ * **2016-12-15**: [BC BREAK] SeoMetadataType constructor refactored to take an options array
  * **2016-08-11**: [BC BREAK] Moved all Sonata related classes into sonata-admin-integration-bundle
  * **2016-05-08**: [BC BREAK] Removed `showAtion` in favor of `listAction` in the `SuggestionProviderController`
  * **2016-05-02**: [BC BREAK] Dropped PHP <5.5 support
