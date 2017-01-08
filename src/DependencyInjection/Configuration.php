@@ -286,6 +286,7 @@ class Configuration implements ConfigurationInterface
         $nodeBuilder
             ->arrayNode('form')
                 ->addDefaultsIfNotSet()
+                ->fixXmlConfig('option')
                 ->children()
                     ->arrayNode('data_class')
                         ->addDefaultsIfNotSet()

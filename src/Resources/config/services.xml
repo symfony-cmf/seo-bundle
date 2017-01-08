@@ -16,7 +16,7 @@
         <service id="cmf_seo.form.type.seo_metadata" class="Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType">
             <argument>%cmf_seo.form.data_class.seo_metadata%</argument>
             <argument>%cmf_seo.form.options%</argument>
-            <tag name="form.type" alias="seo_metadata" />
+            <tag name="form.type"/>
         </service>
 
         <service id="cmf_seo.cache.file" class="Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache">

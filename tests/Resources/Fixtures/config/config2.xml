@@ -25,5 +25,6 @@
         <data_class>
             <seo_metadata>/My/Class</seo_metadata>
         </data_class>
+        <option name="generic_metadata" value="true"/>
     </form>
 </config>

@@ -38,13 +38,20 @@ class SeoMetadataType extends AbstractType
     /**
      * @param string $dataClass the FQCN of the data class to use for this form
      * @param array  $options   List of options to tweak the form
-     *                          - string  "storage"  Storage system that is used to use the correct form settings
-     *                          - boolean "advanced" Whether to enable advanced form editing options
+     *                          - string  "storage"  Storage system that is used to use the correct form settings. undefined|phpcr|orm
+     *                          - boolean "generic_metadata" Whether to enable extra fields. Requires BurgovKeyValueFormBundle
      */
-    public function __construct($dataClass, array $options)
+    public function __construct($dataClass, array $options = [])
     {
         $this->dataClass = $dataClass;
-        $this->options = $options;
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'storage' => 'undefined',
+            'generic_metadata' => false,
+        ]);
+        $resolver->setAllowedValues('storage', ['undefined', 'phpcr', 'orm']);
+        $resolver->setAllowedTypes('generic_metadata', 'boolean');
+        $this->options = $resolver->resolve($options);
     }
 
     /**
