@@ -61,14 +61,6 @@ class SeoMetadata extends SeoMetadataModel implements HierarchyInterface, Transl
     }
 
     /**
-     * @deprecated use setParentDocument
-     */
-    public function setParent($parent)
-    {
-        return $this->setParentDocument($parent);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getParentDocument()
@@ -77,10 +69,24 @@ class SeoMetadata extends SeoMetadataModel implements HierarchyInterface, Transl
     }
 
     /**
-     * @deprecated use getParentDocument
+     * @deprecated For compatibility with Doctrine PHPCR ODM 1.4, to be removed in version 3.0.
+     * @see setParentDocument
+     */
+    public function setParent($parent)
+    {
+        @trigger_error('The '.__METHOD__.'() method is deprecated and will be removed in version 3.0. Use setParentDocument() instead.', E_USER_DEPRECATED);
+
+        return $this->setParentDocument($parent);
+    }
+
+    /**
+     * @deprecated For compatibility with Doctrine PHPCR ODM 1.4, to be removed in version 3.0.
+     * @see getParentDocument
      */
     public function getParent()
     {
+        @trigger_error('The '.__METHOD__.'() method is deprecated and will be removed in version 3.0. Use getParentDocument() instead.', E_USER_DEPRECATED);
+
         return $this->getParentDocument();
     }
 }

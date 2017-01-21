@@ -13,7 +13,7 @@ aware for Search Engine Optimisation (SEO).
 
 ## Requirements
 
-* Symfony 2.3+
+* Symfony 2.8+
 * See also the `require` section of [composer.json](composer.json)
 
 ## Documentation

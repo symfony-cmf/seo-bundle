@@ -1,10 +1,7 @@
 language: php
 
 php:
-  - 5.5
-  - 5.6
   - 7.0
-  - 7.1
   - hhvm
 
 sudo: false
@@ -17,17 +14,15 @@ cache:
 env:
   matrix: SYMFONY_VERSION=3.2.*
   global:
-    - SYMFONY_DEPRECATIONS_HELPER=weak
+    - SYMFONY_DEPRECATIONS_HELPER=48
     - SYMFONY_PHPUNIT_DIR=.phpunit SYMFONY_PHPUNIT_REMOVE="symfony/yaml"
 
 matrix:
   include:
-    - php: 5.5
-      env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_VERSION=2.8.* SYMFONY_DEPRECATIONS_HELPER=weak
-    #- php: nightly
-    #  env: DEPS=dev SYMFONY_VERSION=3.3.*
     - php: 7.1
-      env: SYMFONY_VERSION=3.0.*
+      env: DEPS=dev SYMFONY_VERSION=3.3.*
+    - php: 5.6
+      env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_VERSION=2.8.* SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.1
       env: SYMFONY_VERSION=3.1.*
   fast_finish: true
@@ -47,4 +42,3 @@ script: vendor/bin/simple-phpunit
 
 notifications:
   irc: "irc.freenode.org#symfony-cmf"
-  email: "symfony-cmf-devs@googlegroups.com"
