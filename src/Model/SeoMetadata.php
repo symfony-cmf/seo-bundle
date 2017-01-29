@@ -65,21 +65,21 @@ class SeoMetadata implements SeoMetadataInterface
      *
      * @var array
      */
-    private $extraProperties = array();
+    private $extraProperties = [];
 
     /**
      * To store extra meta tags for type name.
      *
      * @var array
      */
-    private $extraNames = array();
+    private $extraNames = [];
 
     /**
      * To store meta tags for type http-equiv.
      *
      * @var array
      */
-    private $extraHttp = array();
+    private $extraHttp = [];
 
     /**
      * @param mixed $id

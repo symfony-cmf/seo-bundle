@@ -30,10 +30,10 @@ class SiblingSuggestionProvider extends BaseSuggestionProvider
         $parentRoute = $this->findParentRoute($request->getPathInfo());
 
         if (null === $parentRoute) {
-            return array();
+            return [];
         }
 
-        $routes = array();
+        $routes = [];
         $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
         $childRoutes = $manager->getChildren($parentRoute);
 

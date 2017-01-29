@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-$container->loadFromExtension('cmf_seo', array(
+$container->loadFromExtension('cmf_seo', [
     'title' => 'default_title',
     'description' => 'description_key',
-));
+]);

@@ -29,9 +29,9 @@ class SitemapDocumentProviderTest extends BaseTestCase
         $this->db('PHPCR')->createTestNode();
         $this->dm = $this->db('PHPCR')->getOm();
         $this->base = $this->dm->find(null, '/test');
-        $this->db('PHPCR')->loadFixtures(array(
+        $this->db('PHPCR')->loadFixtures([
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadSitemapData',
-        ));
+        ]);
 
         $this->documentProvider = new SitemapDocumentProvider($this->dm);
     }
@@ -40,18 +40,18 @@ class SitemapDocumentProviderTest extends BaseTestCase
     {
         $documents = $this->documentProvider->load('default');
 
-        $paths = array();
+        $paths = [];
         foreach ($documents as $document) {
             $paths[] = $document->getId();
         }
 
         $this->assertEquals(
-            array(
+            [
                 '/test/content/sitemap-aware',
                 '/test/content/sitemap-aware-last-mod-date',
                 '/test/content/sitemap-aware-non-publish',
                 '/test/content/sitemap-aware-publish',
-            ),
+            ],
             $paths
         );
     }

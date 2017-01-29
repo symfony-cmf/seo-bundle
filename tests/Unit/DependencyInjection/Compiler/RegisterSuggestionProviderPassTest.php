@@ -39,7 +39,7 @@ class RegisterSuggestionProviderPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition('some_service', $nonMatcherService);
 
         $matcherServiceWithGroup = new Definition();
-        $matcherServiceWithGroup->addTag('cmf_seo.suggestion_provider', array('group' => 'some-group'));
+        $matcherServiceWithGroup->addTag('cmf_seo.suggestion_provider', ['group' => 'some-group']);
         $this->setDefinition('matcher.with_group', $matcherServiceWithGroup);
 
         $matcherPresentationService = new Definition();
@@ -50,7 +50,7 @@ class RegisterSuggestionProviderPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.error.suggestion_provider.controller',
             'addSuggestionProvider',
-            array(new Reference('matcher.with_group'), 'some-group')
+            [new Reference('matcher.with_group'), 'some-group']
         );
     }
 
@@ -71,7 +71,7 @@ class RegisterSuggestionProviderPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.error.suggestion_provider.controller',
             'addSuggestionProvider',
-            array(new Reference('matcher.without_group'), 'default')
+            [new Reference('matcher.without_group'), 'default']
         );
     }
 }

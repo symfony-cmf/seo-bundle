@@ -76,7 +76,7 @@ class SitemapController
 
         $templates = $this->configurations[$sitemap]['templates'];
 
-        $supportedFormats = array_merge(array('json'), array_keys($templates));
+        $supportedFormats = array_merge(['json'], array_keys($templates));
         if (!in_array($_format, $supportedFormats)) {
             $text = sprintf(
                 'Unknown format %s, use one of %s.',
@@ -90,7 +90,7 @@ class SitemapController
         $urlInformation = $this->sitemapProvider->getUrlInformation($sitemap);
 
         if (isset($templates[$_format])) {
-            return new Response($this->templating->render($templates[$_format], array('urls' => $urlInformation)));
+            return new Response($this->templating->render($templates[$_format], ['urls' => $urlInformation]));
         }
 
         return $this->createJsonResponse($urlInformation);
@@ -103,7 +103,7 @@ class SitemapController
      */
     private function createJsonResponse($urls)
     {
-        $result = array();
+        $result = [];
 
         foreach ($urls as $url) {
             $result[] = $url->toArray();

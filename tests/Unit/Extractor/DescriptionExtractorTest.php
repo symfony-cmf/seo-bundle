@@ -26,9 +26,9 @@ class DescriptionExtractorTest extends BaseTestCase
 
     public function getSupportsData()
     {
-        return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
-        );
+        return [
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface')],
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+        ];
     }
 }

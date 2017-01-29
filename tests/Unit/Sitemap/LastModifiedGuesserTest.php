@@ -67,16 +67,16 @@ class LastModifiedGuesserTest extends GuesserTestCase
         $this->metadata
             ->expects($this->any())
             ->method('getMixins')
-            ->will($this->returnValue(array('mix:lastModified')));
+            ->will($this->returnValue(['mix:lastModified']));
         $this->metadata
             ->expects($this->any())
             ->method('getFieldNames')
-            ->will($this->returnValue(array('lastModified')));
+            ->will($this->returnValue(['lastModified']));
         $this->metadata
             ->expects($this->any())
             ->method('getFieldMapping')
             ->with($this->equalTo('lastModified'))
-            ->will($this->returnValue(array('property' => 'jcr:lastModified')));
+            ->will($this->returnValue(['property' => 'jcr:lastModified']));
         $this->metadata
             ->expects($this->any())
             ->method('getFieldValue')
@@ -101,7 +101,7 @@ class LastModifiedGuesserTest extends GuesserTestCase
      */
     protected function getFields()
     {
-        return array('LastModification');
+        return ['LastModification'];
     }
 
     public function testGuessNoOverwrite()

@@ -30,9 +30,9 @@ class SeoFrontendTest extends BaseTestCase
 {
     public function setUp()
     {
-        $this->db('PHPCR')->loadFixtures(array(
+        $this->db('PHPCR')->loadFixtures([
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
-        ));
+        ]);
     }
 
     /**
@@ -58,10 +58,10 @@ class SeoFrontendTest extends BaseTestCase
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');
-        $expectedMeta = array(
+        $expectedMeta = [
             'testkey, content1, content',
             'Default description. Description of content 1.',
-        );
+        ];
         $this->assertEquals($expectedMeta, $actualMeta);
 
         //test the setting of canonical link
@@ -91,10 +91,10 @@ class SeoFrontendTest extends BaseTestCase
         });
 
         $actualMeta = $metaCrawler->extract('content', 'content');
-        $expectedMeta = array(
+        $expectedMeta = [
             'testkey, test, key',
             'Default description. content of strategy test. ...',
-        );
+        ];
         $this->assertEquals($expectedMeta, $actualMeta);
 
         //test the setting of canonical link
@@ -127,11 +127,11 @@ class SeoFrontendTest extends BaseTestCase
 
     public function getExtraProperties()
     {
-        return array(
-            array('property', 'og:title', 'extra title'),
-            array('name', 'robots', 'index, follow'),
-            array('http-equiv', 'Content-Type', 'text/html; charset=utf-8'),
-        );
+        return [
+            ['property', 'og:title', 'extra title'],
+            ['name', 'robots', 'index, follow'],
+            ['http-equiv', 'Content-Type', 'text/html; charset=utf-8'],
+        ];
     }
 
     public function testAlternateLanguages()
@@ -143,8 +143,8 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertCount(1, $crawler->filter('html:contains("Alternate locale content")'));
 
         $linkCrawler = $crawler->filter('head > link');
-        $expectedArray = array(array('alternate', 'http://localhost/de/alternate-locale-content', 'de'));
-        $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
+        $expectedArray = [['alternate', 'http://localhost/de/alternate-locale-content', 'de']];
+        $this->assertEquals($expectedArray, $linkCrawler->extract(['rel', 'href', 'hreflang']));
 
         $crawler = $this->getClient()->request('GET', '/de/alternate-locale-content');
         $res = $this->getClient()->getResponse();
@@ -153,8 +153,8 @@ class SeoFrontendTest extends BaseTestCase
         $this->assertCount(1, $crawler->filter('html:contains("Alternative Sprachen")'));
 
         $linkCrawler = $crawler->filter('head > link');
-        $expectedArray = array(array('alternate', 'http://localhost/en/alternate-locale-content', 'en'));
-        $this->assertEquals($expectedArray, $linkCrawler->extract(array('rel', 'href', 'hreflang')));
+        $expectedArray = [['alternate', 'http://localhost/en/alternate-locale-content', 'en']];
+        $this->assertEquals($expectedArray, $linkCrawler->extract(['rel', 'href', 'hreflang']));
     }
 
     public function testErrorHandling()

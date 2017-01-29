@@ -20,9 +20,9 @@ class SitemapTest extends BaseTestCase
 {
     public function setUp()
     {
-        $this->db('PHPCR')->loadFixtures(array(
+        $this->db('PHPCR')->loadFixtures([
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadSitemapData',
-        ));
+        ]);
         $this->client = $this->createClient();
     }
 
@@ -65,8 +65,8 @@ class SitemapTest extends BaseTestCase
 
     public function getFormats()
     {
-        return array(
-            array(
+        return [
+            [
                 'html',
                 '<ul class="cmf-sitemap">
                     <li class="indent-0">
@@ -79,8 +79,8 @@ class SitemapTest extends BaseTestCase
                         <a href="http://localhost/sitemap-aware-publish" title="Sitemap Aware Content publish">Sitemap Aware Content publish</a>
                     </li>
                 </ul>',
-            ),
-            array(
+            ],
+            [
                 'xml',
                 '<?xml version="1.0"?>
                  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -99,11 +99,11 @@ class SitemapTest extends BaseTestCase
                          <changefreq>never</changefreq>
                      </url>
                  </urlset>',
-            ),
-            array(
+            ],
+            [
                 'json',
                 '[{"loc":"http:\/\/localhost\/sitemap-aware","label":"Sitemap Aware Content","changefreq":"never","alternate_locales":[{"href":"http:\/\/localhost\/sitemap-aware?_locale=de","href_locale":"de"}],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-last-mod-date","label":"Sitemap Aware Content last mod date","changefreq":"never","lastmod":"2016-07-06T00:00:00+02:00","alternate_locales":[],"depth":0},{"loc":"http:\/\/localhost\/sitemap-aware-publish","label":"Sitemap Aware Content publish","changefreq":"never","alternate_locales":[],"depth":0}]',
-            ),
-        );
+            ],
+        ];
     }
 }

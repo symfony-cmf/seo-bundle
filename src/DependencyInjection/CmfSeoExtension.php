@@ -11,16 +11,16 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DefaultChangeFrequencyGuesser;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Cmf\Bundle\SeoBundle\Sitemap\DefaultChangeFrequencyGuesser;
 
 /**
  * Loads and manages the bundle configuration.
@@ -39,11 +39,11 @@ class CmfSeoExtension extends Extension
      */
     private $contentListenerEnabled = false;
 
-    private $sitemapHelperMap = array(
+    private $sitemapHelperMap = [
         'loaders' => 'cmf_seo.sitemap.loader',
         'guessers' => 'cmf_seo.sitemap.guesser',
         'voters' => 'cmf_seo.sitemap.voter',
-    );
+    ];
 
     /**
      * {@inheritdoc}
@@ -59,7 +59,7 @@ class CmfSeoExtension extends Extension
 
         $this->loadSeoParameters($config, $container);
 
-        $sonataBundles = array();
+        $sonataBundles = [];
         if ($this->isConfigEnabled($container, $config['persistence']['phpcr'])) {
             $container->setParameter('cmf_seo.backend_type_phpcr', true);
             $container->setParameter(
@@ -80,7 +80,7 @@ class CmfSeoExtension extends Extension
             $sonataBundles[] = 'SonataDoctrineORMBundle';
         }
 
-        $errorConfig = isset($config['error']) ? $config['error'] : array();
+        $errorConfig = isset($config['error']) ? $config['error'] : [];
         $this->loadErrorHandling($errorConfig, $container);
 
         if ($this->isConfigEnabled($container, $config['sitemap'])) {
@@ -117,7 +117,7 @@ class CmfSeoExtension extends Extension
      */
     public function loadSeoParameters(array $config, ContainerBuilder $container)
     {
-        $params = array('translation_domain', 'title', 'description', 'original_route_pattern');
+        $params = ['translation_domain', 'title', 'description', 'original_route_pattern'];
 
         foreach ($params as $param) {
             $value = isset($config[$param]) ? $config[$param] : null;
@@ -193,7 +193,7 @@ class CmfSeoExtension extends Extension
                 ->findDefinition('cmf_seo.event_listener.seo_content')
                 ->addMethodCall(
                     'setAlternateLocaleProvider',
-                    array(new Reference($alternateLocaleProvider))
+                    [new Reference($alternateLocaleProvider)]
                 )
             ;
         }
@@ -216,7 +216,7 @@ class CmfSeoExtension extends Extension
      */
     private function loadErrorHandling($config, ContainerBuilder $container)
     {
-        foreach (array('parent', 'sibling') as $group) {
+        foreach (['parent', 'sibling'] as $group) {
             $remove = isset($config['enable_'.$group.'_provider'])
                     && !$config['enable_'.$group.'_provider'] ? true : false;
             if ($container->has('cmf_seo.error.suggestion_provider.'.$group) && $remove) {
@@ -224,8 +224,8 @@ class CmfSeoExtension extends Extension
             }
         }
 
-        $templates = isset($config['templates']) ? $config['templates'] : array();
-        $exclusionRules = isset($config['exclusion_rules']) ? $config['exclusion_rules'] : array();
+        $templates = isset($config['templates']) ? $config['templates'] : [];
+        $exclusionRules = isset($config['exclusion_rules']) ? $config['exclusion_rules'] : [];
         $container->setParameter('cmf_seo.error.templates', $templates);
 
         $exclusionMatcherDefinition = $container->getDefinition('cmf_seo.error.exclusion_matcher');
@@ -240,13 +240,13 @@ class CmfSeoExtension extends Extension
                 $rule['methods'],
                 $rule['ips']
             );
-            $exclusionMatcherDefinition->addMethodCall('addRequestMatcher', array($requestMatcher));
+            $exclusionMatcherDefinition->addMethodCall('addRequestMatcher', [$requestMatcher]);
         }
     }
 
-    private function createRequestMatcher(ContainerBuilder $container, $path = null, $host = null, $methods = null, $ips = null, array $attributes = array())
+    private function createRequestMatcher(ContainerBuilder $container, $path = null, $host = null, $methods = null, $ips = null, array $attributes = [])
     {
-        $arguments = array($path, $host, $methods, $ips, $attributes);
+        $arguments = [$path, $host, $methods, $ips, $attributes];
         $serialized = serialize($arguments);
         $id = 'cmf_seo.error.request_matcher.'.md5($serialized).sha1($serialized);
 
@@ -279,27 +279,27 @@ class CmfSeoExtension extends Extension
 
         $configurations = $config['configurations'];
 
-        $helperStatus = array();
+        $helperStatus = [];
         foreach ($this->sitemapHelperMap as $helper => $tag) {
-            $helperStatus[$helper] = array();
+            $helperStatus[$helper] = [];
             $serviceDefinitionIds = $container->findTaggedServiceIds($tag);
             foreach ($serviceDefinitionIds as $id => $attributes) {
                 if (0 === strpos($id, 'cmf_seo')) {
                     // avoid interfering with services that are not part of this bundle
-                    $helperStatus[$helper][$id] = array();
+                    $helperStatus[$helper][$id] = [];
                 }
             }
         }
 
         foreach ($configurations as $sitemapName => $configuration) {
             if (isset($configuration['default_change_frequency'])) {
-                $definition = new Definition(DefaultChangeFrequencyGuesser::class, array(
+                $definition = new Definition(DefaultChangeFrequencyGuesser::class, [
                     $configuration['default_change_frequency'],
-                ));
-                $definition->addTag('cmf_seo.sitemap.guesser', array(
+                ]);
+                $definition->addTag('cmf_seo.sitemap.guesser', [
                     'sitemap' => $sitemapName,
                     'priority' => -1,
-                ));
+                ]);
                 $container->setDefinition('cmf_seo.sitemap.guesser.'.$sitemapName.'.default_change_frequency', $definition);
             }
             unset($configurations[$sitemapName]['default_change_frequency']);

@@ -34,7 +34,7 @@ class AbstractChainTest extends \PHPUnit_Framework_Testcase
         $this->chain->addItem($one, 0);
         $this->chain->addItem($two, 0);
 
-        $expectedList = array('info-one', 'info-two');
+        $expectedList = ['info-one', 'info-two'];
 
         $this->assertEquals($expectedList, $this->chain->getValues('test'));
     }
@@ -47,7 +47,7 @@ class AbstractChainTest extends \PHPUnit_Framework_Testcase
         $this->chain->addItem($one, 0, 'test');
         $this->chain->addItem($two, 0, 'test');
 
-        $expectedList = array('info-one', 'info-two');
+        $expectedList = ['info-one', 'info-two'];
 
         $this->assertEquals($expectedList, $this->chain->getValues('test'));
     }
@@ -67,12 +67,12 @@ class AbstractChainTest extends \PHPUnit_Framework_Testcase
         $this->chain->addItem($earlySpecific, 10, 'test');
 
         $this->assertEquals(
-            array('info-first', 'info-early-specific', 'info-specific', 'info-early', 'info-last'),
+            ['info-first', 'info-early-specific', 'info-specific', 'info-early', 'info-last'],
             $this->chain->getValues('test')
         );
 
         $this->assertEquals(
-            array('info-first', 'info-early', 'info-last'),
+            ['info-first', 'info-early', 'info-last'],
             $this->chain->getValues('foobar')
         );
     }
@@ -82,7 +82,7 @@ class TestChain extends AbstractChain
 {
     public function getValues($sitemap)
     {
-        $values = array();
+        $values = [];
         /** @var $entry TestEntry */
         foreach ($this->getSortedEntriesForSitemap($sitemap) as $entry) {
             $values[] = $entry->name;

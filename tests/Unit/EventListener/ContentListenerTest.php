@@ -103,13 +103,13 @@ class ContentListenerTest extends \PHPUnit_Framework_Testcase
 
     public function getRedirectRouteData()
     {
-        return array(
-            array('/test_redirect'),
-            array('/a/test'),
-            array('/test', false),
-            array('/test?a', false),
-            array('/test', false, '/test#b'),
-            array('/test?a', false, '/test#b'),
-        );
+        return [
+            ['/test_redirect'],
+            ['/a/test'],
+            ['/test', false],
+            ['/test?a', false],
+            ['/test', false, '/test#b'],
+            ['/test?a', false, '/test#b'],
+        ];
     }
 }

@@ -40,9 +40,9 @@ class SeoMetadataTest extends BaseTestCase
             ->setMetaDescription('Seo Description')
             ->setMetaKeywords('Seo, Keys')
             ->setOriginalUrl('/test')
-            ->setExtraProperties(array('og:title' => 'Extra title'))
-            ->setExtraNames(array('robots' => 'index, follow'))
-            ->setExtraHttp(array('content-type' => 'text/html'))
+            ->setExtraProperties(['og:title' => 'Extra title'])
+            ->setExtraNames(['robots' => 'index, follow'])
+            ->setExtraHttp(['content-type' => 'text/html'])
         ;
 
         $content->setSeoMetadata($seoMetadata);

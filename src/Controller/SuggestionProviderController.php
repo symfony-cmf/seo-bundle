@@ -13,10 +13,10 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Controller;
 
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController;
 use Symfony\Cmf\Bundle\SeoBundle\SuggestionProviderInterface;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 /**
@@ -32,7 +32,7 @@ class SuggestionProviderController extends ExceptionController
      *
      * @var array|SuggestionProviderInterface[]
      */
-    protected $suggestionProviders = array();
+    protected $suggestionProviders = [];
 
     /**
      * Contains the list of templates defined in the error section of the
@@ -89,7 +89,7 @@ class SuggestionProviderController extends ExceptionController
         }
 
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
-        $groupedSuggestions = array();
+        $groupedSuggestions = [];
 
         foreach ($this->suggestionProviders as $item) {
             $suggestions = $item['provider']->create($request);
@@ -101,7 +101,7 @@ class SuggestionProviderController extends ExceptionController
         return new Response(
             $this->twig->render(
                 $templateForSuggestion,
-                array(
+                [
                     'status_code' => $code,
                     'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
                     'message' => $exception->getMessage(),
@@ -109,7 +109,7 @@ class SuggestionProviderController extends ExceptionController
                     'logger' => $logger,
                     'currentContent' => $currentContent,
                     'best_matches' => $groupedSuggestions,
-                )
+                ]
             ),
             $code
         );
@@ -121,7 +121,7 @@ class SuggestionProviderController extends ExceptionController
      */
     public function addSuggestionProvider(SuggestionProviderInterface $matcher, $group)
     {
-        $this->suggestionProviders[] = array('provider' => $matcher, 'group' => $group);
+        $this->suggestionProviders[] = ['provider' => $matcher, 'group' => $group];
     }
 
     /**

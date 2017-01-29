@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
 use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueRowType;
+use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata as SeoMetadataModel;
@@ -26,26 +26,26 @@ class SeoMetadataTypeTest extends TypeTestCase
     {
         return array_merge(
             parent::getExtensions(),
-            array(new PreloadedExtension(array(
+            [new PreloadedExtension([
                 new KeyValueType(),
                 new KeyValueRowType(),
                 new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'),
                 new SeoMetadataTypeTest_OrmType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'),
-            ), array()))
+            ], [])]
         );
     }
 
     public function testDataClassCreationForPhpcr()
     {
-        $this->validator->expects($this->any())->method('validate')->will($this->returnValue(array()));
+        $this->validator->expects($this->any())->method('validate')->will($this->returnValue([]));
 
-        $formData = array(
+        $formData = [
             'title' => 'Title',
             'originalUrl' => 'original/url',
-            'extraProperties' => array(),
-            'extraNames' => array(),
-            'extraHttp' => array(),
-        );
+            'extraProperties' => [],
+            'extraNames' => [],
+            'extraHttp' => [],
+        ];
 
         $form = $this->factory->create(SeoMetadataType::class);
         $this->assertTrue($form->getConfig()->getByReference());
@@ -66,15 +66,15 @@ class SeoMetadataTypeTest extends TypeTestCase
 
     public function testDataClassCreationForNonPhpcr()
     {
-        $this->validator->expects($this->any())->method('validate')->will($this->returnValue(array()));
+        $this->validator->expects($this->any())->method('validate')->will($this->returnValue([]));
 
-        $formData = array(
+        $formData = [
             'title' => 'Title',
             'originalUrl' => 'original/url',
-            'extraProperties' => array(),
-            'extraNames' => array(),
-            'extraHttp' => array(),
-        );
+            'extraProperties' => [],
+            'extraNames' => [],
+            'extraHttp' => [],
+        ];
 
         $form = $this->factory->create(SeoMetadataTypeTest_OrmType::class);
         $this->assertFalse($form->getConfig()->getByReference());

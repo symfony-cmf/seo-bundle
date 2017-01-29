@@ -26,9 +26,9 @@ class OriginalUrlExtractorTest extends BaseTestCase
 
     public function getSupportsData()
     {
-        return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
-        );
+        return [
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface')],
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+        ];
     }
 }

@@ -26,7 +26,7 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
     {
         parent::setUp();
 
-        $this->container->setParameter('cmf_seo.sitemap.configurations', array());
+        $this->container->setParameter('cmf_seo.sitemap.configurations', []);
         $nonProviderService = new Definition();
         $this->setDefinition('some_service', $nonProviderService);
 
@@ -59,21 +59,21 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         $providerServiceWithPriority = new Definition();
         $providerServiceWithPriority->addTag(
             'cmf_seo.sitemap.'.$tagName,
-            array('priority' => 1)
+            ['priority' => 1]
         );
         $this->setDefinition($tagName.'_service_priority', $providerServiceWithPriority);
 
         $providerServiceWithSitemap = new Definition();
         $providerServiceWithSitemap->addTag(
             'cmf_seo.sitemap.'.$tagName,
-            array('sitemap' => 'some-sitemap')
+            ['sitemap' => 'some-sitemap']
         );
         $this->setDefinition($tagName.'_service_sitemap', $providerServiceWithSitemap);
 
         $providerServiceWithMultipleSitemap = new Definition();
         $providerServiceWithMultipleSitemap->addTag(
             'cmf_seo.sitemap.'.$tagName,
-            array('sitemap' => 'some-sitemap,some-other')
+            ['sitemap' => 'some-sitemap,some-other']
         );
         $this->setDefinition($tagName.'_service_sitemap_multiple', $providerServiceWithMultipleSitemap);
 
@@ -82,40 +82,40 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service'), null, null)
+            [new Reference($tagName.'_service'), null, null]
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_priority'), 1, null)
+            [new Reference($tagName.'_service_priority'), 1, null]
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_sitemap'), null, 'some-sitemap')
+            [new Reference($tagName.'_service_sitemap'), null, 'some-sitemap']
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_sitemap_multiple'), null, 'some-sitemap')
+            [new Reference($tagName.'_service_sitemap_multiple'), null, 'some-sitemap']
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.sitemap.'.$serviceName,
             'addItem',
-            array(new Reference($tagName.'_service_sitemap_multiple'), null, 'some-other')
+            [new Reference($tagName.'_service_sitemap_multiple'), null, 'some-other']
         );
     }
 
     public function tagProvider()
     {
-        return array(
-            array('loader', 'loader_chain'),
-            array('voter', 'voter_chain'),
-            array('guesser', 'guesser_chain'),
-        );
+        return [
+            ['loader', 'loader_chain'],
+            ['voter', 'voter_chain'],
+            ['guesser', 'guesser_chain'],
+        ];
     }
 }

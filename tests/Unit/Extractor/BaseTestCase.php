@@ -43,7 +43,7 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $document = $this->getMock('ExtractedDocument', array($this->extractMethod));
+        $document = $this->getMock('ExtractedDocument', [$this->extractMethod]);
         $document->expects($this->any())
             ->method($this->extractMethod)
             ->will($this->returnValue('extracted'));

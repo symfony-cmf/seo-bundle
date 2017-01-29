@@ -94,7 +94,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             if ($sitemap) {
                 $sitemaps = explode(',', $sitemap);
             } else {
-                $sitemaps = array(null);
+                $sitemaps = [null];
             }
 
             foreach ($sitemaps as $sitemap) {
@@ -108,7 +108,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
                 }
                 $serviceDefinition->addMethodCall(
                     'addItem',
-                    array(new Reference($id), $priority, $sitemap)
+                    [new Reference($id), $priority, $sitemap]
                 );
             }
         }

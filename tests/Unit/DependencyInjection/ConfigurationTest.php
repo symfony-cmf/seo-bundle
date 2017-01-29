@@ -37,204 +37,204 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
 
     public function testDefaultsForAllConfigFormats()
     {
-        $expectedConfiguration = array(
+        $expectedConfiguration = [
             'title' => 'default_title',
             'description' => 'default_description',
-            'persistence' => array(
-                'phpcr' => array(
+            'persistence' => [
+                'phpcr' => [
                     'enabled' => false,
                     'manager_name' => null,
-                ),
-                'orm' => array(
+                ],
+                'orm' => [
                     'enabled' => false,
                     'manager_name' => null,
-                ),
-            ),
+                ],
+            ],
             'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
-            'alternate_locale' => array(
+            'alternate_locale' => [
                 'enabled' => false,
                 'provider_id' => null,
-            ),
-            'sitemap' => array(
+            ],
+            'sitemap' => [
                 'enabled' => false,
-                'configurations' => array(),
-                'defaults' => array(
+                'configurations' => [],
+                'defaults' => [
                     'default_change_frequency' => 'always',
-                    'templates' => array(
+                    'templates' => [
                         'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
                         'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
-                    ),
-                    'loaders' => array('_all'),
-                    'guessers' => array('_all'),
-                    'voters' => array('_all'),
-                ),
-            ),
-            'content_listener' => array(
+                    ],
+                    'loaders' => ['_all'],
+                    'guessers' => ['_all'],
+                    'voters' => ['_all'],
+                ],
+            ],
+            'content_listener' => [
                 'enabled' => true,
                 'content_key' => 'contentDocument',
-            ),
-            'form' => array(
-                'data_class' => array(
+            ],
+            'form' => [
+                'data_class' => [
                     'seo_metadata' => null,
-                ),
+                ],
                 'options' => [
                     'generic_metadata' => 'auto',
                 ],
-            ),
-        );
+            ],
+        ];
 
         $sources = array_map(function ($path) {
             return __DIR__.'/../../Resources/Fixtures/'.$path;
-        }, array(
+        }, [
             'config/config.yml',
             'config/config.php',
             'config/config.xml',
-        ));
+        ]);
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
     }
 
     public function testSitemapXmlConfigurations()
     {
-        $expectedConfiguration = array(
-            'sitemap' => array(
+        $expectedConfiguration = [
+            'sitemap' => [
                 'enabled' => true,
-                'configurations' => array(
-                    'sitemap' => array(
+                'configurations' => [
+                    'sitemap' => [
                         'default_change_frequency' => 'never',
-                        'templates' => array(
+                        'templates' => [
                             'xml' => 'test.xml',
                             'html' => 'test.html',
-                        ),
-                        'loaders' => array(),
-                        'guessers' => array(),
-                        'voters' => array(),
-                    ),
-                ),
-                'defaults' => array(
+                        ],
+                        'loaders' => [],
+                        'guessers' => [],
+                        'voters' => [],
+                    ],
+                ],
+                'defaults' => [
                     'default_change_frequency' => 'always',
-                    'templates' => array(
+                    'templates' => [
                         'html' => 'foo.html.twig',
                         'xml' => 'foo.xml.twig',
-                    ),
-                    'loaders' => array('_all'),
-                    'guessers' => array('_all'),
-                    'voters' => array('_all'),
-                ),
-            ),
-            'persistence' => array(
-                'phpcr' => array(
+                    ],
+                    'loaders' => ['_all'],
+                    'guessers' => ['_all'],
+                    'voters' => ['_all'],
+                ],
+            ],
+            'persistence' => [
+                'phpcr' => [
                     'enabled' => false,
                     'manager_name' => null,
-                ),
-                'orm' => array(
+                ],
+                'orm' => [
                     'enabled' => false,
                     'manager_name' => null,
-                ),
-            ),
+                ],
+            ],
             'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
-            'alternate_locale' => array(
+            'alternate_locale' => [
                 'enabled' => false,
                 'provider_id' => null,
-            ),
-            'content_listener' => array(
+            ],
+            'content_listener' => [
                 'enabled' => true,
                 'content_key' => 'contentDocument',
-            ),
-            'form' => array(
-                'data_class' => array(
+            ],
+            'form' => [
+                'data_class' => [
                     'seo_metadata' => null,
-                ),
+                ],
                 'options' => [
                     'generic_metadata' => 'auto',
                 ],
-            ),
-        );
+            ],
+        ];
 
         $sources = array_map(function ($path) {
             return __DIR__.'/../../Resources/Fixtures/'.$path;
-        }, array(
+        }, [
             'config/config_sitemap.xml',
-        ));
+        ]);
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
     }
 
     public function testErrorHandlingXmlConfigurations()
     {
-        $expectedConfiguration = array(
-            'error' => array(
+        $expectedConfiguration = [
+            'error' => [
                 'enable_parent_provider' => true,
                 'enable_sibling_provider' => true,
-                'exclusion_rules' => array(
-                    array(
+                'exclusion_rules' => [
+                    [
                         'path' => 'some/path',
                         'ips' => 'IP',
                         'methods' => 'GET',
                         'host' => 'test.de',
-                    ),
-                    array(
+                    ],
+                    [
                         'path' => 'some-other/path',
                         'ips' => 'IPs',
                         'methods' => 'POST',
                         'host' => 'test-dev.de',
-                    ),
-                ),
-                'templates' => array(
+                    ],
+                ],
+                'templates' => [
                     'html' => 'CmfSeoBundle:Exception:error.html.twig',
-                ),
-            ),
+                ],
+            ],
             'translation_domain' => 'messages',
             'original_route_pattern' => SeoPresentation::ORIGINAL_URL_CANONICAL,
-            'persistence' => array(
-                'phpcr' => array(
+            'persistence' => [
+                'phpcr' => [
                     'enabled' => false,
                     'manager_name' => null,
-                ),
-                'orm' => array(
+                ],
+                'orm' => [
                     'enabled' => false,
                     'manager_name' => null,
-                ),
-            ),
-            'alternate_locale' => array(
+                ],
+            ],
+            'alternate_locale' => [
                 'enabled' => false,
                 'provider_id' => null,
-            ),
-            'sitemap' => array(
+            ],
+            'sitemap' => [
                 'enabled' => false,
-                'configurations' => array(),
-                'defaults' => array(
+                'configurations' => [],
+                'defaults' => [
                     'default_change_frequency' => 'always',
-                    'templates' => array(
+                    'templates' => [
                         'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
                         'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
-                    ),
-                    'loaders' => array('_all'),
-                    'guessers' => array('_all'),
-                    'voters' => array('_all'),
-                ),
-            ),
-            'content_listener' => array(
+                    ],
+                    'loaders' => ['_all'],
+                    'guessers' => ['_all'],
+                    'voters' => ['_all'],
+                ],
+            ],
+            'content_listener' => [
                 'enabled' => true,
                 'content_key' => 'contentDocument',
-            ),
-            'form' => array(
-                'data_class' => array(
+            ],
+            'form' => [
+                'data_class' => [
                     'seo_metadata' => null,
-                ),
+                ],
                 'options' => [
                     'generic_metadata' => 'auto',
                 ],
-            ),
-        );
+            ],
+        ];
 
         $sources = array_map(function ($path) {
             return __DIR__.'/../../Resources/Fixtures/'.$path;
-        }, array(
+        }, [
             'config/config_error.xml',
-        ));
+        ]);
 
         $this->assertProcessedConfigurationEquals($expectedConfiguration, $sources);
     }

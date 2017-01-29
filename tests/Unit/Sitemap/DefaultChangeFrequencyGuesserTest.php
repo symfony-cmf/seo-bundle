@@ -42,6 +42,6 @@ class DefaultChangeFrequencyGuesserTest extends GuesserTestCase
      */
     protected function getFields()
     {
-        return array('ChangeFrequency');
+        return ['ChangeFrequency'];
     }
 }

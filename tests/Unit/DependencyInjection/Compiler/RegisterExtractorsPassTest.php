@@ -41,7 +41,7 @@ class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.presentation',
             'addExtractor',
-            array(new Reference('extractor_service'), 0)
+            [new Reference('extractor_service'), 0]
         );
     }
 
@@ -51,7 +51,7 @@ class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition('some_service', $nonExtractorService);
 
         $extractorService = new Definition();
-        $extractorService->addTag('cmf_seo.extractor', array('priority' => 1));
+        $extractorService->addTag('cmf_seo.extractor', ['priority' => 1]);
         $this->setDefinition('extractor_service', $extractorService);
 
         $presentationService = new Definition();
@@ -62,7 +62,7 @@ class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'cmf_seo.presentation',
             'addExtractor',
-            array(new Reference('extractor_service'), 1)
+            [new Reference('extractor_service'), 1]
         );
     }
 }

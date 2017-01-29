@@ -53,6 +53,6 @@ class SeoMetadataTitleGuesserTest extends GuesserTestCase
      */
     protected function getFields()
     {
-        return array('Label');
+        return ['Label'];
     }
 }

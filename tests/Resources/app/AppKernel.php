@@ -19,17 +19,17 @@ class AppKernel extends TestKernel
         $this->requireBundleSet('default');
 
         if ('phpcr' === $this->environment) {
-            $this->requireBundleSets(array('phpcr_odm'));
+            $this->requireBundleSets(['phpcr_odm']);
         } elseif ('orm' === $this->environment) {
             $this->requireBundleSet('doctrine_orm');
         }
 
-        $this->addBundles(array(
+        $this->addBundles([
             new \Sonata\SeoBundle\SonataSeoBundle(),
             new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
-        ));
+        ]);
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

@@ -26,11 +26,11 @@ class ParentSuggestionProvider extends BaseSuggestionProvider
      */
     public function create(Request $request)
     {
-        $routes = array();
+        $routes = [];
         $parentRoute = $this->findParentRoute($request->getPathInfo());
 
         if (null === $parentRoute) {
-            return array();
+            return [];
         }
 
         if ($parentRoute instanceof Route) {

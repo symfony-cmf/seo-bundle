@@ -60,28 +60,28 @@ class SeoMetadataType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, array('label' => 'form.label_title'))
-            ->add('originalUrl', TextType::class, array('label' => 'form.label_originalUrl'))
-            ->add('metaDescription', TextareaType::class, array('label' => 'form.label_metaDescription'))
-            ->add('metaKeywords', TextareaType::class, array('label' => 'form.label_metaKeywords'))
+            ->add('title', TextType::class, ['label' => 'form.label_title'])
+            ->add('originalUrl', TextType::class, ['label' => 'form.label_originalUrl'])
+            ->add('metaDescription', TextareaType::class, ['label' => 'form.label_metaDescription'])
+            ->add('metaKeywords', TextareaType::class, ['label' => 'form.label_metaKeywords'])
         ;
         if ($this->options['generic_metadata']) {
             $builder
-                ->add('extraProperties', KeyValueType::class, array(
+                ->add('extraProperties', KeyValueType::class, [
                     'label' => 'form.label_extraProperties',
                     'value_type' => TextType::class,
                     'use_container_object' => true,
-                ))
-                ->add('extraNames', KeyValueType::class, array(
+                ])
+                ->add('extraNames', KeyValueType::class, [
                     'label' => 'form.label_extraNames',
                     'value_type' => TextType::class,
                     'use_container_object' => true,
-                ))
-                ->add('extraHttp', KeyValueType::class, array(
+                ])
+                ->add('extraHttp', KeyValueType::class, [
                     'label' => 'form.label_extraHttp',
                     'value_type' => TextType::class,
                     'use_container_object' => true,
-                ))
+                ])
             ;
         }
     }
@@ -91,11 +91,11 @@ class SeoMetadataType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => $this->dataClass,
             'translation_domain' => 'CmfSeoBundle',
             'required' => false,
-        ));
+        ]);
 
         if ('orm' === $this->options['storage']) {
             $resolver->setDefault('by_reference', false);

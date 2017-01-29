@@ -24,22 +24,22 @@ class ExtrasExtractorTest extends BaseTestCase
 
     public function getSupportsData()
     {
-        return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false),
-        );
+        return [
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasReadInterface')],
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false],
+        ];
     }
 
     public function testExtracting()
     {
-        $document = $this->getMock('ExtractedDocument', array('getSeoExtras'));
+        $document = $this->getMock('ExtractedDocument', ['getSeoExtras']);
         $document->expects($this->any())
             ->method('getSeoExtras')
-            ->will($this->returnValue(array(
-                'property' => array('og:title' => 'Extra Title'),
-                'name' => array('robots' => 'index, follow'),
-                'http-equiv' => array('Content-Type' => 'text/html; charset=utf-8'),
-            )));
+            ->will($this->returnValue([
+                'property' => ['og:title' => 'Extra Title'],
+                'name' => ['robots' => 'index, follow'],
+                'http-equiv' => ['Content-Type' => 'text/html; charset=utf-8'],
+            ]));
 
         $this->seoMetadata->expects($this->once())
             ->method('addExtraProperty')
