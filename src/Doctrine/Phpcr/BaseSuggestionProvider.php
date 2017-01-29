@@ -11,9 +11,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr;
 
-use PHPCR\Util\PathHelper;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ODM\PHPCR\DocumentManager;
+use PHPCR\Util\PathHelper;
 use Symfony\Cmf\Bundle\SeoBundle\SuggestionProviderInterface;
 
 /**
@@ -67,7 +67,7 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
     protected function findParentRoute($requestedPath)
     {
         $manager = $this->getManagerForClass('Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route');
-        $parentPaths = array();
+        $parentPaths = [];
 
         foreach ($this->routeBasePaths as $basepath) {
             $parentPaths[] = PathHelper::getParentPath($basepath.$requestedPath);

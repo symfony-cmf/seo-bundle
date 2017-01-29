@@ -35,7 +35,7 @@ class UrlInformationProviderTest extends \PHPUnit_Framework_Testcase
             ->method('load')
             ->with('default')
             ->will(
-                $this->returnValue(array($accepted, $refused))
+                $this->returnValue([$accepted, $refused])
             )
         ;
 

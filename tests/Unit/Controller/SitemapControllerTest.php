@@ -53,14 +53,14 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         $this->controller = new SitemapController(
             $this->provider,
             $this->templating,
-            array(
-                'test' => array(
-                    'templates' => array(
+            [
+                'test' => [
+                    'templates' => [
                         'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
                         'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         );
     }
 
@@ -68,26 +68,26 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Response $response */
         $response = $this->controller->indexAction('json', 'test');
-        $expected = array(
-            array(
+        $expected = [
+            [
                 'loc' => 'http://www.test-alternate-locale.de',
                 'label' => 'Test alternate locale',
                 'changefreq' => 'never',
                 'lastmod' => '2014-11-07T00:00:00+01:00',
                 'priority' => 0.85,
-                'alternate_locales' => array(
-                    array('href' => 'http://www.test-alternate-locale.com', 'href_locale' => 'en'),
-                ),
-            ),
-            array(
+                'alternate_locales' => [
+                    ['href' => 'http://www.test-alternate-locale.com', 'href_locale' => 'en'],
+                ],
+            ],
+            [
                 'loc' => 'http://www.test-domain.de',
                 'label' => 'Test label',
                 'changefreq' => 'always',
                 'lastmod' => '2014-11-06T00:00:00+01:00',
                 'priority' => 0.85,
-                'alternate_locales' => array(),
-            ),
-        );
+                'alternate_locales' => [],
+            ],
+        ];
 
         $this->assertEquals($expected, json_decode($response->getContent(), true));
     }
@@ -118,7 +118,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
 
     private function createUrlInformation()
     {
-        $resultList = array();
+        $resultList = [];
 
         $urlInformation = new UrlInformation();
         $urlInformation

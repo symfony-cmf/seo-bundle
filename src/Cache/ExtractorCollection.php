@@ -82,11 +82,11 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->extractors,
             $this->resource,
             $this->createdAt,
-        ));
+        ]);
     }
 
     /**

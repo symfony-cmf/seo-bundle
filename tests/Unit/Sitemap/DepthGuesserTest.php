@@ -90,7 +90,7 @@ class DepthGuesserTest extends GuesserTestCase
      */
     protected function getFields()
     {
-        return array('depth');
+        return ['depth'];
     }
 
     /**

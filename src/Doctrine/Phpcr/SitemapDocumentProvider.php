@@ -46,7 +46,7 @@ class SitemapDocumentProvider implements LoaderInterface
             QueryInterface::JCR_SQL2
         )->execute();
 
-        $documents = array();
+        $documents = [];
         // the chain provider does not like collections as we array_merge in there
         foreach ($documentsCollection as $document) {
             $documents[] = $document;

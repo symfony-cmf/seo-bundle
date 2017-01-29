@@ -11,9 +11,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 
+use Symfony\Cmf\Bundle\SeoBundle\EventListener\LanguageListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Cmf\Bundle\SeoBundle\EventListener\LanguageListener;
 
 class LanguageListenerTest extends \PHPUnit_Framework_Testcase
 {
@@ -45,10 +45,10 @@ class LanguageListenerTest extends \PHPUnit_Framework_Testcase
 
     public function provideRequestLocales()
     {
-        return array(
-            array('en'),
-            array('en_US'),
-        );
+        return [
+            ['en'],
+            ['en_US'],
+        ];
     }
 
     public function testDoesNotOverridePreSetContentLanguage()

@@ -52,10 +52,10 @@ class RegisterExtractorsPass implements CompilerPassInterface
                 }
             }
 
-            $strategyDefinition->addMethodCall('addExtractor', array(
+            $strategyDefinition->addMethodCall('addExtractor', [
                 new Reference($id),
                 $priority,
-            ));
+            ]);
         }
     }
 }

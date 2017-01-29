@@ -159,11 +159,11 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $this->pageService
             ->expects($this->any())
             ->method('getMetas')
-            ->will($this->returnValue(array(
-                'name' => array(
-                    'keywords' => array('default, other', array()),
-                ),
-            )))
+            ->will($this->returnValue([
+                'name' => [
+                    'keywords' => ['default, other', []],
+                ],
+            ]))
         ;
 
         // predictions
@@ -212,7 +212,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             ->method('trans')
             ->with(
                 $this->equalTo('default_title'),
-                $this->equalTo(array('%content_title%' => 'Final Title')),
+                $this->equalTo(['%content_title%' => 'Final Title']),
                 $this->equalTo(null)
             )
             ->will($this->returnValue('translation strategy test'))
@@ -261,7 +261,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             ->method('trans')
             ->with(
                 $this->equalTo('default_description'),
-                $this->equalTo(array('%content_description%' => 'Final Description')),
+                $this->equalTo(['%content_description%' => 'Final Description']),
                 $this->equalTo(null)
             )
             ->will($this->returnValue('translation strategy test'))
@@ -367,7 +367,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         $seoPresentation->updateSeoPage($this->content);
         $seoPresentation->updateSeoPage($this->content);
 
-        return array($seoPresentation, $cache, $extractors);
+        return [$seoPresentation, $cache, $extractors];
     }
 
     public function testCacheRefresh()
@@ -407,7 +407,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 
         $seoPresentation->updateSeoPage($this->content);
 
-        return array($seoPresentation, $cache, $extractors);
+        return [$seoPresentation, $cache, $extractors];
     }
 
     public function testSeoAwareWithoutCurrentMetadata()

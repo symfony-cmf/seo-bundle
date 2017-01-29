@@ -49,10 +49,10 @@ class SeoPresentation implements SeoPresentationInterface
      */
     const ORIGINAL_URL_REDIRECT = 'redirect';
 
-    public static $originalUrlBehaviours = array(
+    public static $originalUrlBehaviours = [
         self::ORIGINAL_URL_CANONICAL,
         self::ORIGINAL_URL_REDIRECT,
-    );
+    ];
 
     /**
      * @var SeoPage
@@ -67,7 +67,7 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * @var ExtractorInterface[]
      */
-    private $extractors = array();
+    private $extractors = [];
 
     /**
      * @var TranslatorInterface
@@ -130,7 +130,7 @@ class SeoPresentation implements SeoPresentationInterface
     public function addExtractor(ExtractorInterface $extractor, $priority = 0)
     {
         if (!isset($this->extractors[$priority])) {
-            $this->extractors[$priority] = array();
+            $this->extractors[$priority] = [];
         }
         $this->extractors[$priority][] = $extractor;
     }
@@ -192,7 +192,7 @@ class SeoPresentation implements SeoPresentationInterface
      */
     private function getExtractorsForContent($content)
     {
-        $extractors = array();
+        $extractors = [];
         ksort($this->extractors);
         foreach ($this->extractors as $priority) {
             $supportedExtractors = array_filter($priority, function (ExtractorInterface $extractor) use ($content) {
@@ -235,7 +235,7 @@ class SeoPresentation implements SeoPresentationInterface
             $pageTitle = null !== $this->configValues->getTitle()
                 ? $this->translator->trans(
                     $this->configValues->getTitle(),
-                    array('%content_title%' => $seoMetadata->getTitle()),
+                    ['%content_title%' => $seoMetadata->getTitle()],
                     $translationDomain
                 )
                 : $seoMetadata->getTitle();
@@ -247,7 +247,7 @@ class SeoPresentation implements SeoPresentationInterface
             $pageDescription = null !== $this->configValues->getDescription()
                 ? $this->translator->trans(
                     $this->configValues->getDescription(),
-                    array('%content_description%' => $seoMetadata->getMetaDescription()),
+                    ['%content_description%' => $seoMetadata->getMetaDescription()],
                     $translationDomain
                 )
                 : $seoMetadata->getMetaDescription();
@@ -316,9 +316,9 @@ class SeoPresentation implements SeoPresentationInterface
             ->setMetaKeywords($contentSeoMetadata->getMetaKeywords())
             ->setMetaDescription($contentSeoMetadata->getMetaDescription())
             ->setOriginalUrl($contentSeoMetadata->getOriginalUrl())
-            ->setExtraProperties($contentSeoMetadata->getExtraProperties() ?: array())
-            ->setExtraNames($contentSeoMetadata->getExtraNames() ?: array())
-            ->setExtraHttp($contentSeoMetadata->getExtraHttp() ?: array())
+            ->setExtraProperties($contentSeoMetadata->getExtraProperties() ?: [])
+            ->setExtraNames($contentSeoMetadata->getExtraNames() ?: [])
+            ->setExtraHttp($contentSeoMetadata->getExtraHttp() ?: [])
         ;
     }
 

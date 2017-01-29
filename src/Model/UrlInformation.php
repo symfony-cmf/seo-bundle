@@ -48,7 +48,7 @@ class UrlInformation
     /**
      * @var array
      */
-    private $allowedChangeFrequencies = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never');
+    private $allowedChangeFrequencies = ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'];
 
     /**
      * @var string As a string to display the route i.e. in html views.
@@ -67,7 +67,7 @@ class UrlInformation
 
     public function __construct()
     {
-        $this->alternateLocales = array();
+        $this->alternateLocales = [];
     }
 
     /**
@@ -92,15 +92,15 @@ class UrlInformation
 
     public function toArray()
     {
-        $result = array(
+        $result = [
             'loc' => $this->location,
             'label' => $this->label,
             'changefreq' => $this->changeFrequency,
             'lastmod' => $this->lastModification,
             'priority' => $this->priority,
-            'alternate_locales' => array(),
+            'alternate_locales' => [],
             'depth' => $this->depth,
-        );
+        ];
         foreach ($result as $key => $value) {
             if (null === $value) {
                 unset($result[$key]);
@@ -108,7 +108,7 @@ class UrlInformation
         }
 
         foreach ($this->alternateLocales as $locale) {
-            $result['alternate_locales'][] = array('href' => $locale->href, 'href_locale' => $locale->hrefLocale);
+            $result['alternate_locales'][] = ['href' => $locale->href, 'href_locale' => $locale->hrefLocale];
         }
 
         return $result;

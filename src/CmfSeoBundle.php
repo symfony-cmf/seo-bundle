@@ -47,13 +47,13 @@ class CmfSeoBundle extends Bundle
 
         $container->addCompilerPass(
             DoctrinePhpcrMappingsPass::createXmlMappingDriver(
-                array(
+                [
                     realpath(__DIR__.'/Resources/config/doctrine-model') => 'Symfony\Cmf\Bundle\SeoBundle\Model',
                     realpath(__DIR__.'/Resources/config/doctrine-phpcr') => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr',
-                ),
-                array('cmf_seo.dynamic.persistence.phpcr.manager_name'),
+                ],
+                ['cmf_seo.dynamic.persistence.phpcr.manager_name'],
                 'cmf_seo.backend_type_phpcr',
-                array('CmfSeoBundle' => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr')
+                ['CmfSeoBundle' => 'Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr']
             )
         );
     }
@@ -75,12 +75,12 @@ class CmfSeoBundle extends Bundle
 
         $container->addCompilerPass(
             DoctrineOrmMappingsPass::createXmlMappingDriver(
-                array(
+                [
                     realpath(__DIR__.'/Resources/config/doctrine-model') => 'Symfony\Cmf\Bundle\SeoBundle\Model',
-                ),
-                array('cmf_seo.dynamic.persistence.orm.manager_name'),
+                ],
+                ['cmf_seo.dynamic.persistence.orm.manager_name'],
                 'cmf_seo.backend_type_orm',
-                array('CmfSeoBundle' => 'Symfony\Cmf\Bundle\SeoBundle\Model')
+                ['CmfSeoBundle' => 'Symfony\Cmf\Bundle\SeoBundle\Model']
             )
         );
     }

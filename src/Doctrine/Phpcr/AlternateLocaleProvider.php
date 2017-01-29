@@ -79,7 +79,7 @@ class AlternateLocaleProvider implements AlternateLocaleProviderInterface
 
             $alternateLocaleCollection->add(
                 new AlternateLocale(
-                    $this->urlGenerator->generate($content, array('_locale' => $locale), UrlGeneratorInterface::ABSOLUTE_URL),
+                    $this->urlGenerator->generate($content, ['_locale' => $locale], UrlGeneratorInterface::ABSOLUTE_URL),
                     $locale
                 )
             );
@@ -97,7 +97,7 @@ class AlternateLocaleProvider implements AlternateLocaleProviderInterface
      */
     public function createForContents(array $contents)
     {
-        $result = array();
+        $result = [];
         foreach ($contents as $content) {
             $result[] = $this->createForContent($content);
         }

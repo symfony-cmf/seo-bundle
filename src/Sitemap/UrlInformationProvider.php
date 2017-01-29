@@ -57,7 +57,7 @@ class UrlInformationProvider
      */
     public function getUrlInformation($sitemap = 'default')
     {
-        $urlInformationList = array();
+        $urlInformationList = [];
 
         $contentObjects = $this->loader->load($sitemap);
         foreach ($contentObjects as $content) {

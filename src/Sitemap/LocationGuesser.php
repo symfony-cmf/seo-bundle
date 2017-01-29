@@ -42,6 +42,6 @@ class LocationGuesser implements GuesserInterface
             return;
         }
 
-        $urlInformation->setLocation($this->urlGenerator->generate($object, array(), UrlGeneratorInterface::ABSOLUTE_URL));
+        $urlInformation->setLocation($this->urlGenerator->generate($object, [], UrlGeneratorInterface::ABSOLUTE_URL));
     }
 }

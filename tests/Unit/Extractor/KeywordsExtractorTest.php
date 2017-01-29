@@ -26,9 +26,9 @@ class KeywordsExtractorTest extends BaseTestCase
 
     public function getSupportsData()
     {
-        return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
-        );
+        return [
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsReadInterface')],
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+        ];
     }
 }

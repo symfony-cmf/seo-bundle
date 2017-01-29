@@ -23,14 +23,14 @@ abstract class AbstractChain
      *
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * The list of default entries by priority.
      *
      * @var array
      */
-    private $defaultItems = array();
+    private $defaultItems = [];
 
     /**
      * Add an entry to the chain.
@@ -47,7 +47,7 @@ abstract class AbstractChain
     {
         if ($sitemap) {
             if (!isset($this->items[$sitemap])) {
-                $this->items[$sitemap] = array();
+                $this->items[$sitemap] = [];
             }
             $entries = &$this->items[$sitemap];
         } else {
@@ -55,7 +55,7 @@ abstract class AbstractChain
         }
 
         if (!isset($entries[$priority])) {
-            $entries[$priority] = array();
+            $entries[$priority] = [];
         }
 
         $entries[$priority][] = $item;
@@ -77,7 +77,7 @@ abstract class AbstractChain
 
         rsort($priorities);
 
-        $sortedItems = array();
+        $sortedItems = [];
         foreach ($priorities as $priority) {
             if (isset($this->items[$sitemap][$priority])) {
                 // never happens if the sitemap has no specific entries at all

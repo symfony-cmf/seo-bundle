@@ -23,7 +23,7 @@ class LoaderChain extends AbstractChain
      */
     public function load($sitemap)
     {
-        $documents = array();
+        $documents = [];
 
         /** @var $loader LoaderInterface */
         foreach ($this->getSortedEntriesForSitemap($sitemap) as $loader) {

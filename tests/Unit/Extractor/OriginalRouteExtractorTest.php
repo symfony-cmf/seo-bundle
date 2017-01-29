@@ -29,10 +29,10 @@ class OriginalRouteExtractorTest extends BaseTestCase
 
     public function getSupportsData()
     {
-        return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalRouteReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
-        );
+        return [
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalRouteReadInterface')],
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+        ];
     }
 
     public function testExtracting()

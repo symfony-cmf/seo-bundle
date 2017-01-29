@@ -33,9 +33,9 @@ class CmfSeoExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('cmf_seo_update_metadata', array($this, 'updateMetadata')),
-        );
+        return [
+            new \Twig_SimpleFunction('cmf_seo_update_metadata', [$this, 'updateMetadata']),
+        ];
     }
 
     /**

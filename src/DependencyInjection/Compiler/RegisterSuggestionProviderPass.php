@@ -50,7 +50,7 @@ class RegisterSuggestionProviderPass implements CompilerPassInterface
             }
             $group = $group ?: 'default';
 
-            $presentationDefinition->addMethodCall('addSuggestionProvider', array(new Reference($id), $group));
+            $presentationDefinition->addMethodCall('addSuggestionProvider', [new Reference($id), $group]);
         }
     }
 }

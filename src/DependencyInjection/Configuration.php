@@ -45,14 +45,14 @@ class Configuration implements ConfigurationInterface
                 })
                 ->then(function ($config) {
                     if (true === $config['sitemap']) {
-                        $config['sitemap'] = array(
+                        $config['sitemap'] = [
                             'enabled' => true,
-                            'configurations' => array(
-                                'sitemap' => array(),
-                            ),
-                        );
+                            'configurations' => [
+                                'sitemap' => [],
+                            ],
+                        ];
                     } elseif (is_array($config['sitemap'])) {
-                        $config['sitemap']['configurations'] = array('sitemap' => array());
+                        $config['sitemap']['configurations'] = ['sitemap' => []];
                     }
 
                     return $config;
@@ -161,7 +161,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('templates')
                         ->useAttributeAsKey('format')
                         ->requiresAtLeastOneElement()
-                        ->defaultValue(array('html' => 'CmfSeoBundle:Exception:error.html.twig'))
+                        ->defaultValue(['html' => 'CmfSeoBundle:Exception:error.html.twig'])
                         ->prototype('scalar')->end()
                     ->end()
                     ->arrayNode('exclusion_rules')
@@ -202,15 +202,15 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('templates')
                                 ->useAttributeAsKey('format')
                                 ->requiresAtLeastOneElement()
-                                ->defaultValue(array(
+                                ->defaultValue([
                                     'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
                                     'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
-                                ))
+                                ])
                                 ->prototype('scalar')->end()
                             ->end()
-                            ->append($this->getSitemapHelperNode('loaders', array('_all')))
-                            ->append($this->getSitemapHelperNode('guessers', array('_all')))
-                            ->append($this->getSitemapHelperNode('voters', array('_all')))
+                            ->append($this->getSitemapHelperNode('loaders', ['_all']))
+                            ->append($this->getSitemapHelperNode('guessers', ['_all']))
+                            ->append($this->getSitemapHelperNode('voters', ['_all']))
                         ->end()
                     ->end()
                     ->arrayNode('configurations')
@@ -227,9 +227,9 @@ class Configuration implements ConfigurationInterface
                                     ->requiresAtLeastOneElement()
                                     ->prototype('scalar')->end()
                                 ->end()
-                                ->append($this->getSitemapHelperNode('loaders', array()))
-                                ->append($this->getSitemapHelperNode('guessers', array()))
-                                ->append($this->getSitemapHelperNode('voters', array()))
+                                ->append($this->getSitemapHelperNode('loaders', []))
+                                ->append($this->getSitemapHelperNode('guessers', []))
+                                ->append($this->getSitemapHelperNode('voters', []))
                             ->end()
                         ->end()
                     ->end()
@@ -247,7 +247,7 @@ class Configuration implements ConfigurationInterface
                     return is_string($config);
                 })
                 ->then(function ($config) {
-                    return array($config);
+                    return [$config];
                 })
             ->end()
             ->defaultValue($default)

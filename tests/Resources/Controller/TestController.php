@@ -17,12 +17,12 @@ class TestController extends Controller
 {
     public function indexAction($contentDocument)
     {
-        $params = array(
-            'cmfMainContent' => array(
+        $params = [
+            'cmfMainContent' => [
                 'title' => $contentDocument->getTitle(),
                 'body' => $contentDocument->getBody(),
-            ),
-        );
+            ],
+        ];
 
         return $this->render('::tests/index.html.twig', $params);
     }

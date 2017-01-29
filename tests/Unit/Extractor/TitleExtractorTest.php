@@ -26,9 +26,9 @@ class TitleExtractorTest extends BaseTestCase
 
     public function getSupportsData()
     {
-        return array(
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface')),
-            array($this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false),
-        );
+        return [
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface')],
+            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+        ];
     }
 }

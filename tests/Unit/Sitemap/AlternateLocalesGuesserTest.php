@@ -49,6 +49,6 @@ class AlternateLocalesGuesserTest extends GuesserTestCase
      */
     protected function getFields()
     {
-        return array('AlternateLocales');
+        return ['AlternateLocales'];
     }
 }

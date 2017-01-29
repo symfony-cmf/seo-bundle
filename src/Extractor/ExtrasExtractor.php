@@ -37,11 +37,11 @@ class ExtrasExtractor implements ExtractorInterface
      */
     public function updateMetadata($content, SeoMetadataInterface $seoMetadata)
     {
-        $allowedTypesMethodMapping = array(
+        $allowedTypesMethodMapping = [
             'property' => 'addExtraProperty',
             'name' => 'addExtraName',
             'http-equiv' => 'addExtraHttp',
-        );
+        ];
 
         $contentExtras = $content->getSeoExtras();
 
