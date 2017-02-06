@@ -66,6 +66,10 @@ class CmfSeoExtension extends Extension
                 'cmf_seo.persistence.phpcr.manager_name',
                 $config['persistence']['phpcr']['manager_name']
             );
+            $container->setParameter(
+                'cmf_seo.persistence.phpcr.content_basepath',
+                $config['persistence']['phpcr']['content_basepath']
+            );
             $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
 
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);

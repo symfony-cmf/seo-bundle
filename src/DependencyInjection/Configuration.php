@@ -111,6 +111,7 @@ class Configuration implements ConfigurationInterface
                         ->canBeEnabled()
                         ->children()
                             ->scalarNode('manager_name')->defaultNull()->end()
+                            ->scalarNode('content_basepath')->defaultValue('/cms/content')->end()
                         ->end()
                     ->end()
 

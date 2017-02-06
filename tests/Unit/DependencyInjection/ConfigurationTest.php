@@ -44,6 +44,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'phpcr' => [
                     'enabled' => false,
                     'manager_name' => null,
+                    'content_basepath' => '/cms/content',
                 ],
                 'orm' => [
                     'enabled' => false,
@@ -127,6 +128,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'phpcr' => [
                     'enabled' => false,
                     'manager_name' => null,
+                    'content_basepath' => '/cms/content',
                 ],
                 'orm' => [
                     'enabled' => false,
@@ -192,6 +194,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'phpcr' => [
                     'enabled' => false,
                     'manager_name' => null,
+                    'content_basepath' => '/cms/content',
                 ],
                 'orm' => [
                     'enabled' => false,
