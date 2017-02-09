@@ -27,7 +27,7 @@
 
     <xsd:complexType name="persistence">
         <xsd:all minOccurs="0">
-            <xsd:element name="phpcr" type="persistence_layer" />
+            <xsd:element name="phpcr" type="phpcr" />
             <xsd:element name="orm" type="persistence_layer" />
         </xsd:all>
 
@@ -147,5 +147,13 @@
 
     <xsd:complexType name="persistence_layer">
         <xsd:attribute name="manager-name" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="phpcr">
+        <xsd:complexContent>
+            <xsd:extension base="persistence_layer">
+                <xsd:attribute name="content-basepath" type="xsd:string" default="/cms/content"/>
+            </xsd:extension>
+        </xsd:complexContent>
     </xsd:complexType>
 </xsd:schema>
