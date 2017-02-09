@@ -1,8 +1,15 @@
 Changelog
 =========
 
+2.0.0-RC2
+---------
+
+* **2017-02-09**: [BC BREAK] Removed the deprecated `content_key` setting in
+  favor of `content_listener.content_key`.
 * **2017-02-09**: [BC BREAK] Added child restrictions to the `SeoMetadata` document.
   See the UPGRADE guide for detailed information.
+* **2017-02-06**: [BC BREAK] Added a `content_basepath` setting instead of
+  relying on the `content_basepath` setting of the CmfRoutingBundle.
 
 2.0.0-RC1
 ---------

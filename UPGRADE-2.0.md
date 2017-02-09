@@ -49,8 +49,41 @@ UPGRADE FROM 1.x to 2.0
        exception_controller: cmf_seo.error.suggestion_provider.controller:listAction
    ```
 
-## Doctrine PHPCR ODM
+### Doctrine PHPCR ODM
 
  * It is no longer possible to add a child to the `SeoMetadata` document. This
    behaviour can be changed by overriding the `child-class` setting of the
    PHPCR ODM mapping.
+
+### Configuration
+
+ * The content basepath used by the Sitemap depth guesser relies on a new
+   `content_basepath` setting. If your content isn't in `/cms/content`, make
+   sure you configure this setting.
+
+   ```yaml
+   cmf_seo:
+       persistence:
+           phpcr:
+               content_basepath: /custom-content-path
+   ```
+
+   Tip: If you use the CmfCoreBundle, the content basepath will be prepended
+   automatically.
+
+ * The `content_key` setting was moved to the `content_listener` configuration setting.
+
+   Before:
+
+   ```yaml
+   cmf_seo:
+       content_key: contentDocument
+   ```
+
+   After:
+
+   ```yaml
+   cmf_seo:
+       content_listener:
+           content_key: contentDocument
+   ```
