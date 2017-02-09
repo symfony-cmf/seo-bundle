@@ -14,6 +14,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 use Symfony\Cmf\Bundle\SeoBundle\EventListener\LanguageListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class LanguageListenerTest extends \PHPUnit_Framework_Testcase
 {
@@ -34,7 +35,7 @@ class LanguageListenerTest extends \PHPUnit_Framework_Testcase
 
         $response = new Response();
 
-        $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\FilterResponseEvent')->disableOriginalConstructor()->getMock();
+        $event = $this->createMock(FilterResponseEvent::class);
         $event->expects($this->any())->method('getRequest')->will($this->returnValue($request));
         $event->expects($this->any())->method('getResponse')->will($this->returnValue($response));
 
@@ -59,7 +60,7 @@ class LanguageListenerTest extends \PHPUnit_Framework_Testcase
         $response = new Response();
         $response->headers->set('Content-Language', 'nl');
 
-        $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\FilterResponseEvent')->disableOriginalConstructor()->getMock();
+        $event = $this->createMock(FilterResponseEvent::class);
         $event->expects($this->any())->method('getRequest')->will($this->returnValue($request));
         $event->expects($this->any())->method('getResponse')->will($this->returnValue($response));
 

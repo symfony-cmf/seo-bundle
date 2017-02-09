@@ -40,16 +40,13 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->provider = $this
-            ->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->provider = $this->createMock(UrlInformationProvider::class);
         $this->provider
             ->expects($this->any())
             ->method('getUrlInformation')
             ->will($this->returnValue($this->createUrlInformation()));
 
-        $this->templating = $this->getMock('Symfony\Component\Templating\EngineInterface');
+        $this->templating = $this->createMock(EngineInterface::class);
         $this->controller = new SitemapController(
             $this->provider,
             $this->templating,

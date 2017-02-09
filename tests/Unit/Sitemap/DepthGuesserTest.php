@@ -100,13 +100,9 @@ class DepthGuesserTest extends GuesserTestCase
      */
     private function buildMocks($contentBasePath = '/cms/test')
     {
-        $this->managerRegistry = $this->getMockBuilder('Doctrine\Bundle\PHPCRBundle\ManagerRegistry')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->documentManager = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->node = $this->getMock('PHPCR\NodeInterface');
+        $this->managerRegistry = $this->createMock(ManagerRegistry::class);
+        $this->documentManager = $this->createMock(DocumentManager::class);
+        $this->node = $this->createMock(NodeInterface::class);
         $this->object = new \stdClass();
         $this->guesser = new DepthGuesser($this->managerRegistry, $contentBasePath);
     }

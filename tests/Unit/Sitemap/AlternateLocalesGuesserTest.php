@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
+use Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocale;
 use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocaleCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\AlternateLocalesGuesser;
@@ -25,7 +26,7 @@ class AlternateLocalesGuesserTest extends GuesserTestCase
         $collection = new AlternateLocaleCollection();
         $collection->add(new AlternateLocale('http://symfony.com/fr', 'fr'));
 
-        $localeProvider = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\AlternateLocaleProviderInterface');
+        $localeProvider = $this->createMock(AlternateLocaleProviderInterface::class);
         $localeProvider
             ->expects($this->any())
             ->method('createForContent')

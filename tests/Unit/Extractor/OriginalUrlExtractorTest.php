@@ -12,6 +12,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 class OriginalUrlExtractorTest extends BaseTestCase
 {
@@ -27,8 +29,8 @@ class OriginalUrlExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return [
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\OriginalUrlReadInterface')],
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+            [$this->createMock(OriginalUrlReadInterface::class)],
+            [$this->createMock(SeoAwareInterface::class), false],
         ];
     }
 }

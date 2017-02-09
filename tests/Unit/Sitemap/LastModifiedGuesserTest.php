@@ -51,9 +51,9 @@ class LastModifiedGuesserTest extends GuesserTestCase
      */
     protected function createGuesser()
     {
-        $this->registry = $this->getMockBuilder('\Doctrine\Bundle\PHPCRBundle\ManagerRegistry')->disableOriginalConstructor()->getMock();
-        $this->manager = $this->getMockBuilder('\Doctrine\ODM\PHPCR\DocumentManager')->disableOriginalConstructor()->getMock();
-        $this->metadata = $this->getMockBuilder('\Doctrine\ODM\PHPCR\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
+        $this->registry = $this->createMock(ManagerRegistry::class);
+        $this->manager = $this->createMock(DocumentManager::class);
+        $this->metadata = $this->createMock(ClassMetadata::class);
         $this->registry
             ->expects($this->any())
             ->method('getManagerForClass')

@@ -12,6 +12,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 class DescriptionExtractorTest extends BaseTestCase
 {
@@ -27,8 +29,8 @@ class DescriptionExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return [
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface')],
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+            [$this->createMock(DescriptionReadInterface::class)],
+            [$this->createMock(SeoAwareInterface::class), false],
         ];
     }
 }
