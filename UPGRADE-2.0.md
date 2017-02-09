@@ -48,3 +48,9 @@ UPGRADE FROM 1.x to 2.0
    twig:
        exception_controller: cmf_seo.error.suggestion_provider.controller:listAction
    ```
+
+## Doctrine PHPCR ODM
+
+ * It is no longer possible to add a child to the `SeoMetadata` document. This
+   behaviour can be changed by overriding the `child-class` setting of the
+   PHPCR ODM mapping.
