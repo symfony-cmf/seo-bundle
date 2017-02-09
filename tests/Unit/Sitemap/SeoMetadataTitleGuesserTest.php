@@ -12,6 +12,7 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\SeoMetadataTitleGuesser;
 
 class SeoMetadataTitleGuesserTest extends GuesserTestCase
@@ -29,7 +30,7 @@ class SeoMetadataTitleGuesserTest extends GuesserTestCase
     {
         $seoMetadata = new SeoMetadata();
         $seoMetadata->setTitle('Symfony CMF');
-        $seoPresentation = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\SeoPresentation')->disableOriginalConstructor()->getMock();
+        $seoPresentation = $this->createMock(SeoPresentation::class);
         $seoPresentation
             ->expects($this->any())
             ->method('getSeoMetadata')

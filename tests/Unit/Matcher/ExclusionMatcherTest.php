@@ -35,8 +35,8 @@ class ExclusionMatcherTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->matcherA = $this->getMock('Symfony\Component\HttpFoundation\RequestMatcherInterface');
-        $this->matcherB = $this->getMock('Symfony\Component\HttpFoundation\RequestMatcherInterface');
+        $this->matcherA = $this->createMock(RequestMatcherInterface::class);
+        $this->matcherB = $this->createMock(RequestMatcherInterface::class);
 
         $this->exclusionMatcher = new ExclusionMatcher();
         $this->exclusionMatcher->addRequestMatcher($this->matcherA);

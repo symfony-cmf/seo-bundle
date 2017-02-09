@@ -12,7 +12,10 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserChain;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\LoaderChain;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\UrlInformationProvider;
+use Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterChain;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
@@ -29,7 +32,7 @@ class UrlInformationProviderTest extends \PHPUnit_Framework_Testcase
         $accepted = new TestModel('accepted');
         $refused = new TestModel('refused');
 
-        $loader = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Sitemap\LoaderChain');
+        $loader = $this->createMock(LoaderChain::class);
         $loader
             ->expects($this->once())
             ->method('load')
@@ -39,7 +42,7 @@ class UrlInformationProviderTest extends \PHPUnit_Framework_Testcase
             )
         ;
 
-        $voter = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterChain');
+        $voter = $this->createMock(VoterChain::class);
         $voter
             ->expects($this->at(0))
             ->method('exposeOnSitemap')
@@ -53,12 +56,12 @@ class UrlInformationProviderTest extends \PHPUnit_Framework_Testcase
             ->will($this->returnValue(false))
         ;
 
-        $guesser = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserChain');
+        $guesser = $this->createMock(GuesserChain::class);
         $guesser
             ->expects($this->once())
             ->method('guessValues')
             ->with(
-                $this->isInstanceOf('Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation'),
+                $this->isInstanceOf(UrlInformation::class),
                 $this->equalTo($accepted),
                 $this->equalTo('default'))
             ->will($this->returnCallback(function (UrlInformation $info) {

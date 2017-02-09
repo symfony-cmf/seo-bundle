@@ -12,6 +12,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 class ExtrasExtractorTest extends BaseTestCase
 {
@@ -25,14 +27,14 @@ class ExtrasExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return [
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasReadInterface')],
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoAwareInterface'), false],
+            [$this->createMock(ExtrasReadInterface::class)],
+            [$this->createMock(SeoAwareInterface::class), false],
         ];
     }
 
     public function testExtracting()
     {
-        $document = $this->getMock('ExtractedDocument', ['getSeoExtras']);
+        $document = $this->getMockBuilder('ExtractedDocument')->setMethods(['getSeoExtras'])->getMock();
         $document->expects($this->any())
             ->method('getSeoExtras')
             ->will($this->returnValue([

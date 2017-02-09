@@ -11,6 +11,8 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
+use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
+
 abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 {
     protected $seoMetadata;
@@ -22,7 +24,7 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface');
+        $this->seoMetadata = $this->createMock(SeoMetadataInterface::class);
     }
 
     /**
@@ -43,7 +45,7 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $document = $this->getMock('ExtractedDocument', [$this->extractMethod]);
+        $document = $this->getMockBuilder('ExtractedDocument')->setMethods([$this->extractMethod])->getMock();
         $document->expects($this->any())
             ->method($this->extractMethod)
             ->will($this->returnValue('extracted'));

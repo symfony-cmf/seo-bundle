@@ -11,9 +11,15 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
+use Sonata\SeoBundle\Seo\SeoPage;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * This test will cover the behavior of the SeoPresentation Model
@@ -31,8 +37,8 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 
     public function setUp()
     {
-        $this->pageService = $this->getMock('Sonata\SeoBundle\Seo\SeoPage');
-        $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $this->pageService = $this->createMock(SeoPage::class);
+        $this->translator = $this->createMock(TranslatorInterface::class);
         $this->configValues = new ConfigValues();
         $this->configValues->setDescription('default_description');
         $this->configValues->setTitle('default_title');
@@ -44,9 +50,9 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             $this->configValues
         );
 
-        $this->seoMetadata = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata');
+        $this->seoMetadata = $this->createMock(SeoMetadataInterface::class);
 
-        $this->content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
+        $this->content = $this->createMock(SeoAwareContent::class);
         $this->content
             ->expects($this->any())
             ->method('getSeoMetadata')
@@ -185,7 +191,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             ->method('trans')
             ->will($this->returnValue('translation strategy test'))
         ;
-        $extractor = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractor = $this->createMock(ExtractorInterface::class);
         $extractor
             ->expects($this->any())
             ->method('supports')
@@ -217,14 +223,14 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             )
             ->will($this->returnValue('translation strategy test'))
         ;
-        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorDefault = $this->createMock(ExtractorInterface::class);
         $extractorDefault
             ->expects($this->any())
             ->method('supports')
             ->with($this->content)
             ->will($this->returnValue(true))
         ;
-        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorOne = $this->createMock(ExtractorInterface::class);
         $extractorOne
             ->expects($this->any())
             ->method('supports')
@@ -268,14 +274,14 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         ;
 
         // promises
-        $extractorDefault = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorDefault = $this->createMock(ExtractorInterface::class);
         $extractorDefault
             ->expects($this->any())
             ->method('supports')
             ->with($this->content)
             ->will($this->returnValue(true))
         ;
-        $extractorOne = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface');
+        $extractorOne = $this->createMock(ExtractorInterface::class);
         $extractorOne
             ->expects($this->any())
             ->method('supports')
@@ -331,10 +337,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 
     public function testCaching()
     {
-        // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $extractors = $this->createMock(ExtractorCollection::class);
         $extractors
             ->expects($this->any())
             ->method('isFresh')
@@ -345,7 +348,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             ->method('getIterator')
             ->will($this->returnValue(new \ArrayIterator()))
         ;
-        $cache = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface');
+        $cache = $this->createMock(CacheInterface::class);
         $cache
             ->expects($this->any())
             ->method('loadExtractorsFromCache')
@@ -373,9 +376,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
     public function testCacheRefresh()
     {
         // promises
-        $extractors = $this->getMockBuilder('Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $extractors = $this->createMock(ExtractorCollection::class);
         $extractors
             ->expects($this->any())
             ->method('isFresh')
@@ -386,7 +387,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
             ->method('getIterator')
             ->will($this->returnValue(new \ArrayIterator()))
         ;
-        $cache = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface');
+        $cache = $this->createMock(CacheInterface::class);
         $cache
             ->expects($this->any())
             ->method('loadExtractorsFromCache')
@@ -412,7 +413,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 
     public function testSeoAwareWithoutCurrentMetadata()
     {
-        $content = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent');
+        $content = $this->createMock(SeoAwareContent::class);
         $content
             ->expects($this->any())
             ->method('getSeoMetadata')

@@ -13,6 +13,11 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener;
+use Symfony\Cmf\Bundle\SeoBundle\SeoPresentationInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class ContentListenerTest extends \PHPUnit_Framework_Testcase
 {
@@ -23,11 +28,9 @@ class ContentListenerTest extends \PHPUnit_Framework_Testcase
 
     public function setUp()
     {
-        $this->seoPresentation = $this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoPresentationInterface');
-        $this->request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $this->event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->seoPresentation = $this->createMock(SeoPresentationInterface::class);
+        $this->request = $this->createMock(Request::class);
+        $this->event = $this->createMock(GetResponseEvent::class);
         $this->listener = new ContentListener($this->seoPresentation, DynamicRouter::CONTENT_KEY);
     }
 
@@ -36,9 +39,7 @@ class ContentListenerTest extends \PHPUnit_Framework_Testcase
      */
     public function testRedirectRoute($targetUrl, $redirect = true, $currentPath = '/test')
     {
-        $redirectResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\RedirectResponse')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $redirectResponse = $this->createMock(RedirectResponse::class);
         $redirectResponse->expects($this->any())
             ->method('getTargetUrl')
             ->will($this->returnValue($targetUrl));
@@ -73,7 +74,7 @@ class ContentListenerTest extends \PHPUnit_Framework_Testcase
             ;
         }
 
-        $attributes = $this->getMock('Symfony\Component\HttpFoundation\ParameterBag');
+        $attributes = $this->createMock(ParameterBag::class);
         $attributes
             ->expects($this->any())
             ->method('has')

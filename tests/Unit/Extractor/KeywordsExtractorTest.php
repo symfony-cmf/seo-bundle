@@ -12,6 +12,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 class KeywordsExtractorTest extends BaseTestCase
 {
@@ -27,8 +29,8 @@ class KeywordsExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return [
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\KeywordsReadInterface')],
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+            [$this->createMock(KeywordsReadInterface::class)],
+            [$this->createMock(SeoAwareInterface::class), false],
         ];
     }
 }

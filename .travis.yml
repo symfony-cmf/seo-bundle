@@ -15,7 +15,7 @@ env:
   matrix: SYMFONY_VERSION=3.2.*
   global:
     - SYMFONY_DEPRECATIONS_HELPER=48
-    - SYMFONY_PHPUNIT_DIR=.phpunit SYMFONY_PHPUNIT_REMOVE="symfony/yaml"
+    - SYMFONY_PHPUNIT_DIR=.phpunit SYMFONY_PHPUNIT_REMOVE="symfony/yaml" SYMFONY_PHPUNIT_VERSION=5.7
 
 matrix:
   include:

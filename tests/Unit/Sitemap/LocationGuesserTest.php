@@ -27,7 +27,7 @@ class LocationGuesserTest extends GuesserTestCase
      */
     protected function createGuesser()
     {
-        $urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
         $urlGenerator
             ->expects($this->any())
             ->method('generate')

@@ -13,6 +13,7 @@ namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\SitemapAwareDocumentVoter;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SitemapAwareInterface;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
@@ -28,7 +29,7 @@ class SitemapAwareDocumentVoterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->voter = new SitemapAwareDocumentVoter();
-        $this->sitemapAwareDocument = $this->getMock('\Symfony\Cmf\Bundle\SeoBundle\SitemapAwareInterface');
+        $this->sitemapAwareDocument = $this->createMock(SitemapAwareInterface::class);
     }
 
     public function testSitemapAwareDocumentShouldReturnTrueWhenDocumentIsExposed()

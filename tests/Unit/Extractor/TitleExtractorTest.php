@@ -12,6 +12,8 @@
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleExtractor;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 class TitleExtractorTest extends BaseTestCase
 {
@@ -27,8 +29,8 @@ class TitleExtractorTest extends BaseTestCase
     public function getSupportsData()
     {
         return [
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface')],
-            [$this->getMock('Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface'), false],
+            [$this->createMock(TitleReadInterface::class)],
+            [$this->createMock(SeoAwareInterface::class), false],
         ];
     }
 }
