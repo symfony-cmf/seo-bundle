@@ -20,8 +20,6 @@
         <xsd:attribute name="title" type="xsd:string" />
         <xsd:attribute name="description" type="xsd:string" />
         <xsd:attribute name="original-route-pattern" type="original_route_pattern" />
-        <!-- Deprecated as of version 1.1, to be removed in version 2.0. Use the content-listener element instead. -->
-        <xsd:attribute name="content-key" type="xsd:string" />
         <xsd:attribute name="metadata-listener" type="enable_auto" />
     </xsd:complexType>
 

@@ -58,17 +58,6 @@ class Configuration implements ConfigurationInterface
                     return $config;
                 })
             ->end()
-            ->beforeNormalization()
-                ->ifTrue(function ($config) {
-                    return isset($config['content_key']) && !isset($config['content_listener']['content_key']);
-                })
-                ->then(function ($config) {
-                    $config['content_listener']['content_key'] = $config['content_key'];
-                    unset($config['content_key']);
-
-                    return $config;
-                })
-            ->end()
             // validation needs to be on top, when no values are set a validation inside the content_listener array node will not be triggered
             ->validate()
                 ->ifTrue(function ($v) {
