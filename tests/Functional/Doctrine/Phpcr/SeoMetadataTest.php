@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\Phpcr;
 
+use Doctrine\ODM\PHPCR\Document\Generic;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
@@ -63,5 +64,24 @@ class SeoMetadataTest extends BaseTestCase
         $this->assertEquals($seoMetadata->getExtraProperties(), $persistedSeoMetadata->getExtraProperties());
         $this->assertEquals($seoMetadata->getExtraNames(), $persistedSeoMetadata->getExtraNames());
         $this->assertEquals($seoMetadata->getExtraHttp(), $persistedSeoMetadata->getExtraHttp());
+    }
+
+    /**
+     * @expectedException \Doctrine\ODM\PHPCR\Exception\OutOfBoundsException
+     * @expectedExceptionMessage It cannot have children
+     */
+    public function testAddSeoMetadataChild()
+    {
+        $seoMetadata = new SeoMetadata();
+        $seoMetadata->setName('seo-metadata');
+        $seoMetadata->setParentDocument($this->dm->find(null, '/test'));
+        $this->dm->persist($seoMetadata);
+
+        $document = new Generic();
+        $document->setParentDocument($seoMetadata);
+        $document->setNodename('invalid');
+        $this->dm->persist($document);
+
+        $this->dm->flush();
     }
 }
