@@ -1,6 +1,9 @@
 Changelog
 =========
 
+2.0.0-RC2
+---------
+
 * **2017-02-09**: [BC BREAK] Added child restrictions to the `SeoMetadata` document.
   See the UPGRADE guide for detailed information.
 
