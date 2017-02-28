@@ -32,8 +32,6 @@
         "symfony/phpunit-bridge": "^3.2",
         "burgov/key-value-form-bundle": "^1.0"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",
         "symfony-cmf/routing-bundle": "To make use of the alternate locale provider.",
