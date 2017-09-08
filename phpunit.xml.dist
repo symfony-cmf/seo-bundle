@@ -5,7 +5,7 @@
     >
 
     <testsuites>
-        <testsuite name="Symfony SeoBundle Test Suite">
+        <testsuite name="unit tests">
             <directory>./tests/Unit</directory>
         </testsuite>
 
@@ -33,9 +33,4 @@
     <php>
         <server name="KERNEL_DIR" value="tests/Resources/app" />
     </php>
-
-    <listeners>
-        <listener class="Symfony\Cmf\Component\Testing\Phpunit\DatabaseTestListener" />
-    </listeners>
-
 </phpunit>

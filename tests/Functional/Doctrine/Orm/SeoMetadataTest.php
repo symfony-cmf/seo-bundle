@@ -11,12 +11,18 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Functional\Doctrine\Orm;
 
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity\SeoAwareOrmContent;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 
 class SeoMetadataTest extends BaseTestCase
 {
+    public function setUp()
+    {
+        (new ORMPurger($this->getDbManager('ORM')->getOm()))->purge();
+    }
+
     protected function getKernelConfiguration()
     {
         return [
