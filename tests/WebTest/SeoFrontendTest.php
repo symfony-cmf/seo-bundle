@@ -182,7 +182,7 @@ class SeoFrontendTest extends BaseTestCase
 
         $this->assertEquals(404, $res->getStatusCode());
 
-        $this->assertCount(0, $crawler->filter('html:contains("Exception-Test")')); // the default template was chosen
+        $this->assertCount(0, $crawler->filter('h1:contains("Exception-Test")')); // the default template was chosen
         $this->assertCount(1, $crawler->filter('html:contains("No route found for")'));
     }
 

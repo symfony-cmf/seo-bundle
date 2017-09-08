@@ -48,6 +48,7 @@ class RegisterExtractorsPass implements CompilerPassInterface
             foreach ($attributes as $attribute) {
                 if (isset($attribute['priority'])) {
                     $priority = $attribute['priority'];
+
                     break;
                 }
             }

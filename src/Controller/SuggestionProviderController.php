@@ -80,12 +80,12 @@ class SuggestionProviderController extends ExceptionController
     ) {
         $code = $exception->getStatusCode();
         if (404 !== $code || $this->exclusionRequestMatcher->matches($request)) {
-            return $this->showAction($request, $exception, $logger, $request->getRequestFormat());
+            return $this->showAction($request, $exception, $logger);
         }
 
         $templateForSuggestion = $this->getTemplateForSuggestions($request->getRequestFormat());
         if (null === $templateForSuggestion) {
-            return $this->showAction($request, $exception, $logger, $request->getRequestFormat());
+            return $this->showAction($request, $exception, $logger);
         }
 
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));

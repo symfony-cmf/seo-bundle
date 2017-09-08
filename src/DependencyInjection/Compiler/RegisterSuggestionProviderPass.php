@@ -45,6 +45,7 @@ class RegisterSuggestionProviderPass implements CompilerPassInterface
             foreach ($attributes as $attribute) {
                 if (isset($attribute['group'])) {
                     $group = $attribute['group'];
+
                     break;
                 }
             }
