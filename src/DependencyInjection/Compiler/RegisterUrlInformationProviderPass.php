@@ -80,6 +80,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             foreach ($attributes as $attribute) {
                 if (isset($attribute['priority'])) {
                     $priority = $attribute['priority'];
+
                     break;
                 }
             }
@@ -88,6 +89,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             foreach ($attributes as $attribute) {
                 if (isset($attribute['sitemap'])) {
                     $sitemap = $attribute['sitemap'];
+
                     break;
                 }
             }

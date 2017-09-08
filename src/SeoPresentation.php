@@ -272,11 +272,13 @@ class SeoPresentation implements SeoPresentationInterface
             switch ($this->configValues->getOriginalUrlBehaviour()) {
                 case self::ORIGINAL_URL_CANONICAL:
                     $this->sonataPage->setLinkCanonical($url);
+
                     break;
                 case self::ORIGINAL_URL_REDIRECT:
                     $this->setRedirectResponse(
                         new RedirectResponse($url)
                     );
+
                     break;
             }
         }
