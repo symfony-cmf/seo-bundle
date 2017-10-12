@@ -52,7 +52,7 @@ Thanks to
 
 ## License
 
-This package is available under the [MIT license](LICENSE).
+This package is available under the [MIT license](src/Resources/meta/LICENSE).
 
 [travis_legacy_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=2.0
 [travis_legacy_link]: https://travis-ci.org/symfony-cmf/seo-bundle
