@@ -1,4 +1,4 @@
-# Symfony Cmf Seo Bundle
+# Symfony CMF Seo Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/symfony-cmf/seo-bundle/v/stable)](https://packagist.org/packages/symfony-cmf/seo-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/symfony-cmf/seo-bundle/v/unstable)](https://packagist.org/packages/symfony-cmf/seo-bundle)
@@ -10,7 +10,6 @@
 
 Branch | Travis | Coveralls |
 ------ | ------ | --------- |
-2.0   | [![Build Status][travis_legacy_badge]][travis_legacy_link]     | [![Coverage Status][coveralls_legacy_badge]][coveralls_legacy_link]     |
 2.0   | [![Build Status][travis_stable_badge]][travis_stable_link]     | [![Coverage Status][coveralls_stable_badge]][coveralls_stable_link]     |
 master | [![Build Status][travis_unstable_badge]][travis_unstable_link] | [![Coverage Status][coveralls_unstable_badge]][coveralls_unstable_link] |
 
@@ -47,7 +46,7 @@ Unit and/or functional tests exist for this bundle. See the
 [Testing documentation](http://symfony.com/doc/master/cmf/components/testing.html)
 for a guide to running the tests.
 
-Thanks to 
+Thanks to
 [everyone who has contributed](contributors) already.
 
 ## License

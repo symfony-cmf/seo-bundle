@@ -10,23 +10,16 @@
 
 ### Environment
 
-#### Symfony packages
-
-```
-$ composer show --latest 'symfony-cmf/*'
-```
-
-#### Symfony packages
+#### Symfony paackages
 
 ```
 $ composer show --latest 'symfony/*'
 ```
 
-#### PHP version
+#### Symfony CMF packages
 
 ```
-$ php -v
-# Put the result here.
+$ composer show --latest 'symfony-cmf/*'
 ```
 
 ## Subject
