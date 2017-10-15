@@ -32,7 +32,6 @@ test_integration_phpcr:
 test_integration_orm:
 	./${TESTING_SCRIPTS_DIR}/make/test.sh -c${CONSOLE} -tintegration_orm
 
-
 test_unit:
 	./${TESTING_SCRIPTS_DIR}/make/test.sh -tunit
 
