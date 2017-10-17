@@ -13,19 +13,31 @@
 # file that was distributed with this source code.                         #
 ############################################################################
 
+TESTING_SCRIPTS_DIR=vendor/symfony-cmf/testing/bin
+CONSOLE=${TESTING_SCRIPTS_DIR}/console
+ifneq (${BRANCH},"")
+	VERSION=dev-${BRANCH}
+else
+	VERSION=dev-master
+endif
+PACKAGE=symfony-cmf/seo-bundle
 
-preset: symfony
+list:
+	@echo 'test:                    will run all tests'
+	@echo 'test_unit:               will run unit tests only'
+	@echo 'test_integration_phpcr:  will run integration tests on PHPCR'
+	@echo 'test_integration_orm:    will run integration tests on ORM'
 
-enabled:
-  - combine_consecutive_unsets
-  - short_array_syntax
-  - newline_after_open_tag
-  - no_php4_constructor
-  - no_useless_else
-  - ordered_use
-# Comment strict rules for the moment. Should be uncomment later to see StyleCI PR results
-  - strict
-  - php_unit_construct
-  - php_unit_strict
+test_integration_phpcr:
+	./${TESTING_SCRIPTS_DIR}/make/test.sh -c${CONSOLE} -tintegration_phpcr
 
-disabled: [single_line_class_definition]
+test_integration_orm:
+	./${TESTING_SCRIPTS_DIR}/make/test.sh -c${CONSOLE} -tintegration_orm
+
+test_unit:
+	./${TESTING_SCRIPTS_DIR}/make/test.sh -tunit
+
+test_installation:
+	./${TESTING_SCRIPTS_DIR}/make/test.sh -p${PACKAGE} -v${VERSION} -ttest_installation
+
+test: test_unit test_integration_phpcr test_integration_orm
