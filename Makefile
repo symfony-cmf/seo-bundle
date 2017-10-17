@@ -27,5 +27,9 @@ list:
 	@echo 'test_unit:               will run unit tests only'
 	@echo 'test_integration_phpcr:  will run integration tests on PHPCR'
 	@echo 'test_integration_orm:    will run integration tests on ORM'
+include ${TESTING_SCRIPTS_DIR}/make/test_unit.mk
+include ${TESTING_SCRIPTS_DIR}/make/test_integration_phpcr.mk
+include ${TESTING_SCRIPTS_DIR}/make/test_integration_orm.mk
+include ${TESTING_SCRIPTS_DIR}/make/test_installation.mk
 
 test: test_unit test_integration_phpcr test_integration_orm
