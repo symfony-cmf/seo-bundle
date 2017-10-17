@@ -20,24 +20,12 @@ ifneq (${BRANCH},"")
 else
 	VERSION=dev-master
 endif
-PACKAGE=symfony-cmf/seo-bundle
+PACKAGE=seo-bundle
 
 list:
 	@echo 'test:                    will run all tests'
 	@echo 'test_unit:               will run unit tests only'
 	@echo 'test_integration_phpcr:  will run integration tests on PHPCR'
 	@echo 'test_integration_orm:    will run integration tests on ORM'
-
-test_integration_phpcr:
-	./${TESTING_SCRIPTS_DIR}/make/test.sh -c${CONSOLE} -tintegration_phpcr
-
-test_integration_orm:
-	./${TESTING_SCRIPTS_DIR}/make/test.sh -c${CONSOLE} -tintegration_orm
-
-test_unit:
-	./${TESTING_SCRIPTS_DIR}/make/test.sh -tunit
-
-test_installation:
-	./${TESTING_SCRIPTS_DIR}/make/test.sh -p${PACKAGE} -v${VERSION} -ttest_installation
 
 test: test_unit test_integration_phpcr test_integration_orm
