@@ -15,6 +15,7 @@
 
 TESTING_SCRIPTS_DIR=vendor/symfony-cmf/testing/bin
 CONSOLE=${TESTING_SCRIPTS_DIR}/console
+VERSION=dev-master
 ifdef BRANCH
 	VERSION=dev-${BRANCH}
 endif
