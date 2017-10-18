@@ -24,8 +24,8 @@ PACKAGE=seo-bundle
 list:
 	@echo 'test:                    will run all tests'
 	@echo 'unit_tests:               will run unit tests only'
-	@echo 'functional_tests_phpcr:  will run integration tests on PHPCR'
-	@echo 'functional_tests_orm:    will run integration tests on ORM'
+	@echo 'functional_tests_phpcr:  will run functional tests with PHPCR'
+	@echo 'functional_tests_orm:    will run functional tests with ORM'
 	@echo 'test_installation:    will run installation test'
 include ${TESTING_SCRIPTS_DIR}/make/unit_tests.mk
 include ${TESTING_SCRIPTS_DIR}/make/functional_tests_phpcr.mk
