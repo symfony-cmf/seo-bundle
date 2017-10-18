@@ -15,10 +15,8 @@
 
 TESTING_SCRIPTS_DIR=vendor/symfony-cmf/testing/bin
 CONSOLE=${TESTING_SCRIPTS_DIR}/console
-ifneq (${BRANCH},"")
+ifdef BRANCH
 	VERSION=dev-${BRANCH}
-else
-	VERSION=dev-master
 endif
 PACKAGE=seo-bundle
 
@@ -27,6 +25,7 @@ list:
 	@echo 'test_unit:               will run unit tests only'
 	@echo 'test_integration_phpcr:  will run integration tests on PHPCR'
 	@echo 'test_integration_orm:    will run integration tests on ORM'
+	@echo 'test_installation:    will run installation test'
 include ${TESTING_SCRIPTS_DIR}/make/test_unit.mk
 include ${TESTING_SCRIPTS_DIR}/make/test_integration_phpcr.mk
 include ${TESTING_SCRIPTS_DIR}/make/test_integration_orm.mk
