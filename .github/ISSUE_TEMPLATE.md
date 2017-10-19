@@ -10,7 +10,7 @@
 
 ### Environment
 
-#### Symfony paackages
+#### Symfony packages
 
 ```
 $ composer show --latest 'symfony/*'
