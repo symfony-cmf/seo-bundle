@@ -9,12 +9,12 @@
             <directory>./tests/Unit</directory>
         </testsuite>
 
-        <testsuite name="phpcr">
+        <testsuite name="functional tests with phpcr">
             <directory>./tests/WebTest</directory>
             <directory>./tests/Functional/Doctrine/Phpcr</directory>
         </testsuite>
 
-        <testsuite name="orm">
+        <testsuite name="functional tests with orm">
             <directory>./tests/Functional/Doctrine/Orm</directory>
         </testsuite>
     </testsuites>
