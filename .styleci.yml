@@ -23,7 +23,6 @@ enabled:
   - no_php4_constructor
   - no_useless_else
   - ordered_use
-# Comment strict rules for the moment. Should be uncomment later to see StyleCI PR results
   - strict
   - php_unit_construct
   - php_unit_strict
