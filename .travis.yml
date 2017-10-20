@@ -26,14 +26,7 @@ cache:
     - $HOME/.composer/cache/files
 
 env:
-  matrix:
-    - SYMFONY_VERSION=2.8.*
-    - SYMFONY_VERSION=3.1.*
-    - SYMFONY_VERSION=3.2.*
-    - SYMFONY_VERSION=3.3.*
-    - SYMFONY_VERSION=3.4.*
-    - SYMFONY_VERSION=4.0.*
-    - TEST_INSTALLATION=false
+  matrix: SYMFONY_VERSION=3.2.*
   global:
     - SYMFONY_DEPRECATIONS_HELPER=48
     - SYMFONY_PHPUNIT_DIR=.phpunit SYMFONY_PHPUNIT_REMOVE="symfony/yaml" SYMFONY_PHPUNIT_VERSION=5.7
