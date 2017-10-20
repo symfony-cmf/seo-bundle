@@ -25,6 +25,5 @@ enabled:
   - ordered_use
   - strict
   - php_unit_construct
-  - php_unit_strict
 
 disabled: [single_line_class_definition]
