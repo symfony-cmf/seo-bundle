@@ -236,11 +236,11 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             ) {
                 ++$count;
                 $this->assertNotNull($definition);
-                $this->assertSame($arguments[$count - 1], $definition->getArguments());
+                $this->assertEquals($arguments[$count - 1], $definition->getArguments());
             }
         }
 
-        $this->assertSame(2, $count);
+        $this->assertEquals(2, $count);
     }
 
     public function testSitemapConfiguration()

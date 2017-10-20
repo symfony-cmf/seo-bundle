@@ -18,7 +18,7 @@ class DefaultChangeFrequencyGuesserTest extends GuesserTestCase
     public function testGuessCreate()
     {
         $urlInformation = parent::testGuessCreate();
-        $this->assertSame('weekly', $urlInformation->getChangeFrequency());
+        $this->assertEquals('weekly', $urlInformation->getChangeFrequency());
     }
 
     /**

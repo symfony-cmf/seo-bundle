@@ -19,7 +19,7 @@ class LocationGuesserTest extends GuesserTestCase
     public function testGuessCreate()
     {
         $urlInformation = parent::testGuessCreate();
-        $this->assertSame('http://symfony.com', $urlInformation->getLocation());
+        $this->assertEquals('http://symfony.com', $urlInformation->getLocation());
     }
 
     /**

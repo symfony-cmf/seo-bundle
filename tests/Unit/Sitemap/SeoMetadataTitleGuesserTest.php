@@ -20,7 +20,7 @@ class SeoMetadataTitleGuesserTest extends GuesserTestCase
     public function testGuessCreate()
     {
         $urlInformation = parent::testGuessCreate();
-        $this->assertSame('Symfony CMF', $urlInformation->getLabel());
+        $this->assertEquals('Symfony CMF', $urlInformation->getLabel());
     }
 
     /**

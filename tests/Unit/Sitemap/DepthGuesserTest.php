@@ -142,7 +142,7 @@ class DepthGuesserTest extends GuesserTestCase
         $urlInformation = new UrlInformation();
         $this->guesser->guessValues($urlInformation, $this->object, 'default');
 
-        $this->assertSame(1, $urlInformation->getDepth());
+        $this->assertEquals(1, $urlInformation->getDepth());
     }
 
     public function testRootEdgeCase()
@@ -166,6 +166,6 @@ class DepthGuesserTest extends GuesserTestCase
         $urlInformation = new UrlInformation();
         $this->guesser->guessValues($urlInformation, $this->object, 'default');
 
-        $this->assertSame(3, $urlInformation->getDepth());
+        $this->assertEquals(3, $urlInformation->getDepth());
     }
 }

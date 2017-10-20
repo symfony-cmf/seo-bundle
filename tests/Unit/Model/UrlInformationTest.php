@@ -41,6 +41,6 @@ class UrlInformationTest extends \PHPUnit_Framework_Testcase
     {
         $this->model->setChangeFrequency('never');
 
-        $this->assertSame('never', $this->model->getChangeFrequency());
+        $this->assertEquals('never', $this->model->getChangeFrequency());
     }
 }

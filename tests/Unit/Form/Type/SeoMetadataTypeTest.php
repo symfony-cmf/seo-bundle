@@ -61,7 +61,7 @@ class SeoMetadataTypeTest extends TypeTestCase
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertSame($object, $form->getData());
+        $this->assertEquals($object, $form->getData());
     }
 
     public function testDataClassCreationForNonPhpcr()
@@ -90,7 +90,7 @@ class SeoMetadataTypeTest extends TypeTestCase
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertSame($object, $form->getData());
+        $this->assertEquals($object, $form->getData());
     }
 }
 

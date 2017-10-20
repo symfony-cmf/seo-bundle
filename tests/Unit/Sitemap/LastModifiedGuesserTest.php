@@ -41,7 +41,7 @@ class LastModifiedGuesserTest extends GuesserTestCase
     public function testGuessCreate()
     {
         $urlInformation = parent::testGuessCreate();
-        $this->assertSame('2016-07-06T00:00:00+02:00', $urlInformation->getLastModification());
+        $this->assertEquals('2016-07-06T00:00:00+02:00', $urlInformation->getLastModification());
     }
 
     /**
@@ -110,6 +110,6 @@ class LastModifiedGuesserTest extends GuesserTestCase
         $urlInformation->setLastModification(new \DateTime('2016-06-06', new \DateTimeZone('Europe/Berlin')));
 
         $this->guesser->guessValues($urlInformation, $this->data, 'default');
-        $this->assertSame('2016-06-06T00:00:00+02:00', $urlInformation->getLastModification());
+        $this->assertEquals('2016-06-06T00:00:00+02:00', $urlInformation->getLastModification());
     }
 }

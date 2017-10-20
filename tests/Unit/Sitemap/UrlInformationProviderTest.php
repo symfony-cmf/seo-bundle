@@ -78,7 +78,7 @@ class UrlInformationProviderTest extends \PHPUnit_Framework_Testcase
         $this->assertCount(1, $urlInformations);
         $urlInformation = reset($urlInformations);
         $this->assertInstanceof('Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation', $urlInformation);
-        $this->assertSame('http://symfony.com', $urlInformation->getLocation());
+        $this->assertEquals('http://symfony.com', $urlInformation->getLocation());
     }
 }
 
