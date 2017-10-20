@@ -45,12 +45,12 @@ class SeoFrontendTest extends BaseTestCase
         $crawler = $this->getClient()->request('GET', '/content/content-1');
         $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertSame(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content 1")'));
 
         //test the title
         $titleCrawler = $crawler->filter('head > title');
-        $this->assertEquals('Default | Title content 1', $titleCrawler->text());
+        $this->assertSame('Default | Title content 1', $titleCrawler->text());
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
@@ -64,13 +64,13 @@ class SeoFrontendTest extends BaseTestCase
             'testkey, content1, content',
             'Default description. Description of content 1.',
         ];
-        $this->assertEquals($expectedMeta, $actualMeta);
+        $this->assertSame($expectedMeta, $actualMeta);
 
         //test the setting of canonical link
         $linkCrawler = $crawler->filter('head > link')->reduce(function (Crawler $node) {
             return SeoPresentation::ORIGINAL_URL_CANONICAL === $node->attr('rel');
         });
-        $this->assertEquals('/to/original', $linkCrawler->eq(0)->attr('href'));
+        $this->assertSame('/to/original', $linkCrawler->eq(0)->attr('href'));
     }
 
     public function testExtractors()
@@ -78,12 +78,12 @@ class SeoFrontendTest extends BaseTestCase
         $crawler = $this->getClient()->request('GET', '/content/strategy-content');
         $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertSame(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("content of strategy test.")'));
 
         //test the title
         $titleCrawler = $crawler->filter('head > title');
-        $this->assertEquals('Default | Strategy title', $titleCrawler->text());
+        $this->assertSame('Default | Strategy title', $titleCrawler->text());
 
         //test the meta tag entries
         $metaCrawler = $crawler->filter('head > meta')->reduce(function (Crawler $node) {
@@ -97,13 +97,13 @@ class SeoFrontendTest extends BaseTestCase
             'testkey, test, key',
             'Default description. content of strategy test. ...',
         ];
-        $this->assertEquals($expectedMeta, $actualMeta);
+        $this->assertSame($expectedMeta, $actualMeta);
 
         //test the setting of canonical link
         $linkCrawler = $crawler->filter('head > link')->reduce(function (Crawler $node) {
             return SeoPresentation::ORIGINAL_URL_CANONICAL === $node->attr('rel');
         });
-        $this->assertEquals('/home', $linkCrawler->eq(0)->attr('href'));
+        $this->assertSame('/home', $linkCrawler->eq(0)->attr('href'));
     }
 
     /**
@@ -114,7 +114,7 @@ class SeoFrontendTest extends BaseTestCase
         $crawler = $this->getClient()->request('GET', '/content/content-extra');
         $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertSame(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Content extra")'));
 
         //test the meta tag entries
@@ -124,7 +124,7 @@ class SeoFrontendTest extends BaseTestCase
 
         $actualMeta = $metaCrawler->extract('content', 'content');
         $actualMeta = reset($actualMeta);
-        $this->assertEquals($expectedValue, $actualMeta);
+        $this->assertSame($expectedValue, $actualMeta);
     }
 
     public function getExtraProperties()
@@ -141,22 +141,22 @@ class SeoFrontendTest extends BaseTestCase
         $crawler = $this->getClient()->request('GET', '/en/alternate-locale-content');
         $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertSame(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Alternate locale content")'));
 
         $linkCrawler = $crawler->filter('head > link');
         $expectedArray = [['alternate', 'http://localhost/de/alternate-locale-content', 'de']];
-        $this->assertEquals($expectedArray, $linkCrawler->extract(['rel', 'href', 'hreflang']));
+        $this->assertSame($expectedArray, $linkCrawler->extract(['rel', 'href', 'hreflang']));
 
         $crawler = $this->getClient()->request('GET', '/de/alternate-locale-content');
         $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $this->assertSame(200, $res->getStatusCode());
         $this->assertCount(1, $crawler->filter('html:contains("Alternative Sprachen")'));
 
         $linkCrawler = $crawler->filter('head > link');
         $expectedArray = [['alternate', 'http://localhost/en/alternate-locale-content', 'en']];
-        $this->assertEquals($expectedArray, $linkCrawler->extract(['rel', 'href', 'hreflang']));
+        $this->assertSame($expectedArray, $linkCrawler->extract(['rel', 'href', 'hreflang']));
     }
 
     public function testErrorHandling()
@@ -164,7 +164,7 @@ class SeoFrontendTest extends BaseTestCase
         $crawler = $this->client->request('GET', '/content/content-1/content-depp');
         $res = $this->client->getResponse();
 
-        $this->assertEquals(404, $res->getStatusCode());
+        $this->assertSame(404, $res->getStatusCode());
 
         $this->assertCount(1, $crawler->filter('html:contains("Exception-Test")')); // the configured template was chosen
         $this->assertCount(1, $crawler->filter('html:contains("parent - content-1")'));
@@ -174,7 +174,7 @@ class SeoFrontendTest extends BaseTestCase
     public function testErrorHandlingInvalidPhpcrPath()
     {
         $this->client->request('GET', '/content/content-1/content[a]b/sub?bla=blup');
-        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+        $this->assertSame(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testErrorHandlingForExcludedPath()
@@ -182,7 +182,7 @@ class SeoFrontendTest extends BaseTestCase
         $crawler = $this->client->request('GET', '/content/content-1/content-excluded');
         $res = $this->client->getResponse();
 
-        $this->assertEquals(404, $res->getStatusCode());
+        $this->assertSame(404, $res->getStatusCode());
 
         $this->assertCount(0, $crawler->filter('h1:contains("Exception-Test")')); // the default template was chosen
         $this->assertCount(1, $crawler->filter('html:contains("No route found for")'));
@@ -193,7 +193,7 @@ class SeoFrontendTest extends BaseTestCase
         $crawler = $this->getClient()->request('GET', '/en/alternate-locale-content');
         $res = $this->getClient()->getResponse();
 
-        $this->assertEquals(200, $res->getStatusCode());
-        $this->assertEquals('en', $res->headers->get('Content-Language'));
+        $this->assertSame(200, $res->getStatusCode());
+        $this->assertSame('en', $res->headers->get('Content-Language'));
     }
 }

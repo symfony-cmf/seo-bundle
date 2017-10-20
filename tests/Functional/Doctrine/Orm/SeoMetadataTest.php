@@ -67,6 +67,6 @@ class SeoMetadataTest extends BaseTestCase
         $this->assertNotNull($content);
 
         $persistedSeoMetadata = $content->getSeoMetadata();
-        $this->assertEquals($seoMetadata, $persistedSeoMetadata);
+        $this->assertSame($seoMetadata, $persistedSeoMetadata);
     }
 }
