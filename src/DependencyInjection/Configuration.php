@@ -38,7 +38,7 @@ class Configuration implements ConfigurationInterface
                 ->ifTrue(function ($config) {
                     return isset($config['sitemap'])
                         && (!isset($config['sitemap']['configurations'])
-                            || 0 == count($config['sitemap']['configurations'])
+                            || 0 === count($config['sitemap']['configurations'])
                         )
                         && !isset($config['sitemap']['configuration']) // xml configuration
                     ;
