@@ -16,7 +16,7 @@
 language: php
 
 php:
-  - 7.0
+  - 7.1
 
 sudo: false
 
@@ -27,6 +27,13 @@ cache:
 
 env:
   matrix: SYMFONY_VERSION=3.2.*
+    - SYMFONY_VERSION=2.8.*
+    - SYMFONY_VERSION=3.1.*
+    - SYMFONY_VERSION=3.2.*
+    - SYMFONY_VERSION=3.3.*
+    - SYMFONY_VERSION=3.4.*
+    - SYMFONY_VERSION=4.0.*
+    - TEST_INSTALLATION=false
   global:
     - SYMFONY_DEPRECATIONS_HELPER=48
     - SYMFONY_PHPUNIT_DIR=.phpunit SYMFONY_PHPUNIT_REMOVE="symfony/yaml" SYMFONY_PHPUNIT_VERSION=5.7
@@ -38,19 +45,20 @@ matrix:
     - php: 7.1
       env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_VERSION=2.8.* SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.1
-      env: SYMFONY=3.1.*
+      env: SYMFONY_VERSION=3.1.*
     - php: 7.1
-      env: SYMFONY=3.2.*
+      env: SYMFONY_VERSION=3.2.*
     - php: 7.1
-      env: SYMFONY=3.3.*
+      env: SYMFONY_VERSION=3.3.*
     - php: 7.1
-      env: SYMFONY=3.4.*
+      env: SYMFONY_VERSION=3.4.*
 
     - env: TEST_INSTALLATION=true
   fast_finish: true
   allowed_failures:
     - php: 7.1
       env: DEPS=dev SYMFONY_VERSION=4.0.*
+    - env: TEST_INSTALLATION=true
 
 
 before_install:
