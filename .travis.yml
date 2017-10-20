@@ -26,7 +26,7 @@ cache:
     - $HOME/.composer/cache/files
 
 env:
-  matrix: SYMFONY_VERSION=3.2.*
+  matrix:
     - SYMFONY_VERSION=2.8.*
     - SYMFONY_VERSION=3.1.*
     - SYMFONY_VERSION=3.2.*
