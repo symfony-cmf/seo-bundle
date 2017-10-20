@@ -41,7 +41,7 @@ class LanguageListenerTest extends \PHPUnit_Framework_Testcase
 
         $this->listener->onKernelResponse($event);
 
-        $this->assertEquals('en', $response->headers->get('Content-Language'));
+        $this->assertSame('en', $response->headers->get('Content-Language'));
     }
 
     public function provideRequestLocales()
@@ -66,6 +66,6 @@ class LanguageListenerTest extends \PHPUnit_Framework_Testcase
 
         $this->listener->onKernelResponse($event);
 
-        $this->assertEquals('nl', $response->headers->get('Content-Language'));
+        $this->assertSame('nl', $response->headers->get('Content-Language'));
     }
 }

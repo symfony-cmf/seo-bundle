@@ -62,7 +62,7 @@ abstract class GuesserTestCase extends \PHPUnit_Framework_Testcase
 
         $this->guesser->guessValues($urlInformation, $this->data, 'default');
         foreach ($this->getFields() as $field) {
-            $this->assertEquals('always', $urlInformation->{'get'.$field}());
+            $this->assertSame('always', $urlInformation->{'get'.$field}());
         }
     }
 

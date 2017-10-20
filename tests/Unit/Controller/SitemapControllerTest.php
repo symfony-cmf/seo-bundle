@@ -86,7 +86,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $this->assertEquals($expected, json_decode($response->getContent(), true));
+        $this->assertSame($expected, json_decode($response->getContent(), true));
     }
 
     public function testRequestXml()
@@ -99,7 +99,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         /** @var Response $response */
         $response = $this->controller->indexAction('xml', 'test');
 
-        $this->assertEquals('some-xml-string', $response->getContent());
+        $this->assertSame('some-xml-string', $response->getContent());
     }
 
     public function testRequestHtml()
@@ -110,7 +110,7 @@ class SitemapControllerTest extends \PHPUnit_Framework_TestCase
         /** @var Response $response */
         $response = $this->controller->indexAction('html', 'test');
 
-        $this->assertEquals($expectedResponse, $response->getContent());
+        $this->assertSame($expectedResponse, $response->getContent());
     }
 
     private function createUrlInformation()

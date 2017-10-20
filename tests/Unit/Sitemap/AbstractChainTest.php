@@ -36,7 +36,7 @@ class AbstractChainTest extends \PHPUnit_Framework_Testcase
 
         $expectedList = ['info-one', 'info-two'];
 
-        $this->assertEquals($expectedList, $this->chain->getValues('test'));
+        $this->assertSame($expectedList, $this->chain->getValues('test'));
     }
 
     public function testSpecificChain()
@@ -49,7 +49,7 @@ class AbstractChainTest extends \PHPUnit_Framework_Testcase
 
         $expectedList = ['info-one', 'info-two'];
 
-        $this->assertEquals($expectedList, $this->chain->getValues('test'));
+        $this->assertSame($expectedList, $this->chain->getValues('test'));
     }
 
     public function testPrioritisedInput()
@@ -66,12 +66,12 @@ class AbstractChainTest extends \PHPUnit_Framework_Testcase
         $this->chain->addItem($first, 15);
         $this->chain->addItem($earlySpecific, 10, 'test');
 
-        $this->assertEquals(
+        $this->assertSame(
             ['info-first', 'info-early-specific', 'info-specific', 'info-early', 'info-last'],
             $this->chain->getValues('test')
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             ['info-first', 'info-early', 'info-last'],
             $this->chain->getValues('foobar')
         );

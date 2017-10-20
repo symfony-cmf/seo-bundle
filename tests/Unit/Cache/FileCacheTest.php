@@ -30,7 +30,7 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue($thrown);
-        $this->assertEquals($message, sprintf('The directory "%s" does not exist.', $baseDir));
+        $this->assertSame($message, sprintf('The directory "%s" does not exist.', $baseDir));
     }
 
     public function testDirectoryCreation()

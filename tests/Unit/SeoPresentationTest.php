@@ -332,7 +332,7 @@ class SeoPresentationTest extends \PHPUnit_Framework_Testcase
         // assertions
         $redirect = $this->seoPresentation->getRedirectResponse();
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $redirect);
-        $this->assertEquals('/redirect/target', $redirect->getTargetUrl());
+        $this->assertSame('/redirect/target', $redirect->getTargetUrl());
     }
 
     public function testCaching()

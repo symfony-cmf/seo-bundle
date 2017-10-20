@@ -79,7 +79,7 @@ class LastModifiedGuesser implements GuesserInterface
     {
         foreach ($metadata->getFieldNames() as $fieldName) {
             $field = $metadata->getFieldMapping($fieldName);
-            if ('jcr:lastModified' == $field['property']) {
+            if ('jcr:lastModified' === $field['property']) {
                 return $fieldName;
             }
         }
