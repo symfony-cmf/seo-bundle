@@ -45,7 +45,7 @@ class SitemapDocumentProviderTest extends BaseTestCase
             $paths[] = $document->getId();
         }
 
-        $this->assertSame(
+        $this->assertEquals(
             [
                 '/test/content/sitemap-aware',
                 '/test/content/sitemap-aware-last-mod-date',

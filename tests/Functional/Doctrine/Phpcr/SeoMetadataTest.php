@@ -59,13 +59,13 @@ class SeoMetadataTest extends BaseTestCase
         $this->assertNotNull($content);
 
         $persistedSeoMetadata = $content->getSeoMetadata();
-        $this->assertSame($seoMetadata->getTitle(), $persistedSeoMetadata->getTitle());
-        $this->assertSame($seoMetadata->getMetaDescription(), $persistedSeoMetadata->getMetaDescription());
-        $this->assertSame($seoMetadata->getMetaKeywords(), $persistedSeoMetadata->getMetaKeywords());
-        $this->assertSame($seoMetadata->getOriginalUrl(), $persistedSeoMetadata->getOriginalUrl());
-        $this->assertSame($seoMetadata->getExtraProperties(), $persistedSeoMetadata->getExtraProperties());
-        $this->assertSame($seoMetadata->getExtraNames(), $persistedSeoMetadata->getExtraNames());
-        $this->assertSame($seoMetadata->getExtraHttp(), $persistedSeoMetadata->getExtraHttp());
+        $this->assertEquals($seoMetadata->getTitle(), $persistedSeoMetadata->getTitle());
+        $this->assertEquals($seoMetadata->getMetaDescription(), $persistedSeoMetadata->getMetaDescription());
+        $this->assertEquals($seoMetadata->getMetaKeywords(), $persistedSeoMetadata->getMetaKeywords());
+        $this->assertEquals($seoMetadata->getOriginalUrl(), $persistedSeoMetadata->getOriginalUrl());
+        $this->assertEquals($seoMetadata->getExtraProperties(), $persistedSeoMetadata->getExtraProperties());
+        $this->assertEquals($seoMetadata->getExtraNames(), $persistedSeoMetadata->getExtraNames());
+        $this->assertEquals($seoMetadata->getExtraHttp(), $persistedSeoMetadata->getExtraHttp());
     }
 
     /**
