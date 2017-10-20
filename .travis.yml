@@ -34,7 +34,7 @@ env:
 matrix:
   include:
     - php: 7.1
-      env: DEPS=dev SYMFONY_VERSION=3.4.*
+      env: DEPS=dev SYMFONY_VERSION=4.0.*
     - php: 7.1
       env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_VERSION=2.8.* SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.1
@@ -43,9 +43,15 @@ matrix:
       env: SYMFONY=3.2.*
     - php: 7.1
       env: SYMFONY=3.3.*
+    - php: 7.1
+      env: SYMFONY=3.4.*
 
     - env: TEST_INSTALLATION=true
   fast_finish: true
+  allowed_failures:
+    - php: 7.1
+      env: DEPS=dev SYMFONY_VERSION=4.0.*
+
 
 before_install:
   - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi
