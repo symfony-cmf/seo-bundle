@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\WebTest;
 
+use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Cmf\Component\Testing\Functional\BaseTestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -30,6 +31,7 @@ class SeoFrontendTest extends BaseTestCase
 {
     public function setUp()
     {
+        (new PHPCRPurger($this->getDbManager('PHPCR')->getOm()))->purge();
         $this->db('PHPCR')->loadFixtures([
             'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
         ]);
