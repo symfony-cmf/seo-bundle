@@ -23,8 +23,8 @@
         "doctrine/orm": "^2.4",
         "symfony-cmf/core-bundle": "^2.0",
         "symfony-cmf/routing-bundle": "^1.4.0|^2.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^1.0",
-        "matthiasnoback/symfony-config-test": "^3.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^1.1",
+        "matthiasnoback/symfony-config-test": "^2.1",
         "symfony/phpunit-bridge": "^3.3.10",
         "burgov/key-value-form-bundle": "^1.0"
     },
