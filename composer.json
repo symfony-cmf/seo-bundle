@@ -15,11 +15,12 @@
         "php": "^7.1",
         "symfony/framework-bundle": "^2.8|^3.0",
         "sonata-project/seo-bundle": "^2.2",
-        "doctrine/collections": "^1.0"
+        "doctrine/collections": "^1.0",
+        "symfony/symfony": "^2.8",
+        "phpcr/phpcr-utils": "^1.2.9"
     },
     "require-dev": {
         "symfony-cmf/testing": "^2.1",
-        "doctrine/phpcr-odm": "^1.4.2",
         "doctrine/orm": "^2.4",
         "symfony-cmf/core-bundle": "^2.0",
         "symfony-cmf/routing-bundle": "^1.4.0|^2.0",
@@ -27,7 +28,8 @@
         "matthiasnoback/symfony-config-test": "^2.1",
         "symfony/phpunit-bridge": "^3.3.10",
         "burgov/key-value-form-bundle": "^1.0",
-        "sebastian/exporter": "^2.0"
+        "sebastian/exporter": "^2.0",
+        "phpcr/phpcr-utils": "^1.2.9"
     },
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",
