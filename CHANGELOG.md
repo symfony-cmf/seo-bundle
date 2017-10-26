@@ -1,6 +1,8 @@
 Changelog
 =========
 
+* **2017-10-20**: Dropped php versions 5.6 and 7.0 and hhvm support
+
 2.0.0
 -----
 

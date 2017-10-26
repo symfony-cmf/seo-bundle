@@ -5,16 +5,16 @@
     >
 
     <testsuites>
-        <testsuite name="Symfony SeoBundle Test Suite">
+        <testsuite name="unit tests">
             <directory>./tests/Unit</directory>
         </testsuite>
 
-        <testsuite name="phpcr">
+        <testsuite name="functional tests with phpcr">
             <directory>./tests/WebTest</directory>
             <directory>./tests/Functional/Doctrine/Phpcr</directory>
         </testsuite>
 
-        <testsuite name="orm">
+        <testsuite name="functional tests with orm">
             <directory>./tests/Functional/Doctrine/Orm</directory>
         </testsuite>
     </testsuites>
@@ -33,9 +33,4 @@
     <php>
         <server name="KERNEL_DIR" value="tests/Resources/app" />
     </php>
-
-    <listeners>
-        <listener class="Symfony\Cmf\Component\Testing\Phpunit\DatabaseTestListener" />
-    </listeners>
-
 </phpunit>
