@@ -32,7 +32,7 @@ class SeoMetadataTypeTest extends FormIntegrationTestCase
         $this->validator = $this->createMock(ValidatorInterface::class);
         $metadata = $this->createMock(ClassMetadata::class);
         $this->validator->expects($this->once())->method('getMetadataFor')->will($this->returnValue($metadata));
-        $this->validator->expects($this->any())->method('validate')->will($this->returnValue(array()));
+        $this->validator->expects($this->any())->method('validate')->will($this->returnValue([]));
 
         parent::setUp();
     }
@@ -48,7 +48,7 @@ class SeoMetadataTypeTest extends FormIntegrationTestCase
                     new KeyValueRowType(),
                     new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'),
                     new SeoMetadataTypeTest_OrmType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'),
-                ], [])
+                ], []),
             ]
         );
     }
