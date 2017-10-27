@@ -36,11 +36,12 @@
             <argument type="service" id="cmf_seo.cache" />
         </service>
 
-        <service id="cmf_seo.error.suggestion_provider.controller" class="Symfony\Cmf\Bundle\SeoBundle\Controller\SuggestionProviderController">
+        <service id="cmf_seo.error.suggestion_provider.controller" class="Symfony\Cmf\Bundle\SeoBundle\Controller\SuggestionProviderController" public="true">
             <argument type="service" id="twig" />
             <argument>%kernel.debug%</argument>
             <argument type="service" id="cmf_seo.error.exclusion_matcher" />
             <argument>%cmf_seo.error.templates%</argument>
+            <argument type="collection" />
         </service>
 
         <service id="cmf_seo.error.request_matcher"

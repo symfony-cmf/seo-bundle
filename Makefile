@@ -20,7 +20,7 @@ ifdef BRANCH
 	VERSION=dev-${BRANCH}
 endif
 PACKAGE=symfony-cmf/seo-bundle
-
+export KERNEL_CLASS=Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Kernel
 list:
 	@echo 'test:                    will run all tests'
 	@echo 'unit_tests:               will run unit tests only'

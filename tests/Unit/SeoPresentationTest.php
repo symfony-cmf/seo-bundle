@@ -18,7 +18,7 @@ use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtractorInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document\SeoAwareContent;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**

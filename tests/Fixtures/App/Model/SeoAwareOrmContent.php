@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Cmf\Bundle\SeoBundle\SeoAwareInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(table="cmf_test_content")
  *
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
@@ -24,12 +24,11 @@ class SeoAwareOrmContent implements SeoAwareInterface
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\String(type="string")
      */
     private $title;
 
@@ -49,8 +48,6 @@ class SeoAwareOrmContent implements SeoAwareInterface
     public function setBody($body)
     {
         $this->body = $body;
-
-        return $this;
     }
 
     /**
@@ -67,8 +64,6 @@ class SeoAwareOrmContent implements SeoAwareInterface
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -85,8 +80,6 @@ class SeoAwareOrmContent implements SeoAwareInterface
     public function setTitle($title)
     {
         $this->title = $title;
-
-        return $this;
     }
 
     /**
@@ -111,7 +104,5 @@ class SeoAwareOrmContent implements SeoAwareInterface
     public function setSeoMetadata($metadata)
     {
         $this->seoMetadata = $metadata;
-
-        return $this;
     }
 }
