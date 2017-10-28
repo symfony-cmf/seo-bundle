@@ -20,6 +20,7 @@ ifdef BRANCH
 	VERSION=dev-${BRANCH}
 endif
 PACKAGE=symfony-cmf/seo-bundle
+export KERNEL_CLASS=Symfony\Cmf\Bundle\SeoBundle\Tests\App\Kernel
 
 list:
 	@echo 'test:                    will run all tests'

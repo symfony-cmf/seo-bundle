@@ -15,10 +15,11 @@
         "php": "^7.1",
         "symfony/framework-bundle": "^2.8|^3.0",
         "sonata-project/seo-bundle": "^2.2",
-        "doctrine/collections": "^1.0"
+        "doctrine/collections": "^1.0",
+        "symfony/symfony":"^3.4@dev",
+        "symfony-cmf/testing": "dev-be_aware_of_deprecations"
     },
     "require-dev": {
-        "symfony-cmf/testing": "^2.1",
         "doctrine/phpcr-odm": "^1.4.2",
         "doctrine/orm": "^2.4",
         "symfony-cmf/core-bundle": "^2.0",
@@ -44,7 +45,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Symfony\\Cmf\\Bundle\\SeoBundle\\Tests\\": "tests/"
+            "Symfony\\Cmf\\Bundle\\SeoBundle\\Tests\\": "tests/",
+            "Symfony\\Cmf\\Bundle\\SeoBundle\\Tests\\App\\": "tests/Resources/app"
         }
     },
     "extra": {
