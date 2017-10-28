@@ -15,9 +15,7 @@
         "php": "^7.1",
         "symfony/framework-bundle": "^2.8|^3.0",
         "sonata-project/seo-bundle": "^2.2",
-        "doctrine/collections": "^1.0",
-        "symfony/symfony":"^3.4@dev",
-        "symfony-cmf/testing": "dev-be_aware_of_deprecations"
+        "doctrine/collections": "^1.0"
     },
     "require-dev": {
         "doctrine/phpcr-odm": "^1.4.2",
@@ -27,7 +25,9 @@
         "matthiasnoback/symfony-dependency-injection-test": "^1.1",
         "matthiasnoback/symfony-config-test": "^2.1",
         "symfony/phpunit-bridge": "^3.3.10",
-        "burgov/key-value-form-bundle": "^1.0"
+        "burgov/key-value-form-bundle": "^1.0",
+        "symfony-cmf/testing": "dev-be_aware_of_deprecations",
+        "doctrine/phpcr-bundle": "dev-prepare_for_symfony_4.0 as 1.1"
     },
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",
