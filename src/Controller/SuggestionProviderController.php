@@ -60,7 +60,7 @@ class SuggestionProviderController extends ExceptionController
      *                                                by this error handling. It uses the defined exclusion_rules in the
      *                                                error configuration.
      * @param array $templates containing the configured templates to use in custom error cases
-     * @param array $suggestionProvider
+     * @param array $suggestionProvider A list of provider and group pairs
      */
     public function __construct(
         \Twig_Environment $twig,
