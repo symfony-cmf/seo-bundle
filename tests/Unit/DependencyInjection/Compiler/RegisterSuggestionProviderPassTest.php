@@ -43,6 +43,7 @@ class RegisterSuggestionProviderPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition('matcher.with_group', $matcherServiceWithGroup);
 
         $matcherPresentationService = new Definition();
+        $matcherPresentationService->setArguments([1, 1, 2 , 3, []]);
         $this->setDefinition('cmf_seo.error.suggestion_provider.controller', $matcherPresentationService);
 
         $this->compile();
@@ -64,6 +65,7 @@ class RegisterSuggestionProviderPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition('matcher.without_group', $matcherServiceWithOutGroup);
 
         $matcherPresentationService = new Definition();
+        $matcherPresentationService->setArguments([1, 1, 2 , 3, []]);
         $this->setDefinition('cmf_seo.error.suggestion_provider.controller', $matcherPresentationService);
 
         $this->compile();

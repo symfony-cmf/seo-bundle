@@ -53,6 +53,6 @@ class RegisterSuggestionProviderPass implements CompilerPassInterface
             $provider[] = ['provider' => new Reference($id), 'group' => $group];
         }
 
-        $presentationDefinition->setArgument(4, $provider);
+        $presentationDefinition->replaceArgument(4, $provider);
     }
 }

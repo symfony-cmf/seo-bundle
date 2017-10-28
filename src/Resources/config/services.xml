@@ -41,6 +41,7 @@
             <argument>%kernel.debug%</argument>
             <argument type="service" id="cmf_seo.error.exclusion_matcher" />
             <argument>%cmf_seo.error.templates%</argument>
+            <argument type="collection" />
         </service>
 
         <service id="cmf_seo.error.request_matcher"
