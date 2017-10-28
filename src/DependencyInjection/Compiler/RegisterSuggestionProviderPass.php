@@ -34,7 +34,7 @@ class RegisterSuggestionProviderPass implements CompilerPassInterface
 
         $presentationDefinition = $container->getDefinition('cmf_seo.error.suggestion_provider.controller');
         $taggedServices = $container->findTaggedServiceIds('cmf_seo.suggestion_provider');
-
+        $provider = [];
         foreach ($taggedServices as $id => $attributes) {
             $definition = $container->getDefinition($id);
             if (!$definition->isPublic()) {
@@ -50,8 +50,9 @@ class RegisterSuggestionProviderPass implements CompilerPassInterface
                 }
             }
             $group = $group ?: 'default';
-
-            $presentationDefinition->addMethodCall('addSuggestionProvider', [new Reference($id), $group]);
+            $provider[] = ['provider' => new Reference($id), 'group' => $group];
         }
+
+        $presentationDefinition->setArgument(4, $provider);
     }
 }

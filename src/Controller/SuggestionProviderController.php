@@ -54,21 +54,24 @@ class SuggestionProviderController extends ExceptionController
     private $exclusionRequestMatcher;
 
     /**
-     * @param \Twig_Environment       $twig
-     * @param bool                    $debug
+     * @param \Twig_Environment $twig
+     * @param bool $debug
      * @param RequestMatcherInterface $requestMatcher The exclusion matcher to decider whether a route should be handled
      *                                                by this error handling. It uses the defined exclusion_rules in the
      *                                                error configuration.
-     * @param array                   $templates      containing the configured templates to use in custom error cases
+     * @param array $templates containing the configured templates to use in custom error cases
+     * @param array $suggestionProvider
      */
     public function __construct(
         \Twig_Environment $twig,
         $debug,
         RequestMatcherInterface $requestMatcher,
-        $templates
+        $templates,
+        $suggestionProvider
     ) {
         $this->templates = $templates;
         $this->exclusionRequestMatcher = $requestMatcher;
+        $this->suggestionProviders = $suggestionProvider;
 
         parent::__construct($twig, $debug);
     }
@@ -113,15 +116,6 @@ class SuggestionProviderController extends ExceptionController
             ),
             $code
         );
-    }
-
-    /**
-     * @param SuggestionProviderInterface $matcher
-     * @param string                      $group
-     */
-    public function addSuggestionProvider(SuggestionProviderInterface $matcher, $group)
-    {
-        $this->suggestionProviders[] = ['provider' => $matcher, 'group' => $group];
     }
 
     /**
