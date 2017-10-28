@@ -26,8 +26,7 @@
         "matthiasnoback/symfony-config-test": "^2.1",
         "symfony/phpunit-bridge": "^3.3.10",
         "burgov/key-value-form-bundle": "^1.0",
-        "symfony-cmf/testing": "dev-be_aware_of_deprecations",
-        "doctrine/phpcr-bundle": "dev-prepare_for_symfony_4.0 as 1.1"
+        "symfony-cmf/testing": "dev-be_aware_of_deprecations"
     },
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",
