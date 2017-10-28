@@ -13,7 +13,11 @@
 # file that was distributed with this source code.                         #
 ############################################################################
 
+ifeq ("symfony-cmf/seo-bundle", "symfony-cmf/testing")
+TESTING_SCRIPTS_DIR=bin
+else
 TESTING_SCRIPTS_DIR=vendor/symfony-cmf/testing/bin
+endif
 CONSOLE=${TESTING_SCRIPTS_DIR}/console
 VERSION=dev-master
 ifdef BRANCH
@@ -21,7 +25,6 @@ ifdef BRANCH
 endif
 PACKAGE=symfony-cmf/seo-bundle
 export KERNEL_CLASS=Symfony\Cmf\Bundle\SeoBundle\Tests\App\Kernel
-
 list:
 	@echo 'test:                    will run all tests'
 	@echo 'unit_tests:               will run unit tests only'
