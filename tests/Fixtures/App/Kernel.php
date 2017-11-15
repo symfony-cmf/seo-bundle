@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App;
+
 use Symfony\Cmf\Component\Testing\HttpKernel\TestKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-class AppKernel extends TestKernel
+class Kernel extends TestKernel
 {
     public function configure()
     {
@@ -24,12 +26,7 @@ class AppKernel extends TestKernel
             $this->requireBundleSet('doctrine_orm');
         }
 
-        $this->addBundles([
-            new \Sonata\SeoBundle\SonataSeoBundle(),
-            new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
-            new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
-            new \Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
-        ]);
+        $this->registerConfiguredBundles();
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

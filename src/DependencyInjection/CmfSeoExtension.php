@@ -34,11 +34,6 @@ class CmfSeoExtension extends Extension
      */
     private $defaultAlternateLocaleProviderId;
 
-    /**
-     * @var bool Whether the content listener is loaded
-     */
-    private $contentListenerEnabled = false;
-
     private $sitemapHelperMap = [
         'loaders' => 'cmf_seo.sitemap.loader',
         'guessers' => 'cmf_seo.sitemap.guesser',
@@ -59,7 +54,6 @@ class CmfSeoExtension extends Extension
 
         $this->loadSeoParameters($config, $container);
 
-        $sonataBundles = [];
         if ($this->isConfigEnabled($container, $config['persistence']['phpcr'])) {
             $container->setParameter('cmf_seo.backend_type_phpcr', true);
             $container->setParameter(
@@ -70,7 +64,6 @@ class CmfSeoExtension extends Extension
                 'cmf_seo.persistence.phpcr.content_basepath',
                 $config['persistence']['phpcr']['content_basepath']
             );
-            $sonataBundles[] = 'SonataDoctrinePHPCRAdminBundle';
 
             $this->loadPhpcr($config['persistence']['phpcr'], $loader, $container);
         }
@@ -81,7 +74,6 @@ class CmfSeoExtension extends Extension
                 'cmf_seo.persistence.orm.manager_name',
                 $config['persistence']['orm']['manager_name']
             );
-            $sonataBundles[] = 'SonataDoctrineORMBundle';
         }
 
         $errorConfig = isset($config['error']) ? $config['error'] : [];
@@ -169,8 +161,6 @@ class CmfSeoExtension extends Extension
         $container->setParameter('cmf_seo.content_key', $config['content_key']);
 
         $loader->load('content-listener.xml');
-
-        $this->contentListenerEnabled = true;
     }
 
     /**

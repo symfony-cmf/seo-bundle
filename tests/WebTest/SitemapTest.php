@@ -23,7 +23,7 @@ class SitemapTest extends BaseTestCase
     {
         (new PHPCRPurger($this->getDbManager('PHPCR')->getOm()))->purge();
         $this->db('PHPCR')->loadFixtures([
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadSitemapData',
+            'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\DataFixtures\Phpcr\LoadSitemapData',
         ]);
         $this->client = $this->createClient();
     }

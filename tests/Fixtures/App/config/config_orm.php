@@ -18,8 +18,8 @@ $container->loadFromExtension('doctrine', [
         'mappings' => [
             'tests_fixtures' => [
                 'type' => 'annotation',
-                'prefix' => 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Entity',
-                'dir' => $container->getParameter('kernel.root_dir').'/../Entity',
+                'prefix' => 'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Entity',
+                'dir' => $container->getParameter('kernel.root_dir').'/Entity',
                 'is_bundle' => false,
             ],
         ],

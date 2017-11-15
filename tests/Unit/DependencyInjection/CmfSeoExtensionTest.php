@@ -232,7 +232,7 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $count = 0;
         foreach ($this->container->getDefinitions() as $id => $definition) {
             if ($definition instanceof DefinitionDecorator &&
-                $definition->getParent() === 'cmf_seo.error.request_matcher'
+                'cmf_seo.error.request_matcher' === $definition->getParent()
             ) {
                 ++$count;
                 $this->assertNotNull($definition);

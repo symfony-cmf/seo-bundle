@@ -1,7 +1,9 @@
 Changelog
 =========
 
-* **2017-10-20**: Dropped php versions 5.6 and 7.0 and hhvm support
+* **2016-12-15**: [BC BREAK] Removed SuggestionProviderController::addSuggestionProvider() method, use contructor 
+injection instead
+* **2017-11-15**: Removed php 5.6 and 7.0 support, removed Symfony 3.0.* and 3.1.* support
 
 2.0.0
 -----

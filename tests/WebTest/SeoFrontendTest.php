@@ -33,7 +33,7 @@ class SeoFrontendTest extends BaseTestCase
     {
         (new PHPCRPurger($this->getDbManager('PHPCR')->getOm()))->purge();
         $this->db('PHPCR')->loadFixtures([
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadContentData',
+            'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\DataFixtures\Phpcr\LoadContentData',
         ]);
     }
 

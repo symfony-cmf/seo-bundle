@@ -14,24 +14,42 @@ use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Form\Type\SeoMetadataType;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata as SeoMetadataModel;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\PreloadedExtension;
-use Symfony\Component\Form\Tests\Extension\Validator\Type\TypeTestCase;
+use Symfony\Component\Form\Test\FormIntegrationTestCase;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class SeoMetadataTypeTest extends TypeTestCase
+class SeoMetadataTypeTest extends FormIntegrationTestCase
 {
+    private $validator;
+
+    public function setUp()
+    {
+        $this->validator = $this->createMock(ValidatorInterface::class);
+        $metadata = $this->createMock(ClassMetadata::class);
+        $this->validator->expects($this->once())->method('getMetadataFor')->will($this->returnValue($metadata));
+        $this->validator->expects($this->any())->method('validate')->will($this->returnValue([]));
+
+        parent::setUp();
+    }
+
     protected function getExtensions()
     {
         return array_merge(
             parent::getExtensions(),
-            [new PreloadedExtension([
-                new KeyValueType(),
-                new KeyValueRowType(),
-                new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'),
-                new SeoMetadataTypeTest_OrmType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'),
-            ], [])]
+            [
+                new ValidatorExtension($this->validator),
+                new PreloadedExtension([
+                    new KeyValueType(),
+                    new KeyValueRowType(),
+                    new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'),
+                    new SeoMetadataTypeTest_OrmType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'),
+                ], []),
+            ]
         );
     }
 

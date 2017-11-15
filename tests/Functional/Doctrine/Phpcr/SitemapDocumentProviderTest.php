@@ -30,7 +30,7 @@ class SitemapDocumentProviderTest extends BaseTestCase
         $this->dm = $this->db('PHPCR')->getOm();
         $this->base = $this->dm->find(null, '/test');
         $this->db('PHPCR')->loadFixtures(
-            ['Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr\LoadSitemapData']
+            ['Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\DataFixtures\Phpcr\LoadSitemapData']
         );
 
         $this->documentProvider = new SitemapDocumentProvider($this->dm);

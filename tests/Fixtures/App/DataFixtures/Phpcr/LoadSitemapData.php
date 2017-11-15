@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\DataFixtures\Phpcr;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SitemapAwareContent;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SitemapAwareWithLastModifiedDateContent;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SitemapAwareWithPublishWorkflowContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document\SitemapAwareContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document\SitemapAwareWithLastModifiedDateContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document\SitemapAwareWithPublishWorkflowContent;
 
 class LoadSitemapData implements FixtureInterface
 {

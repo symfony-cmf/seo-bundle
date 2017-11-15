@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\DataFixtures\Phpcr;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\DataFixtures\Phpcr;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPCR\Util\NodeHelper;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 use Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\AlternateLocaleContent;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\ContentWithExtractors;
-use Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document\SeoAwareContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document\AlternateLocaleContent;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document\ContentWithExtractors;
+use Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document\SeoAwareContent;
 
 class LoadContentData implements FixtureInterface
 {
@@ -50,7 +50,7 @@ class LoadContentData implements FixtureInterface
         $route = new Route();
         $route->setPosition($routeRoot, 'content-1');
         $route->setContent($content);
-        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Controller\TestController::indexAction');
 
         $manager->persist($route);
 
@@ -65,7 +65,7 @@ class LoadContentData implements FixtureInterface
         $route = new Route();
         $route->setPosition($routeRoot, 'strategy-content');
         $route->setContent($content);
-        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Controller\TestController::indexAction');
 
         $manager->persist($route);
 
@@ -86,7 +86,7 @@ class LoadContentData implements FixtureInterface
         $route = new Route();
         $route->setPosition($routeRoot, 'content-extra');
         $route->setContent($content);
-        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Controller\TestController::indexAction');
 
         $manager->persist($route);
 
@@ -110,7 +110,7 @@ class LoadContentData implements FixtureInterface
         $alternateLocaleRoute->setContent($alternateLocaleContent);
         $alternateLocaleRoute->setDefault(
             '_controller',
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction'
+            'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Controller\TestController::indexAction'
         );
         $manager->persist($alternateLocaleRoute);
 
@@ -122,7 +122,7 @@ class LoadContentData implements FixtureInterface
         $alternateLocaleRoute->setContent($alternateLocaleContent);
         $alternateLocaleRoute->setDefault(
             '_controller',
-            'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction'
+            'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Controller\TestController::indexAction'
         );
         $manager->persist($alternateLocaleRoute);
 
@@ -141,7 +141,7 @@ class LoadContentData implements FixtureInterface
             'content-deeper'
         );
         $route->setContent($content);
-        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Controller\TestController::indexAction');
+        $route->setDefault('_controller', 'Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Controller\TestController::indexAction');
 
         $manager->persist($route);
 

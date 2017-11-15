@@ -9,18 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Resources\Document;
+namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCRODM;
 use Symfony\Cmf\Bundle\CoreBundle\Translatable\TranslatableInterface;
-use Symfony\Cmf\Component\Routing\RouteReferrersInterface;
+use Symfony\Cmf\Bundle\SeoBundle\SitemapAwareInterface;
+use Symfony\Cmf\Component\Routing\RouteReferrersReadInterface;
 use Symfony\Component\Routing\Route;
 
 /**
- * @PHPCRODM\Document(translator="attribute")
+ * @PHPCRODM\Document(referenceable=true, translator="attribute")
+ *
+ * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class AlternateLocaleContent extends ContentBase implements RouteReferrersInterface, TranslatableInterface
+class SitemapAwareContent extends ContentBase implements RouteReferrersReadInterface, TranslatableInterface, SitemapAwareInterface
 {
     /**
      * @var string
@@ -28,13 +31,6 @@ class AlternateLocaleContent extends ContentBase implements RouteReferrersInterf
      * @PHPCRODM\Locale
      */
     protected $locale;
-
-    /**
-     * @var string
-     *
-     * @PHPCRODM\Field(type="string",translated=true)
-     */
-    protected $title;
 
     /**
      * @var ArrayCollection|Route[]
@@ -46,9 +42,45 @@ class AlternateLocaleContent extends ContentBase implements RouteReferrersInterf
      */
     protected $routes;
 
+    /**
+     * @var bool
+     *
+     * @PHPCRODM\Field(type="boolean",property="visible_for_sitemap")
+     */
+    private $isVisibleForSitemap;
+
+    /**
+     * @var string
+     *
+     * @PHPCRODM\Field(type="string",translated=true)
+     */
+    protected $title;
+
     public function __construct()
     {
         $this->routes = new ArrayCollection();
+    }
+
+    /**
+     * @param string $sitemap
+     *
+     * @return bool
+     */
+    public function isVisibleInSitemap($sitemap)
+    {
+        return $this->isVisibleForSitemap;
+    }
+
+    /**
+     * @param bool $isVisibleForSitemap
+     *
+     * @return SitemapAwareContent
+     */
+    public function setIsVisibleForSitemap($isVisibleForSitemap)
+    {
+        $this->isVisibleForSitemap = $isVisibleForSitemap;
+
+        return $this;
     }
 
     /**
