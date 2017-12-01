@@ -21,7 +21,7 @@
         "doctrine/collections": "^1.0"
     },
     "require-dev": {
-        "doctrine/phpcr-odm": "^1.4.2",
+        "doctrine/phpcr-odm": "^1.4.2 || ^2.0",
         "doctrine/orm": "^2.4",
         "symfony-cmf/core-bundle": "^2.0",
         "symfony-cmf/routing-bundle": "^1.4.0|^2.0",
