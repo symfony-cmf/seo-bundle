@@ -13,6 +13,7 @@ namespace Symfony\Cmf\SeoBundle\Tests\Unit\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\CmfSeoExtension;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
@@ -231,8 +232,8 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
     {
         $count = 0;
         foreach ($this->container->getDefinitions() as $id => $definition) {
-            if ($definition instanceof DefinitionDecorator &&
-                'cmf_seo.error.request_matcher' === $definition->getParent()
+            if (($definition instanceof DefinitionDecorator || $definition instanceof ChildDefinition)
+                && 'cmf_seo.error.request_matcher' === $definition->getParent()
             ) {
                 ++$count;
                 $this->assertNotNull($definition);
