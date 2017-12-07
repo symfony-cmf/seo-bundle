@@ -50,7 +50,7 @@
                  abstract="true"
         />
 
-        <service id="cmf_seo.error.exclusion_matcher" class="Symfony\Cmf\Bundle\SeoBundle\Matcher\ExclusionMatcher" />
+        <service id="cmf_seo.error.exclusion_matcher" class="Symfony\Cmf\Bundle\SeoBundle\Matcher\ExclusionMatcher"/>
 
         <service id="cmf_seo.twig.extension" class="Symfony\Cmf\Bundle\SeoBundle\Twig\Extension\CmfSeoExtension" public="false">
             <tag name="twig.extension" />
