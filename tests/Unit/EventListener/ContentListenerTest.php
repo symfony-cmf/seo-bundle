@@ -22,8 +22,11 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class ContentListenerTest extends \PHPUnit_Framework_Testcase
 {
     protected $seoPresentation;
+
     protected $request;
+
     protected $event;
+
     protected $listener;
 
     public function setUp()
