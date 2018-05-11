@@ -24,6 +24,7 @@ class SitemapAwareDocumentVoterTest extends \PHPUnit_Framework_TestCase
      * @var VoterInterface
      */
     protected $voter;
+
     protected $sitemapAwareDocument;
 
     public function setUp()

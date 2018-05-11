@@ -29,10 +29,15 @@ use Symfony\Component\Translation\TranslatorInterface;
 class SeoPresentationTest extends \PHPUnit_Framework_Testcase
 {
     private $seoPresentation;
+
     private $pageService;
+
     private $seoMetadata;
+
     private $translator;
+
     private $content;
+
     private $configValues;
 
     public function setUp()
