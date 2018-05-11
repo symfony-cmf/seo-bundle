@@ -19,7 +19,9 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     // the properties below has to be configured by the child class
     protected $extractor;
+
     protected $extractMethod;
+
     protected $metadataMethod;
 
     public function setUp()
