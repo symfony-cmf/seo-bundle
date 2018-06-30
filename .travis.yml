@@ -32,8 +32,8 @@ env:
         - TEST_INSTALLATION=false
 
 matrix:
+  fast_finish: true
   include:
-    fast_finish: true
     - php: 7.2
       env:  COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak_vendors
     - php: 7.0
