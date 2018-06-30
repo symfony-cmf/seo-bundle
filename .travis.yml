@@ -45,7 +45,7 @@ matrix:
 
     - php: 7.2
       env:  DEPENDENCIES="symfony/lts:^2"
-      env:  DEPENDENCIES="symfony/lts:^2"
+      env:  DEPENDENCIES="symfony/lts:^3"
     - php: 7.2
       env: STABILITY=dev
     - env: TEST_INSTALLATION=true
