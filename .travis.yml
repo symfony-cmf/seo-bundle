@@ -33,21 +33,25 @@ env:
 matrix:
   include:
     fast_finish: true
-    - php: 
+    - php: 7.2
       env:  COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak_vendors
-    - php: 
+    - php: 7.0
       env:  COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak_vendors
 
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
+      env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
 
-    - php: 
+    - php: 7.2
       env:  DEPENDENCIES="symfony/lts:^2"
       env:  DEPENDENCIES="symfony/lts:^2"
-    - php: 
+    - php: 7.2
       env: STABILITY=dev
     - env: TEST_INSTALLATION=true
   allow_failures:
     - env: TEST_INSTALLATION=true
-    - php: 
+    - php: 7.2
       env: STABILITY=dev
 
 before_install:
