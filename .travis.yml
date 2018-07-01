@@ -20,28 +20,27 @@ cache:
         - $HOME/.composer/cache/files
         - $HOME/symfony-bridge/.phpunit
 env:
-      matrix: DEPENDENCIES=4.0.*
-      global:
+    matrix: DEPENDENCIES=4.0.*
+    global:
         - PHPUNIT_FLAGS="-v"
         - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
-
-        - SYMFONY_DEPRECATIONS_HELPER="24"
+s
         - SYMFONY_PHPUNIT_DIR=.phpunit SYMFONY_PHPUNIT_REMOVE="symfony/yaml"
         - KERNEL_CLASS=Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Kernel
         - SYMFONY_PHPUNIT_VERSION=5.7
         - TEST_INSTALLATION=false
 
 matrix:
-  fast_finish: true
-  include:
-    - php: 7.2
-      env:  COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak_vendors
-    - php: 7.0
-      env:  COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak_vendors
+    fast_finish: true
+    include:
+        - php: 7.2
+          env:  COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak_vendors
+        - php: 7.0
+          env:  COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak_vendors
 
-    - php: 7.0
-    - php: 7.1
-    - php: 7.2
+        - php: 7.0
+        - php: 7.1
+        - php: 7.2
       env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
 
     - php: 7.2
@@ -57,16 +56,16 @@ matrix:
       env: STABILITY=dev
 
 before_install:
-  - composer self-update
-  - composer validate --no-check-all --ansi
-  - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-  - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-  - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
-  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+    - composer self-update
+    - composer validate --no-check-all --ansi
+    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+    - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+    - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
 
 install: travis_wait composer update --prefer-dist $COMPOSER_FLAGS
 script:
-  - if [ "${TEST_INSTALLATION}" == true ]; then make test_installation; else make test; fi
+    - if [ "${TEST_INSTALLATION}" == true ]; then make test_installation; else make test; fi
 
 notifications:
   irc: "irc.freenode.org#symfony-cmf"
