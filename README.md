@@ -21,7 +21,7 @@ aware for Search Engine Optimisation (SEO).
 
 ## Requirements
 
-* PHP 7.0 / 7.1 / 7.2
+* PHP 7.1 / 7.2
 * Symfony 2.8 / 3.3 / 3.4 / 4.0
 * See also the `require` section of [composer.json](composer.json)
 
