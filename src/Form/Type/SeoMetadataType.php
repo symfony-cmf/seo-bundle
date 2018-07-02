@@ -109,4 +109,14 @@ class SeoMetadataType extends AbstractType
     {
         return 'seo_metadata';
     }
+
+    /**
+     * To pass on lowest and to compatible on symfony 2.8.
+     *
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'seo_metadata';
+    }
 }
