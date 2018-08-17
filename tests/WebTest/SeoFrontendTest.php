@@ -161,8 +161,8 @@ class SeoFrontendTest extends BaseTestCase
 
     public function testErrorHandling()
     {
-        $crawler = $this->client->request('GET', '/content/content-1/content-depp');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/content/content-1/content-depp');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(404, $res->getStatusCode());
 
@@ -173,14 +173,14 @@ class SeoFrontendTest extends BaseTestCase
 
     public function testErrorHandlingInvalidPhpcrPath()
     {
-        $this->client->request('GET', '/content/content-1/content[a]b/sub?bla=blup');
-        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+        $this->getClient()->request('GET', '/content/content-1/content[a]b/sub?bla=blup');
+        $this->assertEquals(404, $this->getClient()->getResponse()->getStatusCode());
     }
 
     public function testErrorHandlingForExcludedPath()
     {
-        $crawler = $this->client->request('GET', '/content/content-1/content-excluded');
-        $res = $this->client->getResponse();
+        $crawler = $this->getClient()->request('GET', '/content/content-1/content-excluded');
+        $res = $this->getClient()->getResponse();
 
         $this->assertEquals(404, $res->getStatusCode());
 
