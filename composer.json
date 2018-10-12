@@ -30,7 +30,6 @@
         "symfony/phpunit-bridge": "^3.3 || ^4.0",
         "burgov/key-value-form-bundle": "^1.0",
         "symfony-cmf/testing": "^2.1.9",
-        "symfony-cmf/testing": "^2.1.8",
         "symfony/security-bundle": "^2.8 || ^3.3 || ^4.0",
         "symfony/translation": "^2.8 || ^3.3 || ^4.0",
         "symfony/validator": "^2.8 || ^3.3 || ^4.0",
@@ -60,7 +59,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1-dev"
+            "dev-master": "2.2-dev"
         }
     },
     "conflict": {
