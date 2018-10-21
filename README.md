@@ -10,7 +10,6 @@
 
 Branch | Travis | Coveralls |
 ------ | ------ | --------- |
-2.1   | [![Build Status][travis_stable_badge]][travis_link]     | [![Coverage Status][coveralls_stable_badge]][coveralls_stable_link]     |
 master | [![Build Status][travis_unstable_badge]][travis_link] | [![Coverage Status][coveralls_unstable_badge]][coveralls_unstable_link] |
 
 This package is part of the [Symfony Content Management Framework (CMF)](http://cmf.symfony.com/) and licensed
@@ -58,14 +57,14 @@ Thanks to
 
 This package is available under the [MIT license](src/Resources/meta/LICENSE).
 
-[travis_legacy_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=2.1
-[travis_stable_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=2.1
+[travis_legacy_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=master
+[travis_stable_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=master
 [travis_unstable_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=master
 [travis_link]: https://travis-ci.org/symfony-cmf/seo-bundle
 
-[coveralls_legacy_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=2.1
-[coveralls_legacy_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=2.1
-[coveralls_stable_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=2.1
-[coveralls_stable_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=2.1
+[coveralls_legacy_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=master
+[coveralls_legacy_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=master
+[coveralls_stable_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=master
+[coveralls_stable_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=master
 [coveralls_unstable_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=master
 [coveralls_unstable_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=master
