@@ -8,7 +8,7 @@
 [![Monthly Downloads](https://poser.pugx.org/symfony-cmf/seo-bundle/d/monthly)](https://packagist.org/packages/symfony-cmf/seo-bundle)
 [![Daily Downloads](https://poser.pugx.org/symfony-cmf/seo-bundle/d/daily)](https://packagist.org/packages/symfony-cmf/seo-bundle)
 
-Branch | Travis | Coveralls |
+Version/Branch | Travis | Coveralls |
 ------ | ------ | --------- |
 2.1.0   | [![Build Status][travis_stable_badge]][travis_link]     | [![Coverage Status][coveralls_stable_badge]][coveralls_stable_link]     |
 master | [![Build Status][travis_unstable_badge]][travis_link] | [![Coverage Status][coveralls_unstable_badge]][coveralls_unstable_link] |
