@@ -10,8 +10,8 @@
 
 Branch | Travis | Coveralls | Scrutinizer |
 ------ | ------ | --------- | ----------- |
-master   | [![Build Status][travis_stable_badge]][travis_stable_link]     | [![Coverage Status][coveralls_stable_badge]][coveralls_stable_link]     | [![Scrutinizer Status][scrutinizer_stable_badge]][scrutinizer_stable_link] |
-master | [![Build Status][travis_unstable_badge]][travis_unstable_link] | [![Coverage Status][coveralls_unstable_badge]][coveralls_unstable_link] | [![Scrutinizer Status][scrutinizer_unstable_badge]][scrutinizer_unstable_link] |
+2.x   | [![Build Status][travis_stable_badge]][travis_stable_link]     | [![Coverage Status][coveralls_stable_badge]][coveralls_stable_link]     | [![Scrutinizer Status][scrutinizer_stable_badge]][scrutinizer_stable_link] |
+2.2-dev | [![Build Status][travis_unstable_badge]][travis_unstable_link] | [![Coverage Status][coveralls_unstable_badge]][coveralls_unstable_link] | [![Scrutinizer Status][scrutinizer_unstable_badge]][scrutinizer_unstable_link] |
 
 
 This package is part of the [Symfony Content Management Framework (CMF)](http://cmf.symfony.com/) and licensed
@@ -59,17 +59,17 @@ Thanks to
 
 This package is available under the [MIT license](src/Resources/meta/LICENSE).
 
-[travis_stable_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=master
+[travis_stable_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=2.x
 [travis_stable_link]: https://travis-ci.org/symfony-cmf/seo-bundle
-[travis_unstable_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=master
+[travis_unstable_badge]: https://travis-ci.org/symfony-cmf/seo-bundle.svg?branch=2.2-dev
 [travis_unstable_link]: https://travis-ci.org/symfony-cmf/seo-bundle
 
-[coveralls_stable_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=master
-[coveralls_stable_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=master
-[coveralls_unstable_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=master
-[coveralls_unstable_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=master
+[coveralls_stable_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=2.x
+[coveralls_stable_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=2.x
+[coveralls_unstable_badge]: https://coveralls.io/repos/github/symfony-cmf/seo-bundle/badge.svg?branch=2.2-dev
+[coveralls_unstable_link]: https://coveralls.io/github/symfony-cmf/seo-bundle?branch=2.2-dev
 
-[scrutinizer_stable_badge]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/badges/quality-score.png?b=master
-[scrutinizer_stable_link]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/?branch=master
-[scrutinizer_unstable_badge]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/badges/quality-score.png?b=master
-[scrutinizer_unstable_link]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/?branch=master
+[scrutinizer_stable_badge]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/badges/quality-score.png?b=2.x
+[scrutinizer_stable_link]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/?branch=2.x
+[scrutinizer_unstable_badge]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/badges/quality-score.png?b=2.2-dev
+[scrutinizer_unstable_link]: https://scrutinizer-ci.com/g/symfony-cmf/seo-bundle/?branch=2.2-dev
