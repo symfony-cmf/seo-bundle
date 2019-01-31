@@ -9,12 +9,13 @@
  * file that was distributed with this source code.
  */
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class FileCacheTest extends \PHPUnit_Framework_TestCase
+class FileCacheTest extends TestCase
 {
     public function testThrowingExceptionForUnknownBaseDir()
     {

@@ -11,13 +11,14 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserInterface;
 
 /**
  * Test a guesser.
  */
-abstract class GuesserTestCase extends \PHPUnit_Framework_Testcase
+abstract class GuesserTestCase extends TestCase
 {
     /**
      * @var GuesserInterface

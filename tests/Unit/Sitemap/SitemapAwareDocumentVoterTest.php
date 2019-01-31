@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\SitemapAwareDocumentVoter;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterInterface;
 use Symfony\Cmf\Bundle\SeoBundle\SitemapAwareInterface;
@@ -18,7 +19,7 @@ use Symfony\Cmf\Bundle\SeoBundle\SitemapAwareInterface;
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class SitemapAwareDocumentVoterTest extends \PHPUnit_Framework_TestCase
+class SitemapAwareDocumentVoterTest extends TestCase
 {
     /**
      * @var VoterInterface

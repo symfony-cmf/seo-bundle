@@ -11,12 +11,13 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\EventListener\LanguageListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
-class LanguageListenerTest extends \PHPUnit_Framework_Testcase
+class LanguageListenerTest extends TestCase
 {
     private $listener;
 

@@ -19,6 +19,10 @@
         </testsuite>
     </testsuites>
 
+    <php>
+    <env name="KERNEL_CLASS" value="\Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Kernel" />
+    </php>
+
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory>.</directory>

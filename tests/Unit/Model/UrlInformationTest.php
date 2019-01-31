@@ -11,12 +11,13 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Model;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@gmx.de>
  */
-class UrlInformationTest extends \PHPUnit_Framework_Testcase
+class UrlInformationTest extends TestCase
 {
     /**
      * @var UrlInformation

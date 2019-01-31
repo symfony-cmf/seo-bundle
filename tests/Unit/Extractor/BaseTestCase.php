@@ -11,9 +11,10 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Extractor;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 
-abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
+abstract class BaseTestCase extends TestCase
 {
     protected $seoMetadata;
 

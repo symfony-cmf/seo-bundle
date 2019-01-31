@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection;
@@ -26,7 +27,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * This model is responsible for putting the SeoMetadata into
  * sonatas PageService.
  */
-class SeoPresentationTest extends \PHPUnit_Framework_Testcase
+class SeoPresentationTest extends TestCase
 {
     private $seoPresentation;
 

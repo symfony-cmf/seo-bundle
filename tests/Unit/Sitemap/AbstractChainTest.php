@@ -11,12 +11,13 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\AbstractChain;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class AbstractChainTest extends \PHPUnit_Framework_Testcase
+class AbstractChainTest extends TestCase
 {
     /** @var TestChain */
     private $chain;

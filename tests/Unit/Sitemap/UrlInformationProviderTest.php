@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserChain;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\LoaderChain;
@@ -20,7 +21,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterChain;
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class UrlInformationProviderTest extends \PHPUnit_Framework_Testcase
+class UrlInformationProviderTest extends TestCase
 {
     /**
      * @var UrlInformationProvider

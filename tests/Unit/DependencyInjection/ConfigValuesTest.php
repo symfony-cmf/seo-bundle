@@ -11,9 +11,10 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\DependencyInjection\ConfigValues;
 
-class ConfigValuesTest extends \PHPUnit_Framework_Testcase
+class ConfigValuesTest extends TestCase
 {
     /**
      * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exception\ExtractorStrategyException

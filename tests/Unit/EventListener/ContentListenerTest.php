@@ -11,6 +11,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentationInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
-class ContentListenerTest extends \PHPUnit_Framework_Testcase
+class ContentListenerTest extends TestCase
 {
     protected $seoPresentation;
 

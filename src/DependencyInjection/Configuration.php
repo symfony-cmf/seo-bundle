@@ -30,9 +30,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('cmf_seo');
 
-        $nodeBuilder = $treeBuilder->root('cmf_seo')
+        $nodeBuilder = $treeBuilder->getRootNode()
             ->addDefaultsIfNotSet()
             ->beforeNormalization()
                 ->ifTrue(function ($config) {
