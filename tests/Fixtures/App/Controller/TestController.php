@@ -11,9 +11,9 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class TestController extends Controller
+class TestController extends AbstractController
 {
     public function indexAction($contentDocument)
     {

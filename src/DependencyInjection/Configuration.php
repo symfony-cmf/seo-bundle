@@ -31,8 +31,15 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('cmf_seo');
+        // Keep compatibility with symfony/config < 4.2
+        if (!method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->root('cmf_seo');
+        } else {
+            $rootNode = $treeBuilder->getRootNode();
+        }
 
-        $nodeBuilder = $treeBuilder->getRootNode()
+
+        $rootNode
             ->addDefaultsIfNotSet()
             ->beforeNormalization()
                 ->ifTrue(function ($config) {
