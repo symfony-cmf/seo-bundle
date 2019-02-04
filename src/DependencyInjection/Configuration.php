@@ -90,14 +90,14 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
         ;
 
-        $this->addPersistenceSection($nodeBuilder);
-        $this->addAlternateLocaleSection($nodeBuilder);
-        $this->addErrorHandlerSection($nodeBuilder);
-        $this->addSitemapSection($nodeBuilder);
-        $this->addContentListenerSection($nodeBuilder);
-        $this->addFormSection($nodeBuilder);
+        $this->addPersistenceSection($rootNode);
+        $this->addAlternateLocaleSection($rootNode);
+        $this->addErrorHandlerSection($rootNode);
+        $this->addSitemapSection($rootNode);
+        $this->addContentListenerSection($rootNode);
+        $this->addFormSection($rootNode);
 
-        $nodeBuilder->end();
+        $rootNode->end();
 
         return $treeBuilder;
     }
