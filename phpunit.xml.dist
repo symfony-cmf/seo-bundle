@@ -7,16 +7,23 @@
 >
 
 	<testsuites>
+		
 		<testsuite name="unit tests">
             <directory>./tests/Unit</directory>
         </testsuite>
+
+                
         <testsuite name="functional tests with phpcr">
             <directory>./tests/Functional</directory>
             <exclude>./tests/Functional/Doctrine/Orm</exclude>
         </testsuite>
+
+                
         <testsuite name="functional tests with orm">
             <directory>./tests/Functional/Doctrine/Orm</directory>
-        </testsuite>	</testsuites>
+        </testsuite>
+
+        	</testsuites>
 
 	<filter>
 		<whitelist addUncoveredFilesFromWhitelist="true">
@@ -28,5 +35,7 @@
 	</filter>
 
 	<php>
-    <env name="KERNEL_CLASS" value="Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Kernel" />	</php>
+
+        <env name="KERNEL_CLASS" value="\Symfony\Cmf\Bundle\SeoBundle\Tests\Fixtures\App\Kernel" />
+	</php>
 </phpunit>
