@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "symfony/framework-bundle": "^3.4 || ^4.1",
         "sonata-project/seo-bundle": "^2.2",
         "doctrine/collections": "^1.0"
     },
@@ -30,13 +30,13 @@
         "symfony/phpunit-bridge": "^4.2.2",
         "burgov/key-value-form-bundle": "^1.0",
         "symfony-cmf/testing": "^2.1.9",
-        "symfony/security-bundle": "^3.4 || ^4.0",
-        "symfony/translation": "^3.4 || ^4.0",
-        "symfony/validator": "^3.4 || ^4.0",
-        "symfony/asset": "^3.4 || ^4.0",
-        "symfony/templating": "^3.4 || ^4.0",
-        "symfony/browser-kit": "^3.4 || ^4.0",
-        "symfony/css-selector": "^3.4 || ^4.0"
+        "symfony/security-bundle": "^3.4 || ^4.1",
+        "symfony/translation": "^3.4 || ^4.1",
+        "symfony/validator": "^3.4 || ^4.1",
+        "symfony/asset": "^3.4 || ^4.1",
+        "symfony/templating": "^3.4 || ^4.1",
+        "symfony/browser-kit": "^3.4 || ^4.1",
+        "symfony/css-selector": "^3.4 || ^4.1"
     },
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",

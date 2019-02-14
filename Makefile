@@ -27,24 +27,63 @@ list:
 	@echo 'unit_tests:               will run unit tests only'
 	@echo 'functional_tests_phpcr:  will run functional tests with PHPCR'
 	@echo 'functional_tests_orm:    will run functional tests with ORM'
-	@echo 'test_installation:    will run installation test'
-include ${TESTING_SCRIPTS_DIR}/make/unit_tests.mk
-include ${TESTING_SCRIPTS_DIR}/make/functional_tests_phpcr.mk
-include ${TESTING_SCRIPTS_DIR}/make/functional_tests_orm.mk
-include ${TESTING_SCRIPTS_DIR}/make/test_installation.mk
+	@echo 'test_installation:    will run installation test'TEST_DEPENDENCIES := ""
+EXTRA_INCLUDES:=$(wildcard ${TESTING_SCRIPTS_DIR}/make/unit_tests.mk)
+ifneq ($(strip $(EXTRA_INCLUDES)),)
+  contents :=  $(shell echo including extra rules $(EXTRA_INCLUDES))
+  include $(EXTRA_INCLUDES)
+    TEST_DEPENDENCIES := $(TEST_DEPENDENCIES)" unit_tests"
+  endif
+EXTRA_INCLUDES:=$(wildcard ${TESTING_SCRIPTS_DIR}/make/functional_tests_phpcr.mk)
+ifneq ($(strip $(EXTRA_INCLUDES)),)
+  contents :=  $(shell echo including extra rules $(EXTRA_INCLUDES))
+  include $(EXTRA_INCLUDES)
+    TEST_DEPENDENCIES := $(TEST_DEPENDENCIES)" functional_tests_phpcr"
+  endif
+EXTRA_INCLUDES:=$(wildcard ${TESTING_SCRIPTS_DIR}/make/functional_tests_orm.mk)
+ifneq ($(strip $(EXTRA_INCLUDES)),)
+  contents :=  $(shell echo including extra rules $(EXTRA_INCLUDES))
+  include $(EXTRA_INCLUDES)
+    TEST_DEPENDENCIES := $(TEST_DEPENDENCIES)" functional_tests_orm"
+  endif
+EXTRA_INCLUDES:=$(wildcard ${TESTING_SCRIPTS_DIR}/make/test_installation.mk)
+ifneq ($(strip $(EXTRA_INCLUDES)),)
+  contents :=  $(shell echo including extra rules $(EXTRA_INCLUDES))
+  include $(EXTRA_INCLUDES)
+  endif
 
 .PHONY: test
-test: build/xdebug-filter.php  unit_tests functional_tests_phpcr functional_tests_orm
+test: build/xdebug-filter.php$
+ifneq ($(strip $(wildcard ${TESTING_SCRIPTS_DIR}/make/unit_tests.mk)),)
+	@make unit_tests
+endif
+ifneq ($(strip $(wildcard ${TESTING_SCRIPTS_DIR}/make/functional_tests_phpcr.mk)),)
+	@make functional_tests_phpcr
+endif
+ifneq ($(strip $(wildcard ${TESTING_SCRIPTS_DIR}/make/functional_tests_orm.mk)),)
+	@make functional_tests_orm
+endif
+
 lint-php:
 	php-cs-fixer fix --ansi --verbose --diff --dry-run
 .PHONY: lint-php
 
-cs-fix: cs-fix-php cs-fix-xml
+lint: lint-composer lint-php
+.PHONY: lint
+
+lint-composer:
+	composer validate
+.PHONY: lint-composer
+
+cs-fix: cs-fix-php
 .PHONY: cs-fix
 
 cs-fix-php:
 	php-cs-fixer fix --verbose
 .PHONY: cs-fix-php
+
+build:
+	mkdir $@
 
 build/xdebug-filter.php: phpunit.xml.dist build
 ifeq ($(HAS_XDEBUG), 0)
