@@ -14,7 +14,6 @@ namespace Symfony\Cmf\Bundle\SeoBundle\DependencyInjection;
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentation;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -88,6 +87,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('title')->end()
                 ->scalarNode('description')->end()
                 ->scalarNode('original_route_pattern')->defaultValue(SeoPresentation::ORIGINAL_URL_CANONICAL)->end()
+            ->end()
         ;
 
         $this->addPersistenceSection($rootNode);
@@ -97,36 +97,36 @@ class Configuration implements ConfigurationInterface
         $this->addContentListenerSection($rootNode);
         $this->addFormSection($rootNode);
 
-        $rootNode->end();
-
         return $treeBuilder;
     }
 
     /**
      * Attach the persistence node to the tree.
      *
-     * @param NodeBuilder $treeBuilder
+     * @param ArrayNodeDefinition $root
      */
-    private function addPersistenceSection(NodeBuilder $treeBuilder)
+    private function addPersistenceSection(ArrayNodeDefinition $root)
     {
-        $treeBuilder
-            ->arrayNode('persistence')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->arrayNode('phpcr')
-                        ->addDefaultsIfNotSet()
-                        ->canBeEnabled()
-                        ->children()
-                            ->scalarNode('manager_name')->defaultNull()->end()
-                            ->scalarNode('content_basepath')->defaultValue('/cms/content')->end()
+        $root
+            ->children()
+                ->arrayNode('persistence')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('phpcr')
+                            ->addDefaultsIfNotSet()
+                            ->canBeEnabled()
+                            ->children()
+                                ->scalarNode('manager_name')->defaultNull()->end()
+                                ->scalarNode('content_basepath')->defaultValue('/cms/content')->end()
+                            ->end()
                         ->end()
-                    ->end()
 
-                    ->arrayNode('orm')
-                        ->addDefaultsIfNotSet()
-                        ->canBeEnabled()
-                        ->children()
-                            ->scalarNode('manager_name')->defaultNull()->end()
+                        ->arrayNode('orm')
+                            ->addDefaultsIfNotSet()
+                            ->canBeEnabled()
+                            ->children()
+                                ->scalarNode('manager_name')->defaultNull()->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
@@ -137,16 +137,18 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the alternate locale node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $root
      */
-    private function addAlternateLocaleSection(NodeBuilder $nodeBuilder)
+    private function addAlternateLocaleSection(ArrayNodeDefinition $root)
     {
-        $nodeBuilder
-            ->arrayNode('alternate_locale')
-                ->addDefaultsIfNotSet()
-                ->canBeEnabled()
-                ->children()
-                    ->scalarNode('provider_id')->defaultNull()->end()
+        $root
+            ->children()
+                ->arrayNode('alternate_locale')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('provider_id')->defaultNull()->end()
+                    ->end()
                 ->end()
             ->end()
         ;
@@ -155,31 +157,33 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the error node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $root
      */
-    private function addErrorHandlerSection(ArrayNodeDefinition $nodeBuilder)
+    private function addErrorHandlerSection(ArrayNodeDefinition $root)
     {
-        $nodeBuilder
-            ->arrayNode('error')
-                ->fixXmlConfig('template')
-                ->fixXmlConfig('exclusion_rule')
-                ->children()
-                    ->booleanNode('enable_parent_provider')->defaultFalse()->end()
-                    ->booleanNode('enable_sibling_provider')->defaultFalse()->end()
-                    ->arrayNode('templates')
-                        ->useAttributeAsKey('format')
-                        ->requiresAtLeastOneElement()
-                        ->defaultValue(['html' => 'CmfSeoBundle:Exception:error.html.twig'])
-                        ->prototype('scalar')->end()
-                    ->end()
-                    ->arrayNode('exclusion_rules')
-                        ->info('Rules to exclude error handling from specific matches.')
-                        ->prototype('array')
-                            ->children()
-                                ->scalarNode('path')->defaultNull()->info('Path to exclude')->end()
-                                ->scalarNode('host')->defaultNull()->info('Host to exclude')->end()
-                                ->scalarNode('methods')->defaultNull()->info('Methods to exclude')->end()
-                                ->scalarNode('ips')->defaultNull()->info('Ips to exclude')->end()
+        $root
+            ->children()
+                ->arrayNode('error')
+                    ->fixXmlConfig('template')
+                    ->fixXmlConfig('exclusion_rule')
+                    ->children()
+                        ->booleanNode('enable_parent_provider')->defaultFalse()->end()
+                        ->booleanNode('enable_sibling_provider')->defaultFalse()->end()
+                        ->arrayNode('templates')
+                            ->useAttributeAsKey('format')
+                            ->requiresAtLeastOneElement()
+                            ->defaultValue(['html' => 'CmfSeoBundle:Exception:error.html.twig'])
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->arrayNode('exclusion_rules')
+                            ->info('Rules to exclude error handling from specific matches.')
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('path')->defaultNull()->info('Path to exclude')->end()
+                                    ->scalarNode('host')->defaultNull()->info('Host to exclude')->end()
+                                    ->scalarNode('methods')->defaultNull()->info('Methods to exclude')->end()
+                                    ->scalarNode('ips')->defaultNull()->info('Ips to exclude')->end()
+                                    ->end()
                                 ->end()
                             ->end()
                         ->end()
@@ -192,52 +196,54 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the sitemap node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $root
      */
-    private function addSitemapSection(ArrayNodeDefinition $nodeBuilder)
+    private function addSitemapSection(ArrayNodeDefinition $root)
     {
-        $nodeBuilder
-            ->arrayNode('sitemap')
-                ->fixXmlConfig('configuration')
-                ->addDefaultsIfNotSet()
-                ->canBeEnabled()
-                ->children()
-                    ->arrayNode('defaults')
-                        ->fixXmlConfig('template')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('default_change_frequency')->defaultValue('always')->end()
-                            ->arrayNode('templates')
-                                ->useAttributeAsKey('format')
-                                ->requiresAtLeastOneElement()
-                                ->defaultValue([
-                                    'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
-                                    'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
-                                ])
-                                ->prototype('scalar')->end()
-                            ->end()
-                            ->append($this->getSitemapHelperNode('loaders', ['_all']))
-                            ->append($this->getSitemapHelperNode('guessers', ['_all']))
-                            ->append($this->getSitemapHelperNode('voters', ['_all']))
-                        ->end()
-                    ->end()
-                    ->arrayNode('configurations')
-                        ->useAttributeAsKey('name')
-                        ->prototype('array')
+        $root
+            ->children()
+                ->arrayNode('sitemap')
+                    ->fixXmlConfig('configuration')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->children()
+                        ->arrayNode('defaults')
                             ->fixXmlConfig('template')
-                            ->fixXmlConfig('loader')
-                            ->fixXmlConfig('guesser')
-                            ->fixXmlConfig('voter')
+                            ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('default_change_frequency')->defaultNull()->end()
+                                ->scalarNode('default_change_frequency')->defaultValue('always')->end()
                                 ->arrayNode('templates')
                                     ->useAttributeAsKey('format')
                                     ->requiresAtLeastOneElement()
+                                    ->defaultValue([
+                                        'html' => 'CmfSeoBundle:Sitemap:index.html.twig',
+                                        'xml' => 'CmfSeoBundle:Sitemap:index.xml.twig',
+                                    ])
                                     ->prototype('scalar')->end()
                                 ->end()
-                                ->append($this->getSitemapHelperNode('loaders', []))
-                                ->append($this->getSitemapHelperNode('guessers', []))
-                                ->append($this->getSitemapHelperNode('voters', []))
+                                ->append($this->getSitemapHelperNode('loaders', ['_all']))
+                                ->append($this->getSitemapHelperNode('guessers', ['_all']))
+                                ->append($this->getSitemapHelperNode('voters', ['_all']))
+                            ->end()
+                        ->end()
+                        ->arrayNode('configurations')
+                            ->useAttributeAsKey('name')
+                            ->prototype('array')
+                                ->fixXmlConfig('template')
+                                ->fixXmlConfig('loader')
+                                ->fixXmlConfig('guesser')
+                                ->fixXmlConfig('voter')
+                                ->children()
+                                    ->scalarNode('default_change_frequency')->defaultNull()->end()
+                                    ->arrayNode('templates')
+                                        ->useAttributeAsKey('format')
+                                        ->requiresAtLeastOneElement()
+                                        ->prototype('scalar')->end()
+                                    ->end()
+                                    ->append($this->getSitemapHelperNode('loaders', []))
+                                    ->append($this->getSitemapHelperNode('guessers', []))
+                                    ->append($this->getSitemapHelperNode('voters', []))
+                                ->end()
                             ->end()
                         ->end()
                     ->end()
@@ -246,7 +252,13 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function getSitemapHelperNode($type, $default)
+    /**
+     * @param string $type
+     * @param string $default
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getSitemapHelperNode($type, $default): ArrayNodeDefinition
     {
         $node = new ArrayNodeDefinition($type);
         $node
@@ -269,16 +281,18 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the content listener node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $root
      */
-    private function addContentListenerSection(ArrayNodeDefinition $nodeBuilder)
+    private function addContentListenerSection(ArrayNodeDefinition $root)
     {
-        $nodeBuilder
-            ->arrayNode('content_listener')
-                ->canBeDisabled()
-                ->children()
-                    ->scalarNode('content_key')
-                    ->defaultValue(class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter') ? DynamicRouter::CONTENT_KEY : '')
+        $root
+            ->children()
+                ->arrayNode('content_listener')
+                    ->canBeDisabled()
+                    ->children()
+                        ->scalarNode('content_key')
+                        ->defaultValue(class_exists('Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter') ? DynamicRouter::CONTENT_KEY : '')
+                    ->end()
                 ->end()
             ->end()
         ;
@@ -287,28 +301,30 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the form node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $root
      */
-    private function addFormSection($nodeBuilder)
+    private function addFormSection(ArrayNodeDefinition $root)
     {
-        $nodeBuilder
-            ->arrayNode('form')
-                ->addDefaultsIfNotSet()
-                ->fixXmlConfig('option')
-                ->children()
-                    ->arrayNode('data_class')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('seo_metadata')->defaultNull()->end()
+        $root
+            ->children()
+                ->arrayNode('form')
+                    ->addDefaultsIfNotSet()
+                    ->fixXmlConfig('option')
+                    ->children()
+                        ->arrayNode('data_class')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('seo_metadata')->defaultNull()->end()
+                            ->end()
                         ->end()
-                    ->end()
-                    ->arrayNode('options')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->enumNode('generic_metadata')
-                                ->info('Whether to show fields to edit generic SEO information. Needs burgov/key-value-form-bundle.')
-                                ->values([true, false, 'auto'])
-                                ->defaultValue('auto')
+                        ->arrayNode('options')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->enumNode('generic_metadata')
+                                    ->info('Whether to show fields to edit generic SEO information. Needs burgov/key-value-form-bundle.')
+                                    ->values([true, false, 'auto'])
+                                    ->defaultValue('auto')
+                                ->end()
                             ->end()
                         ->end()
                     ->end()
