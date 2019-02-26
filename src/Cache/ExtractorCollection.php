@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,7 +26,7 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
     private $extractors;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $resource;
 
@@ -35,7 +37,7 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
 
     /**
      * @param array       $extractors
-     * @param null|string $resource   The path to the file of the content object, this is
+     * @param string|null $resource   The path to the file of the content object, this is
      *                                used to determine if the cache needs to be updated
      */
     public function __construct(array $extractors, $resource = null)
@@ -56,7 +58,7 @@ class ExtractorCollection implements \IteratorAggregate, \Serializable
     /**
      * Checks if the cache needs to be updated or not.
      *
-     * @param null|int $timestamp
+     * @param int|null $timestamp
      *
      * @return bool whether cache needs to be updated
      */

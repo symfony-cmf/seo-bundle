@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -77,7 +79,7 @@ class SitemapController
         $templates = $this->configurations[$sitemap]['templates'];
 
         $supportedFormats = array_merge(['json'], array_keys($templates));
-        if (!in_array($_format, $supportedFormats)) {
+        if (!\in_array($_format, $supportedFormats, true)) {
             $text = sprintf(
                 'Unknown format %s, use one of %s.',
                 $_format,

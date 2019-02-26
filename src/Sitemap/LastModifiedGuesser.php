@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -53,7 +55,7 @@ class LastModifiedGuesser implements GuesserInterface
             return;
         }
 
-        $className = ClassUtils::getRealClass(get_class($object));
+        $className = ClassUtils::getRealClass(\get_class($object));
         $manager = $this->managerRegistry->getManagerForClass($className);
         if (!$manager instanceof DocumentManager) {
             return;
@@ -63,7 +65,7 @@ class LastModifiedGuesser implements GuesserInterface
         $metadata = $manager->getClassMetadata($className);
         $mixins = $metadata->getMixins();
 
-        if (!in_array('mix:lastModified', $mixins)) {
+        if (!\in_array('mix:lastModified', $mixins, true)) {
             return;
         }
 
@@ -83,7 +85,5 @@ class LastModifiedGuesser implements GuesserInterface
                 return $fieldName;
             }
         }
-
-        return;
     }
 }

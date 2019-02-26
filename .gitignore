@@ -1,5 +1,6 @@
 tests/Fixtures/App/var
 !tests/Fixtures/App/var/.gitempty
-.php_cs
 composer.lock
 vendor
+/.php_cs
+.php_cs.cache

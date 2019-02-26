@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,22 +37,6 @@ class SeoMetadataTypeTest extends FormIntegrationTestCase
         $this->validator->expects($this->any())->method('validate')->will($this->returnValue([]));
 
         parent::setUp();
-    }
-
-    protected function getExtensions()
-    {
-        return array_merge(
-            parent::getExtensions(),
-            [
-                new ValidatorExtension($this->validator),
-                new PreloadedExtension([
-                    new KeyValueType(),
-                    new KeyValueRowType(),
-                    new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'),
-                    new SeoMetadataTypeTest_OrmType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'),
-                ], []),
-            ]
-        );
     }
 
     public function testDataClassCreationForPhpcr()
@@ -109,6 +95,22 @@ class SeoMetadataTypeTest extends FormIntegrationTestCase
 
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($object, $form->getData());
+    }
+
+    protected function getExtensions()
+    {
+        return array_merge(
+            parent::getExtensions(),
+            [
+                new ValidatorExtension($this->validator),
+                new PreloadedExtension([
+                    new KeyValueType(),
+                    new KeyValueRowType(),
+                    new SeoMetadataType('Symfony\Cmf\Bundle\SeoBundle\Doctrine\Phpcr\SeoMetadata'),
+                    new SeoMetadataTypeTest_OrmType('Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata'),
+                ], []),
+            ]
+        );
     }
 }
 

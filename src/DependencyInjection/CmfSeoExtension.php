@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -76,7 +78,7 @@ class CmfSeoExtension extends Extension
             );
         }
 
-        $errorConfig = isset($config['error']) ? $config['error'] : [];
+        $errorConfig = $config['error'] ?? [];
         $this->loadErrorHandling($errorConfig, $container);
 
         if ($this->isConfigEnabled($container, $config['sitemap'])) {
@@ -116,7 +118,7 @@ class CmfSeoExtension extends Extension
         $params = ['translation_domain', 'title', 'description', 'original_route_pattern'];
 
         foreach ($params as $param) {
-            $value = isset($config[$param]) ? $config[$param] : null;
+            $value = $config[$param] ?? null;
             $container->setParameter('cmf_seo.'.$param, $value);
         }
     }
@@ -218,8 +220,8 @@ class CmfSeoExtension extends Extension
             }
         }
 
-        $templates = isset($config['templates']) ? $config['templates'] : [];
-        $exclusionRules = isset($config['exclusion_rules']) ? $config['exclusion_rules'] : [];
+        $templates = $config['templates'] ?? [];
+        $exclusionRules = $config['exclusion_rules'] ?? [];
         $container->setParameter('cmf_seo.error.templates', $templates);
 
         $exclusionMatcherDefinition = $container->getDefinition('cmf_seo.error.exclusion_matcher');
@@ -305,7 +307,7 @@ class CmfSeoExtension extends Extension
                 }
             }
             foreach ($helperStatus as $helper => $map) {
-                $status = count($configuration[$helper]) ? $configuration[$helper] : $config['defaults'][$helper];
+                $status = \count($configuration[$helper]) ? $configuration[$helper] : $config['defaults'][$helper];
 
                 foreach ($status as $s) {
                     if ('_all' === $s) {
@@ -344,7 +346,7 @@ class CmfSeoExtension extends Extension
     {
         foreach ($helperStatus as $type => $status) {
             foreach ($status as $id => $sitemaps) {
-                if (count($sitemaps)) {
+                if (\count($sitemaps)) {
                     $definition = $container->getDefinition($id);
                     $tags = $definition->getTag($this->sitemapHelperMap[$type]);
                     $tag = reset($tags);
@@ -380,10 +382,10 @@ class CmfSeoExtension extends Extension
         $genericMetadata = false;
         if ($config['options']['generic_metadata']) {
             $bundles = $container->getParameter('kernel.bundles');
-            if (true === $config['options']['generic_metadata'] && !array_key_exists('BurgovKeyValueFormBundle', $bundles)) {
+            if (true === $config['options']['generic_metadata'] && !\array_key_exists('BurgovKeyValueFormBundle', $bundles)) {
                 throw new InvalidConfigurationException('To edit generic fields for the HTML header, you need the burgov/key-value-form-bundle in your project.');
             }
-            $genericMetadata = array_key_exists('BurgovKeyValueFormBundle', $bundles);
+            $genericMetadata = \array_key_exists('BurgovKeyValueFormBundle', $bundles);
         }
 
         $container->setParameter('cmf_seo.form.options', [

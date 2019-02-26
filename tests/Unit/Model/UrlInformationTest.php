@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,12 +31,11 @@ class UrlInformationTest extends TestCase
         $this->model = new UrlInformation();
     }
 
-    /**
-     * @expectedException \Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Invalid change frequency "some one", use one of always, hourly, daily, weekly, monthly, yearly, never.
-     */
     public function testSetChangeFrequencyShouldThrowExceptionForInvalidArguments()
     {
+        $this->expectException(\Symfony\Cmf\Bundle\SeoBundle\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid change frequency "some one", use one of always, hourly, daily, weekly, monthly, yearly, never.');
+
         $this->model->setChangeFrequency('some one');
     }
 

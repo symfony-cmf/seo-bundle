@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -54,7 +56,7 @@ class DepthGuesser implements GuesserInterface
             return;
         }
 
-        $manager = $this->managerRegistry->getManagerForClass(ClassUtils::getRealClass(get_class($object)));
+        $manager = $this->managerRegistry->getManagerForClass(ClassUtils::getRealClass(\get_class($object)));
         if (!$manager instanceof DocumentManager) {
             return;
         }

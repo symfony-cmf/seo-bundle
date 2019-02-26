@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,11 +21,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
 {
-    protected function registerCompilerPass(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new RegisterExtractorsPass());
-    }
-
     public function testRegistersServicesWithExtractorTagAndDefaultPriority()
     {
         $nonExtractorService = new Definition();
@@ -64,5 +61,10 @@ class RegisterExtractorsPassTest extends AbstractCompilerPassTestCase
             'addExtractor',
             [new Reference('extractor_service'), 1]
         );
+    }
+
+    protected function registerCompilerPass(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new RegisterExtractorsPass());
     }
 }
