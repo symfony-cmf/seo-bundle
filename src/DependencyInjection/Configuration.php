@@ -157,7 +157,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param NodeBuilder $nodeBuilder
      */
-    private function addErrorHandlerSection(NodeBuilder $nodeBuilder)
+    private function addErrorHandlerSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
             ->arrayNode('error')
@@ -194,7 +194,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param NodeBuilder $nodeBuilder
      */
-    private function addSitemapSection(NodeBuilder $nodeBuilder)
+    private function addSitemapSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
             ->arrayNode('sitemap')
@@ -271,7 +271,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param NodeBuilder $nodeBuilder
      */
-    private function addContentListenerSection(NodeBuilder $nodeBuilder)
+    private function addContentListenerSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
             ->arrayNode('content_listener')
