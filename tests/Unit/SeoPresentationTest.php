@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,6 +13,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\SeoBundle\Seo\SeoPage;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\CacheInterface;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\ExtractorCollection;
@@ -26,7 +29,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * This model is responsible for putting the SeoMetadata into
  * sonatas PageService.
  */
-class SeoPresentationTest extends \PHPUnit_Framework_Testcase
+class SeoPresentationTest extends TestCase
 {
     private $seoPresentation;
 

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -42,12 +44,12 @@ class SeoPresentation implements SeoPresentationInterface
     /**
      * Original URL should be output as canonical URL.
      */
-    const ORIGINAL_URL_CANONICAL = 'canonical';
+    public const ORIGINAL_URL_CANONICAL = 'canonical';
 
     /**
      * Redirect to original URL if not currently on original URL.
      */
-    const ORIGINAL_URL_REDIRECT = 'redirect';
+    public const ORIGINAL_URL_REDIRECT = 'redirect';
 
     public static $originalUrlBehaviours = [
         self::ORIGINAL_URL_CANONICAL,
@@ -80,7 +82,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $configValues;
 
     /**
-     * @var null|CacheInterface
+     * @var CacheInterface|null
      */
     private $cache;
 
@@ -103,14 +105,6 @@ class SeoPresentation implements SeoPresentationInterface
         $this->translator = $translator;
         $this->configValues = $configValues;
         $this->cache = $cache;
-    }
-
-    /**
-     * @param RedirectResponse $redirect
-     */
-    private function setRedirectResponse(RedirectResponse $redirect)
-    {
-        $this->redirectResponse = $redirect;
     }
 
     /**
@@ -156,7 +150,7 @@ class SeoPresentation implements SeoPresentationInterface
                 throw new InvalidArgumentException(
                     sprintf(
                         'getSeoMetadata must return either an instance of SeoMetadataInterface or null, "%s" given',
-                        is_object($contentSeoMetadata) ? get_class($contentSeoMetadata) : gettype($contentSeoMetadata)
+                        \is_object($contentSeoMetadata) ? \get_class($contentSeoMetadata) : \gettype($contentSeoMetadata)
                     )
                 );
             }
@@ -166,11 +160,11 @@ class SeoPresentation implements SeoPresentationInterface
 
         $cachingAvailable = (bool) $this->cache;
         if ($cachingAvailable) {
-            $extractors = $this->cache->loadExtractorsFromCache(get_class($content));
+            $extractors = $this->cache->loadExtractorsFromCache(\get_class($content));
 
             if (null === $extractors || !$extractors->isFresh()) {
                 $extractors = $this->getExtractorsForContent($content);
-                $this->cache->putExtractorsInCache(get_class($content), $extractors);
+                $this->cache->putExtractorsInCache(\get_class($content), $extractors);
             }
         } else {
             $extractors = $this->getExtractorsForContent($content);
@@ -181,28 +175,6 @@ class SeoPresentation implements SeoPresentationInterface
         }
 
         return $seoMetadata;
-    }
-
-    /**
-     * Returns the extractors for content.
-     *
-     * @param object $content
-     *
-     * @return ExtractorInterface[]
-     */
-    private function getExtractorsForContent($content)
-    {
-        $extractors = [];
-        ksort($this->extractors);
-        foreach ($this->extractors as $priority) {
-            $supportedExtractors = array_filter($priority, function (ExtractorInterface $extractor) use ($content) {
-                return $extractor->supports($content);
-            });
-
-            $extractors = array_merge($extractors, $supportedExtractors);
-        }
-
-        return $extractors;
     }
 
     /**
@@ -285,6 +257,49 @@ class SeoPresentation implements SeoPresentationInterface
     }
 
     /**
+     * {inheritDoc}.
+     */
+    public function updateAlternateLocales(AlternateLocaleCollection $collection)
+    {
+        foreach ($collection as $alternateLocale) {
+            $this->sonataPage->addLangAlternate(
+                $alternateLocale->href,
+                $alternateLocale->hrefLocale
+            );
+        }
+    }
+
+    /**
+     * @param RedirectResponse $redirect
+     */
+    private function setRedirectResponse(RedirectResponse $redirect)
+    {
+        $this->redirectResponse = $redirect;
+    }
+
+    /**
+     * Returns the extractors for content.
+     *
+     * @param object $content
+     *
+     * @return ExtractorInterface[]
+     */
+    private function getExtractorsForContent($content)
+    {
+        $extractors = [];
+        ksort($this->extractors);
+        foreach ($this->extractors as $priority) {
+            $supportedExtractors = array_filter($priority, function (ExtractorInterface $extractor) use ($content) {
+                return $extractor->supports($content);
+            });
+
+            $extractors = array_merge($extractors, $supportedExtractors);
+        }
+
+        return $extractors;
+    }
+
+    /**
      * Creates a concatenated list of keywords based on sonatas default
      * values.
      *
@@ -295,9 +310,8 @@ class SeoPresentation implements SeoPresentationInterface
     private function createKeywords($contentKeywords)
     {
         $metas = $this->sonataPage->getMetas();
-        $sonataKeywords = isset($metas['name']['keywords'][0])
-           ? $metas['name']['keywords'][0]
-           : '';
+        $sonataKeywords = $metas['name']['keywords'][0]
+           ?? '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$contentKeywords;
     }
@@ -322,18 +336,5 @@ class SeoPresentation implements SeoPresentationInterface
             ->setExtraNames($contentSeoMetadata->getExtraNames() ?: [])
             ->setExtraHttp($contentSeoMetadata->getExtraHttp() ?: [])
         ;
-    }
-
-    /**
-     * {inheritDoc}.
-     */
-    public function updateAlternateLocales(AlternateLocaleCollection $collection)
-    {
-        foreach ($collection as $alternateLocale) {
-            $this->sonataPage->addLangAlternate(
-                $alternateLocale->href,
-                $alternateLocale->hrefLocale
-            );
-        }
     }
 }

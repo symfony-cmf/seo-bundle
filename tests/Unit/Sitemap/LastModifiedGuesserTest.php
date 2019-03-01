@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -42,6 +44,15 @@ class LastModifiedGuesserTest extends GuesserTestCase
     {
         $urlInformation = parent::testGuessCreate();
         $this->assertEquals('2016-07-06T00:00:00+02:00', $urlInformation->getLastModification());
+    }
+
+    public function testGuessNoOverwrite()
+    {
+        $urlInformation = new UrlInformation();
+        $urlInformation->setLastModification(new \DateTime('2016-06-06', new \DateTimeZone('Europe/Berlin')));
+
+        $this->guesser->guessValues($urlInformation, $this->data, 'default');
+        $this->assertEquals('2016-06-06T00:00:00+02:00', $urlInformation->getLastModification());
     }
 
     /**
@@ -102,14 +113,5 @@ class LastModifiedGuesserTest extends GuesserTestCase
     protected function getFields()
     {
         return ['LastModification'];
-    }
-
-    public function testGuessNoOverwrite()
-    {
-        $urlInformation = new UrlInformation();
-        $urlInformation->setLastModification(new \DateTime('2016-06-06', new \DateTimeZone('Europe/Berlin')));
-
-        $this->guesser->guessValues($urlInformation, $this->data, 'default');
-        $this->assertEquals('2016-06-06T00:00:00+02:00', $urlInformation->getLastModification());
     }
 }

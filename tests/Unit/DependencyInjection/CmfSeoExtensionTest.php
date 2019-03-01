@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,16 +22,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CmfSeoExtensionTest extends AbstractExtensionTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getContainerExtensions()
-    {
-        return [
-            new CmfSeoExtension(),
-        ];
-    }
-
     public function testDefaults()
     {
         $this->container->setParameter(
@@ -223,25 +215,6 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
             $attributes[$key][] = [];
         }
         $this->assertMatcherCreated($attributes);
-    }
-
-    /**
-     * @param array $arguments
-     */
-    private function assertMatcherCreated(array $arguments)
-    {
-        $count = 0;
-        foreach ($this->container->getDefinitions() as $id => $definition) {
-            if (($definition instanceof DefinitionDecorator || $definition instanceof ChildDefinition)
-                && 'cmf_seo.error.request_matcher' === $definition->getParent()
-            ) {
-                ++$count;
-                $this->assertNotNull($definition);
-                $this->assertEquals($arguments[$count - 1], $definition->getArguments());
-            }
-        }
-
-        $this->assertEquals(2, $count);
     }
 
     public function testSitemapConfiguration()
@@ -466,5 +439,34 @@ class CmfSeoExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderNotHasService(
             'cmf_seo.event_listener.seo_content'
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getContainerExtensions()
+    {
+        return [
+            new CmfSeoExtension(),
+        ];
+    }
+
+    /**
+     * @param array $arguments
+     */
+    private function assertMatcherCreated(array $arguments)
+    {
+        $count = 0;
+        foreach ($this->container->getDefinitions() as $id => $definition) {
+            if (($definition instanceof DefinitionDecorator || $definition instanceof ChildDefinition)
+                && 'cmf_seo.error.request_matcher' === $definition->getParent()
+            ) {
+                ++$count;
+                $this->assertNotNull($definition);
+                $this->assertEquals($arguments[$count - 1], $definition->getArguments());
+            }
+        }
+
+        $this->assertEquals(2, $count);
     }
 }

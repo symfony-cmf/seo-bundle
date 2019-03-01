@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Matcher\ExclusionMatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
@@ -16,7 +19,7 @@ use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class ExclusionMatcherTest extends PHPUnit_Framework_TestCase
+class ExclusionMatcherTest extends TestCase
 {
     /**
      * @var RequestMatcherInterface

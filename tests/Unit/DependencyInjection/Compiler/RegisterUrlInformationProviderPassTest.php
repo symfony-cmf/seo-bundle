@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -34,17 +36,6 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
             $chain = new Definition();
             $this->setDefinition('cmf_seo.sitemap.'.$service[1], $chain);
         }
-    }
-
-    /**
-     * Register the compiler pass under test, just like you would do inside a bundle's load()
-     * method:.
-     *
-     *   $container->addCompilerPass(new MyCompilerPass());
-     */
-    protected function registerCompilerPass(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new RegisterUrlInformationProviderPass());
     }
 
     /**
@@ -117,5 +108,16 @@ class RegisterUrlInformationProviderPassTest extends AbstractCompilerPassTestCas
             ['voter', 'voter_chain'],
             ['guesser', 'guesser_chain'],
         ];
+    }
+
+    /**
+     * Register the compiler pass under test, just like you would do inside a bundle's load()
+     * method:.
+     *
+     *   $container->addCompilerPass(new MyCompilerPass());
+     */
+    protected function registerCompilerPass(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new RegisterUrlInformationProviderPass());
     }
 }

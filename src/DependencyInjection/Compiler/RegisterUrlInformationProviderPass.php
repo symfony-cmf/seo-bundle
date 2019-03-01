@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -100,7 +102,7 @@ class RegisterUrlInformationProviderPass implements CompilerPassInterface
             }
 
             foreach ($sitemaps as $sitemap) {
-                if ($sitemap && !in_array($sitemap, $sitemaps)) {
+                if ($sitemap && !\in_array($sitemap, $sitemaps, true)) {
                     throw new InvalidConfigurationException(sprintf(
                         'Service %s tagged with %s specifies sitemap %s but that sitemap is not configured',
                         $id,

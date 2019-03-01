@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,6 +13,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\EventListener;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\RoutingBundle\Routing\DynamicRouter;
 use Symfony\Cmf\Bundle\SeoBundle\EventListener\ContentListener;
 use Symfony\Cmf\Bundle\SeoBundle\SeoPresentationInterface;
@@ -19,7 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
-class ContentListenerTest extends \PHPUnit_Framework_Testcase
+class ContentListenerTest extends TestCase
 {
     protected $seoPresentation;
 

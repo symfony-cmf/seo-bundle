@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -51,7 +53,7 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
     /**
      * @param string $class
      *
-     * @return null|DocumentManager
+     * @return DocumentManager|null
      */
     public function getManagerForClass($class)
     {
@@ -62,7 +64,7 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
      * Finds the parent route document by concatenating the basepaths with the
      * requested path.
      *
-     * @return null|object
+     * @return object|null
      */
     protected function findParentRoute($requestedPath)
     {
@@ -74,7 +76,7 @@ abstract class BaseSuggestionProvider implements SuggestionProviderInterface
         }
 
         $parentRoutes = $manager->findMany(null, $parentPaths);
-        if (0 === count($parentRoutes)) {
+        if (0 === \count($parentRoutes)) {
             return;
         }
 

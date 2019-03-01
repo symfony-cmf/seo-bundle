@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,6 +13,7 @@
 
 namespace Symfony\Cmf\Bundle\SeoBundle\Tests\Unit\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Model\UrlInformation;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\GuesserChain;
 use Symfony\Cmf\Bundle\SeoBundle\Sitemap\LoaderChain;
@@ -20,7 +23,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Sitemap\VoterChain;
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class UrlInformationProviderTest extends \PHPUnit_Framework_Testcase
+class UrlInformationProviderTest extends TestCase
 {
     /**
      * @var UrlInformationProvider

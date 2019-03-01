@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -48,6 +50,68 @@ class DepthGuesserTest extends GuesserTestCase
      */
     protected $node;
 
+    public function testNullOnNoManager()
+    {
+        $this->buildMocks();
+        $this->managerRegistry
+            ->expects($this->any())
+            ->method('getManagerForClass')
+            ->with(\get_class($this->object))
+            ->will($this->returnValue(null));
+        $urlInformation = new UrlInformation();
+        $this->guesser->guessValues($urlInformation, $this->object, 'default');
+
+        $this->assertNull($urlInformation->getDepth());
+    }
+
+    public function testDepthOffsetCalculation()
+    {
+        $this->buildMocks();
+
+        $this->managerRegistry
+            ->expects($this->any())
+            ->method('getManagerForClass')
+            ->with(\get_class($this->object))
+            ->will($this->returnValue($this->documentManager));
+        $this->documentManager
+            ->expects($this->any())
+            ->method('getNodeForDocument')
+            ->with($this->object)
+            ->willReturn($this->node);
+        $this->node
+            ->expects($this->any())
+            ->method('getDepth')
+            ->will($this->returnValue(4));
+        $urlInformation = new UrlInformation();
+        $this->guesser->guessValues($urlInformation, $this->object, 'default');
+
+        $this->assertEquals(1, $urlInformation->getDepth());
+    }
+
+    public function testRootEdgeCase()
+    {
+        $this->buildMocks('/');
+
+        $this->managerRegistry
+            ->expects($this->any())
+            ->method('getManagerForClass')
+            ->with(\get_class($this->object))
+            ->will($this->returnValue($this->documentManager));
+        $this->documentManager
+            ->expects($this->any())
+            ->method('getNodeForDocument')
+            ->with($this->object)
+            ->willReturn($this->node);
+        $this->node
+            ->expects($this->any())
+            ->method('getDepth')
+            ->will($this->returnValue(4));
+        $urlInformation = new UrlInformation();
+        $this->guesser->guessValues($urlInformation, $this->object, 'default');
+
+        $this->assertEquals(3, $urlInformation->getDepth());
+    }
+
     /**
      * Create the guesser for this test.
      *
@@ -60,7 +124,7 @@ class DepthGuesserTest extends GuesserTestCase
         $this->managerRegistry
             ->expects($this->any())
             ->method('getManagerForClass')
-            ->with(get_class($this->object))
+            ->with(\get_class($this->object))
             ->will($this->returnValue($this->documentManager));
         $this->documentManager
             ->expects($this->any())
@@ -105,67 +169,5 @@ class DepthGuesserTest extends GuesserTestCase
         $this->node = $this->createMock(NodeInterface::class);
         $this->object = new \stdClass();
         $this->guesser = new DepthGuesser($this->managerRegistry, $contentBasePath);
-    }
-
-    public function testNullOnNoManager()
-    {
-        $this->buildMocks();
-        $this->managerRegistry
-            ->expects($this->any())
-            ->method('getManagerForClass')
-            ->with(get_class($this->object))
-            ->will($this->returnValue(null));
-        $urlInformation = new UrlInformation();
-        $this->guesser->guessValues($urlInformation, $this->object, 'default');
-
-        $this->assertNull($urlInformation->getDepth());
-    }
-
-    public function testDepthOffsetCalculation()
-    {
-        $this->buildMocks();
-
-        $this->managerRegistry
-            ->expects($this->any())
-            ->method('getManagerForClass')
-            ->with(get_class($this->object))
-            ->will($this->returnValue($this->documentManager));
-        $this->documentManager
-            ->expects($this->any())
-            ->method('getNodeForDocument')
-            ->with($this->object)
-            ->willReturn($this->node);
-        $this->node
-            ->expects($this->any())
-            ->method('getDepth')
-            ->will($this->returnValue(4));
-        $urlInformation = new UrlInformation();
-        $this->guesser->guessValues($urlInformation, $this->object, 'default');
-
-        $this->assertEquals(1, $urlInformation->getDepth());
-    }
-
-    public function testRootEdgeCase()
-    {
-        $this->buildMocks('/');
-
-        $this->managerRegistry
-            ->expects($this->any())
-            ->method('getManagerForClass')
-            ->with(get_class($this->object))
-            ->will($this->returnValue($this->documentManager));
-        $this->documentManager
-            ->expects($this->any())
-            ->method('getNodeForDocument')
-            ->with($this->object)
-            ->willReturn($this->node);
-        $this->node
-            ->expects($this->any())
-            ->method('getDepth')
-            ->will($this->returnValue(4));
-        $urlInformation = new UrlInformation();
-        $this->guesser->guessValues($urlInformation, $this->object, 'default');
-
-        $this->assertEquals(3, $urlInformation->getDepth());
     }
 }

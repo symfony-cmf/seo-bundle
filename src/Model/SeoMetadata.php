@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -220,7 +222,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function removeExtraProperty($key)
     {
-        if (array_key_exists($key, $this->extraProperties)) {
+        if (\array_key_exists($key, $this->extraProperties)) {
             unset($this->extraProperties[$key]);
         }
     }
@@ -256,7 +258,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function removeExtraName($key)
     {
-        if (array_key_exists($key, $this->extraNames)) {
+        if (\array_key_exists($key, $this->extraNames)) {
             unset($this->extraNames[$key]);
         }
     }
@@ -292,7 +294,7 @@ class SeoMetadata implements SeoMetadataInterface
      */
     public function removeExtraHttp($key)
     {
-        if (array_key_exists($key, $this->extraHttp)) {
+        if (\array_key_exists($key, $this->extraHttp)) {
             unset($this->extraHttp[$key]);
         }
     }
@@ -302,13 +304,13 @@ class SeoMetadata implements SeoMetadataInterface
      *
      * @param array|KeyValueContainer|\Traversable $data something that can be converted to an array
      *
-     * @return array Native array representation of $data
-     *
      * @throws InvalidArgumentException if $data can not be converted to an array
+     *
+     * @return array Native array representation of $data
      */
     private function toArray($data)
     {
-        if (is_array($data)) {
+        if (\is_array($data)) {
             return $data;
         }
 
@@ -322,6 +324,6 @@ class SeoMetadata implements SeoMetadataInterface
 
         throw new InvalidArgumentException(
             sprintf('Expected array, Traversable or KeyValueContainer, got "%s"',
-                is_object($data) ? get_class($data) : gettype($data)));
+                \is_object($data) ? \get_class($data) : \gettype($data)));
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -75,6 +77,14 @@ class ContentListener
         }
     }
 
+    /**
+     * @param AlternateLocaleProviderInterface $alternateLocaleProvider
+     */
+    public function setAlternateLocaleProvider($alternateLocaleProvider)
+    {
+        $this->alternateLocaleProvider = $alternateLocaleProvider;
+    }
+
     protected function canBeRedirected(Request $request, RedirectResponse $response)
     {
         $targetRequest = Request::create($response->getTargetUrl());
@@ -85,13 +95,5 @@ class ContentListener
         $currentPath = $stripUrl($request->getBaseUrl().$request->getPathInfo());
 
         return $targetPath !== $currentPath;
-    }
-
-    /**
-     * @param AlternateLocaleProviderInterface $alternateLocaleProvider
-     */
-    public function setAlternateLocaleProvider($alternateLocaleProvider)
-    {
-        $this->alternateLocaleProvider = $alternateLocaleProvider;
     }
 }

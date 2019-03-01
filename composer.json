@@ -15,8 +15,8 @@
         }
     ],
     "require": {
-        "php": "^7.2",
-        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "php": "^7.1",
+        "symfony/framework-bundle": "^3.4 || ^4.1",
         "sonata-project/seo-bundle": "^2.2",
         "doctrine/collections": "^1.0"
     },
@@ -25,25 +25,25 @@
         "doctrine/orm": "^2.4",
         "symfony-cmf/core-bundle": "^2.1",
         "symfony-cmf/routing-bundle": "^1.4.0 || ^2.1",
-        "matthiasnoback/symfony-dependency-injection-test": "^1.1",
-        "matthiasnoback/symfony-config-test": "^2.1",
-        "symfony/phpunit-bridge": "^3.4 || ^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "matthiasnoback/symfony-config-test": "^4.0.1",
+        "symfony/phpunit-bridge": "^4.2.2",
         "burgov/key-value-form-bundle": "^1.0",
         "symfony-cmf/testing": "^2.1.9",
-        "symfony/security-bundle": "^3.4 || ^4.0",
-        "symfony/translation": "^3.4 || ^4.0",
-        "symfony/validator": "^3.4 || ^4.0",
-        "symfony/asset": "^3.4 || ^4.0",
-        "symfony/templating": "^3.4 || ^4.0",
-        "symfony/browser-kit": "^3.4 || ^4.0",
-        "symfony/css-selector": "^3.4 || ^4.0"
+        "symfony/security-bundle": "^3.4 || ^4.1",
+        "symfony/translation": "^3.4 || ^4.1",
+        "symfony/validator": "^3.4 || ^4.1",
+        "symfony/asset": "^3.4 || ^4.1",
+        "symfony/templating": "^3.4 || ^4.1",
+        "symfony/browser-kit": "^3.4 || ^4.1",
+        "symfony/css-selector": "^3.4 || ^4.1"
     },
     "suggest": {
         "symfony-cmf/core-bundle": "When using the provided PHPCR-ODM document",
         "symfony-cmf/routing-bundle": "To make use of the alternate locale provider.",
         "doctrine/phpcr-bundle": "To persist the metadata in PHPCR ODM documents",
         "doctrine/doctrine-bundle": "To persist the metadata in ORM entities",
-        "doctrine/orm": "To persist the metadata in ORM entities, ~2.4",
+        "doctrine/orm": "To persist the metadata in ORM entities, ^2.4",
         "burgov/key-value-form-bundle": "To have advanced editing options in the SEO form type, ^1.0",
         "symfony-cmf/sonata-admin-integration-bundle": "To provide an admin interface for the PHPCR ODM documents."
     },
@@ -63,6 +63,9 @@
         }
     },
     "conflict": {
+        "doctrine/phpcr-odm": "<1.4",
+        "twig/twig": "<2",
+        "phpunit/phpunit": "<6",
         "phpcr/phpcr-utils": "<1.3.0",
         "sebastian/exporter": "<2.0.0",
         "burgov/key-value-form-bundle": "<1.3.1"

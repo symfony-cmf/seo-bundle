@@ -1,20 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Cmf\Bundle\SeoBundle\Cache\FileCache;
 
 /**
  * @author Maximilian Berghoff <Maximilian.Berghoff@mayflower.de>
  */
-class FileCacheTest extends \PHPUnit_Framework_TestCase
+class FileCacheTest extends TestCase
 {
     public function testThrowingExceptionForUnknownBaseDir()
     {
@@ -41,7 +44,7 @@ class FileCacheTest extends \PHPUnit_Framework_TestCase
         new FileCache($baseDir, $dir);
 
         $expectedDirectory = $baseDir.'/'.$dir;
-        $this->assertTrue(is_dir($expectedDirectory));
+        $this->assertDirectoryExists($expectedDirectory);
 
         rmdir($expectedDirectory);
         rmdir($baseDir);

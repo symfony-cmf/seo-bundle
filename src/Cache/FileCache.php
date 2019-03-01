@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,7 +37,7 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
             throw new \InvalidArgumentException(sprintf('The directory "%s" is not writable.', $baseDir));
         }
 
-        $this->dir = $baseDir.DIRECTORY_SEPARATOR.rtrim($dir, '\\/');
+        $this->dir = $baseDir.\DIRECTORY_SEPARATOR.rtrim($dir, '\\/');
 
         $this->umask = $umask;
 
@@ -75,32 +77,6 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
     }
 
     /**
-     * Renames a file with fallback for windows.
-     *
-     * @param string $source
-     * @param string $target
-     *
-     * @throws \RuntimeException When the renaming can't be completed succesfully
-     *
-     * @author Johannes M. Schmitt <schmittjoh@gmail.com>
-     */
-    private function renameFile($source, $target)
-    {
-        if (false === @rename($source, $target)) {
-            if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-                if (false === copy($source, $target)) {
-                    throw new \RuntimeException(sprintf('(WIN) Could not write new cache file to %s.', $target));
-                }
-                if (false === unlink($source)) {
-                    throw new \RuntimeException(sprintf('(WIN) Could not delete temp cache file to %s.', $source));
-                }
-            } else {
-                throw new \RuntimeException(sprintf('Could not write new cache file to %s.', $target));
-            }
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function isOptional()
@@ -126,6 +102,32 @@ class FileCache implements CacheInterface, CacheWarmerInterface, CacheClearerInt
         $filesystem = new Filesystem();
         if (is_dir($this->dir)) {
             $filesystem->remove($this->dir);
+        }
+    }
+
+    /**
+     * Renames a file with fallback for windows.
+     *
+     * @param string $source
+     * @param string $target
+     *
+     * @throws \RuntimeException When the renaming can't be completed succesfully
+     *
+     * @author Johannes M. Schmitt <schmittjoh@gmail.com>
+     */
+    private function renameFile($source, $target)
+    {
+        if (false === @rename($source, $target)) {
+            if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
+                if (false === copy($source, $target)) {
+                    throw new \RuntimeException(sprintf('(WIN) Could not write new cache file to %s.', $target));
+                }
+                if (false === unlink($source)) {
+                    throw new \RuntimeException(sprintf('(WIN) Could not delete temp cache file to %s.', $source));
+                }
+            } else {
+                throw new \RuntimeException(sprintf('Could not write new cache file to %s.', $target));
+            }
         }
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2017 Symfony CMF
+ * (c) Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -68,12 +70,11 @@ class SeoMetadataTest extends BaseTestCase
         $this->assertEquals($seoMetadata->getExtraHttp(), $persistedSeoMetadata->getExtraHttp());
     }
 
-    /**
-     * @expectedException \Doctrine\ODM\PHPCR\Exception\OutOfBoundsException
-     * @expectedExceptionMessage It cannot have children
-     */
     public function testAddSeoMetadataChild()
     {
+        $this->expectException(\Doctrine\ODM\PHPCR\Exception\OutOfBoundsException::class);
+        $this->expectExceptionMessage('It cannot have children');
+
         $seoMetadata = new SeoMetadata();
         $seoMetadata->setName('seo-metadata');
         $seoMetadata->setParentDocument($this->dm->find(null, '/test'));
