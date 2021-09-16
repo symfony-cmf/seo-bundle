@@ -1,3 +1,12 @@
+# This repository is no longer maintained
+
+Due to lack of interest, we had to decide to discontinue this repository. 
+The CMF project focusses on the [Routing component](https://github.com/symfony-cmf/routing) and [RoutingBundle](https://github.com/symfony-cmf/routing-bundle), which are still in active use by other projects.
+
+This repository will no longer be upgraded and marked as abandoned, but will be kept available for legacy projects or if somebody wants to experiment with the CMF.
+
+You can contact us in the #symfony_cmf channel of the [Symfony devs slack](https://symfony.com/slack).
+
 # Symfony CMF Seo Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/symfony-cmf/seo-bundle/v/stable)](https://packagist.org/packages/symfony-cmf/seo-bundle)
